@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import { siteConfig } from "@/data/siteConfig";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import MouseSpotlight from "@/components/MouseSpotlight";
+import ScrollProgress from "@/components/ScrollProgress";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -64,6 +66,8 @@ export default function RootLayout({
     <html lang="ru" className={manrope.variable}>
       <body>
         <AnimatedBackground />
+        <MouseSpotlight />
+        <ScrollProgress />
         {children}
       </body>
     </html>

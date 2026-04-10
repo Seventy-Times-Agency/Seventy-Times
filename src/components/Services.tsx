@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { SERVICES, type Service } from "@/data/services";
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
+import SectionWatermark from "./SectionWatermark";
 import styles from "./Services.module.css";
 
 export default function Services() {
@@ -12,6 +13,8 @@ export default function Services() {
 
   return (
     <section id="services" className={styles.section}>
+      <SectionWatermark text="services" number="/ 01" position="right" />
+
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <Reveal>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
+import SectionWatermark from "./SectionWatermark";
 import styles from "./ChatDemo.module.css";
 
 type Message = {
@@ -81,6 +82,8 @@ export default function ChatDemo() {
 
   return (
     <section id="chat" className={styles.section}>
+      <SectionWatermark text="live demo" number="/ 03" position="right" />
+
       <div className={styles.layout}>
         <div className={styles.intro}>
           <Reveal>

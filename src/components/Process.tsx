@@ -1,11 +1,14 @@
 import { PROCESS_STEPS } from "@/data/process";
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
+import SectionWatermark from "./SectionWatermark";
 import styles from "./Process.module.css";
 
 export default function Process() {
   return (
     <section id="process" className={styles.section}>
+      <SectionWatermark text="process" number="/ 02" position="left" />
+
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <Reveal>

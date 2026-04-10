@@ -1,4 +1,6 @@
 .section {
+  position: relative;
+  isolation: isolate;
   padding: 140px 48px 120px;
   max-width: var(--container);
   margin: 0 auto;

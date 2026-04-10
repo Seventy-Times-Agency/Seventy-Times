@@ -30,6 +30,10 @@ const STATS = [
 export default function Hero() {
   return (
     <section id="top" className={styles.hero}>
+      <span className={styles.heroWordmark} aria-hidden="true">
+        aicore®
+      </span>
+
       <motion.div variants={container} initial="hidden" animate="visible">
         {/* Editorial meta strip */}
         <motion.div variants={item} className={styles.meta}>

@@ -1,11 +1,14 @@
 import { siteConfig } from "@/data/siteConfig";
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
+import SectionWatermark from "./SectionWatermark";
 import styles from "./CTA.module.css";
 
 export default function CTA() {
   return (
     <section id="contact" className={styles.section}>
+      <SectionWatermark text="contact" number="/ 05" position="center" />
+
       <Reveal>
         <div className={styles.inner}>
           <div className={styles.eyebrowRow}>
