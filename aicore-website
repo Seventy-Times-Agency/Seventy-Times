@@ -1,0 +1,616 @@
+import { useState, useRef, useEffect } from "react";
+
+const SERVICES = [
+  {
+    key: "targeting",
+    icon: "🎯",
+    title: "Таргетированная реклама",
+    tagline: "Реклама, которая приводит реальных клиентов",
+    note: "Рекламный бюджет оплачивается отдельно",
+    includes: [
+      "Настройка рекламного кабинета с нуля",
+      "Ведение рекламы на Meta, Google и TikTok",
+      "Креативы — баннеры и тексты объявлений",
+      "Настройка аудиторий и таргетинга",
+      "Постоянная оптимизация кампаний",
+    ],
+    addons: [
+      "AI-генерация рекламных материалов",
+      "A/B тестирование объявлений",
+      "Ретаргетинг — возвращаем тех, кто уже интересовался",
+      "Landing page под рекламную кампанию",
+      "Управление рекламным бюджетом",
+    ],
+  },
+  {
+    key: "automation",
+    icon: "⚙️",
+    title: "Автоматизация",
+    tagline: "Убираем рутину — бизнес работает сам",
+    note: null,
+    includes: [
+      "Аудит процессов: находим где теряется время и деньги",
+      "Автоматизация одного ключевого процесса",
+      "Например: заявка → уведомление → таблица → ответ клиенту",
+    ],
+    addons: [
+      "Автоматизация дополнительных процессов",
+      "Интеграция между платформами и сервисами",
+      "Авто-отчёты и аналитика",
+      "Автоматическое выставление счетов",
+      "Интеграция с CRM-системой",
+      "Поддержка и обновления после запуска",
+    ],
+  },
+  {
+    key: "aibot",
+    icon: "🤖",
+    title: "AI-Бот",
+    tagline: "Умный помощник, который работает за тебя 24/7",
+    note: null,
+    includes: [
+      "Бот на любой платформе: Telegram, Instagram, Facebook или сайт",
+      "AI-консультант, обученный под твой бизнес и бренд",
+      "Автоматический сбор контактов в Google Sheets или другие программы",
+      "Поддержка любого языка",
+    ],
+    addons: [
+      "Онлайн-запись и бронирование",
+      "Автоматические напоминания клиентам",
+      "Генерация изображений прямо в боте",
+      "Реакция на комментарии и сторис",
+      "Интеграция с CRM-системой",
+      "Воронка продаж",
+      "Поддержка и обновления после запуска",
+    ],
+  },
+];
+
+const SYSTEM_PROMPT = `Ты — AI-консультант команды Aicore. Твоя задача — помочь потенциальному клиенту разобраться в услугах и мягко подвести к заявке.
+
+О нас: Aicore — команда специалистов по AI и digital-маркетингу. Мы помогаем бизнесу расти с помощью технологий.
+
+Наши услуги:
+1. ТАРГЕТИРОВАННАЯ РЕКЛАМА — реклама в Meta, Google, TikTok. Настройка кабинета с нуля, ведение, создание креативов, настройка аудиторий, постоянная оптимизация. Дополнительно: AI-генерация материалов, A/B тесты, ретаргетинг, landing page. Рекламный бюджет оплачивается отдельно.
+2. АВТОМАТИЗАЦИЯ — аудит бизнес-процессов, автоматизация рутины. Интеграции между платформами, авто-отчёты, CRM, выставление счетов.
+3. AI-БОТ — умный чат-бот для Telegram, Instagram, Facebook или сайта. Работает 24/7, обучается под бизнес клиента, собирает контакты, поддерживает любой язык.
+
+Цены: обговариваются индивидуально после понимания задачи. Не называй конкретных цифр.
+
+Правила общения:
+- Будь дружелюбным, живым, немного неформальным
+- Задавай уточняющие вопросы про бизнес клиента
+- Помогай клиенту понять какая услуга ему нужна
+- Если клиент готов — предложи написать нам напрямую
+- Отвечай коротко, по делу, без лишних слов
+- Пиши только на русском языке`;
+
+export default function AicoreWebsite() {
+  const [messages, setMessages] = useState([
+    {
+      role: "assistant",
+      content:
+        "Привет! 👋 Я AI-консультант Aicore.\n\nРасскажи немного о своём бизнесе — подберём решение под твои задачи.",
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [openService, setOpenService] = useState(null);
+  const chatEndRef = useRef(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
+
+  const sendMessage = async () => {
+    if (!input.trim() || loading) return;
+    const userMsg = { role: "user", content: input.trim() };
+    const updated = [...messages, userMsg];
+    setMessages(updated);
+    setInput("");
+    setLoading(true);
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          system: SYSTEM_PROMPT,
+          messages: updated.map((m) => ({ role: m.role, content: m.content })),
+        }),
+      });
+      const data = await res.json();
+      const reply = data.content?.[0]?.text || "Что-то пошло не так. Попробуй снова.";
+      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "Ошибка соединения. Попробуй чуть позже." },
+      ]);
+    }
+    setLoading(false);
+  };
+
+  const styles = {
+    root: {
+      fontFamily: "'Manrope', 'Inter', sans-serif",
+      background: "#080818",
+      color: "#fff",
+      minHeight: "100vh",
+      overflowX: "hidden",
+    },
+    nav: {
+      padding: "18px 32px",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      borderBottom: "1px solid rgba(255,255,255,0.05)",
+      position: "sticky",
+      top: 0,
+      background: "rgba(8,8,24,0.85)",
+      backdropFilter: "blur(16px)",
+      zIndex: 100,
+    },
+    logo: {
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+    },
+    logoIcon: {
+      width: 34,
+      height: 34,
+      borderRadius: "50%",
+      background: "linear-gradient(135deg, #7c3aed, #c084fc)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontWeight: 900,
+      fontSize: 15,
+      color: "#fff",
+    },
+    logoText: {
+      fontWeight: 800,
+      fontSize: 18,
+      letterSpacing: -0.5,
+    },
+    navBtn: {
+      background: "linear-gradient(135deg, #7c3aed, #6d28d9)",
+      color: "#fff",
+      padding: "9px 22px",
+      borderRadius: 100,
+      textDecoration: "none",
+      fontWeight: 700,
+      fontSize: 13,
+      border: "none",
+      cursor: "pointer",
+    },
+    hero: {
+      padding: "90px 32px 70px",
+      textAlign: "center",
+      maxWidth: 720,
+      margin: "0 auto",
+      position: "relative",
+    },
+    badge: {
+      display: "inline-block",
+      background: "rgba(124,58,237,0.12)",
+      border: "1px solid rgba(124,58,237,0.3)",
+      borderRadius: 100,
+      padding: "5px 16px",
+      fontSize: 12,
+      color: "#c084fc",
+      fontWeight: 700,
+      letterSpacing: 0.5,
+      textTransform: "uppercase",
+      marginBottom: 24,
+    },
+    h1: {
+      fontSize: 52,
+      fontWeight: 900,
+      lineHeight: 1.08,
+      margin: "0 0 20px",
+      letterSpacing: -2.5,
+    },
+    accent: {
+      background: "linear-gradient(135deg, #a78bfa, #c084fc)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+    },
+    heroSub: {
+      fontSize: 17,
+      color: "rgba(255,255,255,0.5)",
+      lineHeight: 1.7,
+      marginBottom: 40,
+    },
+    heroCta: {
+      display: "inline-block",
+      background: "linear-gradient(135deg, #7c3aed, #6d28d9)",
+      color: "#fff",
+      padding: "14px 32px",
+      borderRadius: 100,
+      textDecoration: "none",
+      fontWeight: 700,
+      fontSize: 15,
+    },
+    glowOrb: {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: 600,
+      height: 600,
+      background: "radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%)",
+      pointerEvents: "none",
+      zIndex: -1,
+    },
+    section: {
+      padding: "70px 32px",
+      maxWidth: 1080,
+      margin: "0 auto",
+    },
+    sectionHeader: {
+      textAlign: "center",
+      marginBottom: 48,
+    },
+    h2: {
+      fontSize: 38,
+      fontWeight: 900,
+      letterSpacing: -1.5,
+      margin: "8px 0 0",
+    },
+    grid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+      gap: 18,
+    },
+    card: (isOpen) => ({
+      background: isOpen ? "rgba(124,58,237,0.1)" : "rgba(255,255,255,0.025)",
+      border: `1px solid ${isOpen ? "rgba(124,58,237,0.4)" : "rgba(255,255,255,0.07)"}`,
+      borderRadius: 20,
+      padding: 26,
+      cursor: "pointer",
+      transition: "all 0.25s ease",
+    }),
+    cardIcon: {
+      fontSize: 30,
+      marginBottom: 14,
+    },
+    cardTitle: {
+      fontSize: 17,
+      fontWeight: 800,
+      margin: "0 0 6px",
+      letterSpacing: -0.4,
+    },
+    cardTagline: {
+      color: "rgba(255,255,255,0.45)",
+      fontSize: 13,
+      lineHeight: 1.6,
+      margin: "0 0 14px",
+    },
+    divider: {
+      borderTop: "1px solid rgba(255,255,255,0.07)",
+      margin: "14px 0",
+    },
+    listLabel: {
+      fontSize: 11,
+      fontWeight: 700,
+      color: "#a78bfa",
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      marginBottom: 10,
+    },
+    listItem: (muted) => ({
+      display: "flex",
+      gap: 8,
+      marginBottom: 7,
+      fontSize: 13,
+      color: muted ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.72)",
+      lineHeight: 1.5,
+    }),
+    listDot: (muted) => ({
+      color: muted ? "rgba(124,58,237,0.5)" : "#7c3aed",
+      flexShrink: 0,
+      marginTop: 1,
+    }),
+    toggle: {
+      fontSize: 12,
+      color: "#a78bfa",
+      fontWeight: 700,
+      marginTop: 14,
+    },
+    chatWrap: {
+      padding: "60px 32px 80px",
+      maxWidth: 720,
+      margin: "0 auto",
+    },
+    chatBox: {
+      background: "rgba(255,255,255,0.025)",
+      border: "1px solid rgba(255,255,255,0.07)",
+      borderRadius: 24,
+      overflow: "hidden",
+    },
+    chatHeader: {
+      padding: "14px 22px",
+      borderBottom: "1px solid rgba(255,255,255,0.06)",
+      display: "flex",
+      alignItems: "center",
+      gap: 12,
+      background: "rgba(255,255,255,0.02)",
+    },
+    chatAvatar: {
+      width: 36,
+      height: 36,
+      borderRadius: "50%",
+      background: "linear-gradient(135deg, #7c3aed, #c084fc)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: 16,
+    },
+    chatName: {
+      fontWeight: 700,
+      fontSize: 14,
+    },
+    chatStatus: {
+      fontSize: 12,
+      color: "#4ade80",
+    },
+    messages: {
+      height: 380,
+      overflowY: "auto",
+      padding: "20px 20px",
+      display: "flex",
+      flexDirection: "column",
+      gap: 10,
+    },
+    bubble: (isUser) => ({
+      maxWidth: "78%",
+      alignSelf: isUser ? "flex-end" : "flex-start",
+      padding: "11px 16px",
+      borderRadius: isUser ? "18px 18px 4px 18px" : "4px 18px 18px 18px",
+      background: isUser
+        ? "linear-gradient(135deg, #7c3aed, #6d28d9)"
+        : "rgba(255,255,255,0.06)",
+      fontSize: 14,
+      lineHeight: 1.6,
+      color: "#fff",
+      whiteSpace: "pre-wrap",
+      wordBreak: "break-word",
+    }),
+    typing: {
+      alignSelf: "flex-start",
+      padding: "11px 16px",
+      borderRadius: "4px 18px 18px 18px",
+      background: "rgba(255,255,255,0.06)",
+      fontSize: 13,
+      color: "rgba(255,255,255,0.4)",
+    },
+    inputRow: {
+      padding: "14px 18px",
+      borderTop: "1px solid rgba(255,255,255,0.06)",
+      display: "flex",
+      gap: 10,
+    },
+    input: {
+      flex: 1,
+      background: "rgba(255,255,255,0.05)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 100,
+      padding: "11px 18px",
+      color: "#fff",
+      fontSize: 14,
+      outline: "none",
+      fontFamily: "inherit",
+    },
+    sendBtn: {
+      background: "linear-gradient(135deg, #7c3aed, #6d28d9)",
+      border: "none",
+      borderRadius: 100,
+      padding: "11px 22px",
+      color: "#fff",
+      fontWeight: 700,
+      fontSize: 14,
+      cursor: "pointer",
+      fontFamily: "inherit",
+    },
+    ctaSection: {
+      padding: "60px 32px 80px",
+      textAlign: "center",
+    },
+    ctaInner: {
+      maxWidth: 560,
+      margin: "0 auto",
+      background: "rgba(124,58,237,0.08)",
+      border: "1px solid rgba(124,58,237,0.2)",
+      borderRadius: 28,
+      padding: "52px 40px",
+    },
+    ctaH2: {
+      fontSize: 38,
+      fontWeight: 900,
+      letterSpacing: -1.5,
+      margin: "0 0 14px",
+    },
+    ctaSub: {
+      color: "rgba(255,255,255,0.45)",
+      fontSize: 15,
+      lineHeight: 1.7,
+      marginBottom: 32,
+    },
+    ctaBtn: {
+      display: "inline-block",
+      background: "linear-gradient(135deg, #7c3aed, #6d28d9)",
+      color: "#fff",
+      padding: "14px 34px",
+      borderRadius: 100,
+      textDecoration: "none",
+      fontWeight: 700,
+      fontSize: 15,
+    },
+    footer: {
+      padding: "20px 32px",
+      borderTop: "1px solid rgba(255,255,255,0.05)",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    footerNote: {
+      color: "rgba(255,255,255,0.2)",
+      fontSize: 12,
+    },
+  };
+
+  return (
+    <div style={styles.root}>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+      />
+
+      {/* NAV */}
+      <nav style={styles.nav}>
+        <div style={styles.logo}>
+          <div style={styles.logoIcon}>A</div>
+          <span style={styles.logoText}>Aicore</span>
+        </div>
+        <a href="#chat" style={styles.navBtn}>
+          Начать
+        </a>
+      </nav>
+
+      {/* HERO */}
+      <section style={styles.hero}>
+        <div style={styles.glowOrb} />
+        <div style={styles.badge}>AI + Marketing Agency</div>
+        <h1 style={styles.h1}>
+          Автоматизируем{" "}
+          <span style={styles.accent}>рост</span>
+          <br />
+          вашего бизнеса
+        </h1>
+        <p style={styles.heroSub}>
+          Таргетированная реклама, автоматизация процессов и AI-боты —
+          <br />
+          всё что нужно для масштабирования
+        </p>
+        <a href="#chat" style={styles.heroCta}>
+          Поговорить с AI-консультантом →
+        </a>
+      </section>
+
+      {/* SERVICES */}
+      <section style={styles.section}>
+        <div style={styles.sectionHeader}>
+          <div style={styles.badge}>Услуги</div>
+          <h2 style={styles.h2}>Что мы делаем</h2>
+        </div>
+        <div style={styles.grid}>
+          {SERVICES.map((s) => {
+            const isOpen = openService === s.key;
+            return (
+              <div
+                key={s.key}
+                style={styles.card(isOpen)}
+                onClick={() => setOpenService(isOpen ? null : s.key)}
+              >
+                <div style={styles.cardIcon}>{s.icon}</div>
+                <h3 style={styles.cardTitle}>{s.title}</h3>
+                <p style={styles.cardTagline}>{s.tagline}</p>
+                {s.note && (
+                  <p style={{ ...styles.cardTagline, fontSize: 12, fontStyle: "italic" }}>
+                    {s.note}
+                  </p>
+                )}
+                {isOpen && (
+                  <>
+                    <div style={styles.divider} />
+                    <div style={styles.listLabel}>Что входит:</div>
+                    {s.includes.map((item, i) => (
+                      <div key={i} style={styles.listItem(false)}>
+                        <span style={styles.listDot(false)}>▸</span>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                    <div style={{ ...styles.divider, marginTop: 16 }} />
+                    <div style={styles.listLabel}>✦ Можно добавить:</div>
+                    {s.addons.map((item, i) => (
+                      <div key={i} style={styles.listItem(true)}>
+                        <span style={styles.listDot(true)}>+</span>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </>
+                )}
+                <div style={styles.toggle}>{isOpen ? "Скрыть ↑" : "Подробнее ↓"}</div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* CHAT DEMO */}
+      <div id="chat" style={styles.chatWrap}>
+        <div style={styles.sectionHeader}>
+          <div style={styles.badge}>Демо</div>
+          <h2 style={styles.h2}>Поговори с нашим AI</h2>
+          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, marginTop: 10 }}>
+            Это реальный AI-консультант — такого же сделаем для вашего бизнеса
+          </p>
+        </div>
+        <div style={styles.chatBox}>
+          <div style={styles.chatHeader}>
+            <div style={styles.chatAvatar}>🤖</div>
+            <div>
+              <div style={styles.chatName}>Aicore AI-консультант</div>
+              <div style={styles.chatStatus}>● онлайн</div>
+            </div>
+          </div>
+          <div style={styles.messages}>
+            {messages.map((msg, i) => (
+              <div key={i} style={styles.bubble(msg.role === "user")}>
+                {msg.content}
+              </div>
+            ))}
+            {loading && <div style={styles.typing}>печатает...</div>}
+            <div ref={chatEndRef} />
+          </div>
+          <div style={styles.inputRow}>
+            <input
+              style={styles.input}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              placeholder="Напишите сообщение..."
+            />
+            <button style={styles.sendBtn} onClick={sendMessage} disabled={loading}>
+              →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <section style={styles.ctaSection}>
+        <div style={styles.ctaInner}>
+          <h2 style={styles.ctaH2}>Готовы к росту?</h2>
+          <p style={styles.ctaSub}>
+            Обсудим ваш проект и подберём решение под задачи вашего бизнеса. Цена — после понимания задачи.
+          </p>
+          <a href="#chat" style={styles.ctaBtn}>
+            Написать нам
+          </a>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer style={styles.footer}>
+        <div style={styles.logo}>
+          <div style={{ ...styles.logoIcon, width: 26, height: 26, fontSize: 12 }}>A</div>
+          <span style={{ ...styles.logoText, fontSize: 15 }}>Aicore</span>
+        </div>
+        <div style={styles.footerNote}>© 2025 Aicore. All rights reserved.</div>
+      </footer>
+    </div>
+  );
+}
