@@ -1,0 +1,63 @@
+import { siteConfig } from "@/data/siteConfig";
+import Reveal from "./Reveal";
+import styles from "./CTA.module.css";
+
+export default function CTA() {
+  return (
+    <section id="contact" className={styles.section}>
+      <Reveal>
+        <div className={styles.inner}>
+          <h2 className={styles.title}>Готовы к росту?</h2>
+          <p className={styles.sub}>
+            Обсудим ваш проект и подберём решение под задачи бизнеса. Напишите
+            нам — ответим в течение часа и вместе найдём точку роста.
+          </p>
+          <div className={styles.buttons}>
+            <a
+              className={styles.primary}
+              href={siteConfig.contacts.telegram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <TelegramIcon /> Написать в Telegram
+            </a>
+            <a className={styles.secondary} href={siteConfig.contacts.email.url}>
+              <MailIcon /> {siteConfig.contacts.email.address}
+            </a>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function TelegramIcon() {
+  return (
+    <svg
+      className={styles.icon}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" />
+    </svg>
+  );
+}
+
+function MailIcon() {
+  return (
+    <svg
+      className={styles.icon}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m22 7-10 5L2 7" />
+    </svg>
+  );
+}

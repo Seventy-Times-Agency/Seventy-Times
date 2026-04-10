@@ -1,0 +1,109 @@
+.section {
+  padding: 60px 32px 100px;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.inner {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 72px 48px;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(ellipse at top, rgba(124, 58, 237, 0.18), transparent 60%),
+    rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  text-align: center;
+  overflow: hidden;
+}
+
+.inner::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(168, 85, 247, 0.8),
+    transparent
+  );
+}
+
+.title {
+  font-size: clamp(30px, 4.5vw, 46px);
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  margin: 0 0 16px;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sub {
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto 36px;
+}
+
+.buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 30px;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: var(--shadow-glow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 50px -10px var(--brand-glow);
+}
+
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 30px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 15px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-strong);
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 560px) {
+  .inner {
+    padding: 48px 24px;
+  }
+}

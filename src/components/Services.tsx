@@ -1,0 +1,122 @@
+"use client";
+
+import { useState, type MouseEvent } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { SERVICES, type Service } from "@/data/services";
+import Reveal from "./Reveal";
+import styles from "./Services.module.css";
+
+export default function Services() {
+  const [openKey, setOpenKey] = useState<string | null>(null);
+
+  return (
+    <section id="services" className={styles.section}>
+      <Reveal>
+        <div className={styles.header}>
+          <div className={styles.badge}>Услуги</div>
+          <h2 className={styles.title}>Что мы делаем</h2>
+          <p className={styles.subtitle}>
+            Три направления, которые вместе превращают бизнес в машину роста.
+            Нажмите на карточку, чтобы увидеть детали.
+          </p>
+        </div>
+      </Reveal>
+
+      <div className={styles.grid}>
+        {SERVICES.map((service, i) => (
+          <Reveal key={service.key} delay={i * 0.08}>
+            <ServiceCard
+              service={service}
+              isOpen={openKey === service.key}
+              onToggle={() =>
+                setOpenKey((prev) => (prev === service.key ? null : service.key))
+              }
+            />
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ServiceCard({
+  service,
+  isOpen,
+  onToggle,
+}: {
+  service: Service;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  const handleMove = (e: MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    e.currentTarget.style.setProperty("--mx", `${x}%`);
+    e.currentTarget.style.setProperty("--my", `${y}%`);
+  };
+
+  return (
+    <div
+      className={`${styles.card} ${isOpen ? styles.cardOpen : ""}`}
+      onClick={onToggle}
+      onMouseMove={handleMove}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onToggle();
+        }
+      }}
+    >
+      <div className={styles.icon}>{service.icon}</div>
+      <h3 className={styles.cardTitle}>{service.title}</h3>
+      <p className={styles.tagline}>{service.tagline}</p>
+      {service.note && <span className={styles.note}>{service.note}</span>}
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            key="content"
+            className={styles.details}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
+          >
+            <div className={styles.detailsInner}>
+              <div className={styles.divider} />
+              <div className={styles.listLabel}>Что входит</div>
+              <ul className={styles.list}>
+                {service.includes.map((item) => (
+                  <li key={item} className={styles.listItem}>
+                    <span className={styles.bullet}>▸</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className={styles.divider} />
+              <div className={styles.listLabel}>✦ Можно добавить</div>
+              <ul className={styles.list}>
+                {service.addons.map((item) => (
+                  <li key={item} className={`${styles.listItem} ${styles.muted}`}>
+                    <span className={`${styles.bullet} ${styles.bulletMuted}`}>
+                      +
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className={styles.toggle}>
+        {isOpen ? "Скрыть ↑" : "Подробнее ↓"}
+      </div>
+    </div>
+  );
+}

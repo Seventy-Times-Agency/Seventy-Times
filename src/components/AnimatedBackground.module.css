@@ -1,0 +1,65 @@
+.wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at top, #0f0820 0%, var(--bg-0) 60%);
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124, 58, 237, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+.orbA {
+  top: -10%;
+  left: -10%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+  animation: float 22s ease-in-out infinite;
+}
+
+.orbB {
+  top: 30%;
+  right: -15%;
+  width: 620px;
+  height: 620px;
+  background: radial-gradient(circle, #22d3ee 0%, transparent 70%);
+  opacity: 0.28;
+  animation: floatSlow 28s ease-in-out infinite;
+}
+
+.orbC {
+  bottom: -15%;
+  left: 30%;
+  width: 580px;
+  height: 580px;
+  background: radial-gradient(circle, #ec4899 0%, transparent 70%);
+  opacity: 0.22;
+  animation: float 35s ease-in-out infinite reverse;
+}
+
+.noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+}
