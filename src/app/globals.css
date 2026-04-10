@@ -1,28 +1,29 @@
 :root {
-  /* ── Monochrome editorial palette ───────────────────────── */
-  --black: #0a0a0a;
+  /* ── Monochrome editorial palette — graphite, not pure black ── */
+  --black: #16161b;
   --black-pure: #000000;
-  --surface: #111113;
-  --surface-2: #16161a;
-  --surface-3: #1c1c22;
+  --bg-deep: #101015;
+  --surface: #1c1c22;
+  --surface-2: #23232a;
+  --surface-3: #2c2c34;
 
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.16);
-  --line-hi: rgba(255, 255, 255, 0.32);
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.2);
+  --line-hi: rgba(255, 255, 255, 0.36);
 
   --white: #ffffff;
   --text: #ffffff;
-  --text-muted: #a8a8ad;
-  --text-dim: #6b6b6c; /* Dove Grey */
-  --text-faint: rgba(255, 255, 255, 0.28);
+  --text-muted: #b4b4b9;
+  --text-dim: #86868c; /* lighter dove grey */
+  --text-faint: rgba(255, 255, 255, 0.3);
 
   /* One restrained accent — kept for status indicators */
   --accent-green: #4ade80;
 
   /* Effects */
-  --gradient-text: linear-gradient(180deg, #ffffff 0%, #a8a8ad 100%);
-  --shadow-xl: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
-  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+  --gradient-text: linear-gradient(180deg, #ffffff 0%, #b4b4b9 100%);
+  --shadow-xl: 0 40px 100px -20px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.45);
 
   /* Layout */
   --radius-xs: 6px;
@@ -155,6 +156,27 @@ textarea {
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmerSweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Reusable shimmer text — runs on any element it's applied to */
+.shimmer {
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0.95) 80%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerSweep 6s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

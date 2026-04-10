@@ -13,11 +13,14 @@ export default function Nav() {
         <a href="#services" className={styles.link}>
           Услуги
         </a>
+        <a href="#process" className={styles.link}>
+          Процесс
+        </a>
         <a href="#chat" className={styles.link}>
           AI-демо
         </a>
-        <a href="#contact" className={styles.link}>
-          Контакты
+        <a href="#faq" className={styles.link}>
+          FAQ
         </a>
       </div>
 

@@ -5,27 +5,27 @@
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, #1a1a1d 0%, var(--black) 60%),
+    radial-gradient(ellipse 80% 60% at 50% 0%, #24242c 0%, var(--black) 55%),
     var(--black);
 }
 
-/* Ultra-subtle architectural grid */
+/* Architectural grid — slightly brighter */
 .grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 80px 80px;
   mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 80%);
   -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 80%);
 }
 
-/* Dim grey glow that drifts very slowly */
+/* Brighter grey glows that drift slowly */
 .glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(120px);
+  filter: blur(130px);
   will-change: transform;
 }
 
@@ -34,7 +34,7 @@
   left: 20%;
   width: 720px;
   height: 720px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.13) 0%, transparent 70%);
   animation: drift 28s ease-in-out infinite;
 }
 
@@ -43,7 +43,7 @@
   right: 10%;
   width: 680px;
   height: 680px;
-  background: radial-gradient(circle, rgba(168, 168, 173, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(200, 200, 210, 0.1) 0%, transparent 70%);
   animation: drift 36s ease-in-out infinite reverse;
 }
 

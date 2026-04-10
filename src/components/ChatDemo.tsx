@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "./Reveal";
+import AnimatedText from "./AnimatedText";
 import styles from "./ChatDemo.module.css";
 
 type Message = {
@@ -81,19 +82,27 @@ export default function ChatDemo() {
   return (
     <section id="chat" className={styles.section}>
       <div className={styles.layout}>
-        <Reveal>
-          <div className={styles.intro}>
+        <div className={styles.intro}>
+          <Reveal>
             <span className="eyebrow">— Live Demo / Claude</span>
-            <h2 className={styles.title}>
-              Поговори{" "}
-              <span className={styles.titleItalic}>с нашим</span>
-              <br />
-              AI.
-            </h2>
+          </Reveal>
+          <h2 className={styles.title}>
+            <AnimatedText
+              stagger={0.1}
+              words={[
+                "Поговори",
+                { text: "с нашим", className: styles.titleItalic },
+                "AI.",
+              ]}
+            />
+          </h2>
+          <Reveal delay={0.2}>
             <p className={styles.lead}>
               Это живой консультант на Claude. Такого же — обученного на ваших
               материалах — мы ставим вам на сайт, в Telegram или Instagram.
             </p>
+          </Reveal>
+          <Reveal delay={0.3}>
             <div className={styles.bullets}>
               {BULLETS.map((b) => (
                 <div key={b} className={styles.bullet}>
@@ -102,8 +111,8 @@ export default function ChatDemo() {
                 </div>
               ))}
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
 
         <Reveal delay={0.1}>
           <div className={styles.box}>

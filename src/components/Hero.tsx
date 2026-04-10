@@ -1,17 +1,18 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import AnimatedText from "./AnimatedText";
 import styles from "./Hero.module.css";
 
 const container: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.15 },
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
   },
 };
 
 const item: Variants = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
@@ -46,17 +47,27 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Massive editorial title */}
-        <motion.h1 variants={item} className={styles.title}>
+        {/* Massive editorial title with mask-reveal animation */}
+        <h1 className={styles.title}>
           <span className={styles.titleBlock}>
-            <span className={styles.titleRow}>Автоматизируем</span>
             <span className={styles.titleRow}>
-              <span className={styles.titleOutline}>рост</span>{" "}
-              <span className={styles.titleAccent}>вашего</span>
+              <AnimatedText immediate delay={0.25} words={["Автоматизируем"]} />
             </span>
-            <span className={styles.titleRow}>бизнеса.</span>
+            <span className={styles.titleRow}>
+              <AnimatedText
+                immediate
+                delay={0.35}
+                words={[
+                  { text: "рост", className: styles.titleOutline },
+                  { text: "вашего", className: "shimmer" },
+                ]}
+              />
+            </span>
+            <span className={styles.titleRow}>
+              <AnimatedText immediate delay={0.55} words={["бизнеса."]} />
+            </span>
           </span>
-        </motion.h1>
+        </h1>
 
         {/* Sub + CTAs */}
         <motion.div variants={item} className={styles.grid}>

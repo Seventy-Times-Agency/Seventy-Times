@@ -4,6 +4,7 @@ import { useState, type MouseEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { SERVICES, type Service } from "@/data/services";
 import Reveal from "./Reveal";
+import AnimatedText from "./AnimatedText";
 import styles from "./Services.module.css";
 
 export default function Services() {
@@ -11,22 +12,30 @@ export default function Services() {
 
   return (
     <section id="services" className={styles.section}>
-      <Reveal>
-        <div className={styles.header}>
-          <div className={styles.headerLeft}>
+      <div className={styles.header}>
+        <div className={styles.headerLeft}>
+          <Reveal>
             <span className="eyebrow">— Services / 2026</span>
-            <h2 className={styles.title}>
-              Что мы <span className={styles.titleItalic}>делаем</span>
-            </h2>
-          </div>
-          <div className={styles.headerRight}>
+          </Reveal>
+          <h2 className={styles.title}>
+            <AnimatedText
+              words={[
+                "Что",
+                "мы",
+                { text: "делаем", className: styles.titleItalic },
+              ]}
+            />
+          </h2>
+        </div>
+        <div className={styles.headerRight}>
+          <Reveal delay={0.15}>
             <p className={styles.lead}>
               Три направления, которые вместе работают как одна машина роста.
               Нажмите на карточку, чтобы увидеть детали.
             </p>
-          </div>
+          </Reveal>
         </div>
-      </Reveal>
+      </div>
 
       <div className={styles.grid}>
         {SERVICES.map((service, i) => (

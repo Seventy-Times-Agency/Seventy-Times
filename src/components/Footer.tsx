@@ -24,6 +24,8 @@ export default function Footer() {
           <a href="#services">Автоматизация</a>
           <a href="#services">AI-боты</a>
           <a href="#chat">AI-демо</a>
+          <a href="#process">Процесс</a>
+          <a href="#faq">FAQ</a>
         </div>
 
         <div className={styles.col}>

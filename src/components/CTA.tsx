@@ -1,5 +1,6 @@
 import { siteConfig } from "@/data/siteConfig";
 import Reveal from "./Reveal";
+import AnimatedText from "./AnimatedText";
 import styles from "./CTA.module.css";
 
 export default function CTA() {
@@ -13,7 +14,14 @@ export default function CTA() {
           </div>
 
           <h2 className={styles.title}>
-            Готовы <span className={styles.titleItalic}>к росту</span>?
+            <AnimatedText
+              stagger={0.12}
+              words={[
+                "Готовы",
+                { text: "к росту", className: styles.titleItalic },
+                "?",
+              ]}
+            />
           </h2>
 
           <p className={styles.sub}>
