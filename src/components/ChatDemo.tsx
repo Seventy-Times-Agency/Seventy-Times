@@ -13,8 +13,14 @@ type Message = {
 const INITIAL_MESSAGE: Message = {
   role: "assistant",
   content:
-    "Привет! 👋 Я AI-консультант Aicore.\n\nРасскажи немного о своём бизнесе — подберём решение под твои задачи.",
+    "Привет 👋  Я AI-консультант Aicore.\n\nРасскажи немного о своём бизнесе — подберём решение под твои задачи.",
 };
+
+const BULLETS = [
+  "Обучен на материалах и тон-оф-войсе бренда",
+  "Отвечает на любом языке, работает 24/7",
+  "Собирает заявки прямо в CRM или Google Sheets",
+];
 
 export default function ChatDemo() {
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
@@ -74,85 +80,99 @@ export default function ChatDemo() {
 
   return (
     <section id="chat" className={styles.section}>
-      <Reveal>
-        <div className={styles.header}>
-          <div className={styles.badge}>Демо</div>
-          <h2 className={styles.title}>Поговори с нашим AI</h2>
-          <p className={styles.subtitle}>
-            Это живой AI-консультант на Claude — такого же сделаем под твой
-            бизнес, обученного на твоих материалах.
-          </p>
-        </div>
-      </Reveal>
-
-      <Reveal delay={0.1}>
-        <div className={styles.box}>
-          <div className={styles.chatHeader}>
-            <div className={styles.avatar}>🤖</div>
-            <div className={styles.chatMeta}>
-              <span className={styles.chatName}>Aicore AI-консультант</span>
-              <span className={styles.chatStatus}>
-                <span className={styles.statusDot} /> онлайн
-              </span>
+      <div className={styles.layout}>
+        <Reveal>
+          <div className={styles.intro}>
+            <span className="eyebrow">— Live Demo / Claude</span>
+            <h2 className={styles.title}>
+              Поговори{" "}
+              <span className={styles.titleItalic}>с нашим</span>
+              <br />
+              AI.
+            </h2>
+            <p className={styles.lead}>
+              Это живой консультант на Claude. Такого же — обученного на ваших
+              материалах — мы ставим вам на сайт, в Telegram или Instagram.
+            </p>
+            <div className={styles.bullets}>
+              {BULLETS.map((b) => (
+                <div key={b} className={styles.bullet}>
+                  <span className={styles.bulletIcon}>→</span>
+                  <span>{b}</span>
+                </div>
+              ))}
             </div>
           </div>
+        </Reveal>
 
-          <div className={styles.messages}>
-            <AnimatePresence initial={false}>
-              {messages.map((msg, i) => (
-                <motion.div
-                  key={i}
-                  layout
-                  initial={{ opacity: 0, y: 12, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                  className={`${styles.bubble} ${
-                    msg.role === "user" ? styles.userBubble : styles.botBubble
-                  }`}
-                >
-                  {msg.content}
-                </motion.div>
-              ))}
-              {loading && (
-                <motion.div
-                  key="typing"
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className={styles.typing}
-                  aria-label="AI печатает"
-                >
-                  <span className={styles.typingDot} />
-                  <span className={styles.typingDot} />
-                  <span className={styles.typingDot} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-            <div ref={endRef} />
-          </div>
+        <Reveal delay={0.1}>
+          <div className={styles.box}>
+            <div className={styles.chatHeader}>
+              <div className={styles.avatar}>A</div>
+              <div className={styles.chatMeta}>
+                <span className={styles.chatName}>Aicore · AI-консультант</span>
+                <span className={styles.chatStatus}>онлайн · отвечает сразу</span>
+              </div>
+              <span className={styles.chatBadge}>Live</span>
+            </div>
 
-          <div className={styles.inputRow}>
-            <input
-              ref={inputRef}
-              className={styles.input}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={onKeyDown}
-              placeholder="Напишите сообщение..."
-              maxLength={2000}
-              aria-label="Сообщение"
-            />
-            <button
-              className={styles.sendBtn}
-              onClick={sendMessage}
-              disabled={loading || !input.trim()}
-              aria-label="Отправить"
-            >
-              →
-            </button>
+            <div className={styles.messages}>
+              <AnimatePresence initial={false}>
+                {messages.map((msg, i) => (
+                  <motion.div
+                    key={i}
+                    layout
+                    initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.28, ease: "easeOut" }}
+                    className={`${styles.bubble} ${
+                      msg.role === "user" ? styles.userBubble : styles.botBubble
+                    }`}
+                  >
+                    {msg.content}
+                  </motion.div>
+                ))}
+                {loading && (
+                  <motion.div
+                    key="typing"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className={styles.typing}
+                    aria-label="AI печатает"
+                  >
+                    <span className={styles.typingDot} />
+                    <span className={styles.typingDot} />
+                    <span className={styles.typingDot} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <div ref={endRef} />
+            </div>
+
+            <div className={styles.inputRow}>
+              <input
+                ref={inputRef}
+                className={styles.input}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={onKeyDown}
+                placeholder="Напишите сообщение..."
+                maxLength={2000}
+                aria-label="Сообщение"
+              />
+              <button
+                className={styles.sendBtn}
+                onClick={sendMessage}
+                disabled={loading || !input.trim()}
+                aria-label="Отправить"
+              >
+                →
+              </button>
+            </div>
           </div>
-        </div>
-      </Reveal>
+        </Reveal>
+      </div>
     </section>
   );
 }

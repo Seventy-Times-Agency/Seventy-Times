@@ -7,11 +7,21 @@ export default function CTA() {
     <section id="contact" className={styles.section}>
       <Reveal>
         <div className={styles.inner}>
-          <h2 className={styles.title}>Готовы к росту?</h2>
+          <div className={styles.eyebrowRow}>
+            <span className="eyebrow">— Get in touch</span>
+            <span className={styles.eyebrowEnd}>Aicore / 2026 →</span>
+          </div>
+
+          <h2 className={styles.title}>
+            Готовы <span className={styles.titleItalic}>к росту</span>?
+          </h2>
+
           <p className={styles.sub}>
-            Обсудим ваш проект и подберём решение под задачи бизнеса. Напишите
-            нам — ответим в течение часа и вместе найдём точку роста.
+            Напишите в Telegram или на почту — обсудим задачу, расскажем как
+            можем помочь, и в течение часа дадим первые идеи. Без обязательств,
+            без воды.
           </p>
+
           <div className={styles.buttons}>
             <a
               className={styles.primary}
@@ -19,11 +29,19 @@ export default function CTA() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <TelegramIcon /> Написать в Telegram
+              <TelegramIcon />
+              Написать в Telegram
+              <span aria-hidden="true">→</span>
             </a>
             <a className={styles.secondary} href={siteConfig.contacts.email.url}>
-              <MailIcon /> {siteConfig.contacts.email.address}
+              <MailIcon />
+              {siteConfig.contacts.email.address}
             </a>
+          </div>
+
+          <div className={styles.metaBottom}>
+            <span>Aicore Studio · AI × Marketing</span>
+            <span>Принимаем проекты · Алматы → Мир</span>
           </div>
         </div>
       </Reveal>

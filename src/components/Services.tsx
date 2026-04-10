@@ -13,12 +13,18 @@ export default function Services() {
     <section id="services" className={styles.section}>
       <Reveal>
         <div className={styles.header}>
-          <div className={styles.badge}>Услуги</div>
-          <h2 className={styles.title}>Что мы делаем</h2>
-          <p className={styles.subtitle}>
-            Три направления, которые вместе превращают бизнес в машину роста.
-            Нажмите на карточку, чтобы увидеть детали.
-          </p>
+          <div className={styles.headerLeft}>
+            <span className="eyebrow">— Services / 2026</span>
+            <h2 className={styles.title}>
+              Что мы <span className={styles.titleItalic}>делаем</span>
+            </h2>
+          </div>
+          <div className={styles.headerRight}>
+            <p className={styles.lead}>
+              Три направления, которые вместе работают как одна машина роста.
+              Нажмите на карточку, чтобы увидеть детали.
+            </p>
+          </div>
         </div>
       </Reveal>
 
@@ -26,6 +32,7 @@ export default function Services() {
         {SERVICES.map((service, i) => (
           <Reveal key={service.key} delay={i * 0.08}>
             <ServiceCard
+              index={i + 1}
               service={service}
               isOpen={openKey === service.key}
               onToggle={() =>
@@ -40,10 +47,12 @@ export default function Services() {
 }
 
 function ServiceCard({
+  index,
   service,
   isOpen,
   onToggle,
 }: {
+  index: number;
   service: Service;
   isOpen: boolean;
   onToggle: () => void;
@@ -55,6 +64,8 @@ function ServiceCard({
     e.currentTarget.style.setProperty("--mx", `${x}%`);
     e.currentTarget.style.setProperty("--my", `${y}%`);
   };
+
+  const num = String(index).padStart(2, "0");
 
   return (
     <div
@@ -69,8 +80,13 @@ function ServiceCard({
           onToggle();
         }
       }}
+      aria-expanded={isOpen}
     >
-      <div className={styles.icon}>{service.icon}</div>
+      <div className={styles.number}>
+        <span>/ {num}</span>
+        <span className={styles.icon}>{service.icon}</span>
+      </div>
+
       <h3 className={styles.cardTitle}>{service.title}</h3>
       <p className={styles.tagline}>{service.tagline}</p>
       {service.note && <span className={styles.note}>{service.note}</span>}
@@ -83,7 +99,7 @@ function ServiceCard({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
+            transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}
           >
             <div className={styles.detailsInner}>
               <div className={styles.divider} />
@@ -91,14 +107,14 @@ function ServiceCard({
               <ul className={styles.list}>
                 {service.includes.map((item) => (
                   <li key={item} className={styles.listItem}>
-                    <span className={styles.bullet}>▸</span>
+                    <span className={styles.bullet}>→</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
 
               <div className={styles.divider} />
-              <div className={styles.listLabel}>✦ Можно добавить</div>
+              <div className={styles.listLabel}>+ Можно добавить</div>
               <ul className={styles.list}>
                 {service.addons.map((item) => (
                   <li key={item} className={`${styles.listItem} ${styles.muted}`}>
@@ -114,8 +130,11 @@ function ServiceCard({
         )}
       </AnimatePresence>
 
-      <div className={styles.toggle}>
-        {isOpen ? "Скрыть ↑" : "Подробнее ↓"}
+      <div className={styles.toggleRow}>
+        <span>{isOpen ? "Свернуть" : "Подробнее"}</span>
+        <span className={styles.toggleArrow} aria-hidden="true">
+          ↓
+        </span>
       </div>
     </div>
   );

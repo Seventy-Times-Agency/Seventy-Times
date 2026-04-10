@@ -3,19 +3,63 @@ import styles from "./Footer.module.css";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+
   return (
     <footer className={styles.footer}>
-      <div className={styles.logo}>
-        <span className={styles.logoIcon}>A</span>
-        <span>{siteConfig.name}</span>
+      <div className={styles.top}>
+        <div className={styles.brand}>
+          <span className={styles.logo}>
+            <span className={styles.logoMark}>A</span>
+            <span>{siteConfig.name.toLowerCase()}</span>
+          </span>
+          <p className={styles.brandText}>
+            {siteConfig.description} Команда строит системы, которые приводят
+            клиентов на автопилоте.
+          </p>
+        </div>
+
+        <div className={styles.col}>
+          <span className={styles.colTitle}>Услуги</span>
+          <a href="#services">Таргет</a>
+          <a href="#services">Автоматизация</a>
+          <a href="#services">AI-боты</a>
+          <a href="#chat">AI-демо</a>
+        </div>
+
+        <div className={styles.col}>
+          <span className={styles.colTitle}>Контакты</span>
+          <a
+            href={siteConfig.contacts.telegram.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Telegram
+          </a>
+          <a href={siteConfig.contacts.email.url}>
+            {siteConfig.contacts.email.address}
+          </a>
+          <span>Алматы → Мир</span>
+        </div>
+
+        <div className={styles.col}>
+          <span className={styles.colTitle}>Компания</span>
+          <a href="#top">О нас</a>
+          <a href="#contact">Сотрудничество</a>
+          <span>Принимаем проекты</span>
+        </div>
       </div>
-      <div className={styles.links}>
-        <a href={siteConfig.contacts.telegram.url} target="_blank" rel="noopener noreferrer">
-          Telegram
-        </a>
-        <a href={siteConfig.contacts.email.url}>Email</a>
+
+      <div className={styles.wordmark} aria-hidden="true">
+        aicore®
       </div>
-      <div className={styles.note}>© {year} {siteConfig.name}. All rights reserved.</div>
+
+      <div className={styles.bottom}>
+        <span>© {year} {siteConfig.name} · All rights reserved</span>
+        <div className={styles.bottomLinks}>
+          <a href="#top">Наверх ↑</a>
+          <a href="#contact">Связаться</a>
+        </div>
+      </div>
     </footer>
   );
 }
