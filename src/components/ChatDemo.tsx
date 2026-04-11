@@ -15,11 +15,11 @@ type Message = {
 const INITIAL_MESSAGE: Message = {
   role: "assistant",
   content:
-    "Привет 👋  Я AI-консультант IAA agency.\n\nРасскажи немного о своём бизнесе — подберём решение под твои задачи.",
+    "Привет 👋 Меня зовут Венеса, я AI-консультант IAA agency.\n\nРасскажи немного о своём бизнесе — подберу решение под твои задачи.",
 };
 
 const BULLETS = [
-  "Обучен на материалах и тон-оф-войсе бренда",
+  "Венеса обучена на материалах и тон-оф-войсе бренда",
   "Отвечает на любом языке, работает 24/7",
   "Собирает заявки прямо в CRM или Google Sheets",
 ];
@@ -87,22 +87,23 @@ export default function ChatDemo() {
       <div className={styles.layout}>
         <div className={styles.intro}>
           <Reveal>
-            <span className="eyebrow">— Live Demo / Claude</span>
+            <span className="eyebrow">— Meet Venesa / Live AI</span>
           </Reveal>
           <h2 className={styles.title}>
             <AnimatedText
               stagger={0.1}
               words={[
                 "Поговори",
-                { text: "с нашим", className: styles.titleItalic },
-                "AI.",
+                "с",
+                { text: "Венесой.", className: styles.titleItalic },
               ]}
             />
           </h2>
           <Reveal delay={0.2}>
             <p className={styles.lead}>
-              Это живой консультант на Claude. Такого же — обученного на ваших
-              материалах — мы ставим вам на сайт, в Telegram или Instagram.
+              Венеса — наш AI-консультант на Claude. Такую же — обученную на
+              ваших материалах — мы поставим вам на сайт, в Telegram или
+              Instagram.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
@@ -120,9 +121,18 @@ export default function ChatDemo() {
         <Reveal delay={0.1}>
           <div className={styles.box}>
             <div className={styles.chatHeader}>
-              <div className={styles.avatar}>i</div>
+              <div className={styles.avatar}>
+                <div className={styles.avatarInner}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/venesa.jpg"
+                    alt="Венеса"
+                    className={styles.avatarImage}
+                  />
+                </div>
+              </div>
               <div className={styles.chatMeta}>
-                <span className={styles.chatName}>IAA · AI-консультант</span>
+                <span className={styles.chatName}>Венеса · AI-консультант</span>
                 <span className={styles.chatStatus}>онлайн · отвечает сразу</span>
               </div>
               <span className={styles.chatBadge}>Live</span>

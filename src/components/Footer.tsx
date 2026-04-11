@@ -25,7 +25,7 @@ export default function Footer() {
           <a href="#services">Ads / Таргет</a>
           <a href="#services">Automation</a>
           <a href="#services">AI-боты</a>
-          <a href="#chat">AI-демо</a>
+          <a href="#chat">Венеса</a>
           <a href="#process">Процесс</a>
           <a href="#faq">FAQ</a>
         </div>

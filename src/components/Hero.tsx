@@ -85,7 +85,7 @@ export default function Hero() {
           <div className={styles.actions}>
             <div className={styles.actionsRow}>
               <a href="#chat" className={styles.primary}>
-                Поговорить с AI
+                Поговорить с Венесой
                 <span className={styles.arrow} aria-hidden="true">
                   →
                 </span>

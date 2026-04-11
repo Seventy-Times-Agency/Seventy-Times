@@ -19,7 +19,7 @@ export default function Nav() {
           Процесс
         </a>
         <a href="#chat" className={styles.link}>
-          AI-демо
+          Венеса
         </a>
         <a href="#faq" className={styles.link}>
           FAQ
