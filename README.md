@@ -31,9 +31,26 @@ npm run dev
 | Что | Где |
 |---|---|
 | Услуги и их содержимое | `src/data/services.ts` |
+| Шаги процесса | `src/data/process.ts` |
+| Отзывы (плейсхолдеры) | `src/data/testimonials.ts` |
+| FAQ | `src/data/faq.ts` |
 | Контакты (Telegram, email) | `src/data/siteConfig.ts` |
-| Системный промпт AI-консультанта | `src/lib/systemPrompt.ts` |
+| Системный промпт Венесы | `src/lib/systemPrompt.ts` |
 | Модель Claude | env `ANTHROPIC_MODEL` или `src/app/api/chat/route.ts` |
+
+## Форма заявки
+
+Любой элемент с `href="#lead"` открывает модалку с формой (имя,
+контакт, бизнес, задача). Модалка смонтирована глобально в
+`src/app/layout.tsx`, триггеры сейчас стоят в `Nav`, `Hero` и `CTA`.
+
+Обработчик отправки — `src/app/api/lead/route.ts`:
+
+- Валидирует и урезает поля.
+- Всегда пишет заявку в консоль сервера (видно в **Vercel → Logs**).
+- Если в env заданы `TELEGRAM_BOT_TOKEN` и `TELEGRAM_CHAT_ID` —
+  дополнительно отправляет форматированное сообщение в указанный
+  Telegram-чат. Подробности настройки см. в `.env.example`.
 
 ## Структура
 

@@ -5,6 +5,7 @@ import AnimatedBackground from "@/components/AnimatedBackground";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageIntro from "@/components/PageIntro";
+import LeadForm from "@/components/LeadForm";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -71,6 +72,7 @@ export default function RootLayout({
         <AnimatedBackground />
         <ScrollProgress />
         {children}
+        <LeadForm />
       </body>
     </html>
   );

@@ -4,23 +4,22 @@ const ITEMS = [
   "Реклама",
   "Автоматизация",
   "AI",
-  "Telegram",
   "Meta",
   "Google",
   "Воронки",
-  "Аналитика",
+  "Telegram",
   "CRM",
-  "Лендинги",
 ];
 
 /**
- * Single-row CSS-only ticker. No JS scroll listeners, no requestAnimationFrame
- * loops — the animation runs entirely on the compositor via translate3d, so it
- * never causes layout work or repaints. Pauses on hover.
+ * CSS-only ticker. No JavaScript per frame — animation runs on the
+ * GPU compositor via translate3d, and the wrap uses `contain` to
+ * isolate layout/paint so the rest of the page never repaints when
+ * the ticker moves. Pauses on hover via CSS.
  */
 export default function VelocityTicker() {
-  // Render twice for a seamless loop (the second copy fills the gap as the
-  // first slides out, then the keyframe wraps back to 0).
+  // Render twice for a seamless loop — keyframe wraps to 0 when the
+  // first copy slides fully off-screen.
   const doubled = [...ITEMS, ...ITEMS];
 
   return (

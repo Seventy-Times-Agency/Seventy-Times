@@ -123,6 +123,28 @@
   height: 18px;
 }
 
+.emailRow {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
+
+.emailLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+  padding: 10px 0;
+}
+
+.emailLink:hover {
+  color: var(--accent-strong);
+}
+
 /* Bottom editorial meta */
 .metaBottom {
   display: flex;

@@ -93,16 +93,16 @@ export default function Hero() {
           <div className={styles.actions}>
             <div className={styles.actionsRow}>
               <Magnetic strength={0.4}>
-                <a href="#chat" className={styles.primary}>
-                  Поговорить с Венесой
+                <a href="#lead" className={styles.primary}>
+                  Оставить заявку
                   <span className={styles.arrow} aria-hidden="true">
                     →
                   </span>
                 </a>
               </Magnetic>
               <Magnetic strength={0.3}>
-                <a href="#services" className={styles.secondary}>
-                  Услуги
+                <a href="#chat" className={styles.secondary}>
+                  Поговорить с Венесой
                 </a>
               </Magnetic>
             </div>

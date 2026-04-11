@@ -36,23 +36,28 @@ export default function CTA() {
 
           <div className={styles.buttons}>
             <Magnetic strength={0.4}>
+              <a className={styles.primary} href="#lead">
+                Оставить заявку
+                <span aria-hidden="true">→</span>
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.3}>
               <a
-                className={styles.primary}
+                className={styles.secondary}
                 href={siteConfig.contacts.telegram.url}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <TelegramIcon />
-                Написать в Telegram
-                <span aria-hidden="true">→</span>
+                Telegram
               </a>
             </Magnetic>
-            <Magnetic strength={0.3}>
-              <a className={styles.secondary} href={siteConfig.contacts.email.url}>
-                <MailIcon />
-                {siteConfig.contacts.email.address}
-              </a>
-            </Magnetic>
+          </div>
+
+          <div className={styles.emailRow}>
+            <a className={styles.emailLink} href={siteConfig.contacts.email.url}>
+              <MailIcon /> {siteConfig.contacts.email.address}
+            </a>
           </div>
 
           <div className={styles.metaBottom}>

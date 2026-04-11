@@ -5,16 +5,46 @@
   border-bottom: 1px solid var(--line);
   background: rgba(200, 212, 222, 0.018);
   overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  /* Isolate rendering so the rest of the page never paints when the
+     ticker moves. `contain` tells the browser it can skip descendants
+     for layout/style/paint invalidations. */
+  contain: layout paint style;
+  transform: translateZ(0);
+  /* Give the compositor a dedicated layer hint */
+  isolation: isolate;
+}
+
+/* Edge fades via pseudo-elements — much cheaper than mask-image which
+   forces per-frame alpha compositing of the whole wrap. */
+.wrap::before,
+.wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 140px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.wrap::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--black), transparent);
+}
+
+.wrap::after {
+  right: 0;
+  background: linear-gradient(-90deg, var(--black), transparent);
 }
 
 .row {
   display: flex;
   white-space: nowrap;
   width: max-content;
-  animation: tickerScroll 55s linear infinite;
+  animation: tickerScroll 60s linear infinite;
   will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .wrap:hover .row {
@@ -33,22 +63,20 @@
 .item {
   display: inline-flex;
   align-items: center;
-  gap: 56px;
-  padding-right: 56px;
-  font-size: clamp(28px, 3.5vw, 50px);
+  gap: 48px;
+  padding-right: 48px;
+  font-size: clamp(26px, 3vw, 44px);
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   color: var(--text);
   text-transform: uppercase;
-  font-style: italic;
   flex-shrink: 0;
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--accent);
   flex-shrink: 0;
-  box-shadow: 0 0 12px var(--accent-glow);
 }

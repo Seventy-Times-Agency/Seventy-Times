@@ -30,8 +30,8 @@ export default function Nav() {
         <span className={styles.status}>
           <span className={styles.statusDot} /> Принимаем проекты
         </span>
-        <a href="#chat" className={styles.cta}>
-          Начать
+        <a href="#lead" className={styles.cta}>
+          Оставить заявку
           <span className={styles.ctaArrow} aria-hidden="true">
             →
           </span>
