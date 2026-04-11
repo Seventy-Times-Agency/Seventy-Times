@@ -14,7 +14,7 @@ export default function FAQ() {
 
   return (
     <section id="faq" className={styles.section}>
-      <SectionWatermark text="questions" number="/ 04" position="left" />
+      <SectionWatermark text="questions" number="/ 05" position="left" />
 
       <div className={styles.layout}>
         <div className={styles.intro}>

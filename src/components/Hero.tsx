@@ -2,6 +2,8 @@
 
 import { motion, type Variants } from "framer-motion";
 import AnimatedText from "./AnimatedText";
+import Counter from "./Counter";
+import Magnetic from "./Magnetic";
 import styles from "./Hero.module.css";
 
 const container: Variants = {
@@ -20,11 +22,17 @@ const item: Variants = {
   },
 };
 
-const STATS = [
-  { value: "50+", label: "Клиентов" },
-  { value: "24/7", label: "AI-поддержка" },
-  { value: "3×", label: "Рост конверсий" },
-  { value: "2026", label: "Следующий виток" },
+type Stat = {
+  label: string;
+  counter?: { to: number; suffix?: string; prefix?: string };
+  static?: string;
+};
+
+const STATS: Stat[] = [
+  { label: "Клиентов", counter: { to: 50, suffix: "+" } },
+  { label: "AI-поддержка", static: "24/7" },
+  { label: "Рост конверсий", counter: { to: 3, suffix: "×" } },
+  { label: "Следующий виток", static: "2026" },
 ];
 
 export default function Hero() {
@@ -43,10 +51,10 @@ export default function Hero() {
           </span>
           <span className={styles.metaCenter}>
             <span className={styles.metaDot} />
-            Принимаем проекты · 2026
+            Accepting projects · 2026
           </span>
           <span className={styles.metaRight}>
-            Алматы → Мир
+            USA → Worldwide
             <span className={styles.metaLine} />
           </span>
         </motion.div>
@@ -84,15 +92,19 @@ export default function Hero() {
 
           <div className={styles.actions}>
             <div className={styles.actionsRow}>
-              <a href="#chat" className={styles.primary}>
-                Поговорить с Венесой
-                <span className={styles.arrow} aria-hidden="true">
-                  →
-                </span>
-              </a>
-              <a href="#services" className={styles.secondary}>
-                Услуги
-              </a>
+              <Magnetic strength={0.4}>
+                <a href="#chat" className={styles.primary}>
+                  Поговорить с Венесой
+                  <span className={styles.arrow} aria-hidden="true">
+                    →
+                  </span>
+                </a>
+              </Magnetic>
+              <Magnetic strength={0.3}>
+                <a href="#services" className={styles.secondary}>
+                  Услуги
+                </a>
+              </Magnetic>
             </div>
             <span className={styles.hint}>
               Ответ за 10 секунд · Без обязательств
@@ -104,7 +116,17 @@ export default function Hero() {
         <motion.div variants={item} className={styles.stats}>
           {STATS.map((s) => (
             <div key={s.label} className={styles.stat}>
-              <span className={styles.statValue}>{s.value}</span>
+              <span className={styles.statValue}>
+                {s.counter ? (
+                  <Counter
+                    to={s.counter.to}
+                    suffix={s.counter.suffix}
+                    prefix={s.counter.prefix}
+                  />
+                ) : (
+                  s.static
+                )}
+              </span>
               <span className={styles.statLabel}>{s.label}</span>
             </div>
           ))}

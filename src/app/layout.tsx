@@ -4,6 +4,9 @@ import { siteConfig } from "@/data/siteConfig";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import MouseSpotlight from "@/components/MouseSpotlight";
 import ScrollProgress from "@/components/ScrollProgress";
+import SmoothScroll from "@/components/SmoothScroll";
+import CustomCursor from "@/components/CustomCursor";
+import PageIntro from "@/components/PageIntro";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -65,8 +68,11 @@ export default function RootLayout({
   return (
     <html lang="ru" className={manrope.variable}>
       <body>
+        <SmoothScroll />
+        <PageIntro />
         <AnimatedBackground />
         <MouseSpotlight />
+        <CustomCursor />
         <ScrollProgress />
         {children}
       </body>

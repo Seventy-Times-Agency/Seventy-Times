@@ -2,12 +2,13 @@ import { siteConfig } from "@/data/siteConfig";
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
 import SectionWatermark from "./SectionWatermark";
+import Magnetic from "./Magnetic";
 import styles from "./CTA.module.css";
 
 export default function CTA() {
   return (
     <section id="contact" className={styles.section}>
-      <SectionWatermark text="contact" number="/ 05" position="center" />
+      <SectionWatermark text="contact" number="/ 06" position="center" />
 
       <Reveal>
         <div className={styles.inner}>
@@ -34,25 +35,29 @@ export default function CTA() {
           </p>
 
           <div className={styles.buttons}>
-            <a
-              className={styles.primary}
-              href={siteConfig.contacts.telegram.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <TelegramIcon />
-              Написать в Telegram
-              <span aria-hidden="true">→</span>
-            </a>
-            <a className={styles.secondary} href={siteConfig.contacts.email.url}>
-              <MailIcon />
-              {siteConfig.contacts.email.address}
-            </a>
+            <Magnetic strength={0.4}>
+              <a
+                className={styles.primary}
+                href={siteConfig.contacts.telegram.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TelegramIcon />
+                Написать в Telegram
+                <span aria-hidden="true">→</span>
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.3}>
+              <a className={styles.secondary} href={siteConfig.contacts.email.url}>
+                <MailIcon />
+                {siteConfig.contacts.email.address}
+              </a>
+            </Magnetic>
           </div>
 
           <div className={styles.metaBottom}>
             <span>IAA agency · Ads × Automation × AI</span>
-            <span>Принимаем проекты · Алматы → Мир</span>
+            <span>Accepting projects · USA → Worldwide</span>
           </div>
         </div>
       </Reveal>

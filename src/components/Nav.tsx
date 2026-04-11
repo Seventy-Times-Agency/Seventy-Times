@@ -28,7 +28,7 @@ export default function Nav() {
 
       <div className={styles.right}>
         <span className={styles.status}>
-          <span className={styles.statusDot} /> Принимаем проекты
+          <span className={styles.statusDot} /> Accepting projects
         </span>
         <a href="#chat" className={styles.cta}>
           Начать

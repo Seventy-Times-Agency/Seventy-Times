@@ -42,14 +42,14 @@ export default function Footer() {
           <a href={siteConfig.contacts.email.url}>
             {siteConfig.contacts.email.address}
           </a>
-          <span>Алматы → Мир</span>
+          <span>USA → Worldwide</span>
         </div>
 
         <div className={styles.col}>
           <span className={styles.colTitle}>Компания</span>
           <a href="#top">О нас</a>
           <a href="#contact">Сотрудничество</a>
-          <span>Принимаем проекты</span>
+          <span>Accepting projects</span>
         </div>
       </div>
 

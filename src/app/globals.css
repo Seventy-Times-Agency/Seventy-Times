@@ -170,6 +170,19 @@ textarea {
   100% { background-position: -200% 0; }
 }
 
+/* Hide native cursor on hover-capable wide viewports — replaced by CustomCursor */
+@media (hover: hover) and (min-width: 821px) {
+  html,
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  [role="button"] {
+    cursor: none !important;
+  }
+}
+
 /* Reusable shimmer text — runs on any element it's applied to */
 .shimmer {
   background: linear-gradient(

@@ -1,0 +1,38 @@
+.wrap {
+  position: relative;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line-strong) 20%,
+    var(--line-hi) 50%,
+    var(--line-strong) 80%,
+    transparent
+  );
+  transform-origin: center;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    padding: 0 24px;
+  }
+}
