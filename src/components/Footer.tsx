@@ -42,14 +42,14 @@ export default function Footer() {
           <a href={siteConfig.contacts.email.url}>
             {siteConfig.contacts.email.address}
           </a>
-          <span>USA → Worldwide</span>
+          <span>США → Весь мир</span>
         </div>
 
         <div className={styles.col}>
           <span className={styles.colTitle}>Компания</span>
           <a href="#top">О нас</a>
           <a href="#contact">Сотрудничество</a>
-          <span>Accepting projects</span>
+          <span>Принимаем проекты</span>
         </div>
       </div>
 
@@ -59,7 +59,7 @@ export default function Footer() {
       </div>
 
       <div className={styles.bottom}>
-        <span>© {year} {siteConfig.name} · All rights reserved</span>
+        <span>© {year} {siteConfig.name} · Все права защищены</span>
         <div className={styles.bottomLinks}>
           <a href="#top">Наверх ↑</a>
           <a href="#contact">Связаться</a>

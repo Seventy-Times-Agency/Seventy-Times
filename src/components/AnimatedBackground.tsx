@@ -1,34 +1,22 @@
-"use client";
-
-import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./AnimatedBackground.module.css";
 
 /**
- * Layered animated background with scroll-linked parallax.
- * Each layer moves at a different speed to create depth.
+ * Layered background — kept intentionally lightweight:
+ * - static gradient + grid (zero per-frame work)
+ * - two blurred glows that drift via cheap CSS keyframes
+ * - one thin top highlight line
+ *
+ * No JS scroll listeners, no parallax transforms, no noise overlay,
+ * no mix-blend modes — everything stays on the compositor so the
+ * page never repaints because of the background.
  */
 export default function AnimatedBackground() {
-  const { scrollY } = useScroll();
-
-  // Different speeds for each layer — slower layers feel further away
-  const yGrid = useTransform(scrollY, [0, 3000], [0, -120]);
-  const yGlowA = useTransform(scrollY, [0, 3000], [0, -360]);
-  const yGlowB = useTransform(scrollY, [0, 3000], [0, -180]);
-  const yNoise = useTransform(scrollY, [0, 3000], [0, -60]);
-
   return (
     <div className={styles.wrap} aria-hidden="true">
       <div className={styles.topLight} />
-      <motion.div className={styles.grid} style={{ y: yGrid }} />
-      <motion.div
-        className={`${styles.glow} ${styles.glowA}`}
-        style={{ y: yGlowA }}
-      />
-      <motion.div
-        className={`${styles.glow} ${styles.glowB}`}
-        style={{ y: yGlowB }}
-      />
-      <motion.div className={styles.noise} style={{ y: yNoise }} />
+      <div className={styles.grid} />
+      <div className={`${styles.glow} ${styles.glowA}`} />
+      <div className={`${styles.glow} ${styles.glowB}`} />
     </div>
   );
 }

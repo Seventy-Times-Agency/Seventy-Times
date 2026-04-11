@@ -18,12 +18,12 @@ export default function Testimonials() {
 
   return (
     <section id="testimonials" className={styles.section}>
-      <SectionWatermark text="voices" number="/ 04" position="right" />
+      <SectionWatermark text="отзывы" number="/ 04" position="right" />
 
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <Reveal>
-            <span className="eyebrow">— Voices / Clients</span>
+            <span className="eyebrow">— Отзывы / Клиенты</span>
           </Reveal>
           <h2 className={styles.title}>
             <AnimatedText

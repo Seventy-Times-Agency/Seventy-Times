@@ -47,14 +47,14 @@ export default function Hero() {
         <motion.div variants={item} className={styles.meta}>
           <span className={styles.metaLeft}>
             <span className={styles.metaLine} />
-            Ads · Automation · AI
+            Реклама · Автоматизация · AI
           </span>
           <span className={styles.metaCenter}>
             <span className={styles.metaDot} />
-            Accepting projects · 2026
+            Принимаем проекты · 2026
           </span>
           <span className={styles.metaRight}>
-            USA → Worldwide
+            США → Весь мир
             <span className={styles.metaLine} />
           </span>
         </motion.div>

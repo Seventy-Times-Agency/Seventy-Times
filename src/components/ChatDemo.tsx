@@ -82,12 +82,12 @@ export default function ChatDemo() {
 
   return (
     <section id="chat" className={styles.section}>
-      <SectionWatermark text="live demo" number="/ 03" position="right" />
+      <SectionWatermark text="демо" number="/ 03" position="right" />
 
       <div className={styles.layout}>
         <div className={styles.intro}>
           <Reveal>
-            <span className="eyebrow">— Meet Venesa / Live AI</span>
+            <span className="eyebrow">— Знакомьтесь / Венеса</span>
           </Reveal>
           <h2 className={styles.title}>
             <AnimatedText
@@ -135,7 +135,7 @@ export default function ChatDemo() {
                 <span className={styles.chatName}>Венеса · AI-консультант</span>
                 <span className={styles.chatStatus}>онлайн · отвечает сразу</span>
               </div>
-              <span className={styles.chatBadge}>Live</span>
+              <span className={styles.chatBadge}>В сети</span>
             </div>
 
             <div className={styles.messages}>

@@ -2,10 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import { siteConfig } from "@/data/siteConfig";
 import AnimatedBackground from "@/components/AnimatedBackground";
-import MouseSpotlight from "@/components/MouseSpotlight";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
-import CustomCursor from "@/components/CustomCursor";
 import PageIntro from "@/components/PageIntro";
 import "./globals.css";
 
@@ -71,8 +69,6 @@ export default function RootLayout({
         <SmoothScroll />
         <PageIntro />
         <AnimatedBackground />
-        <MouseSpotlight />
-        <CustomCursor />
         <ScrollProgress />
         {children}
       </body>

@@ -14,12 +14,12 @@ export default function FAQ() {
 
   return (
     <section id="faq" className={styles.section}>
-      <SectionWatermark text="questions" number="/ 05" position="left" />
+      <SectionWatermark text="вопросы" number="/ 05" position="left" />
 
       <div className={styles.layout}>
         <div className={styles.intro}>
           <Reveal>
-            <span className="eyebrow">— FAQ / Questions</span>
+            <span className="eyebrow">— Частые вопросы</span>
           </Reveal>
           <h2 className={styles.title}>
             <AnimatedText

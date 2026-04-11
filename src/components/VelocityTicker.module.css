@@ -1,6 +1,6 @@
 .wrap {
   position: relative;
-  padding: 32px 0;
+  padding: 36px 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   background: rgba(200, 212, 222, 0.018);
@@ -12,13 +12,22 @@
 .row {
   display: flex;
   white-space: nowrap;
-  flex-wrap: nowrap;
+  width: max-content;
+  animation: tickerScroll 55s linear infinite;
   will-change: transform;
 }
 
-.rowMuted {
-  opacity: 0.55;
-  margin-top: 14px;
+.wrap:hover .row {
+  animation-play-state: paused;
+}
+
+@keyframes tickerScroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 .item {
@@ -35,12 +44,6 @@
   flex-shrink: 0;
 }
 
-.itemOutline {
-  color: transparent;
-  -webkit-text-stroke: 1.2px var(--line-hi);
-  font-style: normal;
-}
-
 .dot {
   width: 12px;
   height: 12px;
@@ -48,8 +51,4 @@
   background: var(--accent);
   flex-shrink: 0;
   box-shadow: 0 0 12px var(--accent-glow);
-}
-
-.wrap:hover .row {
-  animation-play-state: paused;
 }

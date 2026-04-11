@@ -7,12 +7,12 @@ import styles from "./Process.module.css";
 export default function Process() {
   return (
     <section id="process" className={styles.section}>
-      <SectionWatermark text="process" number="/ 02" position="left" />
+      <SectionWatermark text="процесс" number="/ 02" position="left" />
 
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <Reveal>
-            <span className="eyebrow">— How we work / Process</span>
+            <span className="eyebrow">— Как мы работаем</span>
           </Reveal>
           <h2 className={styles.title}>
             <AnimatedText

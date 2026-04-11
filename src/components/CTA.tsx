@@ -8,12 +8,12 @@ import styles from "./CTA.module.css";
 export default function CTA() {
   return (
     <section id="contact" className={styles.section}>
-      <SectionWatermark text="contact" number="/ 06" position="center" />
+      <SectionWatermark text="контакты" number="/ 06" position="center" />
 
       <Reveal>
         <div className={styles.inner}>
           <div className={styles.eyebrowRow}>
-            <span className="eyebrow">— Get in touch</span>
+            <span className="eyebrow">— Связаться</span>
             <span className={styles.eyebrowEnd}>IAA / 2026 →</span>
           </div>
 
@@ -56,8 +56,8 @@ export default function CTA() {
           </div>
 
           <div className={styles.metaBottom}>
-            <span>IAA agency · Ads × Automation × AI</span>
-            <span>Accepting projects · USA → Worldwide</span>
+            <span>IAA agency · Реклама × Автоматизация × AI</span>
+            <span>Принимаем проекты · США → Весь мир</span>
           </div>
         </div>
       </Reveal>

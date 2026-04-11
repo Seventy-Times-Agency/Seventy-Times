@@ -76,7 +76,7 @@ export default function PageIntro() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.55, delay: 0.7 }}
             >
-              Ads <span className={styles.taglineDot} /> Automation{" "}
+              Реклама <span className={styles.taglineDot} /> Автоматизация{" "}
               <span className={styles.taglineDot} /> AI
             </motion.div>
           </div>
@@ -87,8 +87,8 @@ export default function PageIntro() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.9 }}
           >
-            <span>USA → Worldwide</span>
-            <span>Loading experience…</span>
+            <span>США → Весь мир</span>
+            <span>Загружаем…</span>
           </motion.div>
         </motion.div>
       )}

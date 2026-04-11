@@ -18,15 +18,15 @@ export default function HomePage() {
         <Hero />
         <VelocityTicker />
         <Services />
-        <SectionDivider label="— next" />
+        <SectionDivider label="— дальше" />
         <Process />
-        <SectionDivider label="— meet venesa" />
+        <SectionDivider label="— знакомьтесь" />
         <ChatDemo />
-        <SectionDivider label="— social proof" />
+        <SectionDivider label="— отзывы" />
         <Testimonials />
-        <SectionDivider label="— questions" />
+        <SectionDivider label="— вопросы" />
         <FAQ />
-        <SectionDivider label="— let's talk" />
+        <SectionDivider label="— связаться" />
         <CTA />
       </main>
       <Footer />

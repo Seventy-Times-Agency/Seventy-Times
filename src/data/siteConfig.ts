@@ -6,7 +6,7 @@
 export const siteConfig = {
   name: "IAA agency",
   shortName: "iaa",
-  tagline: "Ads · Automation · AI",
+  tagline: "Реклама · Автоматизация · AI",
   description:
     "Реклама, автоматизация процессов и AI-боты для роста бизнеса.",
   url: "https://iaa.example",

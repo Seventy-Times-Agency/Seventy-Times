@@ -13,12 +13,12 @@ export default function Services() {
 
   return (
     <section id="services" className={styles.section}>
-      <SectionWatermark text="services" number="/ 01" position="right" />
+      <SectionWatermark text="услуги" number="/ 01" position="right" />
 
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <Reveal>
-            <span className="eyebrow">— Services / 2026</span>
+            <span className="eyebrow">— Услуги / 2026</span>
           </Reveal>
           <h2 className={styles.title}>
             <AnimatedText
