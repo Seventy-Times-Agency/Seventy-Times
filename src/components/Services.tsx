@@ -6,6 +6,7 @@ import { SERVICES, type Service } from "@/data/services";
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
 import SectionWatermark from "./SectionWatermark";
+import { SERVICE_ICONS } from "./ServiceIcons";
 import styles from "./Services.module.css";
 
 export default function Services() {
@@ -78,6 +79,7 @@ function ServiceCard({
   };
 
   const num = String(index).padStart(2, "0");
+  const Icon = SERVICE_ICONS[service.key];
 
   return (
     <div
@@ -96,7 +98,11 @@ function ServiceCard({
     >
       <div className={styles.number}>
         <span>/ {num}</span>
-        <span className={styles.icon}>{service.icon}</span>
+        {Icon && (
+          <span className={styles.iconBox}>
+            <Icon className={styles.iconSvg} />
+          </span>
+        )}
       </div>
 
       <h3 className={styles.cardTitle}>{service.title}</h3>

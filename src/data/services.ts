@@ -1,6 +1,5 @@
 export type Service = {
   key: string;
-  icon: string;
   title: string;
   tagline: string;
   note: string | null;
@@ -11,7 +10,6 @@ export type Service = {
 export const SERVICES: Service[] = [
   {
     key: "targeting",
-    icon: "🎯",
     title: "Таргетированная реклама",
     tagline: "Реклама, которая приводит реальных клиентов",
     note: "Рекламный бюджет оплачивается отдельно",
@@ -32,7 +30,6 @@ export const SERVICES: Service[] = [
   },
   {
     key: "automation",
-    icon: "⚙️",
     title: "Автоматизация",
     tagline: "Убираем рутину — бизнес работает сам",
     note: null,
@@ -52,7 +49,6 @@ export const SERVICES: Service[] = [
   },
   {
     key: "aibot",
-    icon: "🤖",
     title: "AI-Бот",
     tagline: "Умный помощник, который работает за тебя 24/7",
     note: null,

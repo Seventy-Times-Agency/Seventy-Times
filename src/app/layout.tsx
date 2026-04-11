@@ -6,6 +6,8 @@ import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageIntro from "@/components/PageIntro";
 import LeadForm from "@/components/LeadForm";
+import ReviewForm from "@/components/ReviewForm";
+import ViewportFrame from "@/components/ViewportFrame";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -70,9 +72,11 @@ export default function RootLayout({
         <SmoothScroll />
         <PageIntro />
         <AnimatedBackground />
+        <ViewportFrame />
         <ScrollProgress />
         {children}
         <LeadForm />
+        <ReviewForm />
       </body>
     </html>
   );

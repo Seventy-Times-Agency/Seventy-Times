@@ -107,15 +107,35 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   color: var(--text-dim);
-  margin-bottom: 48px;
+  margin-bottom: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.icon {
-  font-size: 20px;
-  opacity: 0.7;
+.iconBox {
+  display: inline-grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(200, 212, 222, 0.025);
+  color: var(--accent);
+  transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.iconSvg {
+  width: 34px;
+  height: 34px;
+  display: block;
+}
+
+.card:hover .iconBox,
+.cardOpen .iconBox {
+  border-color: var(--accent);
+  background: rgba(200, 212, 222, 0.06);
+  color: var(--accent-strong);
 }
 
 .cardTitle {
