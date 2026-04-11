@@ -228,9 +228,9 @@
 
 .card:hover .toggleArrow,
 .cardOpen .toggleArrow {
-  background: var(--white);
+  background: var(--accent);
   color: var(--black);
-  border-color: var(--white);
+  border-color: var(--accent);
 }
 
 .cardOpen .toggleArrow {

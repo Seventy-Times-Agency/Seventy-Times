@@ -11,20 +11,24 @@
   top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: clamp(220px, 32vw, 520px);
+  font-size: clamp(260px, 38vw, 600px);
   font-weight: 800;
-  font-style: italic;
   letter-spacing: -0.06em;
   line-height: 0.8;
   white-space: nowrap;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.055);
+  color: rgba(200, 212, 222, 0.045);
   pointer-events: none;
   user-select: none;
   z-index: -1;
   text-transform: lowercase;
   will-change: transform;
   animation: heroDrift 24s ease-in-out infinite;
+}
+
+.heroWordmarkOutline {
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(200, 212, 222, 0.07);
 }
 
 @keyframes heroDrift {
@@ -162,18 +166,19 @@
   gap: 12px;
   padding: 18px 34px;
   border-radius: var(--radius-pill);
-  background: var(--white);
+  background: var(--accent);
   color: var(--black);
   font-weight: 700;
   font-size: 15px;
   letter-spacing: 0.01em;
-  transition: transform 0.2s var(--ease), box-shadow 0.3s ease;
-  box-shadow: 0 20px 60px -20px rgba(255, 255, 255, 0.35);
+  transition: transform 0.2s var(--ease), box-shadow 0.3s ease, background 0.2s ease;
+  box-shadow: 0 20px 60px -20px var(--accent-glow);
 }
 
 .primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 30px 80px -20px rgba(255, 255, 255, 0.5);
+  background: var(--accent-strong);
+  box-shadow: 0 30px 80px -20px var(--accent-glow);
 }
 
 .primary .arrow {

@@ -5,8 +5,10 @@ export default function Nav() {
   return (
     <nav className={styles.nav}>
       <a href="#top" className={styles.logo} aria-label={siteConfig.name}>
-        <span className={styles.logoMark}>A</span>
-        <span className={styles.logoText}>{siteConfig.name.toLowerCase()}</span>
+        <span className={styles.logoMark}>
+          ia<span className={styles.logoOutline}>a</span>
+        </span>
+        <span className={styles.logoSub}>agency</span>
       </a>
 
       <div className={styles.links}>

@@ -89,11 +89,11 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: var(--white);
+  background: var(--accent);
   color: var(--black);
   display: grid;
   place-items: center;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 900;
   position: relative;
 }
@@ -163,7 +163,7 @@
 
 .userBubble {
   align-self: flex-end;
-  background: var(--white);
+  background: var(--accent);
   color: var(--black);
   border-radius: 18px 18px 4px 18px;
   font-weight: 500;
@@ -237,7 +237,7 @@
   min-width: 50px;
   padding: 0 24px;
   border-radius: var(--radius-pill);
-  background: var(--white);
+  background: var(--accent);
   color: var(--black);
   font-weight: 800;
   font-size: 16px;
@@ -246,7 +246,7 @@
 
 .sendBtn:hover:not(:disabled) {
   transform: translateY(-1px);
-  background: #e5e5e5;
+  background: var(--accent-strong);
 }
 
 .sendBtn:disabled {

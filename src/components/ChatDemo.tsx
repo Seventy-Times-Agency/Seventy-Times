@@ -15,7 +15,7 @@ type Message = {
 const INITIAL_MESSAGE: Message = {
   role: "assistant",
   content:
-    "Привет 👋  Я AI-консультант Aicore.\n\nРасскажи немного о своём бизнесе — подберём решение под твои задачи.",
+    "Привет 👋  Я AI-консультант IAA agency.\n\nРасскажи немного о своём бизнесе — подберём решение под твои задачи.",
 };
 
 const BULLETS = [
@@ -120,9 +120,9 @@ export default function ChatDemo() {
         <Reveal delay={0.1}>
           <div className={styles.box}>
             <div className={styles.chatHeader}>
-              <div className={styles.avatar}>A</div>
+              <div className={styles.avatar}>i</div>
               <div className={styles.chatMeta}>
-                <span className={styles.chatName}>Aicore · AI-консультант</span>
+                <span className={styles.chatName}>IAA · AI-консультант</span>
                 <span className={styles.chatStatus}>онлайн · отвечает сразу</span>
               </div>
               <span className={styles.chatBadge}>Live</span>

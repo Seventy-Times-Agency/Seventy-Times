@@ -138,9 +138,9 @@
 
 .item:hover .toggle,
 .itemOpen .toggle {
-  background: var(--white);
+  background: var(--accent);
   color: var(--black);
-  border-color: var(--white);
+  border-color: var(--accent);
 }
 
 .itemOpen .toggle {

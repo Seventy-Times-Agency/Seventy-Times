@@ -108,10 +108,10 @@
 }
 
 .step:hover .numberWrap {
-  background: var(--white);
+  background: var(--accent);
   color: var(--black);
-  border-color: var(--white);
-  box-shadow: 0 20px 50px -18px rgba(255, 255, 255, 0.45);
+  border-color: var(--accent);
+  box-shadow: 0 20px 50px -18px var(--accent-glow);
 }
 
 .duration {

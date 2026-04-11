@@ -17,12 +17,12 @@
   height: 100%;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    var(--white) 30%,
-    var(--white) 100%
+    rgba(200, 212, 222, 0.1) 0%,
+    var(--accent) 30%,
+    var(--accent-strong) 100%
   );
   transform-origin: top;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 14px var(--accent-glow);
 }
 
 .label {

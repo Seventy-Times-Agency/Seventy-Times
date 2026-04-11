@@ -13,7 +13,7 @@ export default function CTA() {
         <div className={styles.inner}>
           <div className={styles.eyebrowRow}>
             <span className="eyebrow">— Get in touch</span>
-            <span className={styles.eyebrowEnd}>Aicore / 2026 →</span>
+            <span className={styles.eyebrowEnd}>IAA / 2026 →</span>
           </div>
 
           <h2 className={styles.title}>
@@ -51,7 +51,7 @@ export default function CTA() {
           </div>
 
           <div className={styles.metaBottom}>
-            <span>Aicore Studio · AI × Marketing</span>
+            <span>IAA agency · Ads × Automation × AI</span>
             <span>Принимаем проекты · Алматы → Мир</span>
           </div>
         </div>

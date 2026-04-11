@@ -31,7 +31,7 @@ export default function Hero() {
   return (
     <section id="top" className={styles.hero}>
       <span className={styles.heroWordmark} aria-hidden="true">
-        aicore®
+        ia<span className={styles.heroWordmarkOutline}>a</span>
       </span>
 
       <motion.div variants={container} initial="hidden" animate="visible">
@@ -39,7 +39,7 @@ export default function Hero() {
         <motion.div variants={item} className={styles.meta}>
           <span className={styles.metaLeft}>
             <span className={styles.metaLine} />
-            AI · Marketing · Automation
+            Ads · Automation · AI
           </span>
           <span className={styles.metaCenter}>
             <span className={styles.metaDot} />
@@ -76,10 +76,10 @@ export default function Hero() {
         {/* Sub + CTAs */}
         <motion.div variants={item} className={styles.grid}>
           <p className={styles.sub}>
-            <span className={styles.subStrong}>Aicore</span> — команда, которая
-            превращает AI и digital-маркетинг в предсказуемый поток клиентов.
-            Таргет, автоматизация и умные боты, настроенные под один KPI — ваш
-            рост.
+            <span className={styles.subStrong}>IAA agency</span> — команда,
+            которая превращает AI и digital-маркетинг в предсказуемый поток
+            клиентов. Реклама, автоматизация и умные боты, настроенные под
+            один KPI — ваш рост.
           </p>
 
           <div className={styles.actions}>

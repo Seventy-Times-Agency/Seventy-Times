@@ -12,8 +12,8 @@
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
   background:
-    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255, 255, 255, 0.08), transparent 60%),
-    rgba(255, 255, 255, 0.018);
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(160, 190, 220, 0.12), transparent 60%),
+    rgba(200, 212, 222, 0.02);
   overflow: hidden;
 }
 
@@ -28,7 +28,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.4),
+    rgba(200, 212, 222, 0.45),
     transparent
   );
 }
@@ -85,17 +85,18 @@
   gap: 12px;
   padding: 20px 36px;
   border-radius: var(--radius-pill);
-  background: var(--white);
+  background: var(--accent);
   color: var(--black);
   font-weight: 700;
   font-size: 15px;
-  box-shadow: 0 30px 80px -20px rgba(255, 255, 255, 0.4);
-  transition: transform 0.2s var(--ease), box-shadow 0.3s ease;
+  box-shadow: 0 30px 80px -20px var(--accent-glow);
+  transition: transform 0.2s var(--ease), box-shadow 0.3s ease, background 0.2s ease;
 }
 
 .primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 40px 100px -20px rgba(255, 255, 255, 0.6);
+  background: var(--accent-strong);
+  box-shadow: 0 40px 100px -20px var(--accent-glow);
 }
 
 .secondary {

@@ -4,8 +4,8 @@
   z-index: 50;
   pointer-events: none;
   background: radial-gradient(
-    560px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(255, 255, 255, 0.055),
+    600px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(180, 200, 220, 0.07),
     transparent 45%
   );
   mix-blend-mode: screen;

@@ -1,6 +1,6 @@
-# Aicore Website
+# IAA agency Website
 
-Лендинг AI-маркетингового агентства Aicore на Next.js 14 с живым AI-консультантом на базе Claude.
+Лендинг AI-маркетингового агентства IAA (ads · automation · AI) на Next.js 14 с живым AI-консультантом на базе Claude.
 
 ## Что внутри
 

@@ -39,6 +39,6 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--white);
+  background: var(--accent);
   flex-shrink: 0;
 }

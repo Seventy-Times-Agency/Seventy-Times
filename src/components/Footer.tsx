@@ -9,8 +9,10 @@ export default function Footer() {
       <div className={styles.top}>
         <div className={styles.brand}>
           <span className={styles.logo}>
-            <span className={styles.logoMark}>A</span>
-            <span>{siteConfig.name.toLowerCase()}</span>
+            <span className={styles.logoMark}>
+              ia<span className={styles.logoOutline}>a</span>
+            </span>
+            <span className={styles.logoSub}>agency</span>
           </span>
           <p className={styles.brandText}>
             {siteConfig.description} Команда строит системы, которые приводят
@@ -20,8 +22,8 @@ export default function Footer() {
 
         <div className={styles.col}>
           <span className={styles.colTitle}>Услуги</span>
-          <a href="#services">Таргет</a>
-          <a href="#services">Автоматизация</a>
+          <a href="#services">Ads / Таргет</a>
+          <a href="#services">Automation</a>
           <a href="#services">AI-боты</a>
           <a href="#chat">AI-демо</a>
           <a href="#process">Процесс</a>
@@ -52,7 +54,8 @@ export default function Footer() {
       </div>
 
       <div className={styles.wordmark} aria-hidden="true">
-        aicore®
+        ia<span className={styles.wordmarkOutline}>a</span>
+        <span className={styles.wordmarkSub}>agency®</span>
       </div>
 
       <div className={styles.bottom}>

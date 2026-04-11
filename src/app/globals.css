@@ -1,29 +1,36 @@
 :root {
-  /* ── Monochrome editorial palette — graphite, not pure black ── */
-  --black: #16161b;
+  /* ── IAA palette: cool graphite + Casper accents ────────── */
+  --black: #0a0b10;
   --black-pure: #000000;
-  --bg-deep: #101015;
-  --surface: #1c1c22;
-  --surface-2: #23232a;
-  --surface-3: #2c2c34;
+  --bg-deep: #06060c;
+  --surface: #14151c;
+  --surface-2: #1c1d26;
+  --surface-3: #25262f;
 
-  --line: rgba(255, 255, 255, 0.1);
-  --line-strong: rgba(255, 255, 255, 0.2);
-  --line-hi: rgba(255, 255, 255, 0.36);
+  --line: rgba(200, 212, 222, 0.1);
+  --line-strong: rgba(200, 212, 222, 0.2);
+  --line-hi: rgba(200, 212, 222, 0.36);
 
-  --white: #ffffff;
-  --text: #ffffff;
-  --text-muted: #b4b4b9;
-  --text-dim: #86868c; /* lighter dove grey */
-  --text-faint: rgba(255, 255, 255, 0.3);
+  /* Text — Casper-tinted instead of pure white */
+  --white: #e8eef4;
+  --text: #e8eef4;
+  --text-muted: #a8b4c0;
+  --text-dim: #6c7480; /* cool dove grey */
+  --text-faint: rgba(232, 238, 244, 0.28);
 
-  /* One restrained accent — kept for status indicators */
+  /* Casper accent — used for buttons, badges, glows, key highlights */
+  --accent: #c8d4de;
+  --accent-strong: #d8e2ec;
+  --accent-deep: #8a9aa6;
+  --accent-glow: rgba(200, 212, 222, 0.4);
+
+  /* Single restrained signal for "online" status */
   --accent-green: #4ade80;
 
   /* Effects */
-  --gradient-text: linear-gradient(180deg, #ffffff 0%, #b4b4b9 100%);
-  --shadow-xl: 0 40px 100px -20px rgba(0, 0, 0, 0.6);
-  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.45);
+  --gradient-text: linear-gradient(180deg, #e8eef4 0%, #a8b4c0 100%);
+  --shadow-xl: 0 40px 100px -20px rgba(0, 0, 0, 0.65);
+  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
 
   /* Layout */
   --radius-xs: 6px;
@@ -167,9 +174,9 @@ textarea {
 .shimmer {
   background: linear-gradient(
     110deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(255, 255, 255, 0.4) 40%,
-    rgba(255, 255, 255, 0.95) 80%
+    #e8eef4 0%,
+    #b8c8d4 40%,
+    #e8eef4 80%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;

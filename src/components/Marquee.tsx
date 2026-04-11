@@ -1,12 +1,12 @@
 import styles from "./Marquee.module.css";
 
 const KEYWORDS = [
-  "Targeting",
+  "Ads",
   "Automation",
-  "AI Agents",
-  "Meta Ads",
-  "Google Ads",
-  "TikTok Ads",
+  "AI",
+  "Meta",
+  "Google",
+  "TikTok",
   "Telegram Bots",
   "Instagram",
   "CRM",
