@@ -73,11 +73,11 @@ const dict = {
       "Поддержка и обновления после запуска",
     ],
     svc3Title: "AI-Бот",
-    svc3Tag: "Умный помощник, который работает за тебя 24/7",
+    svc3Tag: "Умный помощник, который работает за вас 24/7",
     svc3Note: null as string | null,
     svc3Inc: [
       "Бот на любой платформе: Telegram, Instagram, Facebook или сайт",
-      "AI-консультант, обученный под твой бизнес и бренд",
+      "AI-консультант, обученный под ваш бизнес и бренд",
       "Автоматический сбор контактов в Google Sheets или другие программы",
       "Поддержка любого языка",
     ],
@@ -192,8 +192,8 @@ const dict = {
 
     // Footer
     ftServices: "Услуги",
-    ftAds: "Ads / Таргет",
-    ftAutomation: "Automation",
+    ftAds: "Реклама / Таргет",
+    ftAutomation: "Автоматизация",
     ftBots: "AI-боты",
     ftVenesa: "Венеса",
     ftProcess: "Процесс",
@@ -224,7 +224,7 @@ const dict = {
 
     // Lead form
     leadEyebrow: "— Оставить заявку",
-    leadTitle: "Расскажи о",
+    leadTitle: "Расскажите о",
     leadTitleAccent: "задаче",
     leadSub: "Ответим в течение часа в рабочее время. Все поля обязательны.",
     leadName: "Имя",
@@ -242,9 +242,9 @@ const dict = {
       "Нажимая «Отправить», вы соглашаетесь на обработку контактных данных для обратной связи.",
     leadSuccessTitle: "Заявка отправлена",
     leadSuccessText:
-      "Спасибо! Мы получили твою заявку и ответим в течение часа в рабочее время. До связи 👋",
+      "Спасибо! Мы получили вашу заявку и ответим в течение часа в рабочее время. До связи 👋",
     leadClose: "Закрыть",
-    leadFillAll: "Пожалуйста, заполни все поля",
+    leadFillAll: "Пожалуйста, заполните все поля",
 
     // Chat widget
     chatGreeting:
@@ -264,7 +264,7 @@ const dict = {
     navVenesa: "Venesa",
     navFaq: "FAQ",
     navStatus: "Accepting projects",
-    navCta: "Get started",
+    navCta: "Get a quote",
 
     // Hero meta
     heroMeta1: "Ads · Automation · AI",
@@ -278,7 +278,7 @@ const dict = {
       "IAA agency — a team that turns AI and digital marketing into a predictable flow of clients. Ads, automation, and smart bots tuned to one KPI — your growth.",
     heroCta1: "Get a quote",
     heroCta2: "Talk to Venesa",
-    heroHint: "Reply in 10 seconds · No obligations",
+    heroHint: "Response in 10 seconds · No obligations",
     statClients: "Clients",
     statSupport: "AI support",
     statGrowth: "Conversion growth",
@@ -395,7 +395,7 @@ const dict = {
     testTitle2: "clients",
     testTitle3: "say",
     testLead:
-      "Teams from the US and Europe we've launched projects with in recent months.",
+      "Teams across the US and Europe we partnered with recently.",
     testReviewBtn: "Leave a review",
     testPrev: "Previous review",
     testNext: "Next review",
@@ -419,7 +419,7 @@ const dict = {
       "Over the past years we've launched projects in e-commerce, education, real estate, healthcare, services and SaaS. If your niche isn't listed — reach out anyway, we likely have relevant experience.",
     faq4q: "What if the ads don't work?",
     faq4a:
-      "We don't promise '100% leads in a week' — that would be empty words. But we work on transparent KPIs, show numbers weekly, and if a campaign isn't performing — we pivot quickly instead of burning budget for months.",
+      "We don't promise '100% leads in a week' — that would be empty words. But we work on transparent KPIs, show numbers weekly, and if a campaign isn't performing — we pivot quickly instead of burning through the budget for months.",
     faq5q: "Do I need my own marketer?",
     faq5a:
       "No. We handle all operations — from creating ads to reporting. Your job is to give feedback on leads and approve key decisions.",
@@ -526,10 +526,10 @@ const dict = {
     heroMeta1: "Werbung · Automatisierung · KI",
     heroMeta2: "Projekte willkommen · 2026",
     heroMeta3: "USA → Weltweit",
-    heroTitle1: "Wir automatisieren",
-    heroTitle2: "das Wachstum",
-    heroTitle3: "Ihres",
-    heroTitle4: "Unternehmens.",
+    heroTitle1: "Wachstum",
+    heroTitle2: "automatisiert",
+    heroTitle3: "f\u00FCr Ihr",
+    heroTitle4: "Unternehmen.",
     heroSub:
       "IAA agency — ein Team, das KI und digitales Marketing in einen planbaren Kundenfluss verwandelt. Werbung, Automatisierung und smarte Bots, ausgerichtet auf ein KPI — Ihr Wachstum.",
     heroCta1: "Anfrage senden",
@@ -572,7 +572,7 @@ const dict = {
     svc2Tag: "Wir eliminieren Routine — Ihr Geschäft läuft von selbst",
     svc2Note: null as string | null,
     svc2Inc: [
-      "Prozessaudit: Finden wo Zeit und Geld verloren gehen",
+      "Prozessaudit: finden, wo Zeit und Geld verloren gehen",
       "Automatisierung eines Schlüsselprozesses",
       "Beispiel: Lead → Benachrichtigung → Tabelle → Kundenantwort",
     ],
@@ -612,11 +612,11 @@ const dict = {
       "Einfach und transparent. Vom ersten Gespräch bis zu ersten Leads — in der Regel 2–3 Wochen. Keine Bürokratie, klare KPIs.",
     proc1: "Briefing",
     proc1d:
-      "Wir analysieren Ihr Geschäft, Ziele, Zielgruppe und bestehende Trichter. Wir finden wo Geld verloren geht und wo Wachstum versteckt ist.",
+      "Wir analysieren Ihr Gesch\u00E4ft, Ziele, Zielgruppe und bestehende Trichter. Wir finden, wo Geld verloren geht und wo Wachstum versteckt ist.",
     proc1t: "1–2 Tage",
     proc2: "Strategie",
     proc2d:
-      "Wir schlagen einen Plan vor: Kanäle, Angebote, KPIs, Budget. Wir stimmen ab was wann gestartet und wie gemessen wird.",
+      "Wir schlagen einen Plan vor: Kan\u00E4le, Angebote, KPIs, Budget. Wir stimmen ab, was wann gestartet und wie gemessen wird.",
     proc2t: "3–5 Tage",
     proc3: "Launch",
     proc3d:
@@ -638,7 +638,7 @@ const dict = {
       "Trainiert auf die Materialien und den Tonfall Ihrer Marke",
       "Antwortet in jeder Sprache, arbeitet 24/7",
       "Erfasst Leads direkt ins CRM oder Telegram",
-      "Sie kontrollieren was sie weiß und wie sie kommuniziert",
+      "Sie kontrollieren, was sie wei\u00DF und wie sie kommuniziert",
     ],
     venCta: "Mit Venesa sprechen",
     venBadgeLabel: "KI-Agent",
