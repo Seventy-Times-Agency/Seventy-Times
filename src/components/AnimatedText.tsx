@@ -2,15 +2,27 @@
 
 import { motion } from "framer-motion";
 
+/**
+ * Mask-clip word reveal.
+ * Each word is wrapped in an `overflow: hidden` span, and its content
+ * slides up from below the baseline. Supports per-word classNames for
+ * inline styling (italic, outlined, shimmer, etc.).
+ */
+
 export type AnimatedWord = string | { text: string; className?: string };
 
 type Props = {
   words: AnimatedWord[];
   className?: string;
+  /** Delay before the first word starts, in seconds. */
   delay?: number;
+  /** Gap between each word's animation, in seconds. */
   stagger?: number;
+  /** Duration of each word's slide. */
   duration?: number;
+  /** Animate immediately on mount rather than on scroll-in. */
   immediate?: boolean;
+  /** Only animate once per page load. */
   once?: boolean;
 };
 

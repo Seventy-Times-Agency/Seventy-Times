@@ -271,6 +271,32 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 100px 0 80px;
+    padding: 80px 0 72px;
+  }
+  .header {
+    padding: 0 20px 28px;
+  }
+  .title {
+    font-size: clamp(28px, 8vw, 44px);
+  }
+  .track {
+    padding: 4px 20px 24px;
+    gap: 14px;
+  }
+  .card {
+    flex: 0 0 calc(100vw - 56px);
+    padding: 30px 24px 26px;
+  }
+  .quote {
+    font-size: 15px;
+  }
+  .controls {
+    padding: 0 20px;
+    gap: 16px;
+  }
+  .navBtn {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
   }
 }

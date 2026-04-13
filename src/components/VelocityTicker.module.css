@@ -5,10 +5,17 @@
   border-bottom: 1px solid var(--line);
   background: rgba(200, 212, 222, 0.018);
   overflow: hidden;
+  /* Isolate rendering so the rest of the page never paints when the
+     ticker moves. `contain` tells the browser it can skip descendants
+     for layout/style/paint invalidations. */
   contain: layout paint style;
   transform: translateZ(0);
+  /* Give the compositor a dedicated layer hint */
   isolation: isolate;
 }
+
+/* Edge fades via pseudo-elements — much cheaper than mask-image which
+   forces per-frame alpha compositing of the whole wrap. */
 .wrap::before,
 .wrap::after {
   content: "";
@@ -19,8 +26,17 @@
   z-index: 2;
   pointer-events: none;
 }
-.wrap::before { left: 0; background: linear-gradient(90deg, var(--black), transparent); }
-.wrap::after { right: 0; background: linear-gradient(-90deg, var(--black), transparent); }
+
+.wrap::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--black), transparent);
+}
+
+.wrap::after {
+  right: 0;
+  background: linear-gradient(-90deg, var(--black), transparent);
+}
+
 .row {
   display: flex;
   white-space: nowrap;
@@ -30,11 +46,18 @@
   backface-visibility: hidden;
   transform: translateZ(0);
 }
+
 /* Ticker always moves — no hover pause */
+
 @keyframes tickerScroll {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
+
 .item {
   display: inline-flex;
   align-items: center;
@@ -47,4 +70,11 @@
   text-transform: uppercase;
   flex-shrink: 0;
 }
-.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}

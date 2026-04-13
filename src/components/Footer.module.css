@@ -148,11 +148,20 @@
 }
 
 @media (max-width: 560px) {
+  .footer {
+    padding: 48px 20px 24px;
+  }
   .top {
     grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .wordmark {
+    font-size: clamp(48px, 16vw, 160px);
+    margin: 36px 0 24px;
   }
   .bottom {
     flex-direction: column;
     align-items: flex-start;
+    gap: 14px;
   }
 }

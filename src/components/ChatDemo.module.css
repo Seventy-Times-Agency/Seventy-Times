@@ -1,21 +1,20 @@
 .section {
   position: relative;
   isolation: isolate;
-  padding: 120px 48px 120px;
+  padding: 120px 48px;
   max-width: var(--container);
   margin: 0 auto;
 }
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 72px;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
 }
 
+/* Left: text + CTA ────────────────────────────────────── */
 .intro {
-  position: sticky;
-  top: 120px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -37,234 +36,169 @@
 .lead {
   font-size: var(--fs-body-lg);
   color: var(--text-muted);
-  line-height: 1.6;
-  max-width: 420px;
+  line-height: 1.65;
+  max-width: 480px;
 }
 
 .bullets {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  margin-top: 14px;
+  margin-top: 8px;
   padding-top: 24px;
   border-top: 1px solid var(--line);
-  max-width: 420px;
 }
 
 .bullet {
   display: flex;
   gap: 12px;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--text-muted);
   line-height: 1.55;
 }
 
 .bulletIcon {
-  color: var(--white);
+  color: var(--accent);
   font-weight: 800;
   flex-shrink: 0;
 }
 
-/* Chat box ──────────────────────────────────────────────── */
-.box {
-  border: 1px solid var(--line);
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 34px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--black);
+  font-weight: 700;
+  font-size: 15px;
+  margin-top: 14px;
+  align-self: flex-start;
+  transition: transform 0.2s var(--ease), background 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 50px -16px var(--accent-glow);
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  background: var(--accent-strong);
+  box-shadow: 0 28px 60px -16px var(--accent-glow);
+}
+
+/* Right: Venesa portrait ──────────────────────────────── */
+.portrait {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.portraitFrame {
+  position: relative;
+  width: 380px;
+  max-width: 100%;
+  aspect-ratio: 3 / 4;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0.008) 100%);
-  box-shadow: var(--shadow-xl);
-  backdrop-filter: blur(8px);
-}
-
-.chatHeader {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.avatar {
-  width: 48px;
-  height: 48px;
-  position: relative;
-  flex-shrink: 0;
-}
-
-.avatarInner {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  background: var(--surface-2);
   border: 1px solid var(--line-strong);
-  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.55);
+  box-shadow: var(--shadow-xl);
 }
 
-.avatarImage {
+.portraitImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Online status dot — sits outside the rounded inner */
-.avatar::after {
-  content: "";
+/* Decorative overlays on portrait */
+.portraitBadge {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 13px;
-  height: 13px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  background: rgba(10, 11, 16, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.badgeDot {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--accent-green);
-  border: 2px solid var(--black);
-  z-index: 2;
+  box-shadow: 0 0 8px var(--accent-green);
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
 }
 
-.chatMeta {
+.badgeMeta {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
 }
 
-.chatName {
-  font-size: 14px;
+.badgeName {
+  font-size: 13px;
   font-weight: 800;
-  letter-spacing: -0.01em;
+  color: var(--white);
 }
 
-.chatStatus {
+.badgeRole {
   font-size: 11px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
   font-weight: 700;
-}
-
-.chatBadge {
-  margin-left: auto;
-  font-size: var(--fs-mini);
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  color: var(--text-dim);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 6px 12px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
-}
-
-.messages {
-  height: 440px;
-  overflow-y: auto;
-  padding: 26px 26px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  scroll-behavior: smooth;
-}
-
-.bubble {
-  max-width: 82%;
-  padding: 13px 18px;
-  font-size: 14.5px;
-  line-height: 1.55;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.userBubble {
-  align-self: flex-end;
-  background: var(--accent);
-  color: var(--black);
-  border-radius: 18px 18px 4px 18px;
-  font-weight: 500;
-}
-
-.botBubble {
-  align-self: flex-start;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--line);
-  color: var(--text);
-  border-radius: 4px 18px 18px 18px;
-}
-
-.typing {
-  align-self: flex-start;
-  display: flex;
-  gap: 6px;
-  padding: 16px 20px;
-  border-radius: 4px 18px 18px 18px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--line);
-}
-
-.typingDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--white);
-  animation: blink 1.3s ease-in-out infinite;
-}
-
-.typingDot:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-.typingDot:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-.inputRow {
-  display: flex;
-  gap: 10px;
-  padding: 18px 20px;
-  border-top: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.015);
-}
-
-.input {
-  flex: 1;
-  padding: 14px 22px;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--line);
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.input::placeholder {
   color: var(--text-dim);
 }
 
-.input:focus {
-  border-color: var(--line-hi);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.sendBtn {
-  display: grid;
-  place-items: center;
-  min-width: 50px;
-  padding: 0 24px;
+.portraitLabel {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 6px 14px;
   border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--black);
+  background: rgba(10, 11, 16, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  font-size: 10px;
   font-weight: 800;
-  font-size: 16px;
-  transition: transform 0.15s var(--ease), opacity 0.15s ease, background 0.2s ease;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
-.sendBtn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  background: var(--accent-strong);
+/* Float rings behind portrait */
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  pointer-events: none;
 }
 
-.sendBtn:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
+.ringA {
+  width: 480px;
+  height: 480px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+}
+
+.ringB {
+  width: 600px;
+  height: 600px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.15;
 }
 
 @media (max-width: 1024px) {
@@ -272,20 +206,34 @@
     grid-template-columns: 1fr;
     gap: 48px;
   }
-  .intro {
-    position: static;
+  .portrait {
+    order: -1;
+    overflow: hidden;
   }
+  .portraitFrame {
+    width: 300px;
+    margin: 0 auto;
+  }
+  .ringA { width: 380px; height: 380px; }
+  .ringB { width: 460px; height: 460px; }
 }
 
 @media (max-width: 640px) {
   .section {
     padding: 80px 20px;
   }
-  .messages {
-    height: 380px;
-    padding: 20px 18px 10px;
+  .title {
+    font-size: clamp(28px, 8vw, 44px);
   }
-  .bubble {
-    max-width: 90%;
+  .portraitFrame {
+    width: 240px;
+  }
+  .ringA { width: 300px; height: 300px; }
+  .ringB { width: 360px; height: 360px; }
+  .portraitBadge {
+    padding: 12px 16px;
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
   }
 }

@@ -265,13 +265,17 @@
 
 @media (max-width: 820px) {
   .section {
-    padding: 100px 24px 80px;
+    padding: 80px 20px 72px;
   }
   .header {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
     align-items: start;
-    margin-bottom: 56px;
+    margin-bottom: 44px;
+    padding-bottom: 28px;
+  }
+  .title {
+    font-size: clamp(32px, 8vw, 56px);
   }
   .headerRight {
     align-items: flex-start;
@@ -279,5 +283,15 @@
   }
   .grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .card {
+    padding: 26px 22px 24px;
+  }
+  .cardTitle {
+    font-size: 22px;
+  }
+  .number {
+    margin-bottom: 32px;
   }
 }
