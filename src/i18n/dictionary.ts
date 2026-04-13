@@ -751,7 +751,7 @@ const dict = {
     leadSubmit: "Anfrage senden",
     leadSubmitting: "Wird gesendet…",
     leadConsent:
-      "Mit Klick auf „Senden" stimmen Sie der Verarbeitung Ihrer Kontaktdaten zur Rückmeldung zu.",
+      'Mit Klick auf \u201ESenden\u201C stimmen Sie der Verarbeitung Ihrer Kontaktdaten zur R\u00FCckmeldung zu.',
     leadSuccessTitle: "Anfrage gesendet",
     leadSuccessText:
       "Vielen Dank! Wir haben Ihre Anfrage erhalten und antworten innerhalb einer Stunde während der Geschäftszeiten. Bis bald 👋",
