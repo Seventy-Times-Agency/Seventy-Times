@@ -8,6 +8,7 @@ import PageIntro from "@/components/PageIntro";
 import LeadForm from "@/components/LeadForm";
 import ReviewForm from "@/components/ReviewForm";
 import ViewportFrame from "@/components/ViewportFrame";
+import ChatWidget from "@/components/ChatWidget";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -75,6 +76,7 @@ export default function RootLayout({
         <ViewportFrame />
         <ScrollProgress />
         {children}
+        <ChatWidget />
         <LeadForm />
         <ReviewForm />
       </body>

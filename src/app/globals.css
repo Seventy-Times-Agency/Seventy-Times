@@ -66,6 +66,8 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 body {
@@ -73,7 +75,10 @@ body {
   color: var(--text);
   font-family: var(--font-manrope), "Inter", system-ui, -apple-system, sans-serif;
   font-feature-settings: "ss01", "cv11";
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
   line-height: 1.55;
+  letter-spacing: 0.005em;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -168,6 +173,14 @@ textarea {
 @keyframes shimmerSweep {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+/* Prevent italic/outlined glyphs from being clipped by overflow:hidden
+   wrappers (AnimatedText mask). The stroke extends past the glyph box
+   so we need a tiny bit of breathing room. */
+[class*="titleItalic"],
+[class*="titleOutline"] {
+  padding: 0 0.06em;
 }
 
 /* Reusable shimmer text — runs on any element it's applied to */
