@@ -1,7 +1,21 @@
+"use client";
+
+import { useState } from "react";
 import { siteConfig } from "@/data/siteConfig";
 import styles from "./Nav.module.css";
 
+const NAV_LINKS = [
+  { href: "#services", label: "Услуги" },
+  { href: "#process", label: "Процесс" },
+  { href: "#chat", label: "Венеса" },
+  { href: "#faq", label: "FAQ" },
+];
+
 export default function Nav() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const close = () => setMenuOpen(false);
+
   return (
     <nav className={styles.nav}>
       <a href="#top" className={styles.logo} aria-label={siteConfig.name}>
@@ -12,18 +26,11 @@ export default function Nav() {
       </a>
 
       <div className={styles.links}>
-        <a href="#services" className={styles.link}>
-          Услуги
-        </a>
-        <a href="#process" className={styles.link}>
-          Процесс
-        </a>
-        <a href="#chat" className={styles.link}>
-          Венеса
-        </a>
-        <a href="#faq" className={styles.link}>
-          FAQ
-        </a>
+        {NAV_LINKS.map((l) => (
+          <a key={l.href} href={l.href} className={styles.link}>
+            {l.label}
+          </a>
+        ))}
       </div>
 
       <div className={styles.right}>
@@ -31,12 +38,33 @@ export default function Nav() {
           <span className={styles.statusDot} /> Принимаем проекты
         </span>
         <a href="#lead" className={styles.cta}>
-          Оставить заявку
-          <span className={styles.ctaArrow} aria-hidden="true">
-            →
-          </span>
+          Заявка <span className={styles.ctaArrow} aria-hidden="true">→</span>
         </a>
+        <button
+          className={styles.hamburger}
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
+          aria-expanded={menuOpen}
+          type="button"
+        >
+          <span className={menuOpen ? styles.barX1 : ""} />
+          <span className={menuOpen ? styles.barX2 : ""} />
+          <span className={menuOpen ? styles.barX3 : ""} />
+        </button>
       </div>
+
+      {menuOpen && (
+        <div className={styles.mobileMenu}>
+          {NAV_LINKS.map((l) => (
+            <a key={l.href} href={l.href} className={styles.mobileLink} onClick={close}>
+              {l.label}
+            </a>
+          ))}
+          <a href="#lead" className={styles.mobileCta} onClick={close}>
+            Оставить заявку →
+          </a>
+        </div>
+      )}
     </nav>
   );
 }
