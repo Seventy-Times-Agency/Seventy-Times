@@ -1,8 +1,12 @@
+"use client";
+
 import { siteConfig } from "@/data/siteConfig";
+import { useT } from "@/i18n/context";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const { t } = useT();
 
   return (
     <footer className={styles.footer}>
@@ -14,42 +18,31 @@ export default function Footer() {
             </span>
             <span className={styles.logoSub}>agency</span>
           </span>
-          <p className={styles.brandText}>
-            {siteConfig.description} Команда строит системы, которые приводят
-            клиентов на автопилоте.
-          </p>
+          <p className={styles.brandText}>{siteConfig.description}</p>
         </div>
 
         <div className={styles.col}>
-          <span className={styles.colTitle}>Услуги</span>
-          <a href="#services">Ads / Таргет</a>
-          <a href="#services">Automation</a>
-          <a href="#services">AI-боты</a>
-          <a href="#chat">Венеса</a>
-          <a href="#process">Процесс</a>
-          <a href="#faq">FAQ</a>
+          <span className={styles.colTitle}>{t.ftServices}</span>
+          <a href="#services">{t.ftAds}</a>
+          <a href="#services">{t.ftAutomation}</a>
+          <a href="#services">{t.ftBots}</a>
+          <a href="#chat">{t.ftVenesa}</a>
+          <a href="#process">{t.ftProcess}</a>
+          <a href="#faq">{t.ftFaq}</a>
         </div>
 
         <div className={styles.col}>
-          <span className={styles.colTitle}>Контакты</span>
-          <a
-            href={siteConfig.contacts.telegram.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Telegram
-          </a>
-          <a href={siteConfig.contacts.email.url}>
-            {siteConfig.contacts.email.address}
-          </a>
-          <span>США → Весь мир</span>
+          <span className={styles.colTitle}>{t.ftContacts}</span>
+          <a href={siteConfig.contacts.telegram.url} target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href={siteConfig.contacts.email.url}>{siteConfig.contacts.email.address}</a>
+          <span>{t.ftLocation}</span>
         </div>
 
         <div className={styles.col}>
-          <span className={styles.colTitle}>Компания</span>
-          <a href="#top">О нас</a>
-          <a href="#contact">Сотрудничество</a>
-          <span>Принимаем проекты</span>
+          <span className={styles.colTitle}>{t.ftCompany}</span>
+          <a href="#top">{t.ftAbout}</a>
+          <a href="#contact">{t.ftCollab}</a>
+          <span>{t.ftAccepting}</span>
         </div>
       </div>
 
@@ -59,10 +52,10 @@ export default function Footer() {
       </div>
 
       <div className={styles.bottom}>
-        <span>© {year} {siteConfig.name} · Все права защищены</span>
+        <span>© {year} {siteConfig.name} · {t.ftRights}</span>
         <div className={styles.bottomLinks}>
-          <a href="#top">Наверх ↑</a>
-          <a href="#contact">Связаться</a>
+          <a href="#top">{t.ftUp}</a>
+          <a href="#contact">{t.ftContact}</a>
         </div>
       </div>
     </footer>

@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import AnimatedText from "./AnimatedText";
 import Counter from "./Counter";
 import Magnetic from "./Magnetic";
+import { useT } from "@/i18n/context";
 import styles from "./Hero.module.css";
 
 const container: Variants = {
@@ -28,14 +29,16 @@ type Stat = {
   static?: string;
 };
 
-const STATS: Stat[] = [
-  { label: "Клиентов", counter: { to: 50, suffix: "+" } },
-  { label: "AI-поддержка", static: "24/7" },
-  { label: "Рост конверсий", counter: { to: 3, suffix: "×" } },
-  { label: "Следующий виток", static: "2026" },
-];
-
 export default function Hero() {
+  const { t } = useT();
+
+  const stats: Stat[] = [
+    { label: t.statClients, counter: { to: 50, suffix: "+" } },
+    { label: t.statSupport, static: "24/7" },
+    { label: t.statGrowth, counter: { to: 3, suffix: "×" } },
+    { label: t.statNext, static: "2026" },
+  ];
+
   return (
     <section id="top" className={styles.hero}>
       <span className={styles.heroWordmark} aria-hidden="true">
@@ -47,14 +50,14 @@ export default function Hero() {
         <motion.div variants={item} className={styles.meta}>
           <span className={styles.metaLeft}>
             <span className={styles.metaLine} />
-            Реклама · Автоматизация · AI
+            {t.heroMeta1}
           </span>
           <span className={styles.metaCenter}>
             <span className={styles.metaDot} />
-            Принимаем проекты · 2026
+            {t.heroMeta2}
           </span>
           <span className={styles.metaRight}>
-            США → Весь мир
+            {t.heroMeta3}
             <span className={styles.metaLine} />
           </span>
         </motion.div>
@@ -63,20 +66,20 @@ export default function Hero() {
         <h1 className={styles.title}>
           <span className={styles.titleBlock}>
             <span className={styles.titleRow}>
-              <AnimatedText immediate delay={0.25} words={["Автоматизируем"]} />
+              <AnimatedText immediate delay={0.25} words={[t.heroTitle1]} />
             </span>
             <span className={styles.titleRow}>
               <AnimatedText
                 immediate
                 delay={0.35}
                 words={[
-                  { text: "рост", className: styles.titleOutline },
-                  { text: "вашего", className: "shimmer" },
+                  { text: t.heroTitle2, className: styles.titleOutline },
+                  { text: t.heroTitle3, className: "shimmer" },
                 ]}
               />
             </span>
             <span className={styles.titleRow}>
-              <AnimatedText immediate delay={0.55} words={["бизнеса."]} />
+              <AnimatedText immediate delay={0.55} words={[t.heroTitle4]} />
             </span>
           </span>
         </h1>
@@ -84,17 +87,14 @@ export default function Hero() {
         {/* Sub + CTAs */}
         <motion.div variants={item} className={styles.grid}>
           <p className={styles.sub}>
-            <span className={styles.subStrong}>IAA agency</span> — команда,
-            которая превращает AI и digital-маркетинг в предсказуемый поток
-            клиентов. Реклама, автоматизация и умные боты, настроенные под
-            один KPI — ваш рост.
+            {t.heroSub}
           </p>
 
           <div className={styles.actions}>
             <div className={styles.actionsRow}>
               <Magnetic strength={0.4}>
                 <a href="#lead" className={styles.primary}>
-                  Оставить заявку
+                  {t.heroCta1}
                   <span className={styles.arrow} aria-hidden="true">
                     →
                   </span>
@@ -102,19 +102,19 @@ export default function Hero() {
               </Magnetic>
               <Magnetic strength={0.3}>
                 <a href="#chat" className={styles.secondary}>
-                  Поговорить с Венесой
+                  {t.heroCta2}
                 </a>
               </Magnetic>
             </div>
             <span className={styles.hint}>
-              Ответ за 10 секунд · Без обязательств
+              {t.heroHint}
             </span>
           </div>
         </motion.div>
 
         {/* Stats strip */}
         <motion.div variants={item} className={styles.stats}>
-          {STATS.map((s) => (
+          {stats.map((s) => (
             <div key={s.label} className={styles.stat}>
               <span className={styles.statValue}>
                 {s.counter ? (

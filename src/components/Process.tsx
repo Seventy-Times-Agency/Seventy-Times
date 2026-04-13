@@ -1,47 +1,55 @@
-import { PROCESS_STEPS } from "@/data/process";
+"use client";
+
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
 import SectionWatermark from "./SectionWatermark";
+import { useT } from "@/i18n/context";
 import styles from "./Process.module.css";
 
 export default function Process() {
+  const { t } = useT();
+
+  const steps = [
+    { num: "01", title: t.proc1, desc: t.proc1d, dur: t.proc1t },
+    { num: "02", title: t.proc2, desc: t.proc2d, dur: t.proc2t },
+    { num: "03", title: t.proc3, desc: t.proc3d, dur: t.proc3t },
+    { num: "04", title: t.proc4, desc: t.proc4d, dur: t.proc4t },
+  ];
+
   return (
     <section id="process" className={styles.section}>
-      <SectionWatermark text="процесс" number="/ 02" position="left" />
+      <SectionWatermark text={t.navProcess.toLowerCase()} number="/ 02" position="left" />
 
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <Reveal>
-            <span className="eyebrow">— Как мы работаем</span>
+            <span className="eyebrow">{t.procEyebrow}</span>
           </Reveal>
           <h2 className={styles.title}>
             <AnimatedText
               words={[
-                "Как",
-                "мы",
-                { text: "работаем", className: styles.titleItalic },
+                t.procTitle1,
+                t.procTitle2,
+                { text: t.procTitle3, className: styles.titleItalic },
               ]}
             />
           </h2>
         </div>
         <div className={styles.headerRight}>
           <Reveal delay={0.15}>
-            <p className={styles.lead}>
-              Простой и прозрачный процесс. От первого звонка до первых лидов —
-              обычно 2–3 недели. Без бюрократии, с понятными KPI.
-            </p>
+            <p className={styles.lead}>{t.procLead}</p>
           </Reveal>
         </div>
       </div>
 
       <div className={styles.grid}>
-        {PROCESS_STEPS.map((step, i) => (
+        {steps.map((step, i) => (
           <Reveal key={step.num} delay={i * 0.1}>
             <div className={styles.step}>
               <div className={styles.numberWrap}>{step.num}</div>
-              <span className={styles.duration}>{step.duration}</span>
+              <span className={styles.duration}>{step.dur}</span>
               <h3 className={styles.stepTitle}>{step.title}</h3>
-              <p className={styles.stepDesc}>{step.description}</p>
+              <p className={styles.stepDesc}>{step.desc}</p>
             </div>
           </Reveal>
         ))}

@@ -2,19 +2,22 @@
 
 import { useState } from "react";
 import { siteConfig } from "@/data/siteConfig";
+import { useT } from "@/i18n/context";
+import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
 import styles from "./Nav.module.css";
-
-const NAV_LINKS = [
-  { href: "#services", label: "Услуги" },
-  { href: "#process", label: "Процесс" },
-  { href: "#chat", label: "Венеса" },
-  { href: "#faq", label: "FAQ" },
-];
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { locale, t, setLocale } = useT();
 
   const close = () => setMenuOpen(false);
+
+  const NAV_LINKS = [
+    { href: "#services", label: t.navServices },
+    { href: "#process", label: t.navProcess },
+    { href: "#chat", label: t.navVenesa },
+    { href: "#faq", label: t.navFaq },
+  ];
 
   return (
     <nav className={styles.nav}>
@@ -35,10 +38,22 @@ export default function Nav() {
 
       <div className={styles.right}>
         <span className={styles.status}>
-          <span className={styles.statusDot} /> Принимаем проекты
+          <span className={styles.statusDot} /> {t.navStatus}
         </span>
+        <div className={styles.langSwitcher}>
+          {LOCALES.map((l) => (
+            <button
+              key={l}
+              className={`${styles.langBtn}${l === locale ? ` ${styles.langBtnActive}` : ""}`}
+              onClick={() => setLocale(l)}
+              type="button"
+            >
+              {LOCALE_LABELS[l]}
+            </button>
+          ))}
+        </div>
         <a href="#lead" className={styles.cta}>
-          Заявка <span className={styles.ctaArrow} aria-hidden="true">→</span>
+          {t.navCta} <span className={styles.ctaArrow} aria-hidden="true">→</span>
         </a>
         <button
           className={styles.hamburger}
@@ -61,7 +76,7 @@ export default function Nav() {
             </a>
           ))}
           <a href="#lead" className={styles.mobileCta} onClick={close}>
-            Оставить заявку →
+            {t.heroCta1} →
           </a>
         </div>
       )}

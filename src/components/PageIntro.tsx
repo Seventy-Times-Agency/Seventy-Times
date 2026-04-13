@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useT } from "@/i18n/context";
 import styles from "./PageIntro.module.css";
 
 const EASE = [0.85, 0, 0.15, 1] as const;
@@ -15,6 +16,7 @@ const EASE = [0.85, 0, 0.15, 1] as const;
  */
 export default function PageIntro() {
   const [visible, setVisible] = useState(true);
+  const { t } = useT();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -76,8 +78,8 @@ export default function PageIntro() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.55, delay: 0.7 }}
             >
-              Реклама <span className={styles.taglineDot} /> Автоматизация{" "}
-              <span className={styles.taglineDot} /> AI
+              {t.introTag1} <span className={styles.taglineDot} /> {t.introTag2}{" "}
+              <span className={styles.taglineDot} /> {t.introTag3}
             </motion.div>
           </div>
 
@@ -87,8 +89,8 @@ export default function PageIntro() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.9 }}
           >
-            <span>США → Весь мир</span>
-            <span>Загружаем…</span>
+            <span>{t.introLocation}</span>
+            <span>{t.introLoading}</span>
           </motion.div>
         </motion.div>
       )}

@@ -133,6 +133,10 @@
   transform: translateX(3px);
 }
 
+.langSwitcher { display: flex; gap: 2px; background: rgba(200,212,222,0.06); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 2px; }
+.langBtn { padding: 4px 10px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 800; letter-spacing: 0.08em; color: var(--text-dim); transition: all 0.2s ease; text-transform: uppercase; }
+.langBtnActive { background: var(--accent); color: var(--black); }
+
 @media (min-width: 900px) {
   .status {
     display: inline-flex;
@@ -215,6 +219,9 @@
   }
   .status {
     display: none !important;
+  }
+  .langSwitcher {
+    display: none;
   }
   .cta {
     font-size: 12px;

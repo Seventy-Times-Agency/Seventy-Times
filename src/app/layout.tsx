@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import { siteConfig } from "@/data/siteConfig";
+import { I18nProvider } from "@/i18n/context";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -70,15 +71,17 @@ export default function RootLayout({
   return (
     <html lang="ru" className={manrope.variable}>
       <body>
-        <SmoothScroll />
-        <PageIntro />
-        <AnimatedBackground />
-        <ViewportFrame />
-        <ScrollProgress />
-        {children}
-        <ChatWidget />
-        <LeadForm />
-        <ReviewForm />
+        <I18nProvider>
+          <SmoothScroll />
+          <PageIntro />
+          <AnimatedBackground />
+          <ViewportFrame />
+          <ScrollProgress />
+          {children}
+          <ChatWidget />
+          <LeadForm />
+          <ReviewForm />
+        </I18nProvider>
       </body>
     </html>
   );

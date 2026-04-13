@@ -7,6 +7,7 @@ import {
   type FormEvent,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useT } from "@/i18n/context";
 import styles from "./LeadForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -26,6 +27,7 @@ const INITIAL = {
  * Mounted once at the layout level.
  */
 export default function LeadForm() {
+  const { t } = useT();
   const [open, setOpen] = useState(false);
   const [fields, setFields] = useState(INITIAL);
   const [status, setStatus] = useState<Status>("idle");
@@ -85,7 +87,7 @@ export default function LeadForm() {
     const request = fields.request.trim();
 
     if (!name || !contact || !business || !request) {
-      setError("Пожалуйста, заполни все поля");
+      setError(t.leadFillAll);
       return;
     }
 
@@ -101,7 +103,7 @@ export default function LeadForm() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Что-то пошло не так. Попробуй ещё раз.");
+        throw new Error(data.error || t.chatFallback);
       }
 
       setStatus("success");
@@ -109,7 +111,7 @@ export default function LeadForm() {
     } catch (err) {
       setStatus("error");
       setError(
-        err instanceof Error ? err.message : "Ошибка соединения. Попробуй позже."
+        err instanceof Error ? err.message : t.chatError
       );
     }
   };
@@ -148,41 +150,32 @@ export default function LeadForm() {
             {status === "success" ? (
               <div className={styles.success}>
                 <div className={styles.successIcon}>✓</div>
-                <h3 className={styles.successTitle}>Заявка отправлена</h3>
-                <p className={styles.successText}>
-                  Спасибо! Мы получили твою заявку и ответим в течение часа в
-                  рабочее время. До связи 👋
-                </p>
-                <button
-                  className={styles.successCloseBtn}
-                  onClick={close}
-                  type="button"
-                >
-                  Закрыть
+                <h3 className={styles.successTitle}>{t.leadSuccessTitle}</h3>
+                <p className={styles.successText}>{t.leadSuccessText}</p>
+                <button className={styles.successCloseBtn} onClick={close} type="button">
+                  {t.leadClose}
                 </button>
               </div>
             ) : (
               <>
                 <div className={styles.header}>
-                  <span className={styles.eyebrow}>— Оставить заявку</span>
+                  <span className={styles.eyebrow}>{t.leadEyebrow}</span>
                   <h3 className={styles.title} id="lead-form-title">
-                    Расскажи о{" "}
-                    <span className={styles.titleItalic}>задаче</span>
+                    {t.leadTitle}{" "}
+                    <span className={styles.titleItalic}>{t.leadTitleAccent}</span>
                   </h3>
-                  <p className={styles.subtitle}>
-                    Ответим в течение часа в рабочее время. Все поля обязательны.
-                  </p>
+                  <p className={styles.subtitle}>{t.leadSub}</p>
                 </div>
 
                 <form onSubmit={submit} className={styles.form} noValidate>
                   <label className={styles.field}>
-                    <span className={styles.label}>Имя</span>
+                    <span className={styles.label}>{t.leadName}</span>
                     <input
                       className={styles.input}
                       type="text"
                       value={fields.name}
                       onChange={setField("name")}
-                      placeholder="Как к вам обращаться"
+                      placeholder={t.leadNamePh}
                       maxLength={100}
                       autoComplete="name"
                       required
@@ -190,13 +183,13 @@ export default function LeadForm() {
                   </label>
 
                   <label className={styles.field}>
-                    <span className={styles.label}>Контакт</span>
+                    <span className={styles.label}>{t.leadContact}</span>
                     <input
                       className={styles.input}
                       type="text"
                       value={fields.contact}
                       onChange={setField("contact")}
-                      placeholder="@username в Telegram или email"
+                      placeholder={t.leadContactPh}
                       maxLength={200}
                       autoComplete="email"
                       required
@@ -204,25 +197,25 @@ export default function LeadForm() {
                   </label>
 
                   <label className={styles.field}>
-                    <span className={styles.label}>Ваш бизнес</span>
+                    <span className={styles.label}>{t.leadBusiness}</span>
                     <input
                       className={styles.input}
                       type="text"
                       value={fields.business}
                       onChange={setField("business")}
-                      placeholder="Название, сайт, чем занимаетесь"
+                      placeholder={t.leadBusinessPh}
                       maxLength={500}
                       required
                     />
                   </label>
 
                   <label className={styles.field}>
-                    <span className={styles.label}>Задача</span>
+                    <span className={styles.label}>{t.leadTask}</span>
                     <textarea
                       className={styles.textarea}
                       value={fields.request}
                       onChange={setField("request")}
-                      placeholder="Что нужно: реклама, автоматизация, AI-бот, или что-то другое. Чем подробнее — тем точнее ответим."
+                      placeholder={t.leadTaskPh}
                       maxLength={2000}
                       rows={5}
                       required
@@ -237,18 +230,15 @@ export default function LeadForm() {
                     disabled={status === "loading"}
                   >
                     {status === "loading" ? (
-                      "Отправляем…"
+                      t.leadSubmitting
                     ) : (
                       <>
-                        Отправить заявку <span aria-hidden="true">→</span>
+                        {t.leadSubmit} <span aria-hidden="true">→</span>
                       </>
                     )}
                   </button>
 
-                  <p className={styles.note}>
-                    Нажимая «Отправить», вы соглашаетесь на обработку контактных
-                    данных для обратной связи.
-                  </p>
+                  <p className={styles.note}>{t.leadConsent}</p>
                 </form>
               </>
             )}

@@ -1,15 +1,7 @@
-import styles from "./VelocityTicker.module.css";
+"use client";
 
-const ITEMS = [
-  "Реклама",
-  "Автоматизация",
-  "AI",
-  "Meta",
-  "Google",
-  "Воронки",
-  "Telegram",
-  "CRM",
-];
+import { useT } from "@/i18n/context";
+import styles from "./VelocityTicker.module.css";
 
 /**
  * CSS-only ticker. No JavaScript per frame — animation runs on the
@@ -17,10 +9,12 @@ const ITEMS = [
  * isolate layout/paint so the rest of the page never repaints when
  * the ticker moves. Pauses on hover via CSS.
  */
+const BRAND_ITEMS = ["Meta", "Google", "Telegram", "CRM"];
+
 export default function VelocityTicker() {
-  // Render twice for a seamless loop — keyframe wraps to 0 when the
-  // first copy slides fully off-screen.
-  const doubled = [...ITEMS, ...ITEMS];
+  const { t } = useT();
+  const localized = [t.svc1Title, t.svc2Title, t.svc3Title, ...BRAND_ITEMS];
+  const doubled = [...localized, ...localized];
 
   return (
     <div className={styles.wrap} aria-hidden="true">

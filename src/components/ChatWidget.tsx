@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useT } from "@/i18n/context";
 import styles from "./ChatWidget.module.css";
 
 type Message = {
@@ -9,15 +10,12 @@ type Message = {
   content: string;
 };
 
-const GREETING: Message = {
-  role: "assistant",
-  content:
-    "Привет 👋 Меня зовут Венеса, я AI-консультант IAA agency.\n\nРасскажи немного о своём бизнесе — подберу решение под твои задачи.",
-};
-
 export default function ChatWidget() {
+  const { t } = useT();
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([GREETING]);
+  const [messages, setMessages] = useState<Message[]>([
+    { role: "assistant", content: t.chatGreeting },
+  ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
@@ -68,12 +66,12 @@ export default function ChatWidget() {
       const reply =
         typeof data.reply === "string" && data.reply.length > 0
           ? data.reply
-          : data.error || "Что-то пошло не так. Попробуй снова.";
+          : data.error || t.chatFallback;
       setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Ошибка соединения. Попробуй чуть позже." },
+        { role: "assistant", content: t.chatError },
       ]);
     } finally {
       setLoading(false);
@@ -109,9 +107,9 @@ export default function ChatWidget() {
                 />
               </div>
               <div className={styles.meta}>
-                <span className={styles.name}>Венеса · AI-консультант</span>
+                <span className={styles.name}>{t.chatName}</span>
                 <span className={styles.status}>
-                  <span className={styles.statusDot} /> Онлайн
+                  <span className={styles.statusDot} /> {t.chatStatus}
                 </span>
               </div>
               <button
@@ -163,7 +161,7 @@ export default function ChatWidget() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={onKeyDown}
-                placeholder="Напишите сообщение..."
+                placeholder={t.chatPh}
                 maxLength={2000}
                 aria-label="Сообщение"
               />
@@ -192,7 +190,7 @@ export default function ChatWidget() {
           <img src="/venesa.jpg" alt="" className={styles.toggleImg} />
         </div>
         <span className={styles.toggleDot} />
-        {!open && <span className={styles.toggleLabel}>Венеса</span>}
+        {!open && <span className={styles.toggleLabel}>{t.chatLabel}</span>}
       </button>
     </div>
   );
