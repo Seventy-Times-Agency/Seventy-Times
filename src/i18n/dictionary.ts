@@ -512,6 +512,262 @@ const dict = {
     chatError: "Connection error. Please try again later.",
     chatFallback: "Something went wrong. Please try again.",
   },
+
+  de: {
+    // Nav
+    navServices: "Leistungen",
+    navProcess: "Prozess",
+    navVenesa: "Venesa",
+    navFaq: "FAQ",
+    navStatus: "Projekte willkommen",
+    navCta: "Anfrage",
+
+    // Hero meta
+    heroMeta1: "Werbung · Automatisierung · KI",
+    heroMeta2: "Projekte willkommen · 2026",
+    heroMeta3: "USA → Weltweit",
+    heroTitle1: "Wir automatisieren",
+    heroTitle2: "das Wachstum",
+    heroTitle3: "Ihres",
+    heroTitle4: "Unternehmens.",
+    heroSub:
+      "IAA agency — ein Team, das KI und digitales Marketing in einen planbaren Kundenfluss verwandelt. Werbung, Automatisierung und smarte Bots, ausgerichtet auf ein KPI — Ihr Wachstum.",
+    heroCta1: "Anfrage senden",
+    heroCta2: "Mit Venesa sprechen",
+    heroHint: "Antwort in 10 Sekunden · Unverbindlich",
+    statClients: "Kunden",
+    statSupport: "KI-Support",
+    statGrowth: "Conversion-Wachstum",
+    statNext: "Nächster Meilenstein",
+
+    // Services
+    svcEyebrow: "— Leistungen / 2026",
+    svcTitle1: "Was",
+    svcTitle2: "wir",
+    svcTitle3: "tun",
+    svcLead:
+      "Drei Säulen, die als ein einziger Wachstumsmotor funktionieren. Klicken Sie auf eine Karte für Details.",
+    svcIncludes: "Inklusive",
+    svcAddons: "+ Optionale Extras",
+    svcExpand: "Details",
+    svcCollapse: "Einklappen",
+    svc1Title: "Zielgerichtete Werbung",
+    svc1Tag: "Werbung, die echte Kunden bringt",
+    svc1Note: "Werbebudget wird separat abgerechnet",
+    svc1Inc: [
+      "Einrichtung des Werbekontos von Grund auf",
+      "Kampagnenmanagement auf Meta, Google & TikTok",
+      "Kreativmaterial — Banner und Anzeigentexte",
+      "Zielgruppen- und Targeting-Einrichtung",
+      "Laufende Kampagnenoptimierung",
+    ],
+    svc1Add: [
+      "KI-generierte Werbematerialien",
+      "A/B-Tests",
+      "Retargeting — warme Leads zurückholen",
+      "Landingpage für Werbekampagnen",
+      "Verwaltung des Werbebudgets",
+    ],
+    svc2Title: "Automatisierung",
+    svc2Tag: "Wir eliminieren Routine — Ihr Geschäft läuft von selbst",
+    svc2Note: null as string | null,
+    svc2Inc: [
+      "Prozessaudit: Finden wo Zeit und Geld verloren gehen",
+      "Automatisierung eines Schlüsselprozesses",
+      "Beispiel: Lead → Benachrichtigung → Tabelle → Kundenantwort",
+    ],
+    svc2Add: [
+      "Automatisierung weiterer Prozesse",
+      "Plattformübergreifende Integrationen",
+      "Automatisierte Berichte und Analysen",
+      "Automatische Rechnungsstellung",
+      "CRM-Integration",
+      "Support und Updates nach dem Launch",
+    ],
+    svc3Title: "KI-Bot",
+    svc3Tag: "Ein smarter Assistent, der 24/7 für Sie arbeitet",
+    svc3Note: null as string | null,
+    svc3Inc: [
+      "Bot auf jeder Plattform: Telegram, Instagram, Facebook oder Website",
+      "KI-Berater, trainiert für Ihre Marke und Ihr Geschäft",
+      "Automatische Lead-Erfassung in Google Sheets oder andere Tools",
+      "Mehrsprachiger Support",
+    ],
+    svc3Add: [
+      "Online-Buchung und Terminplanung",
+      "Automatische Kundenerinnerungen",
+      "Bildgenerierung im Bot",
+      "Reaktion auf Kommentare und Stories",
+      "CRM-Integration",
+      "Verkaufstrichter",
+      "Support und Updates nach dem Launch",
+    ],
+
+    // Process
+    procEyebrow: "— So arbeiten wir",
+    procTitle1: "So",
+    procTitle2: "arbeiten",
+    procTitle3: "wir",
+    procLead:
+      "Einfach und transparent. Vom ersten Gespräch bis zu ersten Leads — in der Regel 2–3 Wochen. Keine Bürokratie, klare KPIs.",
+    proc1: "Briefing",
+    proc1d:
+      "Wir analysieren Ihr Geschäft, Ziele, Zielgruppe und bestehende Trichter. Wir finden wo Geld verloren geht und wo Wachstum versteckt ist.",
+    proc1t: "1–2 Tage",
+    proc2: "Strategie",
+    proc2d:
+      "Wir schlagen einen Plan vor: Kanäle, Angebote, KPIs, Budget. Wir stimmen ab was wann gestartet und wie gemessen wird.",
+    proc2t: "3–5 Tage",
+    proc3: "Launch",
+    proc3d:
+      "Wir richten Konten ein, schreiben Texte, erstellen Visuals, bauen Automatisierungen und führen erste Tests durch. Analytics angebunden.",
+    proc3t: "1–2 Wochen",
+    proc4: "Optimierung",
+    proc4d:
+      "Wir prüfen Zahlen wöchentlich. Streichen was nicht funktioniert, skalieren was funktioniert. Montagsberichte, Dashboard-Zugang — immer.",
+    proc4t: "Laufend",
+
+    // Venesa promo
+    venEyebrow: "— Lernen Sie Venesa kennen",
+    venTitle1: "Ihre",
+    venTitle2: "KI-Beraterin",
+    venTitle3: "Venesa.",
+    venLead:
+      "Venesa ist eine KI-Assistentin auf Basis von Claude, trainiert für Ihr Unternehmen. Sie spricht mit Kunden auf Ihrer Website, in Telegram und Instagram, qualifiziert Leads und leitet heiße Kontakte direkt an Sie weiter. Denselben Bot erstellen wir für jedes Projekt.",
+    venBullets: [
+      "Trainiert auf die Materialien und den Tonfall Ihrer Marke",
+      "Antwortet in jeder Sprache, arbeitet 24/7",
+      "Erfasst Leads direkt ins CRM oder Telegram",
+      "Sie kontrollieren was sie weiß und wie sie kommuniziert",
+    ],
+    venCta: "Mit Venesa sprechen",
+    venBadgeLabel: "KI-Agent",
+    venBadgeName: "Venesa",
+    venBadgeRole: "KI-Beraterin · Online",
+
+    // Testimonials
+    testEyebrow: "— Kundenstimmen",
+    testTitle1: "Was",
+    testTitle2: "Kunden",
+    testTitle3: "sagen",
+    testLead:
+      "Teams aus den USA und Europa, mit denen wir in den letzten Monaten Projekte gestartet haben.",
+    testReviewBtn: "Bewertung abgeben",
+    testPrev: "Vorherige Bewertung",
+    testNext: "Nächste Bewertung",
+
+    // FAQ
+    faqEyebrow: "— Häufige Fragen",
+    faqTitle1: "Häufige",
+    faqTitle2: "Fragen",
+    faqLead:
+      "Die häufigsten Fragen vor dem Start. Keine passende Antwort gefunden? Schreiben Sie uns — wir antworten innerhalb einer Stunde.",
+    faqNote: "Schnellere Antwort nötig?",
+    faqNoteLink: "Schreiben Sie uns auf Telegram →",
+    faq1q: "Was kosten Ihre Leistungen?",
+    faq1a:
+      "Wir nennen keine Preise vorab — wir besprechen sie nach dem Briefing, um eine auf Ihre Aufgabe zugeschnittene Preisspanne anzubieten. Die meisten Kunden starten ab ca. 1.000 $/Monat, der genaue Betrag hängt von Umfang und Zielen ab.",
+    faq2q: "Wann sehe ich erste Ergebnisse?",
+    faq2a:
+      "Bei Werbung — erste Leads kommen in der Regel innerhalb von 3–7 Tagen nach dem Start. Bei Automatisierung — sofort nach der Implementierung. Bei KI-Bots — am Starttag. Stabile Werbeleistung bildet sich bis Ende des ersten Monats nach der Optimierung.",
+    faq3q: "Arbeiten Sie mit meiner Branche?",
+    faq3a:
+      "In den letzten Jahren haben wir Projekte in E-Commerce, Bildung, Immobilien, Gesundheitswesen, Dienstleistungen und SaaS gestartet. Wenn Ihre Nische nicht dabei ist — kontaktieren Sie uns trotzdem, wir haben wahrscheinlich relevante Erfahrung.",
+    faq4q: "Was wenn die Werbung nicht funktioniert?",
+    faq4a:
+      "Wir versprechen keine '100% Leads in einer Woche' — das wären leere Worte. Aber wir arbeiten mit transparenten KPIs, zeigen wöchentlich Zahlen, und wenn eine Kampagne nicht performt — schwenken wir schnell um, statt monatelang Budget zu verbrennen.",
+    faq5q: "Brauche ich einen eigenen Marketer?",
+    faq5a:
+      "Nein. Wir übernehmen den gesamten operativen Betrieb — von der Anzeigenerstellung bis zum Reporting. Ihre Aufgabe ist es, Feedback zu Leads zu geben und wichtige Entscheidungen zu genehmigen.",
+    faq6q: "Wie läuft die Kommunikation?",
+    faq6a:
+      "Wir erstellen einen gemeinsamen Telegram-Chat, senden wöchentliche Berichte am Montag und beantworten dringende Fragen innerhalb einer Stunde während der Geschäftszeiten. Einmal im Monat — ein Strategiegespräch für die nächste Periode.",
+    faq7q: "Kann ich mit nur einer Leistung starten?",
+    faq7a:
+      "Ja. Viele Kunden starten nur mit Werbung oder nur mit einem KI-Bot und fügen 1–2 Monate später mehr hinzu, sobald sie Ergebnisse sehen. Wir drängen keine Pakete auf.",
+    faq8q: "Unterzeichnen Sie NDAs?",
+    faq8a:
+      "Ja, bei Bedarf — wir unterzeichnen ein NDA vor Arbeitsbeginn. Alle Projektinformationen bleiben vertraulich.",
+
+    // CTA
+    ctaEyebrow: "— Kontakt aufnehmen",
+    ctaEnd: "IAA / 2026 →",
+    ctaTitle1: "Bereit",
+    ctaTitle2: "zu wachsen",
+    ctaTitle3: "?",
+    ctaSub:
+      "Schreiben Sie uns auf Telegram oder per E-Mail — wir besprechen Ihre Aufgabe, erklären wie wir helfen können und teilen erste Ideen innerhalb einer Stunde. Unverbindlich, ohne Floskeln.",
+    ctaPrimary: "Anfrage senden",
+    ctaTelegram: "Telegram",
+    ctaMeta1: "IAA agency · Werbung × Automatisierung × KI",
+    ctaMeta2: "Projekte willkommen · USA → Weltweit",
+
+    // Footer
+    ftServices: "Leistungen",
+    ftAds: "Werbung / Targeting",
+    ftAutomation: "Automatisierung",
+    ftBots: "KI-Bots",
+    ftVenesa: "Venesa",
+    ftProcess: "Prozess",
+    ftFaq: "FAQ",
+    ftContacts: "Kontakt",
+    ftCompany: "Unternehmen",
+    ftAbout: "Über uns",
+    ftCollab: "Partnerschaften",
+    ftAccepting: "Projekte willkommen",
+    ftLocation: "USA → Weltweit",
+    ftRights: "Alle Rechte vorbehalten",
+    ftUp: "Nach oben ↑",
+    ftContact: "Kontakt",
+
+    // Dividers
+    divNext: "— weiter",
+    divMeet: "— lernen Sie Venesa kennen",
+    divProof: "— Kundenstimmen",
+    divQuestions: "— Fragen",
+    divTalk: "— Kontakt",
+
+    // Intro
+    introTag1: "Werbung",
+    introTag2: "Automatisierung",
+    introTag3: "KI",
+    introLocation: "USA → Weltweit",
+    introLoading: "Laden…",
+
+    // Lead form
+    leadEyebrow: "— Anfrage senden",
+    leadTitle: "Erzählen Sie uns von",
+    leadTitleAccent: "Ihrer Aufgabe",
+    leadSub: "Wir antworten innerhalb einer Stunde während der Geschäftszeiten. Alle Felder erforderlich.",
+    leadName: "Name",
+    leadNamePh: "Wie sollen wir Sie ansprechen",
+    leadContact: "Kontakt",
+    leadContactPh: "@Benutzername auf Telegram oder E-Mail",
+    leadBusiness: "Ihr Unternehmen",
+    leadBusinessPh: "Firmenname, Website, was Sie tun",
+    leadTask: "Aufgabe",
+    leadTaskPh:
+      "Was Sie brauchen: Werbung, Automatisierung, KI-Bot oder etwas anderes. Je detaillierter, desto genauer unsere Antwort.",
+    leadSubmit: "Anfrage senden",
+    leadSubmitting: "Wird gesendet…",
+    leadConsent:
+      "Mit Klick auf „Senden" stimmen Sie der Verarbeitung Ihrer Kontaktdaten zur Rückmeldung zu.",
+    leadSuccessTitle: "Anfrage gesendet",
+    leadSuccessText:
+      "Vielen Dank! Wir haben Ihre Anfrage erhalten und antworten innerhalb einer Stunde während der Geschäftszeiten. Bis bald 👋",
+    leadClose: "Schließen",
+    leadFillAll: "Bitte füllen Sie alle Felder aus",
+
+    // Chat widget
+    chatGreeting:
+      "Hallo 👋 Mein Name ist Venesa, ich bin die KI-Beraterin bei IAA agency.\n\nErzählen Sie mir ein wenig über Ihr Unternehmen — ich schlage die passende Lösung für Ihre Ziele vor.",
+    chatName: "Venesa · KI-Beraterin",
+    chatStatus: "Online",
+    chatPh: "Nachricht eingeben...",
+    chatLabel: "Venesa",
+    chatError: "Verbindungsfehler. Bitte versuchen Sie es später erneut.",
+    chatFallback: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+  },
 } as const;
 
 export type Dictionary = (typeof dict)["ru"];
