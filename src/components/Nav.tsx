@@ -75,6 +75,18 @@ export default function Nav() {
               {l.label}
             </a>
           ))}
+          <div className={styles.mobileLangRow}>
+            {LOCALES.map((l) => (
+              <button
+                key={l}
+                className={`${styles.mobileLangBtn}${l === locale ? ` ${styles.mobileLangBtnActive}` : ""}`}
+                onClick={() => setLocale(l)}
+                type="button"
+              >
+                {LOCALE_LABELS[l]}
+              </button>
+            ))}
+          </div>
           <a href="#lead" className={styles.mobileCta} onClick={close}>
             {t.heroCta1} →
           </a>

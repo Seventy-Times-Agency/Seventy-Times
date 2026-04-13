@@ -194,6 +194,30 @@
   color: var(--text);
 }
 
+.mobileLangRow {
+  display: flex;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.mobileLangBtn {
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid var(--line);
+  transition: all 0.2s ease;
+}
+
+.mobileLangBtnActive {
+  background: var(--accent);
+  color: var(--black);
+  border-color: var(--accent);
+}
+
 .mobileCta {
   display: inline-flex;
   align-items: center;

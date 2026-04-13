@@ -7,4 +7,4 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   en: "EN",
 };
 
-export const DEFAULT_LOCALE: Locale = "ru";
+export const DEFAULT_LOCALE: Locale = "en";
