@@ -768,10 +768,10 @@ const dict = {
     chatError: "Verbindungsfehler. Bitte versuchen Sie es später erneut.",
     chatFallback: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
   },
-} as const;
+};
 
-export type Dictionary = (typeof dict)["ru"];
+export type Dictionary = typeof dict.ru;
 
 export function getDictionary(locale: Locale): Dictionary {
-  return dict[locale];
+  return dict[locale] as Dictionary;
 }
