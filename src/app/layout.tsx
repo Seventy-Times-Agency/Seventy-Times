@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "@/data/siteConfig";
 import { I18nProvider } from "@/i18n/context";
 import AnimatedBackground from "@/components/AnimatedBackground";
@@ -82,6 +83,7 @@ export default function RootLayout({
           <LeadForm />
           <ReviewForm />
         </I18nProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
