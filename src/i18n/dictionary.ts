@@ -19,7 +19,7 @@ const dict = {
     heroTitle3: "вашего",
     heroTitle4: "бизнеса.",
     heroSub:
-      "Seventy Times — команда, которая превращает AI и digital-маркетинг в предсказуемый поток клиентов. Реклама, автоматизация и умные боты, настроенные под один KPI — ваш рост.",
+      "Seventy Times превращает AI и digital-маркетинг в предсказуемый поток квалифицированных клиентов. Реклама, автоматизация и умные боты — всё работает на одну метрику: ваш рост.",
     heroCta1: "Оставить заявку",
     heroCta2: "Поговорить с Венесой",
     heroHint: "Ответ за 10 секунд · Без обязательств",
@@ -275,7 +275,7 @@ const dict = {
     heroTitle3: "business",
     heroTitle4: "growth.",
     heroSub:
-      "Seventy Times — a team that turns AI and digital marketing into a predictable flow of clients. Ads, automation, and smart bots tuned to one KPI — your growth.",
+      "Seventy Times turns AI and performance marketing into a predictable stream of qualified clients. Ads, automation and smart bots — all built around one metric: your growth.",
     heroCta1: "Get a quote",
     heroCta2: "Talk to Venesa",
     heroHint: "Response in 10 seconds · No obligations",
@@ -531,7 +531,7 @@ const dict = {
     heroTitle3: "f\u00FCr Ihr",
     heroTitle4: "Unternehmen.",
     heroSub:
-      "Seventy Times — ein Team, das KI und digitales Marketing in einen planbaren Kundenfluss verwandelt. Werbung, Automatisierung und smarte Bots, ausgerichtet auf ein KPI — Ihr Wachstum.",
+      "Seventy Times verwandelt KI und Performance-Marketing in einen planbaren Strom qualifizierter Kunden. Werbung, Automatisierung und smarte Bots — alle auf eine Kennzahl ausgerichtet: Ihr Wachstum.",
     heroCta1: "Anfrage senden",
     heroCta2: "Mit Venesa sprechen",
     heroHint: "Antwort in 10 Sekunden · Unverbindlich",

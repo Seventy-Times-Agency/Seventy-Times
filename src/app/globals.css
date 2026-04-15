@@ -183,6 +183,24 @@ textarea {
   padding: 0 0.06em;
 }
 
+/* Long German compound words — allow soft break and hyphenation on
+   all display titles so they don't overflow on narrow viewports. */
+h1, h2, h3,
+[class*="title"],
+[class*="heroTitle"] {
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+html:lang(de) h1,
+html:lang(de) h2,
+html:lang(de) h3 {
+  hyphens: auto;
+  -ms-hyphens: auto;
+}
+
 /* Reusable shimmer text — runs on any element it's applied to */
 .shimmer {
   background: linear-gradient(

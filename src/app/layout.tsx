@@ -2,13 +2,13 @@ import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import { siteConfig } from "@/data/siteConfig";
 import { I18nProvider } from "@/i18n/context";
+import HtmlLangSync from "@/i18n/HtmlLangSync";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageIntro from "@/components/PageIntro";
 import LeadForm from "@/components/LeadForm";
 import ReviewForm from "@/components/ReviewForm";
-import ViewportFrame from "@/components/ViewportFrame";
 import ChatWidget from "@/components/ChatWidget";
 import "./globals.css";
 
@@ -69,13 +69,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru" className={manrope.variable}>
+    <html lang="en" className={manrope.variable}>
       <body>
         <I18nProvider>
+          <HtmlLangSync />
           <SmoothScroll />
           <PageIntro />
           <AnimatedBackground />
-          <ViewportFrame />
           <ScrollProgress />
           {children}
           <ChatWidget />

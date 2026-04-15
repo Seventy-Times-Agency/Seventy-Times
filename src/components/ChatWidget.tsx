@@ -185,10 +185,8 @@ export default function ChatWidget() {
         aria-label={open ? "Закрыть чат" : "Написать Венесе"}
         type="button"
       >
-        <div className={styles.avatar}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/venesa.jpg" alt="" className={styles.toggleImg} />
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/venesa.jpg" alt="" className={styles.toggleImg} />
         <span className={styles.toggleDot} />
         {!open && <span className={styles.toggleLabel}>{t.chatLabel}</span>}
       </button>
