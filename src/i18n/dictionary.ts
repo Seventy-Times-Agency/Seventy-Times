@@ -19,13 +19,13 @@ const dict = {
     heroTitle3: "вашего",
     heroTitle4: "бизнеса.",
     heroSub:
-      "IAA agency — команда, которая превращает AI и digital-маркетинг в предсказуемый поток клиентов. Реклама, автоматизация и умные боты, настроенные под один KPI — ваш рост.",
+      "Seventy Times — команда, которая превращает AI и digital-маркетинг в предсказуемый поток клиентов. Реклама, автоматизация и умные боты, настроенные под один KPI — ваш рост.",
     heroCta1: "Оставить заявку",
     heroCta2: "Поговорить с Венесой",
     heroHint: "Ответ за 10 секунд · Без обязательств",
     statClients: "Клиентов",
     statSupport: "AI-поддержка",
-    statGrowth: "Рост конверсий",
+    statGrowth: "Средний рост",
     statNext: "Следующий виток",
 
     // Services
@@ -179,7 +179,7 @@ const dict = {
 
     // CTA
     ctaEyebrow: "— Связаться",
-    ctaEnd: "IAA / 2026 →",
+    ctaEnd: "70× / 2026 →",
     ctaTitle1: "Готовы",
     ctaTitle2: "к росту",
     ctaTitle3: "?",
@@ -187,7 +187,7 @@ const dict = {
       "Напишите в Telegram или на почту — обсудим задачу, расскажем как можем помочь, и в течение часа дадим первые идеи. Без обязательств, без воды.",
     ctaPrimary: "Оставить заявку",
     ctaTelegram: "Telegram",
-    ctaMeta1: "IAA agency · Реклама × Автоматизация × AI",
+    ctaMeta1: "Seventy Times · Реклама × Автоматизация × AI",
     ctaMeta2: "Принимаем проекты · США → Весь мир",
 
     // Footer
@@ -248,7 +248,7 @@ const dict = {
 
     // Chat widget
     chatGreeting:
-      "Привет 👋 Меня зовут Венеса, я AI-консультант IAA agency.\n\nРасскажи немного о своём бизнесе — подберу решение под твои задачи.",
+      "Привет 👋 Меня зовут Венеса, я AI-консультант Seventy Times.\n\nРасскажи немного о своём бизнесе — подберу решение под твои задачи.",
     chatName: "Венеса · AI-консультант",
     chatStatus: "Онлайн",
     chatPh: "Напишите сообщение...",
@@ -275,13 +275,13 @@ const dict = {
     heroTitle3: "business",
     heroTitle4: "growth.",
     heroSub:
-      "IAA agency — a team that turns AI and digital marketing into a predictable flow of clients. Ads, automation, and smart bots tuned to one KPI — your growth.",
+      "Seventy Times — a team that turns AI and digital marketing into a predictable flow of clients. Ads, automation, and smart bots tuned to one KPI — your growth.",
     heroCta1: "Get a quote",
     heroCta2: "Talk to Venesa",
     heroHint: "Response in 10 seconds · No obligations",
     statClients: "Clients",
     statSupport: "AI support",
-    statGrowth: "Conversion growth",
+    statGrowth: "Avg. growth",
     statNext: "Next milestone",
 
     // Services
@@ -435,7 +435,7 @@ const dict = {
 
     // CTA
     ctaEyebrow: "— Get in touch",
-    ctaEnd: "IAA / 2026 →",
+    ctaEnd: "70× / 2026 →",
     ctaTitle1: "Ready",
     ctaTitle2: "to grow",
     ctaTitle3: "?",
@@ -443,7 +443,7 @@ const dict = {
       "Write us on Telegram or email — we'll discuss your task, explain how we can help, and share first ideas within an hour. No obligations, no fluff.",
     ctaPrimary: "Get a quote",
     ctaTelegram: "Telegram",
-    ctaMeta1: "IAA agency · Ads × Automation × AI",
+    ctaMeta1: "Seventy Times · Ads × Automation × AI",
     ctaMeta2: "Accepting projects · USA → Worldwide",
 
     // Footer
@@ -504,7 +504,7 @@ const dict = {
 
     // Chat widget
     chatGreeting:
-      "Hi 👋 My name is Venesa, I'm the AI consultant at IAA agency.\n\nTell me a bit about your business — I'll suggest the right solution for your goals.",
+      "Hi 👋 My name is Venesa, I'm the AI consultant at Seventy Times.\n\nTell me a bit about your business — I'll suggest the right solution for your goals.",
     chatName: "Venesa · AI consultant",
     chatStatus: "Online",
     chatPh: "Type a message...",
@@ -531,13 +531,13 @@ const dict = {
     heroTitle3: "f\u00FCr Ihr",
     heroTitle4: "Unternehmen.",
     heroSub:
-      "IAA agency — ein Team, das KI und digitales Marketing in einen planbaren Kundenfluss verwandelt. Werbung, Automatisierung und smarte Bots, ausgerichtet auf ein KPI — Ihr Wachstum.",
+      "Seventy Times — ein Team, das KI und digitales Marketing in einen planbaren Kundenfluss verwandelt. Werbung, Automatisierung und smarte Bots, ausgerichtet auf ein KPI — Ihr Wachstum.",
     heroCta1: "Anfrage senden",
     heroCta2: "Mit Venesa sprechen",
     heroHint: "Antwort in 10 Sekunden · Unverbindlich",
     statClients: "Kunden",
     statSupport: "KI-Support",
-    statGrowth: "Conversion-Wachstum",
+    statGrowth: "Wachstum",
     statNext: "Nächster Meilenstein",
 
     // Services
@@ -691,7 +691,7 @@ const dict = {
 
     // CTA
     ctaEyebrow: "— Kontakt aufnehmen",
-    ctaEnd: "IAA / 2026 →",
+    ctaEnd: "70× / 2026 →",
     ctaTitle1: "Bereit",
     ctaTitle2: "zu wachsen",
     ctaTitle3: "?",
@@ -699,7 +699,7 @@ const dict = {
       "Schreiben Sie uns auf Telegram oder per E-Mail — wir besprechen Ihre Aufgabe, erklären wie wir helfen können und teilen erste Ideen innerhalb einer Stunde. Unverbindlich, ohne Floskeln.",
     ctaPrimary: "Anfrage senden",
     ctaTelegram: "Telegram",
-    ctaMeta1: "IAA agency · Werbung × Automatisierung × KI",
+    ctaMeta1: "Seventy Times · Werbung × Automatisierung × KI",
     ctaMeta2: "Projekte willkommen · USA → Weltweit",
 
     // Footer
@@ -760,7 +760,7 @@ const dict = {
 
     // Chat widget
     chatGreeting:
-      "Hallo 👋 Mein Name ist Venesa, ich bin die KI-Beraterin bei IAA agency.\n\nErzählen Sie mir ein wenig über Ihr Unternehmen — ich schlage die passende Lösung für Ihre Ziele vor.",
+      "Hallo 👋 Mein Name ist Venesa, ich bin die KI-Beraterin bei Seventy Times.\n\nErzählen Sie mir ein wenig über Ihr Unternehmen — ich schlage die passende Lösung für Ihre Ziele vor.",
     chatName: "Venesa · KI-Beraterin",
     chatStatus: "Online",
     chatPh: "Nachricht eingeben...",

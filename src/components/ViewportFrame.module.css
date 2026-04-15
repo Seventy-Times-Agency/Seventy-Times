@@ -97,6 +97,48 @@
   left: 64px;
 }
 
+/* Editorial number accents — scattered coordinate-like labels */
+.numAccent {
+  position: absolute;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+  opacity: 0.6;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.numAccent::before {
+  content: "";
+  width: 14px;
+  height: 1px;
+  background: var(--line);
+  display: inline-block;
+}
+
+.numTopRight {
+  top: 24px;
+  right: 64px;
+}
+
+.numMidLeft {
+  top: 50%;
+  left: 18px;
+  transform: translateY(120px) rotate(-90deg);
+  transform-origin: left center;
+}
+
+.numMidRight {
+  top: 50%;
+  right: 18px;
+  transform: translateY(-120px) rotate(90deg);
+  transform-origin: right center;
+}
+
 .chipDot {
   width: 5px;
   height: 5px;

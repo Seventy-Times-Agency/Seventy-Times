@@ -1,31 +1,31 @@
 /**
  * Конфиг сайта: контакты, соцсети, имя.
- * Контакты сейчас — заглушки. Замени на реальные когда будут готовы.
+ * Контакты — заглушки, замени на реальные когда будут готовы.
  */
 
 export const siteConfig = {
-  name: "IAA agency",
-  shortName: "iaa",
-  tagline: "Реклама · Автоматизация · AI",
+  name: "Seventy Times",
+  shortName: "70×",
+  tagline: "Ads · Automation · AI",
   description:
     "Реклама, автоматизация процессов и AI-боты для роста бизнеса.",
-  url: "https://iaa.example",
+  url: "https://seventy-times.com",
 
   contacts: {
     // TODO: заменить на реальные контакты
     telegram: {
-      handle: "@iaa_agency",
-      url: "https://t.me/iaa_agency",
+      handle: "@seventytimes",
+      url: "https://t.me/seventytimes",
     },
     email: {
-      address: "hello@iaa.agency",
-      url: "mailto:hello@iaa.agency",
+      address: "hello@seventy-times.com",
+      url: "mailto:hello@seventy-times.com",
     },
   },
 
   stats: [
-    { value: "50+", label: "Клиентов" },
+    { value: "70×", label: "Рост" },
     { value: "24/7", label: "AI-поддержка" },
-    { value: "3×", label: "Рост конверсий" },
+    { value: "3×", label: "Конверсии" },
   ],
 } as const;

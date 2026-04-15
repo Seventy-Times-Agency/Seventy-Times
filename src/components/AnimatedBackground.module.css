@@ -48,6 +48,30 @@
   animation: drift 38s ease-in-out infinite reverse;
 }
 
+/* Gigantic "70" numeral anchored to the far right edge — brand accent */
+.bigNumeral {
+  position: absolute;
+  top: 50%;
+  right: -8%;
+  transform: translateY(-50%);
+  font-size: clamp(300px, 50vw, 900px);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(200, 212, 222, 0.03);
+  letter-spacing: -0.06em;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 820px) {
+  .bigNumeral {
+    display: none;
+  }
+}
+
 /* Thin highlight line at the top of the page */
 .topLight {
   position: absolute;

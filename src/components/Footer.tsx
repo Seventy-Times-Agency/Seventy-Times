@@ -14,9 +14,9 @@ export default function Footer() {
         <div className={styles.brand}>
           <span className={styles.logo}>
             <span className={styles.logoMark}>
-              ia<span className={styles.logoOutline}>a</span>
+              70<span className={styles.logoOutline}>×</span>
             </span>
-            <span className={styles.logoSub}>agency</span>
+            <span className={styles.logoSub}>times</span>
           </span>
           <p className={styles.brandText}>{siteConfig.description}</p>
         </div>
@@ -47,8 +47,8 @@ export default function Footer() {
       </div>
 
       <div className={styles.wordmark} aria-hidden="true">
-        ia<span className={styles.wordmarkOutline}>a</span>
-        <span className={styles.wordmarkSub}>agency®</span>
+        seventy<span className={styles.wordmarkOutline}>×</span>times
+        <span className={styles.wordmarkSub}>®</span>
       </div>
 
       <div className={styles.bottom}>

@@ -15,6 +15,7 @@ export default function AnimatedBackground() {
     <div className={styles.wrap} aria-hidden="true">
       <div className={styles.topLight} />
       <div className={styles.grid} />
+      <div className={styles.bigNumeral}>70×</div>
       <div className={`${styles.glow} ${styles.glowA}`} />
       <div className={`${styles.glow} ${styles.glowB}`} />
     </div>

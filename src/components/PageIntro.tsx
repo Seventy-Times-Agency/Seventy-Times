@@ -22,7 +22,7 @@ export default function PageIntro() {
     if (typeof window === "undefined") return;
 
     // Replay only once per browser session
-    const seen = sessionStorage.getItem("iaa-intro-seen");
+    const seen = sessionStorage.getItem("st-intro-seen");
     if (seen) {
       setVisible(false);
       return;
@@ -34,7 +34,7 @@ export default function PageIntro() {
 
     const timer = window.setTimeout(() => {
       setVisible(false);
-      sessionStorage.setItem("iaa-intro-seen", "1");
+      sessionStorage.setItem("st-intro-seen", "1");
       document.body.style.overflow = prevOverflow;
     }, 1900);
 
@@ -60,7 +60,7 @@ export default function PageIntro() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.15 }}
             >
-              IAA agency / 2026
+              Seventy Times / 2026
             </motion.div>
 
             <motion.div
@@ -69,7 +69,7 @@ export default function PageIntro() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
             >
-              ia<span className={styles.outline}>a</span>
+              70<span className={styles.outline}>×</span>
             </motion.div>
 
             <motion.div

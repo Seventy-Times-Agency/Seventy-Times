@@ -33,16 +33,16 @@ export default function Hero() {
   const { t } = useT();
 
   const stats: Stat[] = [
+    { label: t.statGrowth, counter: { to: 70, suffix: "×" } },
     { label: t.statClients, counter: { to: 50, suffix: "+" } },
     { label: t.statSupport, static: "24/7" },
-    { label: t.statGrowth, counter: { to: 3, suffix: "×" } },
     { label: t.statNext, static: "2026" },
   ];
 
   return (
     <section id="top" className={styles.hero}>
       <span className={styles.heroWordmark} aria-hidden="true">
-        ia<span className={styles.heroWordmarkOutline}>a</span>
+        70<span className={styles.heroWordmarkOutline}>×</span>
       </span>
 
       <motion.div variants={container} initial="hidden" animate="visible">

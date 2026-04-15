@@ -23,9 +23,9 @@ export default function Nav() {
     <nav className={styles.nav}>
       <a href="#top" className={styles.logo} aria-label={siteConfig.name}>
         <span className={styles.logoMark}>
-          ia<span className={styles.logoOutline}>a</span>
+          70<span className={styles.logoOutline}>×</span>
         </span>
-        <span className={styles.logoSub}>agency</span>
+        <span className={styles.logoSub}>times</span>
       </a>
 
       <div className={styles.links}>
