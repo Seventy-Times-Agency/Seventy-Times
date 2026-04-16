@@ -241,7 +241,7 @@ const dict = {
     ftRights: "Все права защищены",
     ftUp: "Наверх ↑",
     ftContact: "Связаться",
-    ftDisclaimer: "Любые проекции роста и числовые ориентиры на сайте носят иллюстративный характер. Реальные результаты зависят от ниши, бюджета и качества исполнения — Seventy Times не гарантирует конкретных цифр."
+    ftDisclaimer: "Любые проекции роста и числовые ориентиры на сайте носят иллюстративный характер. Реальные результаты зависят от ниши, бюджета и качества исполнения — Seventy Times не гарантирует конкретных цифр.",
 
     // Dividers
     divNext: "— дальше",
@@ -533,7 +533,7 @@ const dict = {
     ftRights: "All rights reserved",
     ftUp: "Back to top ↑",
     ftContact: "Contact",
-    ftDisclaimer: "Any growth projections and numbers on this site are illustrative. Actual results depend on niche, budget and execution quality — Seventy Times does not guarantee specific numbers."
+    ftDisclaimer: "Any growth projections and numbers on this site are illustrative. Actual results depend on niche, budget and execution quality — Seventy Times does not guarantee specific numbers.",
 
     // Dividers
     divNext: "— next",
@@ -825,7 +825,7 @@ const dict = {
     ftRights: "Alle Rechte vorbehalten",
     ftUp: "Nach oben ↑",
     ftContact: "Kontakt",
-    ftDisclaimer: "Alle Wachstumsprognosen und Zahlen auf dieser Seite sind illustrativ. Tatsächliche Ergebnisse hängen von Nische, Budget und Umsetzungsqualität ab — Seventy Times garantiert keine konkreten Zahlen."
+    ftDisclaimer: "Alle Wachstumsprognosen und Zahlen auf dieser Seite sind illustrativ. Tatsächliche Ergebnisse hängen von Nische, Budget und Umsetzungsqualität ab — Seventy Times garantiert keine konkreten Zahlen.",
 
     // Dividers
     divNext: "— weiter",
