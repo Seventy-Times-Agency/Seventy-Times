@@ -24,8 +24,9 @@ export const siteConfig = {
   },
 
   stats: [
-    { value: "70×", label: "Рост" },
-    { value: "24/7", label: "AI-поддержка" },
-    { value: "3×", label: "Конверсии" },
+    { value: "70×", label: "Цель" },
+    { value: "3", label: "Направления" },
+    { value: "24/7", label: "AI-консультант" },
+    { value: "2026", label: "Запуск" },
   ],
 } as const;

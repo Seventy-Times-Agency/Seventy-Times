@@ -51,6 +51,8 @@ export default function Footer() {
         <span className={styles.wordmarkSub}>®</span>
       </div>
 
+      <p className={styles.disclaimer}>{t.ftDisclaimer}</p>
+
       <div className={styles.bottom}>
         <span>© {year} {siteConfig.name} · {t.ftRights}</span>
         <div className={styles.bottomLinks}>

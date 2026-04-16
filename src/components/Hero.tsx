@@ -33,10 +33,10 @@ export default function Hero() {
   const { t } = useT();
 
   const stats: Stat[] = [
-    { label: t.statGrowth, counter: { to: 70, suffix: "×" } },
-    { label: t.statClients, counter: { to: 50, suffix: "+" } },
+    { label: t.statGoal, counter: { to: 70, suffix: "×" } },
+    { label: t.statServices, static: "3" },
     { label: t.statSupport, static: "24/7" },
-    { label: t.statNext, static: "2026" },
+    { label: t.statLaunch, static: "2026" },
   ];
 
   return (

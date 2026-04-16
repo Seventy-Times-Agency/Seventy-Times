@@ -7,6 +7,7 @@ import Services from "@/components/Services";
 import Process from "@/components/Process";
 import ChatDemo from "@/components/ChatDemo";
 import Testimonials from "@/components/Testimonials";
+import GrowthSimulator from "@/components/GrowthSimulator";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
@@ -29,6 +30,8 @@ export default function HomePage() {
         <ChatDemo />
         <SectionDivider label={t.divProof} />
         <Testimonials />
+        <SectionDivider label={t.divSimulator} />
+        <GrowthSimulator />
         <SectionDivider label={t.divQuestions} />
         <FAQ />
         <SectionDivider label={t.divTalk} />

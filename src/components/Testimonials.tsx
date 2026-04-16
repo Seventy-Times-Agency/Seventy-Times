@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, type MouseEvent } from "react";
-import { TESTIMONIALS } from "@/data/testimonials";
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
 import SectionWatermark from "./SectionWatermark";
@@ -12,7 +11,14 @@ export default function Testimonials() {
   const { t } = useT();
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
-  const total = TESTIMONIALS.length;
+
+  const principles = [
+    { badge: t.prin1Badge, title: t.prin1Title, body: t.prin1Body },
+    { badge: t.prin2Badge, title: t.prin2Title, body: t.prin2Body },
+    { badge: t.prin3Badge, title: t.prin3Title, body: t.prin3Body },
+    { badge: t.prin4Badge, title: t.prin4Title, body: t.prin4Body },
+  ];
+  const total = principles.length;
 
   useEffect(() => {
     const el = trackRef.current;
@@ -46,8 +52,14 @@ export default function Testimonials() {
 
   const handleMove = (e: MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${((e.clientX - rect.left) / rect.width) * 100}%`);
-    e.currentTarget.style.setProperty("--my", `${((e.clientY - rect.top) / rect.height) * 100}%`);
+    e.currentTarget.style.setProperty(
+      "--mx",
+      `${((e.clientX - rect.left) / rect.width) * 100}%`
+    );
+    e.currentTarget.style.setProperty(
+      "--my",
+      `${((e.clientY - rect.top) / rect.height) * 100}%`
+    );
   };
 
   const progressPct = total > 1 ? ((index + 1) / total) * 100 : 100;
@@ -57,17 +69,23 @@ export default function Testimonials() {
       <SectionWatermark text={t.testTitle3} number="/ 04" position="right" />
       <div className={styles.header}>
         <div className={styles.headerLeft}>
-          <Reveal><span className="eyebrow">{t.testEyebrow}</span></Reveal>
+          <Reveal>
+            <span className="eyebrow">{t.testEyebrow}</span>
+          </Reveal>
           <h2 className={styles.title}>
             <AnimatedText
-              words={[t.testTitle1, t.testTitle2, { text: t.testTitle3, className: styles.titleItalic }]}
+              words={[
+                t.testTitle1,
+                t.testTitle2,
+                { text: t.testTitle3, className: styles.titleItalic },
+              ]}
             />
           </h2>
         </div>
         <Reveal delay={0.15}>
           <div className={styles.headerRight}>
             <p className={styles.lead}>{t.testLead}</p>
-            <a href="#review" className={styles.reviewBtn}>
+            <a href="#lead" className={styles.reviewBtn}>
               {t.testReviewBtn} <span aria-hidden="true">→</span>
             </a>
           </div>
@@ -75,26 +93,48 @@ export default function Testimonials() {
       </div>
       <div className={styles.carousel}>
         <div className={styles.track} ref={trackRef}>
-          {TESTIMONIALS.map((tm) => (
-            <div key={tm.name} className={styles.card} onMouseMove={handleMove}>
-              <div className={styles.quoteMark}>&ldquo;</div>
-              <p className={styles.quote}>{tm.content}</p>
-              <div className={styles.author}>
-                <span className={styles.authorName}>{tm.name}</span>
-                <span className={styles.authorRole}>{tm.role}</span>
-                <span className={styles.authorLocation}>{tm.location}</span>
-              </div>
+          {principles.map((p) => (
+            <div
+              key={p.badge}
+              className={styles.card}
+              onMouseMove={handleMove}
+            >
+              <span className={styles.principleBadge}>/ {p.badge}</span>
+              <h3 className={styles.principleTitle}>{p.title}</h3>
+              <p className={styles.principleBody}>{p.body}</p>
             </div>
           ))}
         </div>
         <div className={styles.controls}>
           <div className={styles.progress}>
-            <div className={styles.progressFill} style={{ width: `${progressPct}%` }} />
+            <div
+              className={styles.progressFill}
+              style={{ width: `${progressPct}%` }}
+            />
           </div>
-          <span className={styles.counter}>/ {String(index + 1).padStart(2, "0")} — {String(total).padStart(2, "0")}</span>
+          <span className={styles.counter}>
+            / {String(index + 1).padStart(2, "0")} —{" "}
+            {String(total).padStart(2, "0")}
+          </span>
           <div className={styles.navButtons}>
-            <button type="button" className={styles.navBtn} onClick={() => scrollByOne(-1)} disabled={index === 0} aria-label={t.testPrev}>←</button>
-            <button type="button" className={styles.navBtn} onClick={() => scrollByOne(1)} disabled={index >= total - 1} aria-label={t.testNext}>→</button>
+            <button
+              type="button"
+              className={styles.navBtn}
+              onClick={() => scrollByOne(-1)}
+              disabled={index === 0}
+              aria-label={t.testPrev}
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              className={styles.navBtn}
+              onClick={() => scrollByOne(1)}
+              disabled={index >= total - 1}
+              aria-label={t.testNext}
+            >
+              →
+            </button>
           </div>
         </div>
       </div>

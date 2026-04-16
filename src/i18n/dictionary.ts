@@ -23,10 +23,10 @@ const dict = {
     heroCta1: "Оставить заявку",
     heroCta2: "Поговорить с Венесой",
     heroHint: "Ответ за 10 секунд · Без обязательств",
-    statClients: "Клиентов",
-    statSupport: "AI-поддержка",
-    statGrowth: "Средний рост",
-    statNext: "Следующий виток",
+    statGoal: "Цель роста",
+    statServices: "Направления",
+    statSupport: "AI на связи",
+    statLaunch: "Запуск",
 
     // Services
     svcEyebrow: "— Услуги / 2026",
@@ -133,16 +133,28 @@ const dict = {
     venBadgeName: "Венеса",
     venBadgeRole: "AI-консультант · Онлайн",
 
-    // Testimonials
-    testEyebrow: "— Отзывы / Клиенты",
+    // Principles (was Testimonials — honest replacement since we're new)
+    testEyebrow: "— Принципы / Обещания",
     testTitle1: "Что",
-    testTitle2: "говорят",
-    testTitle3: "клиенты",
+    testTitle2: "мы",
+    testTitle3: "обещаем",
     testLead:
-      "Команды из США и Европы, с которыми мы запускали проекты в последние месяцы.",
-    testReviewBtn: "Оставить отзыв",
-    testPrev: "Предыдущий отзыв",
-    testNext: "Следующий отзыв",
+      "Мы только запускаемся и не ставим сюда выдуманные отзывы. Вместо этого — четыре принципа, которыми реально руководствуемся в работе.",
+    testReviewBtn: "Стать первым клиентом",
+    testPrev: "Предыдущий принцип",
+    testNext: "Следующий принцип",
+    prin1Title: "Начинаем с малого",
+    prin1Body: "Запускаем одну услугу, показываем результат за 2–3 недели, потом расширяемся. Вас не запирают в длинный контракт — можно остановиться в любой момент.",
+    prin1Badge: "01",
+    prin2Title: "Цифры каждый понедельник",
+    prin2Body: "Еженедельный отчёт с понятными KPI. Видно что сработало, что нет и что меняем на следующей неделе. Никакого тумана и общих слов.",
+    prin2Badge: "02",
+    prin3Title: "Без гарантий чудес",
+    prin3Body: "Мы не обещаем «×100 за неделю» — это было бы враньём. Обещаем измеримый прогресс и честную итерацию. Результат зависит от ниши, бюджета и рынка.",
+    prin3Badge: "03",
+    prin4Title: "Стоп-лосс зашит",
+    prin4Body: "Если за 6–8 недель подход не работает — мы сами говорим первыми. Бюджет ваш остаётся, репутация наша — тоже. Этика важнее выставленного счёта.",
+    prin4Badge: "04",
 
     // FAQ
     faqEyebrow: "— Частые вопросы",
@@ -154,13 +166,13 @@ const dict = {
     faqNoteLink: "Напишите в Telegram →",
     faq1q: "Сколько стоят ваши услуги?",
     faq1a:
-      "Мы не называем цены заранее — обсуждаем их после брифинга, чтобы предложить вилку под конкретную задачу. Обычно наши клиенты стартуют с пакета от $1000 в месяц, но точная цифра зависит от масштаба и целей.",
+      "Мы не называем цены заранее — обсуждаем их после брифинга, чтобы предложить вилку под конкретную задачу. Типичные проекты стартуют от $1000 в месяц, но точная цифра зависит от масштаба и целей.",
     faq2q: "Когда будут первые результаты?",
     faq2a:
       "По таргету — первые лиды обычно приходят в течение 3–7 дней после запуска. По автоматизации — сразу после внедрения. По AI-ботам — в день запуска. Стабильная динамика в рекламе формируется к концу первого месяца после оптимизации.",
     faq3q: "Работаете ли с моей нишей?",
     faq3a:
-      "За последние годы мы запускали проекты в e-commerce, образовании, недвижимости, медицине, услугах и SaaS. Если вашей ниши нет в списке — всё равно пишите, скорее всего у нас есть релевантный опыт.",
+      "Наша методология рассчитана на e-commerce, образование, недвижимость, медицину, услуги и SaaS. Если вашей ниши нет в списке — всё равно пишите, обсудим как можем помочь.",
     faq4q: "Что если реклама не сработает?",
     faq4a:
       "Мы не даём гарантий «100% лидов за неделю» — это были бы пустые обещания. Но мы работаем по прозрачным KPI, еженедельно показываем цифры, и если кампания не заходит — меняем подход быстро, а не жжём бюджет месяцами.",
@@ -176,6 +188,28 @@ const dict = {
     faq8q: "Вы подписываете NDA?",
     faq8a:
       "Да, если есть такая необходимость — подписываем NDA до начала работы. Вся информация о проекте остаётся конфиденциальной.",
+
+    // Growth Simulator
+    simEyebrow: "— 70× Симулятор роста",
+    simTitle1: "Посчитайте",
+    simTitle2: "свой",
+    simTitle3: "путь.",
+    simLead:
+      "Двигайте ползунки — увидите иллюстративную траекторию роста на 6 месяцев. Это не гарантия, а наглядная модель того, как связка Реклама + Автоматизация + AI компонуется.",
+    simSpendLabel: "Рекламный бюджет",
+    simSpendUnit: "$/мес",
+    simAutoLabel: "Уровень автоматизации",
+    simAiLabel: "Внедрение AI",
+    simMonthNow: "Сейчас",
+    simMonth6: "Через 6 мес.",
+    simLeadsNow: "Лидов сейчас",
+    simLeadsProj: "Проекция",
+    simMultiplier: "Коэффициент",
+    simPathTo70x: "Путь к 70×",
+    simPathMonths: "мес.",
+    simDisclaimer:
+      "Модель носит иллюстративный характер. Реальные результаты зависят от ниши, рынка, качества исполнения и ряда других факторов. Seventy Times не гарантирует конкретных цифр.",
+    simCta: "Обсудить план с Венесой",
 
     // CTA
     ctaEyebrow: "— Связаться",
@@ -207,6 +241,7 @@ const dict = {
     ftRights: "Все права защищены",
     ftUp: "Наверх ↑",
     ftContact: "Связаться",
+    ftDisclaimer: "Любые проекции роста и числовые ориентиры на сайте носят иллюстративный характер. Реальные результаты зависят от ниши, бюджета и качества исполнения — Seventy Times не гарантирует конкретных цифр."
 
     // Dividers
     divNext: "— дальше",
@@ -214,6 +249,7 @@ const dict = {
     divProof: "— отзывы",
     divQuestions: "— вопросы",
     divTalk: "— связаться",
+    divSimulator: "— посчитайте свой рост",
 
     // Intro
     introTag1: "Реклама",
@@ -279,10 +315,10 @@ const dict = {
     heroCta1: "Get a quote",
     heroCta2: "Talk to Venesa",
     heroHint: "Response in 10 seconds · No obligations",
-    statClients: "Clients",
-    statSupport: "AI support",
-    statGrowth: "Avg. growth",
-    statNext: "Next milestone",
+    statGoal: "Growth ambition",
+    statServices: "Core services",
+    statSupport: "AI always on",
+    statLaunch: "Est.",
 
     // Services
     svcEyebrow: "— Services / 2026",
@@ -389,16 +425,28 @@ const dict = {
     venBadgeName: "Venesa",
     venBadgeRole: "AI consultant · Online",
 
-    // Testimonials
-    testEyebrow: "— Testimonials / Clients",
+    // Principles
+    testEyebrow: "— Principles / Promises",
     testTitle1: "What",
-    testTitle2: "clients",
-    testTitle3: "say",
+    testTitle2: "we",
+    testTitle3: "promise",
     testLead:
-      "Teams across the US and Europe we partnered with recently.",
-    testReviewBtn: "Leave a review",
-    testPrev: "Previous review",
-    testNext: "Next review",
+      "We're a new studio and we won't post fake testimonials. Instead — four principles we actually run on.",
+    testReviewBtn: "Be our first client",
+    testPrev: "Previous principle",
+    testNext: "Next principle",
+    prin1Title: "Start small, prove first",
+    prin1Body: "We launch with a single service, show results in 2–3 weeks, then expand. No long contracts — you can stop at any time.",
+    prin1Badge: "01",
+    prin2Title: "Numbers every Monday",
+    prin2Body: "Weekly report with clear KPIs. You see what worked, what didn't, and what we'll change next week. No fog, no fluff.",
+    prin2Badge: "02",
+    prin3Title: "No guaranteed miracles",
+    prin3Body: "We don't promise '100× in a week' — that would be a lie. We promise measurable progress and honest iteration. Outcomes depend on niche, budget and market.",
+    prin3Badge: "03",
+    prin4Title: "Stop-loss built in",
+    prin4Body: "If the approach isn't working after 6–8 weeks, we tell you first. Your budget stays yours, our ethics stay ours. Integrity over invoice.",
+    prin4Badge: "04",
 
     // FAQ
     faqEyebrow: "— Frequently asked questions",
@@ -410,13 +458,13 @@ const dict = {
     faqNoteLink: "Message us on Telegram →",
     faq1q: "How much do your services cost?",
     faq1a:
-      "We don't quote prices upfront — we discuss them after the briefing to offer a range tailored to your specific task. Most clients start from around $1,000/month, but the exact figure depends on scope and goals.",
+      "We don't quote prices upfront — we discuss them after the briefing to offer a range tailored to your specific task. Typical projects start from around $1,000/month, but the exact figure depends on scope and goals.",
     faq2q: "When will I see results?",
     faq2a:
       "For ads — first leads usually come within 3–7 days after launch. For automation — immediately after implementation. For AI bots — on launch day. Stable ad performance forms by the end of the first month after optimization.",
     faq3q: "Do you work with my industry?",
     faq3a:
-      "Over the past years we've launched projects in e-commerce, education, real estate, healthcare, services and SaaS. If your niche isn't listed — reach out anyway, we likely have relevant experience.",
+      "Our methodology is built for e-commerce, education, real estate, healthcare, services and SaaS. If your niche isn't listed — reach out anyway, we'll discuss how we can help.",
     faq4q: "What if the ads don't work?",
     faq4a:
       "We don't promise '100% leads in a week' — that would be empty words. But we work on transparent KPIs, show numbers weekly, and if a campaign isn't performing — we pivot quickly instead of burning through the budget for months.",
@@ -432,6 +480,28 @@ const dict = {
     faq8q: "Do you sign NDAs?",
     faq8a:
       "Yes, if needed — we sign an NDA before starting work. All project information remains confidential.",
+
+    // Growth Simulator
+    simEyebrow: "— 70× Growth Simulator",
+    simTitle1: "Model",
+    simTitle2: "your",
+    simTitle3: "path.",
+    simLead:
+      "Move the sliders to see an illustrative 6-month trajectory. This isn't a guarantee — it's a visual model of how Ads + Automation + AI compound together.",
+    simSpendLabel: "Monthly ad spend",
+    simSpendUnit: "$/mo",
+    simAutoLabel: "Automation level",
+    simAiLabel: "AI adoption",
+    simMonthNow: "Today",
+    simMonth6: "In 6 months",
+    simLeadsNow: "Leads now",
+    simLeadsProj: "Projected",
+    simMultiplier: "Multiplier",
+    simPathTo70x: "Path to 70×",
+    simPathMonths: "mo",
+    simDisclaimer:
+      "Model is illustrative. Actual results depend on niche, market, execution quality and many other factors. Seventy Times does not guarantee specific numbers.",
+    simCta: "Discuss this plan with Venesa",
 
     // CTA
     ctaEyebrow: "— Get in touch",
@@ -463,6 +533,7 @@ const dict = {
     ftRights: "All rights reserved",
     ftUp: "Back to top ↑",
     ftContact: "Contact",
+    ftDisclaimer: "Any growth projections and numbers on this site are illustrative. Actual results depend on niche, budget and execution quality — Seventy Times does not guarantee specific numbers."
 
     // Dividers
     divNext: "— next",
@@ -470,6 +541,7 @@ const dict = {
     divProof: "— testimonials",
     divQuestions: "— questions",
     divTalk: "— get in touch",
+    divSimulator: "— model your growth",
 
     // Intro
     introTag1: "Ads",
@@ -535,10 +607,10 @@ const dict = {
     heroCta1: "Anfrage senden",
     heroCta2: "Mit Venesa sprechen",
     heroHint: "Antwort in 10 Sekunden · Unverbindlich",
-    statClients: "Kunden",
-    statSupport: "KI-Support",
-    statGrowth: "Wachstum",
-    statNext: "Nächster Meilenstein",
+    statGoal: "Wachstumsziel",
+    statServices: "Leistungen",
+    statSupport: "KI jederzeit",
+    statLaunch: "Gegr.",
 
     // Services
     svcEyebrow: "— Leistungen / 2026",
@@ -645,16 +717,28 @@ const dict = {
     venBadgeName: "Venesa",
     venBadgeRole: "KI-Beraterin · Online",
 
-    // Testimonials
-    testEyebrow: "— Kundenstimmen",
+    // Principles
+    testEyebrow: "— Prinzipien / Versprechen",
     testTitle1: "Was",
-    testTitle2: "Kunden",
-    testTitle3: "sagen",
+    testTitle2: "wir",
+    testTitle3: "versprechen",
     testLead:
-      "Teams aus den USA und Europa, mit denen wir in den letzten Monaten Projekte gestartet haben.",
-    testReviewBtn: "Bewertung abgeben",
-    testPrev: "Vorherige Bewertung",
-    testNext: "Nächste Bewertung",
+      "Wir sind ein neues Studio und posten keine erfundenen Bewertungen. Stattdessen — vier Prinzipien, nach denen wir wirklich arbeiten.",
+    testReviewBtn: "Erster Kunde werden",
+    testPrev: "Vorheriges Prinzip",
+    testNext: "Nächstes Prinzip",
+    prin1Title: "Klein starten, dann skalieren",
+    prin1Body: "Wir starten mit einer Leistung, zeigen Ergebnisse in 2–3 Wochen, dann erweitern wir. Keine langen Verträge — Sie können jederzeit stoppen.",
+    prin1Badge: "01",
+    prin2Title: "Zahlen jeden Montag",
+    prin2Body: "Wöchentlicher Bericht mit klaren KPIs. Sie sehen was funktioniert hat, was nicht, und was wir in der nächsten Woche ändern. Kein Nebel, keine Floskeln.",
+    prin2Badge: "02",
+    prin3Title: "Keine garantierten Wunder",
+    prin3Body: "Wir versprechen kein '100× in einer Woche' — das wäre gelogen. Wir versprechen messbaren Fortschritt und ehrliche Iteration. Ergebnisse hängen von Nische, Budget und Markt ab.",
+    prin3Badge: "03",
+    prin4Title: "Stopp-Loss eingebaut",
+    prin4Body: "Wenn der Ansatz nach 6–8 Wochen nicht funktioniert, sagen wir es als Erste. Ihr Budget bleibt Ihnen, unsere Ethik bleibt uns. Integrität vor Rechnung.",
+    prin4Badge: "04",
 
     // FAQ
     faqEyebrow: "— Häufige Fragen",
@@ -666,13 +750,13 @@ const dict = {
     faqNoteLink: "Schreiben Sie uns auf Telegram →",
     faq1q: "Was kosten Ihre Leistungen?",
     faq1a:
-      "Wir nennen keine Preise vorab — wir besprechen sie nach dem Briefing, um eine auf Ihre Aufgabe zugeschnittene Preisspanne anzubieten. Die meisten Kunden starten ab ca. 1.000 $/Monat, der genaue Betrag hängt von Umfang und Zielen ab.",
+      "Wir nennen keine Preise vorab — wir besprechen sie nach dem Briefing, um eine auf Ihre Aufgabe zugeschnittene Preisspanne anzubieten. Typische Projekte starten ab ca. 1.000 $/Monat, der genaue Betrag hängt von Umfang und Zielen ab.",
     faq2q: "Wann sehe ich erste Ergebnisse?",
     faq2a:
       "Bei Werbung — erste Leads kommen in der Regel innerhalb von 3–7 Tagen nach dem Start. Bei Automatisierung — sofort nach der Implementierung. Bei KI-Bots — am Starttag. Stabile Werbeleistung bildet sich bis Ende des ersten Monats nach der Optimierung.",
     faq3q: "Arbeiten Sie mit meiner Branche?",
     faq3a:
-      "In den letzten Jahren haben wir Projekte in E-Commerce, Bildung, Immobilien, Gesundheitswesen, Dienstleistungen und SaaS gestartet. Wenn Ihre Nische nicht dabei ist — kontaktieren Sie uns trotzdem, wir haben wahrscheinlich relevante Erfahrung.",
+      "Unsere Methodik ist ausgelegt für E-Commerce, Bildung, Immobilien, Gesundheitswesen, Dienstleistungen und SaaS. Wenn Ihre Nische nicht dabei ist — kontaktieren Sie uns trotzdem, wir besprechen wie wir helfen können.",
     faq4q: "Was wenn die Werbung nicht funktioniert?",
     faq4a:
       "Wir versprechen keine '100% Leads in einer Woche' — das wären leere Worte. Aber wir arbeiten mit transparenten KPIs, zeigen wöchentlich Zahlen, und wenn eine Kampagne nicht performt — schwenken wir schnell um, statt monatelang Budget zu verbrennen.",
@@ -688,6 +772,28 @@ const dict = {
     faq8q: "Unterzeichnen Sie NDAs?",
     faq8a:
       "Ja, bei Bedarf — wir unterzeichnen ein NDA vor Arbeitsbeginn. Alle Projektinformationen bleiben vertraulich.",
+
+    // Growth Simulator
+    simEyebrow: "— 70× Wachstumssimulator",
+    simTitle1: "Modellieren",
+    simTitle2: "Sie Ihren",
+    simTitle3: "Weg.",
+    simLead:
+      "Bewegen Sie die Regler, um eine illustrative 6-Monats-Trajektorie zu sehen. Dies ist keine Garantie — sondern ein visuelles Modell, wie Werbung + Automatisierung + KI zusammenwirken.",
+    simSpendLabel: "Monatliches Werbebudget",
+    simSpendUnit: "$/Monat",
+    simAutoLabel: "Automatisierungsgrad",
+    simAiLabel: "KI-Einsatz",
+    simMonthNow: "Heute",
+    simMonth6: "In 6 Monaten",
+    simLeadsNow: "Leads heute",
+    simLeadsProj: "Prognose",
+    simMultiplier: "Multiplikator",
+    simPathTo70x: "Weg zu 70×",
+    simPathMonths: "Mo.",
+    simDisclaimer:
+      "Das Modell ist illustrativ. Tatsächliche Ergebnisse hängen von Nische, Markt, Umsetzungsqualität und vielen weiteren Faktoren ab. Seventy Times garantiert keine konkreten Zahlen.",
+    simCta: "Plan mit Venesa besprechen",
 
     // CTA
     ctaEyebrow: "— Kontakt aufnehmen",
@@ -719,6 +825,7 @@ const dict = {
     ftRights: "Alle Rechte vorbehalten",
     ftUp: "Nach oben ↑",
     ftContact: "Kontakt",
+    ftDisclaimer: "Alle Wachstumsprognosen und Zahlen auf dieser Seite sind illustrativ. Tatsächliche Ergebnisse hängen von Nische, Budget und Umsetzungsqualität ab — Seventy Times garantiert keine konkreten Zahlen."
 
     // Dividers
     divNext: "— weiter",
@@ -726,6 +833,7 @@ const dict = {
     divProof: "— Kundenstimmen",
     divQuestions: "— Fragen",
     divTalk: "— Kontakt",
+    divSimulator: "— modellieren Sie Ihr Wachstum",
 
     // Intro
     introTag1: "Werbung",
