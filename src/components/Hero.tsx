@@ -2,7 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import AnimatedText from "./AnimatedText";
-import Counter from "./Counter";
+import RingCounter from "./RingCounter";
 import Magnetic from "./Magnetic";
 import { useT } from "@/i18n/context";
 import styles from "./Hero.module.css";
@@ -23,20 +23,37 @@ const item: Variants = {
   },
 };
 
-type Stat = {
-  label: string;
-  counter?: { to: number; suffix?: string; prefix?: string };
-  static?: string;
-};
-
 export default function Hero() {
   const { t } = useT();
 
-  const stats: Stat[] = [
-    { label: t.statGoal, counter: { to: 70, suffix: "×" } },
-    { label: t.statServices, static: "3" },
-    { label: t.statSupport, static: "24/7" },
-    { label: t.statLaunch, static: "2026" },
+  // Each stat has a ring fill % + either a counted number or a static display.
+  // Fill percentages are decorative — they show the ring "loading" toward
+  // its target when the section comes into view.
+  const stats = [
+    {
+      display: "70×",
+      to: 70,
+      suffix: "×",
+      label: t.statGoal,
+      fillPct: 100, // ambition fully drawn
+    },
+    {
+      display: "3",
+      to: 3,
+      suffix: "",
+      label: t.statServices,
+      fillPct: 100, // 3 of 3 services
+    },
+    {
+      display: "24/7",
+      label: t.statSupport,
+      fillPct: 100, // always on
+    },
+    {
+      display: "2026",
+      label: t.statLaunch,
+      fillPct: 100, // launch year — full ring as marker
+    },
   ];
 
   return (
@@ -86,9 +103,7 @@ export default function Hero() {
 
         {/* Sub + CTAs */}
         <motion.div variants={item} className={styles.grid}>
-          <p className={styles.sub}>
-            {t.heroSub}
-          </p>
+          <p className={styles.sub}>{t.heroSub}</p>
 
           <div className={styles.actions}>
             <div className={styles.actionsRow}>
@@ -106,29 +121,21 @@ export default function Hero() {
                 </a>
               </Magnetic>
             </div>
-            <span className={styles.hint}>
-              {t.heroHint}
-            </span>
+            <span className={styles.hint}>{t.heroHint}</span>
           </div>
         </motion.div>
 
-        {/* Stats strip */}
+        {/* Stats strip — animated rings + counters */}
         <motion.div variants={item} className={styles.stats}>
           {stats.map((s) => (
-            <div key={s.label} className={styles.stat}>
-              <span className={styles.statValue}>
-                {s.counter ? (
-                  <Counter
-                    to={s.counter.to}
-                    suffix={s.counter.suffix}
-                    prefix={s.counter.prefix}
-                  />
-                ) : (
-                  s.static
-                )}
-              </span>
-              <span className={styles.statLabel}>{s.label}</span>
-            </div>
+            <RingCounter
+              key={s.label}
+              display={s.display}
+              to={s.to}
+              suffix={s.suffix}
+              label={s.label}
+              fillPct={s.fillPct}
+            />
           ))}
         </motion.div>
       </motion.div>

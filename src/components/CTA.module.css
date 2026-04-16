@@ -1,7 +1,7 @@
 .section {
   position: relative;
   isolation: isolate;
-  padding: 120px 48px;
+  padding: 90px 48px;
   max-width: var(--container);
   margin: 0 auto;
 }

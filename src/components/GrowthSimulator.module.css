@@ -1,7 +1,7 @@
 .section {
   position: relative;
   isolation: isolate;
-  padding: 140px 48px 120px;
+  padding: 100px 48px 80px;
   max-width: var(--container);
   margin: 0 auto;
 }
@@ -44,59 +44,97 @@
   text-align: right;
 }
 
-/* Simulator body ─────────────────────────────────────── */
-.body {
+/* Pillar cards — three options the user toggles intensity for ─────── */
+.pillars {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 48px;
-  align-items: start;
-  background: rgba(200, 212, 222, 0.018);
-  border: 1px solid var(--line);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 40px;
+}
+
+.pillar {
+  position: relative;
+  padding: 28px 26px 24px;
   border-radius: var(--radius-lg);
-  padding: 40px;
-}
-
-.sliders {
+  background: rgba(200, 212, 222, 0.025);
+  border: 1px solid var(--line);
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 18px;
+  transition: border-color 0.3s ease, background 0.3s ease;
 }
 
-.slider {
+.pillar:hover {
+  border-color: var(--line-hi);
+}
+
+.pillarHead {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
 }
 
-.sliderHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-}
-
-.sliderLabel {
-  font-size: 11px;
+.pillarTag {
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--text-dim);
-}
-
-.sliderValue {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
   color: var(--accent);
 }
 
-.sliderUnit {
+.pillarName {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.pillarDesc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  min-height: 40px;
+}
+
+.pillarMetric {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.pillarMetricValue {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.pillarMetricLabel {
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-dim);
-  margin-left: 4px;
+}
+
+.pillarBar {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: rgba(200, 212, 222, 0.08);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.pillarBarFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 100px;
+  transition: width 0.25s var(--ease);
+  box-shadow: 0 0 8px var(--accent-glow);
 }
 
 .range {
@@ -108,6 +146,7 @@
   background: rgba(200, 212, 222, 0.12);
   outline: none;
   cursor: pointer;
+  margin-top: 2px;
 }
 
 .range::-webkit-slider-thumb {
@@ -118,7 +157,7 @@
   border-radius: 50%;
   background: var(--accent);
   border: 3px solid var(--black);
-  box-shadow: 0 4px 16px -4px var(--accent-glow);
+  box-shadow: 0 4px 14px -4px var(--accent-glow);
   cursor: pointer;
   transition: transform 0.15s var(--ease);
 }
@@ -136,94 +175,99 @@
   cursor: pointer;
 }
 
-/* Chart + metrics right column ───────────────────────── */
-.results {
+.intensity {
   display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.chart {
-  width: 100%;
-  height: 220px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: rgba(10, 11, 16, 0.4);
-  position: relative;
-  overflow: hidden;
-}
-
-.chartSvg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.chartPath {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  filter: drop-shadow(0 0 8px var(--accent-glow));
-}
-
-.chartArea {
-  fill: url(#chartGradient);
-  opacity: 0.35;
-}
-
-.chartGrid {
-  stroke: rgba(200, 212, 222, 0.08);
-  stroke-width: 1;
-}
-
-.chartLabel {
-  position: absolute;
-  font-size: 10px;
-  font-weight: 700;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-dim);
 }
 
-.chartLabelLeft { top: 12px; left: 14px; }
-.chartLabelRight { bottom: 12px; right: 14px; }
-
-/* Metrics row */
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+.intensityValue {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
 }
 
-.metric {
-  padding: 18px 18px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: rgba(10, 11, 16, 0.3);
+/* Combined result panel ──────────────────────────────── */
+.result {
+  background:
+    radial-gradient(ellipse 70% 80% at 50% 0%, rgba(200, 212, 222, 0.08), transparent 60%),
+    rgba(200, 212, 222, 0.02);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.result::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(200, 212, 222, 0.4),
+    transparent
+  );
+}
+
+.resultLeft {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 18px;
 }
 
-.metricValue {
-  font-size: clamp(22px, 2.4vw, 30px);
+.resultEyebrow {
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--accent);
-  line-height: 1;
-}
-
-.metricLabel {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--text-dim);
 }
 
-/* CTA + disclaimer */
+.resultMulti {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.resultMultiValue {
+  font-size: clamp(64px, 8vw, 120px);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.resultMultiSign {
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.05em;
+}
+
+.resultMultiLabel {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
 .cta {
   display: inline-flex;
   align-items: center;
@@ -236,14 +280,94 @@
   font-size: 14px;
   letter-spacing: 0.01em;
   align-self: flex-start;
+  margin-top: 8px;
   transition: transform 0.2s var(--ease), background 0.2s ease;
   box-shadow: 0 16px 40px -12px var(--accent-glow);
-  margin-top: 6px;
 }
 
 .cta:hover {
   transform: translateY(-2px);
   background: var(--accent-strong);
+}
+
+/* Right side — before/after comparison */
+.comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.compareLine {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.compareLabel {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.compareBar {
+  position: relative;
+  height: 12px;
+  background: rgba(200, 212, 222, 0.06);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.compareBarFill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.4s var(--ease);
+}
+
+.compareBarBase {
+  background: rgba(200, 212, 222, 0.18);
+}
+
+.compareBarBoosted {
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.compareValue {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  min-width: 52px;
+  text-align: right;
+}
+
+.compareDelta {
+  margin-top: 4px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.compareDeltaLabel {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.compareDeltaValue {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 .disclaimer {
@@ -256,31 +380,38 @@
 }
 
 @media (max-width: 1024px) {
-  .body {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 28px;
-  }
   .header {
     grid-template-columns: 1fr;
     gap: 20px;
     align-items: start;
-    margin-bottom: 44px;
+    margin-bottom: 40px;
   }
   .lead {
     text-align: left;
     justify-self: start;
   }
+  .pillars {
+    grid-template-columns: 1fr;
+  }
+  .result {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 32px;
+  }
 }
 
 @media (max-width: 640px) {
   .section {
-    padding: 80px 20px 72px;
+    padding: 80px 20px 64px;
   }
-  .body {
-    padding: 22px;
+  .pillar {
+    padding: 22px 20px 20px;
   }
-  .metrics {
-    grid-template-columns: 1fr;
+  .result {
+    padding: 26px 22px;
+  }
+  .compareLine {
+    grid-template-columns: 70px 1fr auto;
+    gap: 10px;
   }
 }

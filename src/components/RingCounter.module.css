@@ -1,0 +1,72 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.ringWrap {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  display: grid;
+  place-items: center;
+}
+
+.ringSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: rotate(-90deg);
+}
+
+.ringTrack {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 4;
+}
+
+.ringFill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+}
+
+.value {
+  position: absolute;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--white);
+}
+
+.label {
+  font-size: var(--fs-mini);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .ringWrap {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 420px) {
+  .ringWrap {
+    width: 96px;
+    height: 96px;
+  }
+  .value {
+    font-size: 22px;
+  }
+}

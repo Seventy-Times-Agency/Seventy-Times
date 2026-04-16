@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   isolation: isolate;
-  padding: 140px 48px 120px;
+  padding: 100px 48px 80px;
   max-width: var(--container);
   margin: 0 auto;
 }
@@ -41,7 +41,7 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  margin-bottom: 72px;
+  margin-bottom: 48px;
   gap: 24px;
 }
 
@@ -94,7 +94,7 @@
 /* Huge editorial title ──────────────────────────────────── */
 .titleBlock {
   text-align: center;
-  margin-bottom: 56px;
+  margin-bottom: 40px;
 }
 
 .title {
@@ -217,12 +217,12 @@
 
 /* Stats strip ───────────────────────────────────────────── */
 .stats {
-  margin-top: 100px;
-  padding-top: 40px;
+  margin-top: 64px;
+  padding-top: 32px;
   border-top: 1px solid var(--line);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 48px;
+  gap: 32px;
 }
 
 .stat {
