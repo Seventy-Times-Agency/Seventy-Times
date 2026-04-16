@@ -18,8 +18,8 @@ export const siteConfig = {
       url: "https://t.me/seventytimes",
     },
     email: {
-      address: "hello@seventy-times.com",
-      url: "mailto:hello@seventy-times.com",
+      address: "info@seventy-times.com",
+      url: "mailto:info@seventy-times.com",
     },
   },
 
