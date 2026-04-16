@@ -8,38 +8,38 @@ import { useT } from "@/i18n/context";
 import styles from "./GrowthSimulator.module.css";
 
 /**
- * 70× Growth Simulator — card-based, illustrative model.
+ * 70× Growth Simulator — level-based, illustrative model.
  *
- * Three pillar cards (Ads, Automation, AI), each with an intensity
- * slider 0–100%. Each pillar contributes its own multiplier to a
- * combined coefficient. The result panel shows: total ×, and a clear
- * "today vs in 6 months" lead-flow comparison anchored to a fixed
- * baseline of 100 leads/mo so the user immediately understands what
- * the multiplier means in concrete terms.
+ * Each pillar (Ads, Automation, AI) has 4 concrete levels with clear
+ * descriptions of what's included at each level. Every level carries
+ * a specific growth contribution percentage based on industry-average
+ * digital channel effects. The three pillar contributions compound:
  *
- * Math (intentionally conservative):
- *   adsM   = 1 + ads  * 0.012   // up to +120% from a strong ads engine
- *   autoM  = 1 + auto * 0.005   // up to +50% from automation efficiency
- *   aiM    = 1 + ai   * 0.008   // up to +80% from AI conversion lift
- *   total  = adsM * autoM * aiM        (compounding)
- *   leads6 = 100 * total
+ *   total = (1 + adsPct) × (1 + autoPct) × (1 + aiPct)
  *
- * With every slider at 100%: total ≈ 5.9× — well under the 70× brand
- * ambition so the tool stays realistic, not overpromising.
+ * Maximum at all-full: (1+0.85)(1+0.50)(1+0.70) ≈ 4.72× — realistic,
+ * explicitly below the 70× brand ambition so the tool stays honest.
+ * A separate formula strip under the pillars explains this plainly.
  */
+
+// Contribution percentages per level per pillar (shared across languages)
+const ADS_CONTRIB = [0, 0.30, 0.60, 0.85];
+const AUTO_CONTRIB = [0, 0.15, 0.30, 0.50];
+const AI_CONTRIB = [0, 0.25, 0.45, 0.70];
+
 export default function GrowthSimulator() {
   const { t } = useT();
 
-  const [ads, setAds] = useState(60);
-  const [auto, setAuto] = useState(40);
-  const [ai, setAi] = useState(50);
+  const [adsLevel, setAdsLevel] = useState(2);
+  const [autoLevel, setAutoLevel] = useState(1);
+  const [aiLevel, setAiLevel] = useState(1);
 
-  const adsMulti = 1 + ads * 0.012;
-  const autoMulti = 1 + auto * 0.005;
-  const aiMulti = 1 + ai * 0.008;
-  const total = adsMulti * autoMulti * aiMulti;
+  const adsContrib = ADS_CONTRIB[adsLevel];
+  const autoContrib = AUTO_CONTRIB[autoLevel];
+  const aiContrib = AI_CONTRIB[aiLevel];
+  const total = (1 + adsContrib) * (1 + autoContrib) * (1 + aiContrib);
 
-  const baseline = 100; // illustrative anchor
+  const baseline = 100;
   const projected = Math.round(baseline * total);
   const delta = projected - baseline;
 
@@ -49,35 +49,65 @@ export default function GrowthSimulator() {
 
   const pillars = [
     {
+      key: "ads",
       tag: t.simAdsTag,
       name: t.simAdsName,
       desc: t.simAdsDesc,
-      metric: t.simAdsMetric,
-      value: ads,
-      setValue: setAds,
-      contribution: Math.round((adsMulti - 1) * 100),
+      level: adsLevel,
+      setLevel: setAdsLevel,
+      contrib: adsContrib,
+      levelLabels: [
+        t.simAdsLvl0,
+        t.simAdsLvl1,
+        t.simAdsLvl2,
+        t.simAdsLvl3,
+      ],
+      levelDescs: [
+        t.simAdsLvl0Desc,
+        t.simAdsLvl1Desc,
+        t.simAdsLvl2Desc,
+        t.simAdsLvl3Desc,
+      ],
     },
     {
+      key: "auto",
       tag: t.simAutoTag,
       name: t.simAutoName,
       desc: t.simAutoDesc,
-      metric: t.simAutoMetric,
-      value: auto,
-      setValue: setAuto,
-      contribution: Math.round((autoMulti - 1) * 100),
+      level: autoLevel,
+      setLevel: setAutoLevel,
+      contrib: autoContrib,
+      levelLabels: [
+        t.simAutoLvl0,
+        t.simAutoLvl1,
+        t.simAutoLvl2,
+        t.simAutoLvl3,
+      ],
+      levelDescs: [
+        t.simAutoLvl0Desc,
+        t.simAutoLvl1Desc,
+        t.simAutoLvl2Desc,
+        t.simAutoLvl3Desc,
+      ],
     },
     {
+      key: "ai",
       tag: t.simAiTag,
       name: t.simAiName,
       desc: t.simAiDesc,
-      metric: t.simAiMetric,
-      value: ai,
-      setValue: setAi,
-      contribution: Math.round((aiMulti - 1) * 100),
+      level: aiLevel,
+      setLevel: setAiLevel,
+      contrib: aiContrib,
+      levelLabels: [t.simAiLvl0, t.simAiLvl1, t.simAiLvl2, t.simAiLvl3],
+      levelDescs: [
+        t.simAiLvl0Desc,
+        t.simAiLvl1Desc,
+        t.simAiLvl2Desc,
+        t.simAiLvl3Desc,
+      ],
     },
   ];
 
-  // Comparison bar widths (relative to projected for both bars)
   const barMax = Math.max(projected, baseline);
   const baselinePct = (baseline / barMax) * 100;
   const projectedPct = (projected / barMax) * 100;
@@ -109,44 +139,51 @@ export default function GrowthSimulator() {
       <Reveal delay={0.1}>
         <div className={styles.pillars}>
           {pillars.map((p) => (
-            <div key={p.name} className={styles.pillar}>
+            <div key={p.key} className={styles.pillar}>
               <div className={styles.pillarHead}>
                 <span className={styles.pillarTag}>{p.tag}</span>
                 <h3 className={styles.pillarName}>{p.name}</h3>
+                <span className={styles.pillarDesc}>{p.desc}</span>
               </div>
-              <p className={styles.pillarDesc}>{p.desc}</p>
 
-              <div className={styles.pillarMetric}>
-                <span className={styles.pillarMetricValue}>
-                  +{p.contribution}%
+              <div className={styles.steps}>
+                {p.levelLabels.map((label, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className={`${styles.step} ${
+                      p.level === i ? styles.stepActive : ""
+                    }`}
+                    onClick={() => p.setLevel(i)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <div className={styles.selectedBlock}>
+                <span className={styles.selectedLabel}>{t.simCurrent}</span>
+                <span className={styles.selectedDesc}>
+                  {p.levelDescs[p.level]}
                 </span>
-                <span className={styles.pillarMetricLabel}>{p.metric}</span>
+                <div className={styles.selectedContribution}>
+                  <span className={styles.contributionValue}>
+                    +{Math.round(p.contrib * 100)}%
+                  </span>
+                  <span className={styles.contributionLabel}>
+                    {t.simContribution}
+                  </span>
+                </div>
               </div>
-
-              <div className={styles.pillarBar}>
-                <div
-                  className={styles.pillarBarFill}
-                  style={{ width: `${p.value}%` }}
-                />
-              </div>
-
-              <div className={styles.intensity}>
-                <span>{t.simIntensity}</span>
-                <span className={styles.intensityValue}>{p.value}%</span>
-              </div>
-
-              <input
-                type="range"
-                min={0}
-                max={100}
-                step={5}
-                value={p.value}
-                onChange={(e) => p.setValue(Number(e.target.value))}
-                className={styles.range}
-                aria-label={`${p.name} ${t.simIntensity}`}
-              />
             </div>
           ))}
+        </div>
+      </Reveal>
+
+      <Reveal delay={0.15}>
+        <div className={styles.formula}>
+          <span className={styles.formulaLabel}>{t.simFormula}</span>
+          <span className={styles.formulaDesc}>{t.simFormulaDesc}</span>
         </div>
       </Reveal>
 

@@ -5,46 +5,47 @@ import { animate } from "framer-motion";
 import styles from "./RingCounter.module.css";
 
 type Props = {
-  /** Display value: "70×", "24/7", "2026", "3" etc. */
   display: string;
-  /** Numeric value to count up to (used for ring fill + counter). */
   to?: number;
-  /** Suffix appended after the counted number ("×", "+" etc.). */
   suffix?: string;
-  /** Label under the ring. */
   label: string;
-  /** Animation duration in seconds. */
   duration?: number;
-  /** Ring fill percentage (0-100). Defaults to 100 for static values. */
   fillPct?: number;
+  decimals?: number;
+  /** Delay before animation starts (for staggering multiple rings). */
+  delay?: number;
+  /** Unique id so the gradient defs don't collide across instances. */
+  id?: string;
 };
 
-const RADIUS = 56;
-const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 const VIEWBOX = 132;
+const RADIUS = 54;
+const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 /**
- * Stat tile with an animated SVG ring that draws itself, and either a
- * counted-up number or a static display value in the center.
+ * Stat tile with an animated SVG ring that draws itself with a Casper
+ * gradient stroke, plus either a counted-up number or a static display
+ * value in the centre.
  *
  * Uses native IntersectionObserver + an immediate getBoundingClientRect
- * check so it always fires on first paint, even for elements above the
- * fold.
+ * check so the animation always fires on first paint.
  */
 export default function RingCounter({
   display,
   to,
   suffix = "",
   label,
-  duration = 1.8,
+  duration = 2.6,
   fillPct = 100,
+  decimals = 0,
+  delay = 0,
+  id = "default",
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const numberRef = useRef<HTMLSpanElement>(null);
   const [progress, setProgress] = useState(0);
   const [started, setStarted] = useState(false);
 
-  // Trigger when in viewport (or already on-screen at mount)
   useEffect(() => {
     const node = wrapRef.current;
     if (!node || started) return;
@@ -71,34 +72,52 @@ export default function RingCounter({
     return () => observer.disconnect();
   }, [started]);
 
-  // Animate the ring fill (always)
+  // Animate the ring fill
   useEffect(() => {
     if (!started) return;
     const controls = animate(0, fillPct, {
       duration,
-      ease: [0.21, 0.47, 0.32, 0.98],
+      delay,
+      ease: [0.25, 0.46, 0.45, 0.94],
       onUpdate: (v) => setProgress(v),
     });
     return () => controls.stop();
-  }, [started, fillPct, duration]);
+  }, [started, fillPct, duration, delay]);
 
-  // Animate the counter if a numeric `to` was provided
+  // Animate the counter if a numeric target was provided
   useEffect(() => {
     if (!started || to == null || !numberRef.current) return;
     const node = numberRef.current;
     const controls = animate(0, to, {
       duration,
-      ease: [0.21, 0.47, 0.32, 0.98],
+      delay,
+      ease: [0.25, 0.46, 0.45, 0.94],
       onUpdate(value) {
-        node.textContent = `${Math.floor(value)}${suffix}`;
+        const formatted =
+          decimals > 0 ? value.toFixed(decimals) : String(Math.floor(value));
+        node.textContent = `${formatted}${suffix}`;
       },
     });
     return () => controls.stop();
-  }, [started, to, suffix, duration]);
+  }, [started, to, suffix, duration, delay, decimals]);
 
-  // Stroke offset based on progress (0-100)
-  const strokeOffset =
-    CIRCUMFERENCE - (CIRCUMFERENCE * progress) / 100;
+  const strokeOffset = CIRCUMFERENCE - (CIRCUMFERENCE * progress) / 100;
+  const gradientId = `ringGradient-${id}`;
+
+  // Radial tick marks around the ring (decorative)
+  const ticks = Array.from({ length: 12 }, (_, i) => {
+    const angle = (i * 30 * Math.PI) / 180;
+    const rOuter = RADIUS + 8;
+    const rInner = RADIUS + 4;
+    const cx = VIEWBOX / 2;
+    const cy = VIEWBOX / 2;
+    return {
+      x1: cx + Math.cos(angle) * rInner,
+      y1: cy + Math.sin(angle) * rInner,
+      x2: cx + Math.cos(angle) * rOuter,
+      y2: cy + Math.sin(angle) * rOuter,
+    };
+  });
 
   return (
     <div className={styles.wrap} ref={wrapRef}>
@@ -108,6 +127,31 @@ export default function RingCounter({
           viewBox={`0 0 ${VIEWBOX} ${VIEWBOX}`}
           aria-hidden="true"
         >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#e8eef4" />
+              <stop offset="60%" stopColor="#c8d4de" />
+              <stop offset="100%" stopColor="#8a9aa6" />
+            </linearGradient>
+          </defs>
+
+          {ticks.map((t, i) => (
+            <line
+              key={i}
+              x1={t.x1}
+              y1={t.y1}
+              x2={t.x2}
+              y2={t.y2}
+              className={styles.ringTick}
+            />
+          ))}
+
+          <circle
+            cx={VIEWBOX / 2}
+            cy={VIEWBOX / 2}
+            r={RADIUS + 6}
+            className={styles.ringGuide}
+          />
           <circle
             cx={VIEWBOX / 2}
             cy={VIEWBOX / 2}
@@ -120,6 +164,7 @@ export default function RingCounter({
             r={RADIUS}
             className={styles.ringFill}
             style={{
+              stroke: `url(#${gradientId})`,
               strokeDasharray: CIRCUMFERENCE,
               strokeDashoffset: strokeOffset,
             }}

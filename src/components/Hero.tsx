@@ -31,28 +31,37 @@ export default function Hero() {
   // its target when the section comes into view.
   const stats = [
     {
-      display: "70×",
-      to: 70,
+      display: "3.5×",
+      to: 3.5,
+      decimals: 1,
       suffix: "×",
       label: t.statGoal,
-      fillPct: 100, // ambition fully drawn
+      fillPct: 100,
+      id: "goal",
+      delay: 0,
     },
     {
       display: "3",
       to: 3,
       suffix: "",
       label: t.statServices,
-      fillPct: 100, // 3 of 3 services
+      fillPct: 100,
+      id: "services",
+      delay: 0.15,
     },
     {
       display: "24/7",
       label: t.statSupport,
-      fillPct: 100, // always on
+      fillPct: 100,
+      id: "support",
+      delay: 0.3,
     },
     {
       display: "2026",
       label: t.statLaunch,
-      fillPct: 100, // launch year — full ring as marker
+      fillPct: 100,
+      id: "launch",
+      delay: 0.45,
     },
   ];
 
@@ -130,11 +139,14 @@ export default function Hero() {
           {stats.map((s) => (
             <RingCounter
               key={s.label}
+              id={s.id}
               display={s.display}
               to={s.to}
               suffix={s.suffix}
+              decimals={s.decimals}
               label={s.label}
               fillPct={s.fillPct}
+              delay={s.delay}
             />
           ))}
         </motion.div>
