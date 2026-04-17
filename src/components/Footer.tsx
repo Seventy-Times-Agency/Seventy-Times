@@ -34,8 +34,10 @@ export default function Footer() {
         <div className={styles.col}>
           <span className={styles.colTitle}>{t.ftContacts}</span>
           <a href={siteConfig.contacts.telegram.url} target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href={siteConfig.contacts.whatsapp.url} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href={siteConfig.contacts.instagram.url} target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href={siteConfig.contacts.facebook.url} target="_blank" rel="noopener noreferrer">Facebook</a>
           <a href={siteConfig.contacts.email.url}>{siteConfig.contacts.email.address}</a>
-          <span>{t.ftLocation}</span>
         </div>
 
         <div className={styles.col}>

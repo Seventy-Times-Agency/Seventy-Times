@@ -1,8 +1,3 @@
-/**
- * Конфиг сайта: контакты, соцсети, имя.
- * Контакты — заглушки, замени на реальные когда будут готовы.
- */
-
 export const siteConfig = {
   name: "Seventy Times",
   shortName: "70×",
@@ -12,7 +7,6 @@ export const siteConfig = {
   url: "https://seventy-times.com",
 
   contacts: {
-    // TODO: заменить на реальные контакты
     telegram: {
       handle: "@seventytimes",
       url: "https://t.me/seventytimes",
@@ -21,10 +15,22 @@ export const siteConfig = {
       address: "info@seventy-times.com",
       url: "mailto:info@seventy-times.com",
     },
+    whatsapp: {
+      handle: "+1 (000) 000-0000",
+      url: "https://wa.me/10000000000",
+    },
+    instagram: {
+      handle: "@seventytimes",
+      url: "https://instagram.com/seventytimes",
+    },
+    facebook: {
+      handle: "Seventy Times",
+      url: "https://facebook.com/seventytimes",
+    },
   },
 
   stats: [
-    { value: "70×", label: "Цель" },
+    { value: "3.5×", label: "Потенциал" },
     { value: "3", label: "Направления" },
     { value: "24/7", label: "AI-консультант" },
     { value: "2026", label: "Запуск" },

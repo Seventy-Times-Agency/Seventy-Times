@@ -124,9 +124,67 @@
 }
 
 .emailRow {
-  margin-top: 28px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
+}
+
+/* Contact channels grid ─────────────────────────── */
+.channelsLabel {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 36px;
+  margin-bottom: 18px;
+}
+
+.channels {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.channel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 10px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(200, 212, 222, 0.02);
+  text-decoration: none;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s var(--ease);
+}
+
+.channel:hover {
+  border-color: var(--accent);
+  background: rgba(200, 212, 222, 0.06);
+  transform: translateY(-3px);
+}
+
+.channelIcon {
+  width: 28px;
+  height: 28px;
+  color: var(--accent);
+}
+
+.channelName {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.channelHandle {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  word-break: break-all;
 }
 
 .emailLink {
@@ -191,5 +249,14 @@
   }
   .emailRow {
     margin-top: 20px;
+  }
+  .channels {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .channels {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

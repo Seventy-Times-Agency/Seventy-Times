@@ -4,6 +4,7 @@ import { siteConfig } from "@/data/siteConfig";
 import { I18nProvider } from "@/i18n/context";
 import HtmlLangSync from "@/i18n/HtmlLangSync";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import FloatingGlyphs from "@/components/FloatingGlyphs";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageIntro from "@/components/PageIntro";
@@ -76,6 +77,7 @@ export default function RootLayout({
           <SmoothScroll />
           <PageIntro />
           <AnimatedBackground />
+          <FloatingGlyphs />
           <ScrollProgress />
           {children}
           <ChatWidget />

@@ -172,7 +172,7 @@ const dict = {
       "По таргету — первые лиды обычно приходят в течение 3–7 дней после запуска. По автоматизации — сразу после внедрения. По AI-ботам — в день запуска. Стабильная динамика в рекламе формируется к концу первого месяца после оптимизации.",
     faq3q: "Работаете ли с моей нишей?",
     faq3a:
-      "Наша методология рассчитана на e-commerce, образование, недвижимость, медицину, услуги и SaaS. Если вашей ниши нет в списке — всё равно пишите, обсудим как можем помочь.",
+      "Наша методология рассчитана на e-commerce, услуги, перевозки, ритейл одежды, авто-аксессуары и beauty-индустрию. Если вашей ниши нет в списке — всё равно пишите, обсудим как можем помочь.",
     faq4q: "Что если реклама не сработает?",
     faq4a:
       "Мы не даём гарантий «100% лидов за неделю» — это были бы пустые обещания. Но мы работаем по прозрачным KPI, еженедельно показываем цифры, и если кампания не заходит — меняем подход быстро, а не жжём бюджет месяцами.",
@@ -252,6 +252,7 @@ const dict = {
     ctaSub:
       "Напишите в Telegram или на почту — обсудим задачу, расскажем как можем помочь, и в течение часа дадим первые идеи. Без обязательств, без воды.",
     ctaPrimary: "Оставить заявку",
+    ctaChannelsLabel: "или пишите напрямую",
     ctaTelegram: "Telegram",
     ctaMeta1: "Seventy Times · Реклама × Автоматизация × AI",
     ctaMeta2: "Принимаем проекты · США → Весь мир",
@@ -496,7 +497,7 @@ const dict = {
       "For ads — first leads usually come within 3–7 days after launch. For automation — immediately after implementation. For AI bots — on launch day. Stable ad performance forms by the end of the first month after optimization.",
     faq3q: "Do you work with my industry?",
     faq3a:
-      "Our methodology is built for e-commerce, education, real estate, healthcare, services and SaaS. If your niche isn't listed — reach out anyway, we'll discuss how we can help.",
+      "Our methodology is built for e-commerce, services, transportation, fashion retail, auto accessories and beauty industry. If your niche isn't listed — reach out anyway, we'll discuss how we can help.",
     faq4q: "What if the ads don't work?",
     faq4a:
       "We don't promise '100% leads in a week' — that would be empty words. But we work on transparent KPIs, show numbers weekly, and if a campaign isn't performing — we pivot quickly instead of burning through the budget for months.",
@@ -576,6 +577,7 @@ const dict = {
     ctaSub:
       "Write us on Telegram or email — we'll discuss your task, explain how we can help, and share first ideas within an hour. No obligations, no fluff.",
     ctaPrimary: "Get a quote",
+    ctaChannelsLabel: "or reach us directly",
     ctaTelegram: "Telegram",
     ctaMeta1: "Seventy Times · Ads × Automation × AI",
     ctaMeta2: "Accepting projects · USA → Worldwide",
@@ -820,7 +822,7 @@ const dict = {
       "Bei Werbung — erste Leads kommen in der Regel innerhalb von 3–7 Tagen nach dem Start. Bei Automatisierung — sofort nach der Implementierung. Bei KI-Bots — am Starttag. Stabile Werbeleistung bildet sich bis Ende des ersten Monats nach der Optimierung.",
     faq3q: "Arbeiten Sie mit meiner Branche?",
     faq3a:
-      "Unsere Methodik ist ausgelegt für E-Commerce, Bildung, Immobilien, Gesundheitswesen, Dienstleistungen und SaaS. Wenn Ihre Nische nicht dabei ist — kontaktieren Sie uns trotzdem, wir besprechen wie wir helfen können.",
+      "Unsere Methodik ist ausgelegt für E-Commerce, Dienstleistungen, Transport, Mode-Einzelhandel, Auto-Zubehör und Beauty-Branche. Wenn Ihre Nische nicht dabei ist — kontaktieren Sie uns trotzdem, wir besprechen wie wir helfen können.",
     faq4q: "Was wenn die Werbung nicht funktioniert?",
     faq4a:
       "Wir versprechen keine '100% Leads in einer Woche' — das wären leere Worte. Aber wir arbeiten mit transparenten KPIs, zeigen wöchentlich Zahlen, und wenn eine Kampagne nicht performt — schwenken wir schnell um, statt monatelang Budget zu verbrennen.",
@@ -900,6 +902,7 @@ const dict = {
     ctaSub:
       "Schreiben Sie uns auf Telegram oder per E-Mail — wir besprechen Ihre Aufgabe, erklären wie wir helfen können und teilen erste Ideen innerhalb einer Stunde. Unverbindlich, ohne Floskeln.",
     ctaPrimary: "Anfrage senden",
+    ctaChannelsLabel: "oder schreiben Sie uns direkt",
     ctaTelegram: "Telegram",
     ctaMeta1: "Seventy Times · Werbung × Automatisierung × KI",
     ctaMeta2: "Projekte willkommen · USA → Weltweit",
