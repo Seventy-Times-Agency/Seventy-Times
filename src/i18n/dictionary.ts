@@ -166,6 +166,8 @@ const dict = {
       "Самое частое, что спрашивают перед стартом. Если не нашли свой вопрос — напишите напрямую, ответим в течение часа.",
     faqNote: "Нужен ответ быстрее?",
     faqNoteLink: "Напишите в Telegram →",
+    faqStill: "Не нашли свой вопрос?",
+    faqStillCta: "Задайте его нам напрямую →",
     faq1q: "Сколько стоят ваши услуги?",
     faq1a:
       "Мы не называем цены заранее — обсуждаем их после брифинга, чтобы предложить вилку под конкретную задачу. Типичные проекты стартуют от $1000 в месяц, но точная цифра зависит от масштаба и целей.",
@@ -632,6 +634,8 @@ const dict = {
       "The most common things people ask before getting started. Didn't find your answer? Reach out — we reply within an hour.",
     faqNote: "Need a faster answer?",
     faqNoteLink: "Message us on Telegram →",
+    faqStill: "Don't see your question?",
+    faqStillCta: "Ask us directly →",
     faq1q: "How much do your services cost?",
     faq1a:
       "We don't quote prices upfront — we discuss them after the briefing to offer a range tailored to your specific task. Typical projects start from around $1,000/month, but the exact figure depends on scope and goals.",
@@ -1098,6 +1102,8 @@ const dict = {
       "Die häufigsten Fragen vor dem Start. Keine passende Antwort gefunden? Schreiben Sie uns — wir antworten innerhalb einer Stunde.",
     faqNote: "Schnellere Antwort nötig?",
     faqNoteLink: "Schreiben Sie uns auf Telegram →",
+    faqStill: "Ihre Frage nicht dabei?",
+    faqStillCta: "Fragen Sie uns direkt →",
     faq1q: "Was kosten Ihre Leistungen?",
     faq1a:
       "Wir nennen keine Preise vorab — wir besprechen sie nach dem Briefing, um eine auf Ihre Aufgabe zugeschnittene Preisspanne anzubieten. Typische Projekte starten ab ca. 1.000 $/Monat, der genaue Betrag hängt von Umfang und Zielen ab.",

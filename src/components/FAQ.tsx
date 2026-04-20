@@ -72,6 +72,7 @@ export default function FAQ() {
           </Reveal>
         </div>
         <Reveal delay={0.1}>
+          <div className={styles.listWrap}>
           <div className={styles.list}>
             {items.map((item, i) => {
               const isOpen = openIndex === i;
@@ -103,6 +104,13 @@ export default function FAQ() {
                 </div>
               );
             })}
+          </div>
+          <div className={styles.still}>
+            <span className={styles.stillText}>{t.faqStill}</span>
+            <a href="#lead" className={styles.stillCta}>
+              {t.faqStillCta}
+            </a>
+          </div>
           </div>
         </Reveal>
       </div>

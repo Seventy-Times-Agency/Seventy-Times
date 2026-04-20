@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
 import SectionWatermark from "./SectionWatermark";
 import { useT } from "@/i18n/context";
 import styles from "./GrowthSimulator.module.css";
+
+const STORAGE_KEY = "st-simulator-levels-v1";
 
 /**
  * 70× Growth Simulator — level-based, illustrative model.
@@ -45,6 +47,43 @@ export default function GrowthSimulator() {
   const [adsLevel, setAdsLevel] = useState(2);
   const [autoLevel, setAutoLevel] = useState(1);
   const [aiLevel, setAiLevel] = useState(1);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw) as {
+          ads?: number;
+          auto?: number;
+          ai?: number;
+        };
+        const clamp = (n: unknown) =>
+          typeof n === "number" && n >= 0 && n <= 3 ? n : null;
+        const a = clamp(saved.ads);
+        const b = clamp(saved.auto);
+        const c = clamp(saved.ai);
+        if (a !== null) setAdsLevel(a);
+        if (b !== null) setAutoLevel(b);
+        if (c !== null) setAiLevel(c);
+      }
+    } catch {
+      // ignore
+    }
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ ads: adsLevel, auto: autoLevel, ai: aiLevel })
+      );
+    } catch {
+      // ignore quota
+    }
+  }, [adsLevel, autoLevel, aiLevel, hydrated]);
 
   const adsContrib = ADS_CONTRIB[adsLevel];
   const autoContrib = AUTO_CONTRIB[autoLevel];
