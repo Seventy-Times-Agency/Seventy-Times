@@ -79,6 +79,14 @@
   transform: scaleX(1);
 }
 
+.linkActive {
+  color: var(--white);
+}
+
+.linkActive::before {
+  transform: scaleX(1);
+}
+
 .right {
   justify-self: end;
   display: inline-flex;
@@ -191,6 +199,10 @@
 }
 
 .mobileLink:hover {
+  color: var(--text);
+}
+
+.mobileLinkActive {
   color: var(--text);
 }
 

@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import AnimatedText from "./AnimatedText";
 import RingCounter from "./RingCounter";
 import Magnetic from "./Magnetic";
+import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
 import styles from "./Hero.module.css";
 
@@ -26,12 +27,12 @@ const item: Variants = {
 export default function Hero() {
   const { t } = useT();
 
-  // Each stat has a ring fill % + either a counted number or a static display.
-  // Fill percentages are decorative — they show the ring "loading" toward
-  // its target when the section comes into view.
+  // Stats are visual rings; display values live in siteConfig so they
+  // stay in sync with other numeric mentions on the site.
+  const [goal, services, support, launch] = siteConfig.stats;
   const stats = [
     {
-      display: "3.5×",
+      display: goal.value,
       to: 3.5,
       decimals: 1,
       suffix: "×",
@@ -41,7 +42,7 @@ export default function Hero() {
       delay: 0,
     },
     {
-      display: "3",
+      display: services.value,
       to: 3,
       suffix: "",
       label: t.statServices,
@@ -50,14 +51,14 @@ export default function Hero() {
       delay: 0.15,
     },
     {
-      display: "24/7",
+      display: support.value,
       label: t.statSupport,
       fillPct: 100,
       id: "support",
       delay: 0.3,
     },
     {
-      display: "2026",
+      display: launch.value,
       label: t.statLaunch,
       fillPct: 100,
       id: "launch",

@@ -6,6 +6,7 @@ import {
   rateLimit,
   rateLimitResponse,
 } from "@/lib/apiGuard";
+import { escapeMarkdown } from "@/lib/telegram";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -33,12 +34,6 @@ function isValid(p: unknown): p is LeadPayload {
     typeof r.business === "string" &&
     typeof r.request === "string"
   );
-}
-
-function escapeMarkdown(text: string): string {
-  // Escape Telegram MarkdownV2 special chars so user input can't break
-  // the message formatting or inject markup.
-  return text.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (c) => `\\${c}`);
 }
 
 async function notifyTelegram(lead: LeadPayload) {

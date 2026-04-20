@@ -6,6 +6,7 @@ import {
   rateLimit,
   rateLimitResponse,
 } from "@/lib/apiGuard";
+import { escapeMarkdown } from "@/lib/telegram";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -62,10 +63,6 @@ function isCodeValid(code: string): boolean {
     .map((c) => normalize(c))
     .filter(Boolean)
     .includes(needle);
-}
-
-function escapeMarkdown(text: string): string {
-  return text.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (c) => `\\${c}`);
 }
 
 async function notifyTelegram(review: Omit<ReviewPayload, "code">, code: string) {

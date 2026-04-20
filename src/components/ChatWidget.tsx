@@ -86,27 +86,42 @@ export default function ChatWidget() {
     setInput("");
     setLoading(true);
 
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next }),
-      });
-      const data = await res.json();
-      const reply =
-        typeof data.reply === "string" && data.reply.length > 0
-          ? data.reply
-          : data.error || t.chatFallback;
-      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: t.chatError },
-      ]);
-    } finally {
-      setLoading(false);
-      inputRef.current?.focus();
+    // Retry transient network / 5xx errors with exponential backoff.
+    // Rate-limit (429) and client errors (4xx other than 408) are
+    // surfaced immediately — no point in retrying a banned request.
+    const DELAYS_MS = [0, 800, 2000];
+
+    let reply = t.chatError;
+    for (let attempt = 0; attempt < DELAYS_MS.length; attempt++) {
+      if (DELAYS_MS[attempt] > 0) {
+        await new Promise((r) => setTimeout(r, DELAYS_MS[attempt]));
+      }
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: next }),
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && typeof data.reply === "string" && data.reply.length > 0) {
+          reply = data.reply;
+          break;
+        }
+
+        const retriable = res.status >= 500 || res.status === 408;
+        if (!retriable) {
+          reply = data.error || t.chatFallback;
+          break;
+        }
+      } catch {
+        // network error — fall through to retry
+      }
     }
+
+    setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+    setLoading(false);
+    inputRef.current?.focus();
   }, [input, loading, messages, t.chatError, t.chatFallback]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {

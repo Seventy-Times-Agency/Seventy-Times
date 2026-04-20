@@ -22,7 +22,19 @@ import styles from "./GrowthSimulator.module.css";
  * A separate formula strip under the pillars explains this plainly.
  */
 
-// Contribution percentages per level per pillar (shared across languages)
+// Contribution percentages per level per pillar.
+//
+// Rough anchors from industry-reported lift ranges on lead volume:
+//   - Ads: 1 channel +30%, 2 channels +60%, 3 channels +85% (compounding
+//     reach across Meta / Google / TikTok).
+//   - Automation: basic funnel +15%, CRM + reminders +30%, full stack +50%
+//     (based on recovered conversions from speed-to-reply and consistent
+//     follow-up, not "new traffic").
+//   - AI agent: site only +25%, multi-channel +45%, full stack +70%
+//     (qualification quality + off-hours coverage).
+//
+// These are conservative midpoints — the max combined multiplier is ~4.7×,
+// deliberately well below the 70× brand ambition so the tool stays honest.
 const ADS_CONTRIB = [0, 0.30, 0.60, 0.85];
 const AUTO_CONTRIB = [0, 0.15, 0.30, 0.50];
 const AI_CONTRIB = [0, 0.25, 0.45, 0.70];
