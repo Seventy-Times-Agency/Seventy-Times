@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
 import styles from "./ChatWidget.module.css";
@@ -10,6 +11,9 @@ type Message = {
   content: string;
 };
 
+const STORAGE_KEY = "st-chat-history-v1";
+const MAX_STORED = 50;
+
 export default function ChatWidget() {
   const { t } = useT();
   const [open, setOpen] = useState(false);
@@ -18,10 +22,37 @@ export default function ChatWidget() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Allow other components to open the chat via custom event
+  // Hydrate history from localStorage once on mount
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as Message[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed.slice(-MAX_STORED));
+        }
+      }
+    } catch {
+      // ignore corrupt storage
+    }
+    setHydrated(true);
+  }, []);
+
+  // Persist on change (after hydration, to avoid overwriting with greeting)
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      const tail = messages.slice(-MAX_STORED);
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(tail));
+    } catch {
+      // ignore quota errors
+    }
+  }, [messages, hydrated]);
+
   useEffect(() => {
     const handler = () => setOpen(true);
     window.addEventListener("open-venesa", handler);
@@ -36,7 +67,6 @@ export default function ChatWidget() {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
-  // Close on Escape
   useEffect(() => {
     if (!open) return;
     const onKey = (e: globalThis.KeyboardEvent) => {
@@ -77,7 +107,7 @@ export default function ChatWidget() {
       setLoading(false);
       inputRef.current?.focus();
     }
-  }, [input, loading, messages]);
+  }, [input, loading, messages, t.chatError, t.chatFallback]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -99,11 +129,13 @@ export default function ChatWidget() {
           >
             <div className={styles.header}>
               <div className={styles.avatar}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src="/venesa.jpg"
-                  alt="Венеса"
+                  alt={t.chatAlt}
                   className={styles.avatarImg}
+                  width={48}
+                  height={48}
+                  priority={false}
                 />
               </div>
               <div className={styles.meta}>
@@ -115,7 +147,7 @@ export default function ChatWidget() {
               <button
                 className={styles.closeBtn}
                 onClick={() => setOpen(false)}
-                aria-label="Закрыть чат"
+                aria-label={t.chatClose}
                 type="button"
               >
                 ×
@@ -163,13 +195,13 @@ export default function ChatWidget() {
                 onKeyDown={onKeyDown}
                 placeholder={t.chatPh}
                 maxLength={2000}
-                aria-label="Сообщение"
+                aria-label={t.chatMessage}
               />
               <button
                 className={styles.sendBtn}
                 onClick={send}
                 disabled={loading || !input.trim()}
-                aria-label="Отправить"
+                aria-label={t.chatSend}
                 type="button"
               >
                 →
@@ -182,11 +214,18 @@ export default function ChatWidget() {
       <button
         className={`${styles.toggle} ${open ? styles.toggleOpen : ""}`}
         onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Закрыть чат" : "Написать Венесе"}
+        aria-label={open ? t.chatClose : t.chatOpen}
         type="button"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/venesa.jpg" alt="" className={styles.toggleImg} />
+        <Image
+          src="/venesa.jpg"
+          alt=""
+          className={styles.toggleImg}
+          width={56}
+          height={56}
+          priority={false}
+          aria-hidden="true"
+        />
         <span className={styles.toggleDot} />
         {!open && <span className={styles.toggleLabel}>{t.chatLabel}</span>}
       </button>

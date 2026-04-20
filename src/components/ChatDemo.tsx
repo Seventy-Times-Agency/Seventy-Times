@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
 import SectionWatermark from "./SectionWatermark";
@@ -66,11 +67,14 @@ export default function ChatDemo() {
               transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
             />
             <div className={styles.portraitFrame}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/venesa.jpg"
-                alt="Venesa — AI consultant IAA agency"
+                alt={t.chatAlt}
                 className={styles.portraitImg}
+                width={480}
+                height={600}
+                sizes="(max-width: 768px) 80vw, 480px"
+                priority={false}
               />
               <span className={styles.portraitLabel}>{t.venBadgeLabel}</span>
               <div className={styles.portraitBadge}>

@@ -58,7 +58,7 @@ export default function Nav() {
         <button
           className={styles.hamburger}
           onClick={() => setMenuOpen((v) => !v)}
-          aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
+          aria-label={menuOpen ? t.navCloseMenu : t.navOpenMenu}
           aria-expanded={menuOpen}
           type="button"
         >

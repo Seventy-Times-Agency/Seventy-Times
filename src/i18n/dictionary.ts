@@ -9,6 +9,8 @@ const dict = {
     navFaq: "FAQ",
     navStatus: "Принимаем проекты",
     navCta: "Заявка",
+    navOpenMenu: "Открыть меню",
+    navCloseMenu: "Закрыть меню",
 
     // Hero meta
     heroMeta1: "Реклама · Автоматизация · AI",
@@ -324,6 +326,145 @@ const dict = {
     chatLabel: "Венеса",
     chatError: "Ошибка соединения. Попробуй чуть позже.",
     chatFallback: "Что-то пошло не так. Попробуй снова.",
+    chatOpen: "Написать Венесе",
+    chatClose: "Закрыть чат",
+    chatSend: "Отправить",
+    chatMessage: "Сообщение",
+    chatAlt: "Венеса — AI-консультант Seventy Times",
+
+    // Consent (shared between forms)
+    consentPrefix: "Я согласен(на) с ",
+    consentPrivacy: "Политикой конфиденциальности",
+    consentAnd: " и ",
+    consentTerms: "Условиями использования",
+    consentSuffix: ".",
+    consentRequired: "Нужно согласиться с Политикой и Условиями",
+
+    // Lead form extras
+    leadInvalidContact: "Похоже, контакт не похож на email или @username — проверьте",
+    leadTooMany: "Слишком много заявок. Попробуйте через час.",
+    leadCloseAria: "Закрыть форму",
+
+    // Review form
+    reviewEyebrow: "— Оставить отзыв",
+    reviewTitle: "Поделитесь",
+    reviewTitleAccent: "опытом",
+    reviewSub:
+      "Отзыв могут оставить только реальные клиенты — нужен персональный код, который мы выдаём после завершения проекта. Нет кода? Напишите нам в Telegram, мы вышлем.",
+    reviewCode: "Код клиента",
+    reviewCodePh: "Персональный код, например ST-XYZ-42",
+    reviewName: "Имя",
+    reviewNamePh: "Как подписать отзыв",
+    reviewRole: "Должность и компания",
+    reviewRolePh: "Например: Основатель, Becker Studio",
+    reviewLocation: "Локация",
+    reviewLocationPh: "Город, страна",
+    reviewContent: "Отзыв",
+    reviewContentPh:
+      "Коротко — что сделали, какие были результаты, как вам работалось с командой.",
+    reviewSubmit: "Отправить отзыв",
+    reviewSubmitting: "Проверяем код…",
+    reviewSuccessTitle: "Отзыв принят",
+    reviewSuccessText:
+      "Спасибо за тёплые слова! Мы получили отзыв и добавим его в ленту после быстрой модерации.",
+    reviewClose: "Закрыть",
+    reviewFillAll: "Пожалуйста, заполни все поля",
+    reviewNote:
+      "Отзывы проходят модерацию и добавляются в ленту вручную — мы хотим показывать только реальные истории.",
+    reviewError: "Ошибка соединения. Попробуй позже.",
+    reviewCloseAria: "Закрыть форму",
+    reviewTooMany: "Слишком много попыток. Попробуйте позже.",
+
+    // Footer — legal links
+    ftLegal: "Правовое",
+    ftPrivacy: "Политика конфиденциальности",
+    ftTerms: "Условия использования",
+
+    // Privacy Policy page
+    privacyTitle: "Политика конфиденциальности",
+    privacyUpdated: "Обновлено: 20 апреля 2026",
+    privacyDraftNote:
+      "Это рабочий черновик для ранней стадии. Он будет пересмотрен совместно с юристом после регистрации компании.",
+    privacyBody: [
+      {
+        heading: "Кто мы",
+        text: 'Seventy Times — малый бизнес, работающий из США как индивидуальное предприятие (sole proprietorship); официальная регистрация запланирована на более позднюю стадию. Связаться можно по адресу info@seventy-times.com.',
+      },
+      {
+        heading: "Какие данные мы собираем",
+        text: 'Через форму заявки: ваше имя, контакт (email или Telegram), название бизнеса, описание задачи. Через форму отзыва: имя, должность, локация, текст отзыва и персональный код клиента. Через чат с Венесой: текст сообщений, отправленных нам. Мы не собираем платежную информацию и не используем cookies для трекинга.',
+      },
+      {
+        heading: "Зачем мы это собираем",
+        text: 'Только чтобы связаться с вами и оказать услугу, о которой вы просили. Мы не продаём данные, не делимся ими с рекламными сетями и не используем для профилирования.',
+      },
+      {
+        heading: "Где хранятся данные",
+        text: 'Заявки и отзывы пересылаются в наш внутренний Telegram-чат. Логи сайта хранятся у нашего хостинг-провайдера (Vercel) в техническом виде и не содержат персональных данных. Чат с Венесой обрабатывается через API Anthropic для генерации ответов.',
+      },
+      {
+        heading: "Как долго хранятся",
+        text: 'Заявки и отзывы — до завершения задачи и плюс год, после чего удаляются. История чата хранится только в вашем браузере и очищается когда вы её удаляете.',
+      },
+      {
+        heading: "Ваши права",
+        text: 'Вы можете в любой момент написать на info@seventy-times.com и попросить: посмотреть какие ваши данные у нас есть, исправить их или удалить. Мы ответим в течение 30 дней.',
+      },
+      {
+        heading: "Cookies",
+        text: 'Мы используем один технический cookie: запоминаем выбранный язык интерфейса. Это не трекинг — только для удобства.',
+      },
+      {
+        heading: "Дети",
+        text: 'Сайт не предназначен для детей младше 16 лет. Мы не собираем данные детей.',
+      },
+      {
+        heading: "Изменения",
+        text: 'Когда бизнес будет зарегистрирован официально, эта политика будет обновлена совместно с юристом. Текущая версия — честный минимум для ранней стадии.',
+      },
+    ],
+
+    // Terms of Use page
+    termsTitle: "Условия использования",
+    termsUpdated: "Обновлено: 20 апреля 2026",
+    termsDraftNote:
+      "Это рабочий черновик для ранней стадии. Он будет пересмотрен совместно с юристом после регистрации компании.",
+    termsBody: [
+      {
+        heading: "Общее",
+        text: 'Сайт seventy-times.com принадлежит Seventy Times — малому бизнесу из США. Используя сайт, вы соглашаетесь с этими условиями.',
+      },
+      {
+        heading: "Что мы обещаем",
+        text: 'Мы честно описываем наши услуги, цены обсуждаем индивидуально, результаты — конкретные KPI, которые оговариваем до старта. Чат с Венесой — вспомогательный инструмент, а не юридическое предложение.',
+      },
+      {
+        heading: "Чего мы не обещаем",
+        text: 'Никаких «гарантированных 100× за неделю». Реальные результаты зависят от ниши, бюджета, рынка и качества исполнения. Все цифры на сайте и в Growth Simulator — иллюстративные.',
+      },
+      {
+        heading: "Интеллектуальная собственность",
+        text: 'Все тексты, дизайн и код сайта принадлежат Seventy Times. Копировать и использовать без разрешения нельзя. Бренд «Seventy Times», «70×» и связанные элементы — наша собственность.',
+      },
+      {
+        heading: "Формы и отзывы",
+        text: 'Заполняя форму заявки, вы подтверждаете что данные достоверны и предоставлены добровольно. Отзывы принимаются только с персональным кодом от реального клиента; фальшивые отзывы не публикуются.',
+      },
+      {
+        heading: "Ограничение ответственности",
+        text: 'Сайт предоставляется «как есть». Мы стараемся чтобы всё работало, но не гарантируем что сайт будет доступен 24/7 или что информация всегда на 100% актуальна. Решения на основе материалов сайта — на вашей ответственности.',
+      },
+      {
+        heading: "Применимое право",
+        text: 'К этим условиям применяется право США. Споры, по возможности, решаются прямым диалогом — пишите на info@seventy-times.com.',
+      },
+      {
+        heading: "Изменения",
+        text: 'Мы можем обновлять эти условия. Существенные изменения будут отмечены датой вверху страницы.',
+      },
+    ],
+
+    legalBack: "← Назад на главную",
   },
 
   en: {
@@ -334,6 +475,8 @@ const dict = {
     navFaq: "FAQ",
     navStatus: "Accepting projects",
     navCta: "Get a quote",
+    navOpenMenu: "Open menu",
+    navCloseMenu: "Close menu",
 
     // Hero meta
     heroMeta1: "Ads · Automation · AI",
@@ -649,6 +792,145 @@ const dict = {
     chatLabel: "Venesa",
     chatError: "Connection error. Please try again later.",
     chatFallback: "Something went wrong. Please try again.",
+    chatOpen: "Talk to Venesa",
+    chatClose: "Close chat",
+    chatSend: "Send",
+    chatMessage: "Message",
+    chatAlt: "Venesa — AI consultant at Seventy Times",
+
+    // Consent (shared between forms)
+    consentPrefix: "I agree to the ",
+    consentPrivacy: "Privacy Policy",
+    consentAnd: " and ",
+    consentTerms: "Terms of Use",
+    consentSuffix: ".",
+    consentRequired: "Please agree to the Privacy Policy and Terms of Use",
+
+    // Lead form extras
+    leadInvalidContact: "That doesn't look like an email or @username — please check",
+    leadTooMany: "Too many requests. Please try again in an hour.",
+    leadCloseAria: "Close form",
+
+    // Review form
+    reviewEyebrow: "— Leave a review",
+    reviewTitle: "Share your",
+    reviewTitleAccent: "experience",
+    reviewSub:
+      "Reviews can only be left by real clients — we issue a personal code after every project. No code yet? Message us on Telegram and we'll send one.",
+    reviewCode: "Client code",
+    reviewCodePh: "Your personal code, e.g. ST-XYZ-42",
+    reviewName: "Name",
+    reviewNamePh: "How to sign the review",
+    reviewRole: "Role & company",
+    reviewRolePh: "E.g. Founder, Becker Studio",
+    reviewLocation: "Location",
+    reviewLocationPh: "City, country",
+    reviewContent: "Review",
+    reviewContentPh:
+      "Briefly — what we did, what results you got, how working with us felt.",
+    reviewSubmit: "Submit review",
+    reviewSubmitting: "Verifying code…",
+    reviewSuccessTitle: "Review received",
+    reviewSuccessText:
+      "Thank you for the kind words! We got it and will add it to the feed after a quick moderation pass.",
+    reviewClose: "Close",
+    reviewFillAll: "Please fill in all fields",
+    reviewNote:
+      "Reviews are moderated and added manually — we only show real stories.",
+    reviewError: "Connection error. Please try again later.",
+    reviewCloseAria: "Close form",
+    reviewTooMany: "Too many attempts. Please try again later.",
+
+    // Footer — legal links
+    ftLegal: "Legal",
+    ftPrivacy: "Privacy Policy",
+    ftTerms: "Terms of Use",
+
+    // Privacy Policy page
+    privacyTitle: "Privacy Policy",
+    privacyUpdated: "Last updated: April 20, 2026",
+    privacyDraftNote:
+      "This is a working draft for the early stage of the business. It will be revised with legal counsel once the company is formally registered.",
+    privacyBody: [
+      {
+        heading: "Who we are",
+        text: 'Seventy Times is a small business operating from the United States as a sole proprietorship; formal incorporation is planned at a later stage. You can reach us at info@seventy-times.com.',
+      },
+      {
+        heading: "What data we collect",
+        text: 'Through the request form: your name, contact (email or Telegram), business name, and a description of your task. Through the review form: name, role, location, review text, and a personal client code. Through the chat with Venesa: the text of messages you send us. We do not collect payment information and do not use tracking cookies.',
+      },
+      {
+        heading: "Why we collect it",
+        text: 'Only to get back to you and deliver the service you requested. We do not sell your data, share it with ad networks, or use it for profiling.',
+      },
+      {
+        heading: "Where it is stored",
+        text: 'Requests and reviews are forwarded to our internal Telegram chat. Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Venesa is processed via the Anthropic API to generate responses.',
+      },
+      {
+        heading: "How long we keep it",
+        text: 'Requests and reviews — for the duration of the engagement plus one year, then deleted. Chat history is kept only in your browser and is cleared when you clear it.',
+      },
+      {
+        heading: "Your rights",
+        text: 'You can email info@seventy-times.com at any time to: see what data we hold about you, correct it, or delete it. We will respond within 30 days.',
+      },
+      {
+        heading: "Cookies",
+        text: 'We use a single technical cookie to remember your chosen interface language. This is not tracking — purely for convenience.',
+      },
+      {
+        heading: "Children",
+        text: 'The site is not intended for children under 16. We do not knowingly collect data from minors.',
+      },
+      {
+        heading: "Changes",
+        text: 'Once the business is formally registered, this policy will be revised with legal counsel. The current version is an honest minimum for the early stage.',
+      },
+    ],
+
+    // Terms of Use page
+    termsTitle: "Terms of Use",
+    termsUpdated: "Last updated: April 20, 2026",
+    termsDraftNote:
+      "This is a working draft for the early stage of the business. It will be revised with legal counsel once the company is formally registered.",
+    termsBody: [
+      {
+        heading: "General",
+        text: 'The site seventy-times.com is operated by Seventy Times, a small business in the United States. By using the site you accept these terms.',
+      },
+      {
+        heading: "What we promise",
+        text: 'We describe our services honestly, discuss prices individually, and agree on specific KPIs before we start. The chat with Venesa is a helper tool, not a legal offer.',
+      },
+      {
+        heading: "What we do not promise",
+        text: "No ‘guaranteed 100× in a week’. Actual results depend on niche, budget, market, and execution quality. All numbers on the site and in the Growth Simulator are illustrative.",
+      },
+      {
+        heading: "Intellectual property",
+        text: 'All texts, design, and code of this site belong to Seventy Times. You may not copy or reuse them without permission. The brand "Seventy Times", "70×", and related elements are our property.',
+      },
+      {
+        heading: "Forms and reviews",
+        text: 'By submitting a request form you confirm that the information is accurate and provided voluntarily. Reviews require a personal code issued to a real client; fake reviews are not published.',
+      },
+      {
+        heading: "Limitation of liability",
+        text: 'The site is provided "as is". We do our best to keep everything working, but we do not guarantee 24/7 availability or that every piece of information is always 100% current. Decisions based on site content are your responsibility.',
+      },
+      {
+        heading: "Applicable law",
+        text: 'These terms are governed by the laws of the United States. Disputes are resolved, where possible, through direct dialogue — write to info@seventy-times.com.',
+      },
+      {
+        heading: "Changes",
+        text: 'We may update these terms. Substantial changes will be marked by an updated date at the top of the page.',
+      },
+    ],
+
+    legalBack: "← Back to home",
   },
 
   de: {
@@ -659,6 +941,8 @@ const dict = {
     navFaq: "FAQ",
     navStatus: "Projekte willkommen",
     navCta: "Anfrage",
+    navOpenMenu: "Menü öffnen",
+    navCloseMenu: "Menü schließen",
 
     // Hero meta
     heroMeta1: "Werbung · Automatisierung · KI",
@@ -974,6 +1258,148 @@ const dict = {
     chatLabel: "Venesa",
     chatError: "Verbindungsfehler. Bitte versuchen Sie es später erneut.",
     chatFallback: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+    chatOpen: "Mit Venesa sprechen",
+    chatClose: "Chat schließen",
+    chatSend: "Senden",
+    chatMessage: "Nachricht",
+    chatAlt: "Venesa — KI-Beraterin bei Seventy Times",
+
+    // Consent (shared between forms)
+    consentPrefix: "Ich stimme der ",
+    consentPrivacy: "Datenschutzerklärung",
+    consentAnd: " und den ",
+    consentTerms: "Nutzungsbedingungen",
+    consentSuffix: " zu.",
+    consentRequired:
+      "Bitte stimmen Sie der Datenschutzerklärung und den Nutzungsbedingungen zu",
+
+    // Lead form extras
+    leadInvalidContact:
+      "Das sieht nicht wie eine E-Mail oder ein @Benutzername aus — bitte prüfen",
+    leadTooMany: "Zu viele Anfragen. Bitte versuchen Sie es in einer Stunde erneut.",
+    leadCloseAria: "Formular schließen",
+
+    // Review form
+    reviewEyebrow: "— Bewertung abgeben",
+    reviewTitle: "Teilen Sie Ihre",
+    reviewTitleAccent: "Erfahrung",
+    reviewSub:
+      "Bewertungen können nur echte Kunden hinterlassen — wir vergeben einen persönlichen Code nach jedem Projekt. Noch keinen Code? Schreiben Sie uns auf Telegram, wir schicken einen.",
+    reviewCode: "Kundencode",
+    reviewCodePh: "Ihr persönlicher Code, z.B. ST-XYZ-42",
+    reviewName: "Name",
+    reviewNamePh: "Wie die Bewertung unterzeichnen",
+    reviewRole: "Position & Unternehmen",
+    reviewRolePh: "Z.B. Gründer, Becker Studio",
+    reviewLocation: "Standort",
+    reviewLocationPh: "Stadt, Land",
+    reviewContent: "Bewertung",
+    reviewContentPh:
+      "Kurz — was wir gemacht haben, welche Ergebnisse, wie die Zusammenarbeit war.",
+    reviewSubmit: "Bewertung senden",
+    reviewSubmitting: "Code wird geprüft…",
+    reviewSuccessTitle: "Bewertung erhalten",
+    reviewSuccessText:
+      "Vielen Dank für die netten Worte! Wir haben sie erhalten und fügen sie nach einer kurzen Moderation hinzu.",
+    reviewClose: "Schließen",
+    reviewFillAll: "Bitte füllen Sie alle Felder aus",
+    reviewNote:
+      "Bewertungen werden moderiert und manuell hinzugefügt — wir zeigen nur echte Geschichten.",
+    reviewError: "Verbindungsfehler. Bitte versuchen Sie es später erneut.",
+    reviewCloseAria: "Formular schließen",
+    reviewTooMany:
+      "Zu viele Versuche. Bitte versuchen Sie es später erneut.",
+
+    // Footer — legal links
+    ftLegal: "Rechtliches",
+    ftPrivacy: "Datenschutzerklärung",
+    ftTerms: "Nutzungsbedingungen",
+
+    // Privacy Policy page
+    privacyTitle: "Datenschutzerklärung",
+    privacyUpdated: "Zuletzt aktualisiert: 20. April 2026",
+    privacyDraftNote:
+      "Dies ist ein Arbeitsentwurf für die frühe Geschäftsphase. Er wird nach der offiziellen Registrierung des Unternehmens mit einem Anwalt überarbeitet.",
+    privacyBody: [
+      {
+        heading: "Wer wir sind",
+        text: 'Seventy Times ist ein kleines Unternehmen mit Sitz in den USA, das als Einzelunternehmen (sole proprietorship) geführt wird; die offizielle Eintragung ist für eine spätere Phase geplant. Sie erreichen uns unter info@seventy-times.com.',
+      },
+      {
+        heading: "Welche Daten wir erheben",
+        text: 'Über das Anfrageformular: Ihren Namen, Kontakt (E-Mail oder Telegram), Firmennamen und eine Beschreibung Ihrer Aufgabe. Über das Bewertungsformular: Name, Position, Standort, Bewertungstext und persönlichen Kundencode. Über den Chat mit Venesa: den Text der an uns gesendeten Nachrichten. Wir erheben keine Zahlungsdaten und verwenden keine Tracking-Cookies.',
+      },
+      {
+        heading: "Warum wir Daten erheben",
+        text: 'Ausschließlich um uns bei Ihnen zu melden und die angeforderte Leistung zu erbringen. Wir verkaufen keine Daten, geben sie nicht an Werbenetzwerke weiter und nutzen sie nicht zum Profiling.',
+      },
+      {
+        heading: "Wo Daten gespeichert werden",
+        text: 'Anfragen und Bewertungen werden an unseren internen Telegram-Chat weitergeleitet. Website-Logs werden bei unserem Hosting-Anbieter (Vercel) in technischer Form gespeichert und enthalten keine persönlichen Daten. Der Chat mit Venesa wird über die Anthropic-API für die Antwortgenerierung verarbeitet.',
+      },
+      {
+        heading: "Wie lange wir Daten aufbewahren",
+        text: 'Anfragen und Bewertungen — für die Dauer des Projekts plus ein Jahr, danach werden sie gelöscht. Der Chat-Verlauf wird nur in Ihrem Browser gespeichert und gelöscht, wenn Sie ihn löschen.',
+      },
+      {
+        heading: "Ihre Rechte",
+        text: 'Sie können jederzeit an info@seventy-times.com schreiben und Folgendes anfordern: Einsicht, welche Daten wir über Sie haben; Korrektur; oder Löschung. Wir antworten innerhalb von 30 Tagen.',
+      },
+      {
+        heading: "Cookies",
+        text: 'Wir verwenden einen einzigen technischen Cookie, um Ihre gewählte Oberflächensprache zu speichern. Kein Tracking — rein zur Bequemlichkeit.',
+      },
+      {
+        heading: "Kinder",
+        text: 'Die Website richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich keine Daten von Minderjährigen.',
+      },
+      {
+        heading: "Änderungen",
+        text: 'Sobald das Unternehmen offiziell registriert ist, wird diese Richtlinie mit einem Anwalt überarbeitet. Die aktuelle Version ist ein ehrliches Minimum für die frühe Phase.',
+      },
+    ],
+
+    // Terms of Use page
+    termsTitle: "Nutzungsbedingungen",
+    termsUpdated: "Zuletzt aktualisiert: 20. April 2026",
+    termsDraftNote:
+      "Dies ist ein Arbeitsentwurf für die frühe Geschäftsphase. Er wird nach der offiziellen Registrierung des Unternehmens mit einem Anwalt überarbeitet.",
+    termsBody: [
+      {
+        heading: "Allgemeines",
+        text: 'Die Seite seventy-times.com wird von Seventy Times betrieben, einem kleinen Unternehmen in den USA. Durch die Nutzung der Website akzeptieren Sie diese Bedingungen.',
+      },
+      {
+        heading: "Was wir versprechen",
+        text: 'Wir beschreiben unsere Leistungen ehrlich, besprechen Preise individuell und vereinbaren konkrete KPIs vor dem Start. Der Chat mit Venesa ist ein Hilfswerkzeug, kein rechtliches Angebot.',
+      },
+      {
+        heading: "Was wir nicht versprechen",
+        text: "Kein ‚garantiertes 100× in einer Woche‘. Die tatsächlichen Ergebnisse hängen von Nische, Budget, Markt und Umsetzungsqualität ab. Alle Zahlen auf der Website und im Growth Simulator sind illustrativ.",
+      },
+      {
+        heading: "Geistiges Eigentum",
+        text: 'Alle Texte, Designs und der Code dieser Seite gehören Seventy Times. Kopieren oder Wiederverwenden ist ohne Erlaubnis nicht gestattet. Die Marken "Seventy Times", "70×" und verwandte Elemente sind unser Eigentum.',
+      },
+      {
+        heading: "Formulare und Bewertungen",
+        text: 'Mit dem Absenden des Anfrageformulars bestätigen Sie, dass die Angaben korrekt und freiwillig gemacht sind. Bewertungen erfordern einen persönlichen Code, der an echte Kunden vergeben wird; gefälschte Bewertungen werden nicht veröffentlicht.',
+      },
+      {
+        heading: "Haftungsbeschränkung",
+        text: 'Die Website wird „wie besehen" bereitgestellt. Wir bemühen uns, dass alles funktioniert, garantieren aber keine 24/7-Verfügbarkeit und nicht, dass alle Informationen zu 100% aktuell sind. Entscheidungen auf Basis der Website-Inhalte liegen in Ihrer Verantwortung.',
+      },
+      {
+        heading: "Anwendbares Recht",
+        text: 'Diese Bedingungen unterliegen dem Recht der USA. Streitigkeiten werden, wenn möglich, im direkten Dialog gelöst — schreiben Sie an info@seventy-times.com.',
+      },
+      {
+        heading: "Änderungen",
+        text: 'Wir können diese Bedingungen aktualisieren. Wesentliche Änderungen werden durch ein aktualisiertes Datum oben auf der Seite markiert.',
+      },
+    ],
+
+    legalBack: "← Zurück zur Startseite",
   },
 };
 

@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import { Manrope } from "next/font/google";
 import { siteConfig } from "@/data/siteConfig";
 import { I18nProvider } from "@/i18n/context";
 import HtmlLangSync from "@/i18n/HtmlLangSync";
+import { DEFAULT_LOCALE, LOCALES, type Locale } from "@/i18n/config";
+import { getLocaleMeta } from "@/lib/localizedMeta";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import FloatingGlyphs from "@/components/FloatingGlyphs";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -20,57 +23,56 @@ const manrope = Manrope({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: `${siteConfig.name} — ${siteConfig.tagline}`,
-    template: `%s — ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  keywords: [
-    "Seventy Times",
-    "AI marketing agency",
-    "AI агентство",
-    "маркетинговое агентство",
-    "таргетированная реклама",
-    "performance marketing",
-    "автоматизация бизнеса",
-    "AI-бот",
-    "Claude",
-    "digital marketing",
-  ],
-  authors: [{ name: siteConfig.name }],
-  alternates: {
-    canonical: siteConfig.url,
-    languages: {
-      en: `${siteConfig.url}?lang=en`,
-      ru: `${siteConfig.url}?lang=ru`,
-      de: `${siteConfig.url}?lang=de`,
-      "x-default": siteConfig.url,
+function readLocaleFromCookies(): Locale {
+  const saved = cookies().get("lang")?.value;
+  return (LOCALES as readonly string[]).includes(saved ?? "")
+    ? (saved as Locale)
+    : DEFAULT_LOCALE;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = readLocaleFromCookies();
+  const meta = getLocaleMeta(locale);
+  const alternateLocales = (["en_US", "ru_RU", "de_DE"] as const).filter(
+    (l) => l !== meta.ogLocale
+  );
+
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: {
+      default: `${siteConfig.name} — ${siteConfig.tagline}`,
+      template: `%s — ${siteConfig.name}`,
     },
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    alternateLocale: ["ru_RU", "de_DE"],
-    url: siteConfig.url,
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
-    description: siteConfig.description,
-  },
-  icons: {
-    icon: "/favicon.svg",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+    description: meta.description,
+    keywords: meta.keywords,
+    authors: [{ name: siteConfig.name }],
+    alternates: {
+      canonical: siteConfig.url,
+      languages: {
+        en: `${siteConfig.url}?lang=en`,
+        ru: `${siteConfig.url}?lang=ru`,
+        de: `${siteConfig.url}?lang=de`,
+        "x-default": siteConfig.url,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: meta.ogLocale,
+      alternateLocale: [...alternateLocales],
+      url: siteConfig.url,
+      title: `${siteConfig.name} — ${siteConfig.tagline}`,
+      description: meta.description,
+      siteName: siteConfig.name,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${siteConfig.name} — ${siteConfig.tagline}`,
+      description: meta.description,
+    },
+    icons: { icon: "/favicon.svg" },
+    robots: { index: true, follow: true },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#0a0b10",
