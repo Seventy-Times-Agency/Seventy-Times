@@ -21,24 +21,38 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: `${siteConfig.name} — ${siteConfig.tagline}`,
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: [
-    "AI",
-    "маркетинг",
+    "Seventy Times",
+    "AI marketing agency",
+    "AI агентство",
+    "маркетинговое агентство",
     "таргетированная реклама",
-    "автоматизация",
+    "performance marketing",
+    "автоматизация бизнеса",
     "AI-бот",
     "Claude",
-    "агентство",
+    "digital marketing",
   ],
   authors: [{ name: siteConfig.name }],
+  alternates: {
+    canonical: siteConfig.url,
+    languages: {
+      en: `${siteConfig.url}?lang=en`,
+      ru: `${siteConfig.url}?lang=ru`,
+      de: `${siteConfig.url}?lang=de`,
+      "x-default": siteConfig.url,
+    },
+  },
   openGraph: {
     type: "website",
-    locale: "ru_RU",
+    locale: "en_US",
+    alternateLocale: ["ru_RU", "de_DE"],
     url: siteConfig.url,
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
@@ -64,6 +78,31 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.name,
+  alternateName: siteConfig.shortName,
+  url: siteConfig.url,
+  logo: `${siteConfig.url}/favicon.svg`,
+  description: siteConfig.description,
+  email: siteConfig.contacts.email.address,
+  sameAs: [
+    siteConfig.contacts.telegram.url,
+    siteConfig.contacts.instagram.url,
+    siteConfig.contacts.facebook.url,
+    siteConfig.contacts.whatsapp.url,
+  ],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      email: siteConfig.contacts.email.address,
+      availableLanguage: ["en", "ru", "de"],
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -71,6 +110,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={manrope.variable}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
+      </head>
       <body>
         <I18nProvider>
           <HtmlLangSync />
