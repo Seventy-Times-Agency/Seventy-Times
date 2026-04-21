@@ -198,6 +198,38 @@
   margin-top: 4px;
 }
 
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.consent input[type="checkbox"] {
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.consent a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: rgba(232, 238, 244, 0.3);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.consent a:hover {
+  text-decoration-color: var(--accent);
+}
+
 /* Success state ────────────────────────────────────────── */
 .success {
   display: flex;

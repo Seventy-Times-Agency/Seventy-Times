@@ -1,4 +1,12 @@
 import { NextResponse } from "next/server";
+import {
+  checkOrigin,
+  forbiddenOriginResponse,
+  getClientIp,
+  rateLimit,
+  rateLimitResponse,
+} from "@/lib/apiGuard";
+import { escapeMarkdown } from "@/lib/telegram";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -57,10 +65,6 @@ function isCodeValid(code: string): boolean {
     .includes(needle);
 }
 
-function escapeMarkdown(text: string): string {
-  return text.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (c) => `\\${c}`);
-}
-
 async function notifyTelegram(review: Omit<ReviewPayload, "code">, code: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -96,6 +100,12 @@ async function notifyTelegram(review: Omit<ReviewPayload, "code">, code: string)
 }
 
 export async function POST(req: Request) {
+  if (!checkOrigin(req)) return forbiddenOriginResponse();
+
+  const ip = getClientIp(req);
+  const rl = rateLimit(`review:${ip}`, 3, 60 * 60_000);
+  if (!rl.ok) return rateLimitResponse(rl);
+
   let body: unknown;
   try {
     body = await req.json();
@@ -137,6 +147,12 @@ export async function POST(req: Request) {
   }
 
   if (!isCodeValid(code)) {
+    const bruteforce = rateLimit(`review-bad-code:${ip}`, 5, 15 * 60_000);
+    if (!bruteforce.ok) return rateLimitResponse(bruteforce);
+    console.warn("[REVIEW] invalid code attempt", {
+      at: new Date().toISOString(),
+      codeLen: code.length,
+    });
     return NextResponse.json(
       {
         error:
@@ -146,14 +162,26 @@ export async function POST(req: Request) {
     );
   }
 
-  console.log("[REVIEW]", {
-    code,
-    name,
-    role,
-    location,
-    content,
+  const telegramConfigured = Boolean(
+    process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID
+  );
+
+  console.log("[REVIEW] accepted", {
     at: new Date().toISOString(),
+    telegram: telegramConfigured,
+    sizes: {
+      name: name.length,
+      role: role.length,
+      location: location.length,
+      content: content.length,
+    },
   });
+
+  if (!telegramConfigured) {
+    console.warn(
+      "[REVIEW] Telegram not configured — review accepted but not forwarded"
+    );
+  }
 
   await notifyTelegram({ name, role, location, content }, code);
 

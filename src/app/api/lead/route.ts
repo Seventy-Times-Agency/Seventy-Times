@@ -1,4 +1,12 @@
 import { NextResponse } from "next/server";
+import {
+  checkOrigin,
+  forbiddenOriginResponse,
+  getClientIp,
+  rateLimit,
+  rateLimitResponse,
+} from "@/lib/apiGuard";
+import { escapeMarkdown } from "@/lib/telegram";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -26,12 +34,6 @@ function isValid(p: unknown): p is LeadPayload {
     typeof r.business === "string" &&
     typeof r.request === "string"
   );
-}
-
-function escapeMarkdown(text: string): string {
-  // Escape Telegram MarkdownV2 special chars so user input can't break
-  // the message formatting or inject markup.
-  return text.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (c) => `\\${c}`);
 }
 
 async function notifyTelegram(lead: LeadPayload) {
@@ -66,6 +68,12 @@ async function notifyTelegram(lead: LeadPayload) {
 }
 
 export async function POST(req: Request) {
+  if (!checkOrigin(req)) return forbiddenOriginResponse();
+
+  const ip = getClientIp(req);
+  const rl = rateLimit(`lead:${ip}`, 5, 60 * 60_000);
+  if (!rl.ok) return rateLimitResponse(rl);
+
   let body: unknown;
   try {
     body = await req.json();
@@ -104,17 +112,27 @@ export async function POST(req: Request) {
     );
   }
 
-  // Always log the lead so it's visible in Vercel logs even without
-  // a Telegram bot configured.
-  console.log("[LEAD]", {
-    name,
-    contact,
-    business,
-    request,
+  const telegramConfigured = Boolean(
+    process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID
+  );
+
+  console.log("[LEAD] received", {
     at: new Date().toISOString(),
+    telegram: telegramConfigured,
+    sizes: {
+      name: name.length,
+      contact: contact.length,
+      business: business.length,
+      request: request.length,
+    },
   });
 
-  // Fire-and-notify Telegram if credentials are set in env.
+  if (!telegramConfigured) {
+    console.warn(
+      "[LEAD] Telegram not configured — lead accepted but not forwarded"
+    );
+  }
+
   await notifyTelegram({ name, contact, business, request });
 
   return NextResponse.json({ ok: true });

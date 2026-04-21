@@ -6,7 +6,9 @@ import {
   useState,
   type FormEvent,
 } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { useT } from "@/i18n/context";
 import styles from "./LeadForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -19,14 +21,11 @@ const INITIAL = {
   content: "",
 };
 
-/**
- * Client review submission modal. Only people with a valid client
- * code (issued manually by the agency after a real project) can
- * submit a review. Opens whenever the URL hash becomes `#review`.
- */
 export default function ReviewForm() {
+  const { t } = useT();
   const [open, setOpen] = useState(false);
   const [fields, setFields] = useState(INITIAL);
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
 
@@ -93,7 +92,12 @@ export default function ReviewForm() {
       !payload.location ||
       !payload.content
     ) {
-      setError("Пожалуйста, заполни все поля");
+      setError(t.reviewFillAll);
+      return;
+    }
+
+    if (!consent) {
+      setError(t.consentRequired);
       return;
     }
 
@@ -109,20 +113,19 @@ export default function ReviewForm() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(
-          data.error || "Что-то пошло не так. Попробуй ещё раз."
-        );
+        const msg =
+          res.status === 429
+            ? t.reviewTooMany
+            : data.error || t.reviewError;
+        throw new Error(msg);
       }
 
       setStatus("success");
       setFields(INITIAL);
+      setConsent(false);
     } catch (err) {
       setStatus("error");
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Ошибка соединения. Попробуй позже."
-      );
+      setError(err instanceof Error ? err.message : t.reviewError);
     }
   };
 
@@ -151,7 +154,7 @@ export default function ReviewForm() {
             <button
               className={styles.closeBtn}
               onClick={close}
-              aria-label="Закрыть форму"
+              aria-label={t.reviewCloseAria}
               type="button"
             >
               ×
@@ -160,43 +163,38 @@ export default function ReviewForm() {
             {status === "success" ? (
               <div className={styles.success}>
                 <div className={styles.successIcon}>✓</div>
-                <h3 className={styles.successTitle}>Отзыв принят</h3>
-                <p className={styles.successText}>
-                  Спасибо за тёплые слова! Мы получили отзыв и добавим его в
-                  ленту после быстрой модерации.
-                </p>
+                <h3 className={styles.successTitle}>{t.reviewSuccessTitle}</h3>
+                <p className={styles.successText}>{t.reviewSuccessText}</p>
                 <button
                   className={styles.successCloseBtn}
                   onClick={close}
                   type="button"
                 >
-                  Закрыть
+                  {t.reviewClose}
                 </button>
               </div>
             ) : (
               <>
                 <div className={styles.header}>
-                  <span className={styles.eyebrow}>— Оставить отзыв</span>
+                  <span className={styles.eyebrow}>{t.reviewEyebrow}</span>
                   <h3 className={styles.title} id="review-form-title">
-                    Поделитесь{" "}
-                    <span className={styles.titleItalic}>опытом</span>
+                    {t.reviewTitle}{" "}
+                    <span className={styles.titleItalic}>
+                      {t.reviewTitleAccent}
+                    </span>
                   </h3>
-                  <p className={styles.subtitle}>
-                    Отзыв могут оставить только реальные клиенты — нужен
-                    персональный код, который мы выдаём после завершения
-                    проекта. Нет кода? Напишите нам в Telegram, мы вышлем.
-                  </p>
+                  <p className={styles.subtitle}>{t.reviewSub}</p>
                 </div>
 
                 <form onSubmit={submit} className={styles.form} noValidate>
                   <label className={styles.field}>
-                    <span className={styles.label}>Код клиента</span>
+                    <span className={styles.label}>{t.reviewCode}</span>
                     <input
                       className={styles.input}
                       type="text"
                       value={fields.code}
                       onChange={setField("code")}
-                      placeholder="Персональный код, например IAA-XYZ-42"
+                      placeholder={t.reviewCodePh}
                       maxLength={64}
                       autoComplete="off"
                       required
@@ -204,13 +202,13 @@ export default function ReviewForm() {
                   </label>
 
                   <label className={styles.field}>
-                    <span className={styles.label}>Имя</span>
+                    <span className={styles.label}>{t.reviewName}</span>
                     <input
                       className={styles.input}
                       type="text"
                       value={fields.name}
                       onChange={setField("name")}
-                      placeholder="Как подписать отзыв"
+                      placeholder={t.reviewNamePh}
                       maxLength={100}
                       autoComplete="name"
                       required
@@ -218,13 +216,13 @@ export default function ReviewForm() {
                   </label>
 
                   <label className={styles.field}>
-                    <span className={styles.label}>Должность и компания</span>
+                    <span className={styles.label}>{t.reviewRole}</span>
                     <input
                       className={styles.input}
                       type="text"
                       value={fields.role}
                       onChange={setField("role")}
-                      placeholder="Например: Основатель, Becker Studio"
+                      placeholder={t.reviewRolePh}
                       maxLength={150}
                       autoComplete="organization"
                       required
@@ -232,29 +230,49 @@ export default function ReviewForm() {
                   </label>
 
                   <label className={styles.field}>
-                    <span className={styles.label}>Локация</span>
+                    <span className={styles.label}>{t.reviewLocation}</span>
                     <input
                       className={styles.input}
                       type="text"
                       value={fields.location}
                       onChange={setField("location")}
-                      placeholder="Город, страна"
+                      placeholder={t.reviewLocationPh}
                       maxLength={120}
                       required
                     />
                   </label>
 
                   <label className={styles.field}>
-                    <span className={styles.label}>Отзыв</span>
+                    <span className={styles.label}>{t.reviewContent}</span>
                     <textarea
                       className={styles.textarea}
                       value={fields.content}
                       onChange={setField("content")}
-                      placeholder="Коротко — что сделали, какие были результаты, как вам работалось с командой."
+                      placeholder={t.reviewContentPh}
                       maxLength={1200}
                       rows={5}
                       required
                     />
+                  </label>
+
+                  <label className={styles.consent}>
+                    <input
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      required
+                    />
+                    <span>
+                      {t.consentPrefix}
+                      <Link href="/privacy" target="_blank">
+                        {t.consentPrivacy}
+                      </Link>
+                      {t.consentAnd}
+                      <Link href="/terms" target="_blank">
+                        {t.consentTerms}
+                      </Link>
+                      {t.consentSuffix}
+                    </span>
                   </label>
 
                   {error && <div className={styles.error}>{error}</div>}
@@ -262,21 +280,18 @@ export default function ReviewForm() {
                   <button
                     type="submit"
                     className={styles.submit}
-                    disabled={status === "loading"}
+                    disabled={status === "loading" || !consent}
                   >
                     {status === "loading" ? (
-                      "Проверяем код…"
+                      t.reviewSubmitting
                     ) : (
                       <>
-                        Отправить отзыв <span aria-hidden="true">→</span>
+                        {t.reviewSubmit} <span aria-hidden="true">→</span>
                       </>
                     )}
                   </button>
 
-                  <p className={styles.note}>
-                    Отзывы проходят модерацию и добавляются в ленту вручную —
-                    мы хотим показывать только реальные истории.
-                  </p>
+                  <p className={styles.note}>{t.reviewNote}</p>
                 </form>
               </>
             )}

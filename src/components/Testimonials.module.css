@@ -1,7 +1,7 @@
 .section {
   position: relative;
   isolation: isolate;
-  padding: 100px 0 80px;
+  padding: 72px 0 56px;
   max-width: var(--container);
   margin: 0 auto;
 }
@@ -296,7 +296,7 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 80px 0 72px;
+    padding: 56px 0 48px;
   }
   .header {
     padding: 0 20px 28px;

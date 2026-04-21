@@ -1,7 +1,7 @@
 .section {
   position: relative;
   isolation: isolate;
-  padding: 100px 48px 80px;
+  padding: 72px 48px 56px;
   max-width: var(--container);
   margin: 0 auto;
 }
@@ -426,7 +426,7 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 80px 20px 64px;
+    padding: 56px 20px 48px;
   }
   .pillar {
     padding: 22px 20px 20px;

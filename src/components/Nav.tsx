@@ -1,22 +1,46 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
 import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
 import styles from "./Nav.module.css";
 
+const SECTION_IDS = ["services", "process", "chat", "faq"] as const;
+
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
   const { locale, t, setLocale } = useT();
+
+  useEffect(() => {
+    const nodes = SECTION_IDS
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    if (nodes.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-30% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+
+    nodes.forEach((n) => observer.observe(n));
+    return () => observer.disconnect();
+  }, []);
 
   const close = () => setMenuOpen(false);
 
   const NAV_LINKS = [
-    { href: "#services", label: t.navServices },
-    { href: "#process", label: t.navProcess },
-    { href: "#chat", label: t.navVenesa },
-    { href: "#faq", label: t.navFaq },
+    { href: "#services", id: "services", label: t.navServices },
+    { href: "#process", id: "process", label: t.navProcess },
+    { href: "#chat", id: "chat", label: t.navVenesa },
+    { href: "#faq", id: "faq", label: t.navFaq },
   ];
 
   return (
@@ -30,7 +54,12 @@ export default function Nav() {
 
       <div className={styles.links}>
         {NAV_LINKS.map((l) => (
-          <a key={l.href} href={l.href} className={styles.link}>
+          <a
+            key={l.href}
+            href={l.href}
+            className={`${styles.link}${active === l.id ? ` ${styles.linkActive}` : ""}`}
+            aria-current={active === l.id ? "location" : undefined}
+          >
             {l.label}
           </a>
         ))}
@@ -58,7 +87,7 @@ export default function Nav() {
         <button
           className={styles.hamburger}
           onClick={() => setMenuOpen((v) => !v)}
-          aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
+          aria-label={menuOpen ? t.navCloseMenu : t.navOpenMenu}
           aria-expanded={menuOpen}
           type="button"
         >
@@ -71,7 +100,13 @@ export default function Nav() {
       {menuOpen && (
         <div className={styles.mobileMenu}>
           {NAV_LINKS.map((l) => (
-            <a key={l.href} href={l.href} className={styles.mobileLink} onClick={close}>
+            <a
+              key={l.href}
+              href={l.href}
+              className={`${styles.mobileLink}${active === l.id ? ` ${styles.mobileLinkActive}` : ""}`}
+              onClick={close}
+              aria-current={active === l.id ? "location" : undefined}
+            >
               {l.label}
             </a>
           ))}

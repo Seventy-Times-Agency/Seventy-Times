@@ -3,7 +3,7 @@ export const siteConfig = {
   shortName: "70×",
   tagline: "Ads · Automation · AI",
   description:
-    "Реклама, автоматизация процессов и AI-боты для роста бизнеса.",
+    "Реклама, автоматизация и AI-боты для роста бизнеса.",
   url: "https://seventy-times.com",
 
   contacts: {

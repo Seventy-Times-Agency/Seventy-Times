@@ -1,6 +1,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 import { SYSTEM_PROMPT } from "@/lib/systemPrompt";
+import {
+  checkOrigin,
+  forbiddenOriginResponse,
+  getClientIp,
+  rateLimit,
+  rateLimitResponse,
+} from "@/lib/apiGuard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -26,6 +33,12 @@ function isValidMessage(m: unknown): m is IncomingMessage {
 }
 
 export async function POST(req: Request) {
+  if (!checkOrigin(req)) return forbiddenOriginResponse();
+
+  const ip = getClientIp(req);
+  const rl = rateLimit(`chat:${ip}`, 20, 60_000);
+  if (!rl.ok) return rateLimitResponse(rl);
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
@@ -87,7 +100,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ reply });
   } catch (error) {
-    console.error("Anthropic API error:", error);
+    const status =
+      error instanceof Anthropic.APIError ? error.status : "network";
+    console.error("[CHAT] upstream error", { status });
     return NextResponse.json(
       { error: "Ошибка соединения с AI. Попробуй чуть позже." },
       { status: 502 }

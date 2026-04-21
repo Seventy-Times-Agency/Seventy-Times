@@ -1,7 +1,7 @@
 .section {
   position: relative;
   isolation: isolate;
-  padding: 90px 48px;
+  padding: 64px 48px;
   max-width: var(--container);
   margin: 0 auto;
 }
@@ -220,7 +220,7 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 80px 20px;
+    padding: 56px 20px;
   }
   .title {
     font-size: clamp(28px, 8vw, 44px);

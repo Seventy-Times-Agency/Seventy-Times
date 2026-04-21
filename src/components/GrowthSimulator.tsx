@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Reveal from "./Reveal";
 import AnimatedText from "./AnimatedText";
 import SectionWatermark from "./SectionWatermark";
 import { useT } from "@/i18n/context";
 import styles from "./GrowthSimulator.module.css";
+
+const STORAGE_KEY = "st-simulator-levels-v1";
 
 /**
  * 70× Growth Simulator — level-based, illustrative model.
@@ -22,7 +24,19 @@ import styles from "./GrowthSimulator.module.css";
  * A separate formula strip under the pillars explains this plainly.
  */
 
-// Contribution percentages per level per pillar (shared across languages)
+// Contribution percentages per level per pillar.
+//
+// Rough anchors from industry-reported lift ranges on lead volume:
+//   - Ads: 1 channel +30%, 2 channels +60%, 3 channels +85% (compounding
+//     reach across Meta / Google / TikTok).
+//   - Automation: basic funnel +15%, CRM + reminders +30%, full stack +50%
+//     (based on recovered conversions from speed-to-reply and consistent
+//     follow-up, not "new traffic").
+//   - AI agent: site only +25%, multi-channel +45%, full stack +70%
+//     (qualification quality + off-hours coverage).
+//
+// These are conservative midpoints — the max combined multiplier is ~4.7×,
+// deliberately well below the 70× brand ambition so the tool stays honest.
 const ADS_CONTRIB = [0, 0.30, 0.60, 0.85];
 const AUTO_CONTRIB = [0, 0.15, 0.30, 0.50];
 const AI_CONTRIB = [0, 0.25, 0.45, 0.70];
@@ -33,6 +47,43 @@ export default function GrowthSimulator() {
   const [adsLevel, setAdsLevel] = useState(2);
   const [autoLevel, setAutoLevel] = useState(1);
   const [aiLevel, setAiLevel] = useState(1);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw) as {
+          ads?: number;
+          auto?: number;
+          ai?: number;
+        };
+        const clamp = (n: unknown) =>
+          typeof n === "number" && n >= 0 && n <= 3 ? n : null;
+        const a = clamp(saved.ads);
+        const b = clamp(saved.auto);
+        const c = clamp(saved.ai);
+        if (a !== null) setAdsLevel(a);
+        if (b !== null) setAutoLevel(b);
+        if (c !== null) setAiLevel(c);
+      }
+    } catch {
+      // ignore
+    }
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ ads: adsLevel, auto: autoLevel, ai: aiLevel })
+      );
+    } catch {
+      // ignore quota
+    }
+  }, [adsLevel, autoLevel, aiLevel, hydrated]);
 
   const adsContrib = ADS_CONTRIB[adsLevel];
   const autoContrib = AUTO_CONTRIB[autoLevel];

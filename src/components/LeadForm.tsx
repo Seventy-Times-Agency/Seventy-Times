@@ -6,6 +6,7 @@ import {
   useState,
   type FormEvent,
 } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
 import styles from "./LeadForm.module.css";
@@ -20,6 +21,20 @@ const INITIAL = {
 };
 
 /**
+ * Accepts common contact formats: email, @username (telegram),
+ * or any string containing digits (phone). Anything else we treat
+ * as suspicious and ask the user to check.
+ */
+function isPlausibleContact(value: string): boolean {
+  const v = value.trim();
+  if (v.length < 3) return false;
+  const emailLike = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  const handleLike = /^@[\w.]{2,}$/.test(v);
+  const phoneLike = /\d{5,}/.test(v);
+  return emailLike || handleLike || phoneLike;
+}
+
+/**
  * Global lead-capture modal. Opens whenever the URL hash is `#lead`,
  * so any element with `href="#lead"` anywhere on the page acts as a
  * trigger. Also closable by Escape or clicking the backdrop.
@@ -30,6 +45,7 @@ export default function LeadForm() {
   const { t } = useT();
   const [open, setOpen] = useState(false);
   const [fields, setFields] = useState(INITIAL);
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
 
@@ -91,6 +107,16 @@ export default function LeadForm() {
       return;
     }
 
+    if (!isPlausibleContact(contact)) {
+      setError(t.leadInvalidContact);
+      return;
+    }
+
+    if (!consent) {
+      setError(t.consentRequired);
+      return;
+    }
+
     setStatus("loading");
     setError("");
 
@@ -103,16 +129,19 @@ export default function LeadForm() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || t.chatFallback);
+        const msg =
+          res.status === 429
+            ? t.leadTooMany
+            : data.error || t.chatFallback;
+        throw new Error(msg);
       }
 
       setStatus("success");
       setFields(INITIAL);
+      setConsent(false);
     } catch (err) {
       setStatus("error");
-      setError(
-        err instanceof Error ? err.message : t.chatError
-      );
+      setError(err instanceof Error ? err.message : t.chatError);
     }
   };
 
@@ -141,7 +170,7 @@ export default function LeadForm() {
             <button
               className={styles.closeBtn}
               onClick={close}
-              aria-label="Закрыть форму"
+              aria-label={t.leadCloseAria}
               type="button"
             >
               ×
@@ -222,12 +251,32 @@ export default function LeadForm() {
                     />
                   </label>
 
+                  <label className={styles.consent}>
+                    <input
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      required
+                    />
+                    <span>
+                      {t.consentPrefix}
+                      <Link href="/privacy" target="_blank">
+                        {t.consentPrivacy}
+                      </Link>
+                      {t.consentAnd}
+                      <Link href="/terms" target="_blank">
+                        {t.consentTerms}
+                      </Link>
+                      {t.consentSuffix}
+                    </span>
+                  </label>
+
                   {error && <div className={styles.error}>{error}</div>}
 
                   <button
                     type="submit"
                     className={styles.submit}
-                    disabled={status === "loading"}
+                    disabled={status === "loading" || !consent}
                   >
                     {status === "loading" ? (
                       t.leadSubmitting
@@ -237,8 +286,6 @@ export default function LeadForm() {
                       </>
                     )}
                   </button>
-
-                  <p className={styles.note}>{t.leadConsent}</p>
                 </form>
               </>
             )}

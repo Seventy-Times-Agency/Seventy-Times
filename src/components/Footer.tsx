@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
 import styles from "./Footer.module.css";
@@ -45,6 +46,12 @@ export default function Footer() {
           <a href="#top">{t.ftAbout}</a>
           <a href="#contact">{t.ftCollab}</a>
           <span>{t.ftAccepting}</span>
+        </div>
+
+        <div className={styles.col}>
+          <span className={styles.colTitle}>{t.ftLegal}</span>
+          <Link href="/privacy">{t.ftPrivacy}</Link>
+          <Link href="/terms">{t.ftTerms}</Link>
         </div>
       </div>
 

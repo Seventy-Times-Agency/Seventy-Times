@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { siteConfig } from "@/data/siteConfig";
 import Reveal from "./Reveal";
@@ -12,6 +12,7 @@ import styles from "./FAQ.module.css";
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const { t } = useT();
+  const btnRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const items = [
     { q: t.faq1q, a: t.faq1a },
@@ -23,6 +24,33 @@ export default function FAQ() {
     { q: t.faq7q, a: t.faq7a },
     { q: t.faq8q, a: t.faq8a },
   ];
+
+  const focus = (i: number) => {
+    const el = btnRefs.current[i];
+    if (el) el.focus();
+  };
+
+  const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
+    const last = items.length - 1;
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        focus(i === last ? 0 : i + 1);
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        focus(i === 0 ? last : i - 1);
+        break;
+      case "Home":
+        e.preventDefault();
+        focus(0);
+        break;
+      case "End":
+        e.preventDefault();
+        focus(last);
+        break;
+    }
+  };
 
   return (
     <section id="faq" className={styles.section}>
@@ -44,13 +72,22 @@ export default function FAQ() {
           </Reveal>
         </div>
         <Reveal delay={0.1}>
+          <div className={styles.listWrap}>
           <div className={styles.list}>
             {items.map((item, i) => {
               const isOpen = openIndex === i;
               const num = String(i + 1).padStart(2, "0");
               return (
                 <div key={item.q} className={`${styles.item} ${isOpen ? styles.itemOpen : ""}`}>
-                  <button className={styles.question} onClick={() => setOpenIndex(isOpen ? null : i)} aria-expanded={isOpen} aria-controls={`faq-${i}`}>
+                  <button
+                    ref={(el) => { btnRefs.current[i] = el; }}
+                    className={styles.question}
+                    onClick={() => setOpenIndex(isOpen ? null : i)}
+                    onKeyDown={(e) => onKeyDown(e, i)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-${i}`}
+                    type="button"
+                  >
                     <span className={styles.qIndex}>/ {num}</span>
                     <span className={styles.qText}>{item.q}</span>
                     <span className={styles.toggle} aria-hidden="true">+</span>
@@ -67,6 +104,13 @@ export default function FAQ() {
                 </div>
               );
             })}
+          </div>
+          <div className={styles.still}>
+            <span className={styles.stillText}>{t.faqStill}</span>
+            <a href="#lead" className={styles.stillCta}>
+              {t.faqStillCta}
+            </a>
+          </div>
           </div>
         </Reveal>
       </div>
