@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   isolation: isolate;
-  padding: 100px 48px 80px;
+  padding: 88px 48px 56px;
   max-width: var(--container);
   margin: 0 auto;
 }
@@ -249,7 +249,7 @@
 
 @media (max-width: 900px) {
   .hero {
-    padding: 100px 24px 80px;
+    padding: 72px 24px 56px;
   }
   .heroWordmark {
     font-size: clamp(120px, 28vw, 260px);
@@ -305,7 +305,7 @@
 
 @media (max-width: 420px) {
   .hero {
-    padding: 80px 16px 60px;
+    padding: 56px 16px 40px;
   }
   .title {
     font-size: 32px;

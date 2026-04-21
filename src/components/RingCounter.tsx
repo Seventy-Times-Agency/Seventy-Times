@@ -35,7 +35,7 @@ export default function RingCounter({
   to,
   suffix = "",
   label,
-  duration = 2.6,
+  duration = 2.2,
   fillPct = 100,
   decimals = 0,
   delay = 0,
@@ -72,34 +72,39 @@ export default function RingCounter({
     return () => observer.disconnect();
   }, [started]);
 
-  // Animate the ring fill
+  // Ring fill — single constant-speed ease so all rings feel synchronized.
   useEffect(() => {
     if (!started) return;
     const controls = animate(0, fillPct, {
       duration,
       delay,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      ease: "easeInOut",
       onUpdate: (v) => setProgress(v),
+      onComplete: () => setProgress(fillPct),
     });
     return () => controls.stop();
   }, [started, fillPct, duration, delay]);
 
-  // Animate the counter if a numeric target was provided
+  // Counter — same easing and duration as the ring; snap to the exact
+  // `display` on complete so we never end on 3.4 instead of 3.5×.
   useEffect(() => {
     if (!started || to == null || !numberRef.current) return;
     const node = numberRef.current;
     const controls = animate(0, to, {
       duration,
       delay,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      ease: "easeInOut",
       onUpdate(value) {
         const formatted =
           decimals > 0 ? value.toFixed(decimals) : String(Math.floor(value));
         node.textContent = `${formatted}${suffix}`;
       },
+      onComplete() {
+        node.textContent = display;
+      },
     });
     return () => controls.stop();
-  }, [started, to, suffix, duration, delay, decimals]);
+  }, [started, to, suffix, duration, delay, decimals, display]);
 
   const strokeOffset = CIRCUMFERENCE - (CIRCUMFERENCE * progress) / 100;
   const gradientId = `ringGradient-${id}`;

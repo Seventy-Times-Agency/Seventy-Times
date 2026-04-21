@@ -28,7 +28,8 @@ export default function Hero() {
   const { t } = useT();
 
   // Stats are visual rings; display values live in siteConfig so they
-  // stay in sync with other numeric mentions on the site.
+  // stay in sync with other numeric mentions on the site. All four
+  // rings animate simultaneously at the same speed (no stagger).
   const [goal, services, support, launch] = siteConfig.stats;
   const stats = [
     {
@@ -39,7 +40,6 @@ export default function Hero() {
       label: t.statGoal,
       fillPct: 100,
       id: "goal",
-      delay: 0,
     },
     {
       display: services.value,
@@ -48,21 +48,18 @@ export default function Hero() {
       label: t.statServices,
       fillPct: 100,
       id: "services",
-      delay: 0.15,
     },
     {
       display: support.value,
       label: t.statSupport,
       fillPct: 100,
       id: "support",
-      delay: 0.3,
     },
     {
       display: launch.value,
       label: t.statLaunch,
       fillPct: 100,
       id: "launch",
-      delay: 0.45,
     },
   ];
 
@@ -147,7 +144,6 @@ export default function Hero() {
               decimals={s.decimals}
               label={s.label}
               fillPct={s.fillPct}
-              delay={s.delay}
             />
           ))}
         </motion.div>

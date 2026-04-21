@@ -1,7 +1,7 @@
 .section {
   position: relative;
   isolation: isolate;
-  padding: 100px 48px 80px;
+  padding: 72px 48px 56px;
   max-width: var(--container);
   margin: 0 auto;
 }
@@ -9,7 +9,7 @@
 .layout {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  gap: 80px;
+  gap: 64px;
   align-items: start;
 }
 
@@ -175,7 +175,7 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 80px 20px 72px;
+    padding: 56px 20px 48px;
   }
   .title {
     font-size: clamp(32px, 8vw, 56px);
