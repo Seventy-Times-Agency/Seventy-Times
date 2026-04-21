@@ -50,26 +50,62 @@ export default function RingCounter({
     const node = wrapRef.current;
     if (!node || started) return;
 
-    const rect = node.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-      setStarted(true);
-      return;
+    // Wait for the PageIntro overlay to clear before starting, so the
+    // user actually sees the ring fill from 0 instead of watching the
+    // tail end of it behind the curtain.
+    let timeoutId = 0;
+    let disposed = false;
+
+    const introIsGone = () =>
+      typeof window !== "undefined" &&
+      window.sessionStorage.getItem("st-intro-seen") === "1";
+
+    const beginViewportCheck = () => {
+      if (disposed) return;
+
+      const rect = node.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        setStarted(true);
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              setStarted(true);
+              observer.disconnect();
+              break;
+            }
+          }
+        },
+        { threshold: 0.1, rootMargin: "-5% 0px" }
+      );
+      observer.observe(node);
+      cleanup.push(() => observer.disconnect());
+    };
+
+    const cleanup: Array<() => void> = [];
+
+    if (introIsGone()) {
+      beginViewportCheck();
+    } else {
+      const onIntroGone = () => {
+        // Small buffer so the intro's slide-up is visibly ahead of
+        // the ring fill kicking off.
+        timeoutId = window.setTimeout(beginViewportCheck, 120);
+      };
+      window.addEventListener("st-intro-gone", onIntroGone, { once: true });
+      cleanup.push(() =>
+        window.removeEventListener("st-intro-gone", onIntroGone)
+      );
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setStarted(true);
-            observer.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: 0.1, rootMargin: "-5% 0px" }
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      disposed = true;
+      if (timeoutId) window.clearTimeout(timeoutId);
+      cleanup.forEach((fn) => fn());
+    };
   }, [started]);
 
   // Ring fill — same easing and duration as the counter below, so the
