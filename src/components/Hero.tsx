@@ -54,6 +54,8 @@ export default function Hero() {
     },
     {
       display: support.value,
+      to: 24,
+      suffix: "/7",
       label: t.statSupport,
       fillPct: 100,
       id: "support",
@@ -61,6 +63,7 @@ export default function Hero() {
     },
     {
       display: launch.value,
+      to: 2026,
       label: t.statLaunch,
       fillPct: 100,
       id: "launch",
