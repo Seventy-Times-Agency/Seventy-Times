@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { animate } from "framer-motion";
-import styles from "./RingCounter.module.css";
+import styles from "@/components/ui/RingCounter.module.css";
 
 type Props = {
   display: string;

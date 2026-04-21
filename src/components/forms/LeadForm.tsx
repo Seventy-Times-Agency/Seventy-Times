@@ -9,7 +9,7 @@ import {
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
-import styles from "./LeadForm.module.css";
+import styles from "@/components/forms/LeadForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
 

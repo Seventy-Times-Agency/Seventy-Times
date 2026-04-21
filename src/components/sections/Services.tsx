@@ -2,12 +2,12 @@
 
 import { useState, type MouseEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Reveal from "./Reveal";
-import AnimatedText from "./AnimatedText";
-import SectionWatermark from "./SectionWatermark";
-import { SERVICE_ICONS } from "./ServiceIcons";
+import Reveal from "@/components/ui/Reveal";
+import AnimatedText from "@/components/ui/AnimatedText";
+import SectionWatermark from "@/components/decor/SectionWatermark";
+import { SERVICE_ICONS } from "@/components/ui/ServiceIcons";
 import { useT } from "@/i18n/context";
-import styles from "./Services.module.css";
+import styles from "@/components/sections/Services.module.css";
 
 export default function Services() {
   const [openKey, setOpenKey] = useState<string | null>(null);

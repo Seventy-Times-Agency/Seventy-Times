@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Reveal from "./Reveal";
-import AnimatedText from "./AnimatedText";
-import SectionWatermark from "./SectionWatermark";
+import Reveal from "@/components/ui/Reveal";
+import AnimatedText from "@/components/ui/AnimatedText";
+import SectionWatermark from "@/components/decor/SectionWatermark";
 import { useT } from "@/i18n/context";
-import styles from "./ChatDemo.module.css";
+import styles from "@/components/sections/ChatDemo.module.css";
 
 export default function ChatDemo() {
   const { t } = useT();

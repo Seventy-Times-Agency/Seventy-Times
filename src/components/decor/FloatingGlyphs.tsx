@@ -1,4 +1,4 @@
-import styles from "./FloatingGlyphs.module.css";
+import styles from "@/components/decor/FloatingGlyphs.module.css";
 
 /**
  * Subtle decorative SVG glyphs that drift across the viewport.

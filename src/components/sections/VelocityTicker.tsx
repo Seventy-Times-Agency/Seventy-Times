@@ -1,7 +1,7 @@
 "use client";
 
 import { useT } from "@/i18n/context";
-import styles from "./VelocityTicker.module.css";
+import styles from "@/components/sections/VelocityTicker.module.css";
 
 /**
  * CSS-only ticker. No JavaScript per frame — animation runs on the

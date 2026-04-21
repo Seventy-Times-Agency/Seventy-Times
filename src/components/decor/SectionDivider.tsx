@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import styles from "./SectionDivider.module.css";
+import styles from "@/components/decor/SectionDivider.module.css";
 
 type Props = {
   label?: string;

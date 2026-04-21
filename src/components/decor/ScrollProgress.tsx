@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
-import styles from "./ScrollProgress.module.css";
+import styles from "@/components/decor/ScrollProgress.module.css";
 
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();

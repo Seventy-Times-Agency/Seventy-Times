@@ -1,10 +1,10 @@
 "use client";
 
 import { siteConfig } from "@/data/siteConfig";
-import Reveal from "./Reveal";
-import AnimatedText from "./AnimatedText";
-import SectionWatermark from "./SectionWatermark";
-import Magnetic from "./Magnetic";
+import Reveal from "@/components/ui/Reveal";
+import AnimatedText from "@/components/ui/AnimatedText";
+import SectionWatermark from "@/components/decor/SectionWatermark";
+import Magnetic from "@/components/ui/Magnetic";
 import { useT } from "@/i18n/context";
 import {
   TelegramIcon,
@@ -12,8 +12,8 @@ import {
   WhatsAppIcon,
   InstagramIcon,
   FacebookIcon,
-} from "./ContactIcons";
-import styles from "./CTA.module.css";
+} from "@/components/ui/ContactIcons";
+import styles from "@/components/sections/CTA.module.css";
 
 export default function CTA() {
   const { t } = useT();

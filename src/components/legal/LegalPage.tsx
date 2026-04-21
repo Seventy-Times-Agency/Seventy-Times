@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useT } from "@/i18n/context";
-import styles from "./LegalPage.module.css";
+import styles from "@/components/legal/LegalPage.module.css";
 
 type Section = { heading: string; text: string };
 
