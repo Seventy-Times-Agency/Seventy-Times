@@ -35,7 +35,7 @@ export default function RingCounter({
   to,
   suffix = "",
   label,
-  duration = 2.2,
+  duration = 0.5,
   fillPct = 100,
   decimals = 0,
   delay = 0,
@@ -72,28 +72,29 @@ export default function RingCounter({
     return () => observer.disconnect();
   }, [started]);
 
-  // Ring fill — single constant-speed ease so all rings feel synchronized.
+  // Ring fill — same easing and duration as the counter below, so the
+  // arc and the digit finish exactly together.
   useEffect(() => {
     if (!started) return;
     const controls = animate(0, fillPct, {
       duration,
       delay,
-      ease: "easeInOut",
+      ease: "easeOut",
       onUpdate: (v) => setProgress(v),
       onComplete: () => setProgress(fillPct),
     });
     return () => controls.stop();
   }, [started, fillPct, duration, delay]);
 
-  // Counter — same easing and duration as the ring; snap to the exact
-  // `display` on complete so we never end on 3.4 instead of 3.5×.
+  // Counter — synced with the ring. Snaps to the exact `display` on
+  // complete so we never end on 3.4 instead of 3.5×.
   useEffect(() => {
     if (!started || to == null || !numberRef.current) return;
     const node = numberRef.current;
     const controls = animate(0, to, {
       duration,
       delay,
-      ease: "easeInOut",
+      ease: "easeOut",
       onUpdate(value) {
         const formatted =
           decimals > 0 ? value.toFixed(decimals) : String(Math.floor(value));
