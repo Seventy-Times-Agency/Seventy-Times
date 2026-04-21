@@ -1,0 +1,290 @@
+// Seventy Times — dot globe (Three.js) — clean rewrite
+(function (global) {
+  const CASPER = new THREE.Color("#c8d4de");
+  const GREEN = new THREE.Color("#4ade80");
+
+  const LAND = [
+    [[-168,66],[-160,70],[-140,70],[-128,70],[-110,70],[-95,74],[-80,76],[-65,82],[-58,70],[-55,53],[-65,45],[-70,41],[-74,39],[-76,34],[-81,30],[-80,25],[-83,24],[-88,30],[-94,29],[-97,26],[-106,23],[-115,30],[-123,38],[-125,48],[-135,58],[-148,60],[-162,54],[-168,66]],
+    [[-55,60],[-40,60],[-22,72],[-20,82],[-45,83],[-60,75],[-55,60]],
+    [[-80,12],[-75,10],[-65,10],[-55,5],[-50,0],[-42,-8],[-35,-8],[-38,-18],[-45,-25],[-55,-35],[-65,-43],[-72,-53],[-72,-40],[-76,-30],[-80,-18],[-80,-5],[-80,12]],
+    [[-10,36],[-5,43],[0,48],[3,52],[8,55],[12,58],[20,65],[28,70],[40,68],[55,68],[65,70],[75,68],[70,56],[55,52],[45,48],[40,45],[35,42],[27,40],[22,38],[15,38],[10,37],[-5,36],[-10,36]],
+    [[-17,14],[-16,22],[-5,30],[10,32],[20,32],[30,32],[35,30],[40,22],[44,12],[51,12],[52,2],[42,-10],[38,-18],[32,-28],[25,-34],[18,-34],[14,-22],[9,-5],[-5,4],[-10,8],[-17,14]],
+    [[35,30],[50,25],[55,18],[55,12],[45,12],[38,15],[35,24],[35,30]],
+    [[45,48],[55,52],[70,56],[80,60],[95,60],[110,62],[125,65],[140,68],[155,70],[168,65],[175,65],[170,60],[155,55],[140,52],[135,45],[135,35],[130,33],[122,30],[118,22],[108,20],[103,12],[96,18],[90,22],[88,25],[78,22],[72,20],[68,24],[60,28],[50,30],[45,38],[45,48]],
+    [[68,24],[72,20],[78,8],[82,8],[88,22],[85,26],[78,22],[72,20],[68,24]],
+    [[95,8],[105,5],[110,0],[115,-3],[120,-5],[128,-5],[135,-3],[140,-5],[135,-8],[120,-10],[105,-8],[98,0],[95,8]],
+    [[113,-22],[122,-18],[132,-12],[142,-10],[148,-18],[152,-25],[148,-37],[140,-38],[128,-32],[118,-35],[114,-32],[113,-22]],
+    [[166,-46],[172,-41],[174,-38],[177,-40],[174,-46],[168,-47],[166,-46]],
+    [[-180,-70],[-120,-72],[-60,-74],[0,-72],[60,-70],[120,-72],[180,-70],[180,-85],[-180,-85],[-180,-70]],
+    [[-8,51],[-5,58],[-2,58],[0,54],[-3,51],[-8,51]],
+    [[132,32],[138,36],[142,40],[145,43],[141,45],[135,38],[131,33],[132,32]],
+    [[43,-12],[48,-15],[50,-24],[46,-25],[43,-20],[43,-12]]
+  ];
+
+  function pointInPoly(lon, lat, poly) {
+    let inside = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const [xi, yi] = poly[i], [xj, yj] = poly[j];
+      const hit = ((yi > lat) !== (yj > lat)) &&
+        (lon < ((xj - xi) * (lat - yi)) / (yj - yi) + xi);
+      if (hit) inside = !inside;
+    }
+    return inside;
+  }
+  function isLand(lon, lat) { for (const p of LAND) if (pointInPoly(lon, lat, p)) return true; return false; }
+
+  function sampleDots(density) {
+    const N = Math.round(4000 + density * 3000);
+    const golden = Math.PI * (3 - Math.sqrt(5));
+    const positions = [], colors = [], sizes = [], pulse = [];
+    for (let i = 0; i < N; i++) {
+      const y = 1 - (i / (N - 1)) * 2;
+      const r = Math.sqrt(1 - y * y);
+      const theta = golden * i;
+      const x = Math.cos(theta) * r;
+      const z = Math.sin(theta) * r;
+      const lat = Math.asin(y) * 180 / Math.PI;
+      const lon = Math.atan2(z, x) * 180 / Math.PI;
+      if (!isLand(lon, lat)) continue;
+      positions.push(x, y, z);
+      const green = Math.random() < 0.012;
+      const c = green ? GREEN : CASPER;
+      colors.push(c.r, c.g, c.b);
+      sizes.push(green ? 5.5 : 2.6);
+      pulse.push(green ? 2 + Math.random() * 6.28 : Math.random() * 6.28);
+    }
+    return { positions, colors, sizes, pulse, N: positions.length / 3 };
+  }
+
+  const VS = `
+    attribute float aSize; attribute vec3 aColor; attribute float aPulse;
+    uniform float uTime; uniform float uPixelRatio;
+    varying vec3 vColor; varying float vAlpha;
+    void main() {
+      vColor = aColor;
+      // Normal of a unit-sphere point == position (in model space).
+      vec3 worldPos = (modelMatrix * vec4(position, 1.0)).xyz;
+      vec3 worldNormal = normalize((modelMatrix * vec4(position, 0.0)).xyz);
+      vec3 toCam = normalize(cameraPosition - worldPos);
+      float facing = dot(worldNormal, toCam);
+
+      float isGreen = step(1.5, aPulse);
+      float pulse = 0.5 + 0.5 * sin(uTime * 2.5 + aPulse);
+      float pulseScale = mix(1.0, 0.7 + 0.8 * pulse, isGreen);
+
+      // Hide back-facing dots hard
+      vAlpha = smoothstep(-0.05, 0.2, facing);
+
+      vec4 mv = modelViewMatrix * vec4(position, 1.0);
+      gl_Position = projectionMatrix * mv;
+      gl_PointSize = aSize * uPixelRatio * pulseScale;
+    }`;
+
+  const FS = `
+    precision mediump float;
+    varying vec3 vColor; varying float vAlpha;
+    void main() {
+      if (vAlpha <= 0.001) discard;
+      vec2 uv = gl_PointCoord - 0.5;
+      float d = length(uv);
+      if (d > 0.5) discard;
+      float a = smoothstep(0.5, 0.25, d) * vAlpha;
+      gl_FragColor = vec4(vColor, a);
+    }`;
+
+  function makeRing(radius, thickness, tilt, opacity) {
+    const group = new THREE.Group();
+    const geo = new THREE.TorusGeometry(radius, thickness, 2, 220);
+    const mat = new THREE.MeshBasicMaterial({ color: CASPER, transparent: true, opacity, depthWrite: false });
+    group.add(new THREE.Mesh(geo, mat));
+    const node = new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 12), new THREE.MeshBasicMaterial({ color: CASPER }));
+    node.position.x = radius;
+    group.add(node);
+    group.rotation.x = tilt.x; group.rotation.z = tilt.z;
+    group.userData = { speed: 0.25 + Math.random() * 0.35 };
+    return group;
+  }
+
+  // Great-circle arc between two unit-sphere points, lifted into space.
+  function makeArc(a, b, color, opacity) {
+    const mid = new THREE.Vector3().addVectors(a, b).multiplyScalar(0.5);
+    const dist = a.distanceTo(b);
+    const lift = 1 + dist * 0.35; // higher arcs for longer links
+    mid.normalize().multiplyScalar(lift);
+    const curve = new THREE.QuadraticBezierCurve3(a.clone().multiplyScalar(1.005), mid, b.clone().multiplyScalar(1.005));
+    const pts = curve.getPoints(48);
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity, depthWrite: false });
+    return { line: new THREE.Line(geo, mat), curve, duration: 1.5 + Math.random() * 1.8, start: Math.random() * 3 };
+  }
+
+  // Picks random pairs of land points, renders subtle arc lines + a travelling "packet" dot.
+  function buildConnections(landPoints, count, globeGroup) {
+    const arcs = [];
+    const packetGeo = new THREE.BufferGeometry();
+    const packetPositions = new Float32Array(count * 3);
+    packetGeo.setAttribute("position", new THREE.BufferAttribute(packetPositions, 3));
+    const packetMat = new THREE.PointsMaterial({
+      color: GREEN, size: 0.055, sizeAttenuation: false,
+      transparent: true, opacity: 1.0, depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+    const packets = new THREE.Points(packetGeo, packetMat);
+
+    let tries = 0;
+    for (let i = 0; i < count && tries < count * 8; tries++) {
+      const a = landPoints[Math.floor(Math.random() * landPoints.length)];
+      const b = landPoints[Math.floor(Math.random() * landPoints.length)];
+      if (a.distanceTo(b) < 0.5) continue;
+      const arc = makeArc(a, b, CASPER, 0.3);
+      globeGroup.add(arc.line);
+      arcs.push(arc);
+      i++;
+    }
+    globeGroup.add(packets);
+    return { arcs, packets, packetPositions };
+  }
+
+  async function mount(container, opts = {}) {
+    const { density = 5, interactive = true, fast = false, showRings = true } = opts;
+    const scene = new THREE.Scene();
+    const W = container.clientWidth, H = container.clientHeight;
+    const camera = new THREE.PerspectiveCamera(45, W / H || 1, 0.1, 100);
+    camera.position.z = 3.0;
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(W, H);
+    renderer.setClearColor(0x000000, 0);
+    container.appendChild(renderer.domElement);
+
+    const globeGroup = new THREE.Group();
+    scene.add(globeGroup);
+
+    // No occluder (we back-face-cull in shader), no atmosphere.
+    // Tiny inner dark sphere just for depth context — very subtle.
+    const darkCore = new THREE.Mesh(
+      new THREE.SphereGeometry(0.985, 48, 48),
+      new THREE.MeshBasicMaterial({ color: 0x0a0b10, transparent: true, opacity: 0.85 })
+    );
+    globeGroup.add(darkCore);
+
+    const { positions, colors, sizes, pulse } = sampleDots(density);
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+    geo.setAttribute("aColor", new THREE.Float32BufferAttribute(colors, 3));
+    geo.setAttribute("aSize", new THREE.Float32BufferAttribute(sizes, 1));
+    geo.setAttribute("aPulse", new THREE.Float32BufferAttribute(pulse, 1));
+    const mat = new THREE.ShaderMaterial({
+      uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) } },
+      vertexShader: VS, fragmentShader: FS,
+      transparent: true, depthTest: true, depthWrite: false,
+      blending: THREE.NormalBlending
+    });
+    globeGroup.add(new THREE.Points(geo, mat));
+
+    // Connection arcs between random land points
+    let connections = null;
+    if (opts.showArcs !== false) {
+      const landPts = [];
+      for (let i = 0; i < positions.length; i += 3) {
+        landPts.push(new THREE.Vector3(positions[i], positions[i + 1], positions[i + 2]));
+      }
+      const arcCount = opts.arcCount ?? 10;
+      connections = buildConnections(landPts, arcCount, globeGroup);
+    }
+
+    const rings = [];
+    if (showRings) {
+      rings.push(makeRing(1.22, 0.0028, { x: 0.4, z: 0.15 }, 0.42));
+      rings.push(makeRing(1.4, 0.0022, { x: -0.5, z: -0.25 }, 0.24));
+      rings.push(makeRing(1.6, 0.002, { x: 0.15, z: 0.45 }, 0.14));
+      rings.forEach(r => scene.add(r));
+    }
+
+    // Wireframe mesh — gives it a 3D "tech" feel (JARVIS-style)
+    if (opts.showWireframe !== false) {
+      const wireGeo = new THREE.SphereGeometry(0.995, 36, 24);
+      const wireMat = new THREE.MeshBasicMaterial({
+        color: CASPER, wireframe: true, transparent: true,
+        opacity: 0.08, depthWrite: false
+      });
+      globeGroup.add(new THREE.Mesh(wireGeo, wireMat));
+    }
+
+    const state = { fast, interactive, autoRot: fast ? 1.4 : 0.22, rotX: 0.12, rotY: 0, tgtX: 0.12, running: true };
+    let dragging = false, lastX = 0, lastY = 0;
+    function onDown(e) { if (!state.interactive) return; dragging = true; lastX = e.clientX; lastY = e.clientY; container.style.cursor = "grabbing"; }
+    function onMove(e) {
+      if (!state.interactive) return;
+      const rect = container.getBoundingClientRect();
+      const mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      const my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      if (dragging) {
+        state.rotY += (e.clientX - lastX) * 0.005;
+        state.rotX += (e.clientY - lastY) * 0.005;
+        state.rotX = Math.max(-1.2, Math.min(1.2, state.rotX));
+        lastX = e.clientX; lastY = e.clientY;
+      } else {
+        state.tgtX = 0.12 + my * 0.2;
+      }
+    }
+    function onUp() { dragging = false; container.style.cursor = state.interactive ? "grab" : "default"; }
+    if (interactive) {
+      container.style.cursor = "grab";
+      container.addEventListener("pointerdown", onDown);
+      window.addEventListener("pointermove", onMove);
+      window.addEventListener("pointerup", onUp);
+    }
+    const ro = new ResizeObserver(() => {
+      const w = container.clientWidth, h = container.clientHeight;
+      if (!w || !h) return;
+      camera.aspect = w / h; camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    });
+    ro.observe(container);
+
+    const clock = new THREE.Clock();
+    function tick() {
+      if (!state.running) return;
+      const t = clock.getElapsedTime();
+      const dt = Math.min(clock.getDelta(), 0.05);
+      mat.uniforms.uTime.value = t;
+      state.rotY += state.autoRot * dt;
+      if (!dragging && state.interactive) state.rotX += (state.tgtX - state.rotX) * 0.04;
+      globeGroup.rotation.y = state.rotY;
+      globeGroup.rotation.x = state.rotX;
+      rings.forEach(r => { r.rotation.y += r.userData.speed * dt; });
+      // Update travelling packets along arcs
+      if (connections) {
+        for (let i = 0; i < connections.arcs.length; i++) {
+          const a = connections.arcs[i];
+          const u = ((t - a.start) / a.duration) % 1;
+          const p = a.curve.getPoint(u < 0 ? 0 : u);
+          connections.packetPositions[i * 3] = p.x;
+          connections.packetPositions[i * 3 + 1] = p.y;
+          connections.packetPositions[i * 3 + 2] = p.z;
+        }
+        connections.packets.geometry.attributes.position.needsUpdate = true;
+      }
+      renderer.render(scene, camera);
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    return {
+      setFast(f) { state.fast = f; state.autoRot = f ? 1.4 : 0.22; },
+      setInteractive(i) { state.interactive = i; container.style.cursor = i ? "grab" : "default"; },
+      destroy() {
+        state.running = false;
+        ro.disconnect();
+        container.removeEventListener("pointerdown", onDown);
+        window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("pointerup", onUp);
+        renderer.dispose(); geo.dispose(); mat.dispose();
+        if (renderer.domElement.parentNode === container) container.removeChild(renderer.domElement);
+      }
+    };
+  }
+
+  global.STGlobe = { mount };
+})(window);
