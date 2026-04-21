@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
 import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
-import styles from "./Nav.module.css";
+import styles from "@/components/layout/Nav.module.css";
 
 const SECTION_IDS = ["services", "process", "chat", "faq"] as const;
 

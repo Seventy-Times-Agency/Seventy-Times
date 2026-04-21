@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState, type MouseEvent } from "react";
-import Reveal from "./Reveal";
-import AnimatedText from "./AnimatedText";
-import SectionWatermark from "./SectionWatermark";
+import Reveal from "@/components/ui/Reveal";
+import AnimatedText from "@/components/ui/AnimatedText";
+import SectionWatermark from "@/components/decor/SectionWatermark";
 import { useT } from "@/i18n/context";
-import styles from "./Testimonials.module.css";
+import styles from "@/components/sections/Testimonials.module.css";
 
 export default function Testimonials() {
   const { t } = useT();

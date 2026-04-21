@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
-import styles from "./PageIntro.module.css";
+import styles from "@/components/layout/PageIntro.module.css";
 
 const EASE = [0.85, 0, 0.15, 1] as const;
 const INTRO_DURATION = 1200;

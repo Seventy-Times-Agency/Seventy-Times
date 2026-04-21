@@ -3,11 +3,11 @@
 import { useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { siteConfig } from "@/data/siteConfig";
-import Reveal from "./Reveal";
-import AnimatedText from "./AnimatedText";
-import SectionWatermark from "./SectionWatermark";
+import Reveal from "@/components/ui/Reveal";
+import AnimatedText from "@/components/ui/AnimatedText";
+import SectionWatermark from "@/components/decor/SectionWatermark";
 import { useT } from "@/i18n/context";
-import styles from "./FAQ.module.css";
+import styles from "@/components/sections/FAQ.module.css";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);

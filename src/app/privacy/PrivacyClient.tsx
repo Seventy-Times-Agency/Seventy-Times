@@ -1,7 +1,7 @@
 "use client";
 
 import { useT } from "@/i18n/context";
-import LegalPage from "@/components/LegalPage";
+import LegalPage from "@/components/legal/LegalPage";
 
 export default function PrivacyClient() {
   const { t } = useT();

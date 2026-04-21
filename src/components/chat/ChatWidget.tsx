@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "re
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
-import styles from "./ChatWidget.module.css";
+import styles from "@/components/chat/ChatWidget.module.css";
 
 type Message = {
   role: "user" | "assistant";

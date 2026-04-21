@@ -4,14 +4,14 @@ import { siteConfig } from "@/data/siteConfig";
 import { I18nProvider } from "@/i18n/context";
 import HtmlLangSync from "@/i18n/HtmlLangSync";
 import { getLocaleMeta, readLocaleFromCookies } from "@/lib/localizedMeta";
-import AnimatedBackground from "@/components/AnimatedBackground";
-import FloatingGlyphs from "@/components/FloatingGlyphs";
-import ScrollProgress from "@/components/ScrollProgress";
-import SmoothScroll from "@/components/SmoothScroll";
-import PageIntro from "@/components/PageIntro";
-import LeadForm from "@/components/LeadForm";
-import ReviewForm from "@/components/ReviewForm";
-import ChatWidget from "@/components/ChatWidget";
+import AnimatedBackground from "@/components/decor/AnimatedBackground";
+import FloatingGlyphs from "@/components/decor/FloatingGlyphs";
+import ScrollProgress from "@/components/decor/ScrollProgress";
+import SmoothScroll from "@/components/decor/SmoothScroll";
+import PageIntro from "@/components/layout/PageIntro";
+import LeadForm from "@/components/forms/LeadForm";
+import ReviewForm from "@/components/forms/ReviewForm";
+import ChatWidget from "@/components/chat/ChatWidget";
 import "./globals.css";
 
 const manrope = Manrope({

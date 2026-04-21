@@ -1,4 +1,4 @@
-import styles from "./SectionWatermark.module.css";
+import styles from "@/components/decor/SectionWatermark.module.css";
 
 type Props = {
   text: string;

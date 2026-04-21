@@ -1,12 +1,12 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import AnimatedText from "./AnimatedText";
-import RingCounter from "./RingCounter";
-import Magnetic from "./Magnetic";
+import AnimatedText from "@/components/ui/AnimatedText";
+import RingCounter from "@/components/ui/RingCounter";
+import Magnetic from "@/components/ui/Magnetic";
 import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
-import styles from "./Hero.module.css";
+import styles from "@/components/sections/Hero.module.css";
 
 const container: Variants = {
   hidden: {},

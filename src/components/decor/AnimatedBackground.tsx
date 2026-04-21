@@ -1,4 +1,4 @@
-import styles from "./AnimatedBackground.module.css";
+import styles from "@/components/decor/AnimatedBackground.module.css";
 
 /**
  * Layered background — kept intentionally lightweight:

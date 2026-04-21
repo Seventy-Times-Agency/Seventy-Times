@@ -1,18 +1,18 @@
 "use client";
 
-import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import VelocityTicker from "@/components/VelocityTicker";
-import Services from "@/components/Services";
-import Process from "@/components/Process";
-import ChatDemo from "@/components/ChatDemo";
-import Testimonials from "@/components/Testimonials";
-import GrowthSimulator from "@/components/GrowthSimulator";
-import FAQ from "@/components/FAQ";
-import CTA from "@/components/CTA";
-import Footer from "@/components/Footer";
-import SectionDivider from "@/components/SectionDivider";
-import StructuredData from "@/components/StructuredData";
+import Nav from "@/components/layout/Nav";
+import Hero from "@/components/sections/Hero";
+import VelocityTicker from "@/components/sections/VelocityTicker";
+import Services from "@/components/sections/Services";
+import Process from "@/components/sections/Process";
+import ChatDemo from "@/components/sections/ChatDemo";
+import Testimonials from "@/components/sections/Testimonials";
+import GrowthSimulator from "@/components/sections/GrowthSimulator";
+import FAQ from "@/components/sections/FAQ";
+import CTA from "@/components/sections/CTA";
+import Footer from "@/components/layout/Footer";
+import SectionDivider from "@/components/decor/SectionDivider";
+import StructuredData from "@/components/seo/StructuredData";
 import { useT } from "@/i18n/context";
 
 export default function HomePage() {
