@@ -29,8 +29,8 @@ export default function Hero() {
 
   // Stats are visual rings; display values live in siteConfig so they
   // stay in sync with other numeric mentions on the site.
-  // Each ring takes ~0.5s to fill. A tiny 0.06s stagger gives a subtle
-  // "left-to-right" cascade without the rings feeling sequential.
+  // Each ring fills over ~2.5s with easeInOut so the digit visibly
+  // counts up. A 0.12s stagger gives a subtle L→R cascade.
   const [goal, services, support, launch] = siteConfig.stats;
   const stats = [
     {
@@ -50,21 +50,24 @@ export default function Hero() {
       label: t.statServices,
       fillPct: 100,
       id: "services",
-      delay: 0.06,
-    },
-    {
-      display: support.value,
-      label: t.statSupport,
-      fillPct: 100,
-      id: "support",
       delay: 0.12,
     },
     {
+      display: support.value,
+      to: 24,
+      suffix: "/7",
+      label: t.statSupport,
+      fillPct: 100,
+      id: "support",
+      delay: 0.24,
+    },
+    {
       display: launch.value,
+      to: 2026,
       label: t.statLaunch,
       fillPct: 100,
       id: "launch",
-      delay: 0.18,
+      delay: 0.36,
     },
   ];
 

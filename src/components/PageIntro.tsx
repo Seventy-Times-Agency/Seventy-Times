@@ -11,18 +11,31 @@ const INTRO_DURATION = 1200;
 /**
  * Cinematic intro shown once per browser session. User can press any
  * key or the Skip button to dismiss early.
+ *
+ * Dispatches a `st-intro-gone` event the moment the overlay starts
+ * exiting, so scroll-linked animations in the hero wait until the
+ * user can actually see them.
  */
 export default function PageIntro() {
   const [visible, setVisible] = useState(true);
   const { t } = useT();
 
-  const dismiss = useCallback(() => {
-    setVisible(false);
+  const markGone = () => {
     try {
       sessionStorage.setItem("st-intro-seen", "1");
     } catch {
       // ignore
     }
+    try {
+      window.dispatchEvent(new Event("st-intro-gone"));
+    } catch {
+      // ignore
+    }
+  };
+
+  const dismiss = useCallback(() => {
+    setVisible(false);
+    markGone();
     document.body.style.overflow = "";
   }, []);
 
@@ -32,6 +45,10 @@ export default function PageIntro() {
     const seen = sessionStorage.getItem("st-intro-seen");
     if (seen) {
       setVisible(false);
+      // Fire the event on next tick so hero mounts can subscribe first.
+      setTimeout(() => {
+        window.dispatchEvent(new Event("st-intro-gone"));
+      }, 0);
       return;
     }
 
@@ -40,14 +57,14 @@ export default function PageIntro() {
 
     const timer = window.setTimeout(() => {
       setVisible(false);
-      sessionStorage.setItem("st-intro-seen", "1");
+      markGone();
       document.body.style.overflow = prevOverflow;
     }, INTRO_DURATION);
 
     const onKey = () => {
       window.clearTimeout(timer);
       setVisible(false);
-      sessionStorage.setItem("st-intro-seen", "1");
+      markGone();
       document.body.style.overflow = prevOverflow;
     };
     window.addEventListener("keydown", onKey, { once: true });
@@ -72,7 +89,7 @@ export default function PageIntro() {
             type="button"
             className={styles.skipBtn}
             onClick={dismiss}
-            aria-label={t.legalBack ? "Skip" : "Skip"}
+            aria-label="Skip"
           >
             Skip →
           </button>

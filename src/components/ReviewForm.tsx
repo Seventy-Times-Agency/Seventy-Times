@@ -19,6 +19,7 @@ const INITIAL = {
   role: "",
   location: "",
   content: "",
+  website: "",
 };
 
 export default function ReviewForm() {
@@ -83,6 +84,7 @@ export default function ReviewForm() {
       role: fields.role.trim(),
       location: fields.location.trim(),
       content: fields.content.trim(),
+      website: fields.website,
     };
 
     if (
@@ -187,6 +189,21 @@ export default function ReviewForm() {
                 </div>
 
                 <form onSubmit={submit} className={styles.form} noValidate>
+                  {/* Honeypot — see LeadForm for the approach */}
+                  <div className={styles.honeypot} aria-hidden="true">
+                    <label>
+                      Website
+                      <input
+                        type="text"
+                        name="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={fields.website}
+                        onChange={setField("website")}
+                      />
+                    </label>
+                  </div>
+
                   <label className={styles.field}>
                     <span className={styles.label}>{t.reviewCode}</span>
                     <input
