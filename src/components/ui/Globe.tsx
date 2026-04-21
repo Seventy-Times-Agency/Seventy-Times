@@ -278,7 +278,7 @@ export default function Globe({
         scene.add(group);
         rings.push({
           group,
-          speed: 0.25 + Math.random() * 0.35,
+          speed: 0.55 + Math.random() * 0.55,
           geos: [torusGeo, nodeGeo],
           mats: [torusMat, nodeMat],
         });
@@ -373,8 +373,8 @@ export default function Globe({
           geo,
           mat,
           curve,
-          duration: 1.4 + Math.random() * 1.8,
-          start: Math.random() * 3,
+          duration: 1.0 + Math.random() * 1.4,
+          start: Math.random() * 2.5,
         });
       }
 
@@ -391,7 +391,7 @@ export default function Globe({
       running: true,
       rotY: 0,
       rotX: 0.15,
-      autoRot: 0.22,
+      autoRot: 0.95,
     };
 
     const clock = new THREE.Clock();
@@ -399,12 +399,19 @@ export default function Globe({
 
     const tick = () => {
       if (!state.running) return;
-      const t = clock.getElapsedTime();
+      // IMPORTANT: getDelta() must be called *before* reading
+      // elapsedTime, because getElapsedTime() internally consumes
+      // the delta. Calling them in the reverse order always yields
+      // dt ≈ 0 and the globe sits still.
       const dt = Math.min(clock.getDelta(), 0.05);
+      const t = clock.elapsedTime;
       dotMat.uniforms.uTime.value = t;
 
       if (autoRotate && !prefersReducedMotion) {
         state.rotY += state.autoRot * dt;
+        // Subtle wobble on the tilt so the planet feels alive rather
+        // than spinning on a perfectly fixed axis.
+        state.rotX = 0.15 + Math.sin(t * 0.4) * 0.06;
       }
       globeGroup.rotation.y = state.rotY;
       globeGroup.rotation.x = state.rotX;
