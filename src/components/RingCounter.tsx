@@ -23,12 +23,10 @@ const RADIUS = 54;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 /**
- * Stat tile with an animated SVG ring that draws itself with a Casper
- * gradient stroke, plus either a counted-up number or a static display
- * value in the centre.
- *
- * Uses native IntersectionObserver + an immediate getBoundingClientRect
- * check so the animation always fires on first paint.
+ * Stat tile with an animated SVG ring and a counted-up number in the
+ * centre. Both the ring's stroke-dashoffset and the number are driven
+ * directly via DOM mutation (no React state in the anim loop), so the
+ * browser can paint every animation frame without re-rendering React.
  */
 export default function RingCounter({
   display,
@@ -42,8 +40,8 @@ export default function RingCounter({
   id = "default",
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
+  const fillRef = useRef<SVGCircleElement>(null);
   const numberRef = useRef<HTMLSpanElement>(null);
-  const [progress, setProgress] = useState(0);
   const [started, setStarted] = useState(false);
 
   useEffect(() => {
@@ -59,6 +57,8 @@ export default function RingCounter({
     const introIsGone = () =>
       typeof window !== "undefined" &&
       window.sessionStorage.getItem("st-intro-seen") === "1";
+
+    const cleanup: Array<() => void> = [];
 
     const beginViewportCheck = () => {
       if (disposed) return;
@@ -85,8 +85,6 @@ export default function RingCounter({
       cleanup.push(() => observer.disconnect());
     };
 
-    const cleanup: Array<() => void> = [];
-
     if (introIsGone()) {
       beginViewportCheck();
     } else {
@@ -108,22 +106,30 @@ export default function RingCounter({
     };
   }, [started]);
 
-  // Ring fill — same easing and duration as the counter below, so the
-  // arc and the digit finish exactly together.
+  // Ring fill — mutates strokeDashoffset directly on the SVG circle.
+  // This bypasses React state so every rAF tick paints a new frame.
   useEffect(() => {
-    if (!started) return;
+    if (!started || !fillRef.current) return;
+    const circle = fillRef.current;
+
+    const setOffset = (pct: number) => {
+      const offset = CIRCUMFERENCE - (CIRCUMFERENCE * pct) / 100;
+      circle.style.strokeDashoffset = String(offset);
+    };
+
+    setOffset(0);
+
     const controls = animate(0, fillPct, {
       duration,
       delay,
       ease: "easeInOut",
-      onUpdate: (v) => setProgress(v),
-      onComplete: () => setProgress(fillPct),
+      onUpdate: (v) => setOffset(v),
+      onComplete: () => setOffset(fillPct),
     });
     return () => controls.stop();
   }, [started, fillPct, duration, delay]);
 
-  // Counter — synced with the ring. Snaps to the exact `display` on
-  // complete so we never end on 3.4 instead of 3.5×.
+  // Counter — synced with the ring: same duration, delay, easing.
   useEffect(() => {
     if (!started || to == null || !numberRef.current) return;
     const node = numberRef.current;
@@ -143,7 +149,6 @@ export default function RingCounter({
     return () => controls.stop();
   }, [started, to, suffix, duration, delay, decimals, display]);
 
-  const strokeOffset = CIRCUMFERENCE - (CIRCUMFERENCE * progress) / 100;
   const gradientId = `ringGradient-${id}`;
 
   // Radial tick marks around the ring (decorative)
@@ -201,6 +206,7 @@ export default function RingCounter({
             className={styles.ringTrack}
           />
           <circle
+            ref={fillRef}
             cx={VIEWBOX / 2}
             cy={VIEWBOX / 2}
             r={RADIUS}
@@ -208,7 +214,7 @@ export default function RingCounter({
             style={{
               stroke: `url(#${gradientId})`,
               strokeDasharray: CIRCUMFERENCE,
-              strokeDashoffset: strokeOffset,
+              strokeDashoffset: CIRCUMFERENCE,
             }}
           />
         </svg>
