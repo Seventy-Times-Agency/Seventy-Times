@@ -172,6 +172,7 @@ export default function Globe({
       opacity: 0.85,
     });
     const core = new THREE.Mesh(coreGeo, coreMat);
+    core.renderOrder = 0;
     globeGroup.add(core);
 
     // Sample Fibonacci-distributed points, keep only the ones that land on a continent
@@ -191,10 +192,10 @@ export default function Globe({
       const lon = (Math.atan2(z, x) * 180) / Math.PI;
       if (!isLand(lon, lat)) continue;
       positions.push(x, y, z);
-      const green = Math.random() < 0.014;
+      const green = Math.random() < 0.02;
       const c = green ? GREEN : CASPER;
       colors.push(c.r, c.g, c.b);
-      sizes.push(green ? 6.5 : 2.7);
+      sizes.push(green ? 9 : 4.2);
       pulses.push(green ? 2 + Math.random() * 6.28 : Math.random() * 6.28);
     }
 
@@ -228,6 +229,7 @@ export default function Globe({
       blending: THREE.NormalBlending,
     });
     const dotPoints = new THREE.Points(dotGeo, dotMat);
+    dotPoints.renderOrder = 2;
     globeGroup.add(dotPoints);
 
     // Subtle wireframe grid — JARVIS-style 3D read
@@ -236,10 +238,11 @@ export default function Globe({
       color: CASPER,
       wireframe: true,
       transparent: true,
-      opacity: 0.08,
+      opacity: 0.04,
       depthWrite: false,
     });
     const wire = new THREE.Mesh(wireGeo, wireMat);
+    wire.renderOrder = 1;
     globeGroup.add(wire);
 
     // Tilted torus rings, each with a small satellite node
