@@ -3,8 +3,10 @@ import {
   checkOrigin,
   forbiddenOriginResponse,
   getClientIp,
+  isHoneypotTripped,
   rateLimit,
   rateLimitResponse,
+  silentSuccessResponse,
 } from "@/lib/apiGuard";
 import { escapeMarkdown } from "@/lib/telegram";
 
@@ -118,6 +120,18 @@ export async function POST(req: Request) {
       { error: "Не хватает полей в отзыве" },
       { status: 400 }
     );
+  }
+
+  if (
+    typeof body === "object" &&
+    body !== null &&
+    isHoneypotTripped((body as Record<string, unknown>).website)
+  ) {
+    console.warn("[REVIEW] honeypot tripped", {
+      at: new Date().toISOString(),
+      ip,
+    });
+    return silentSuccessResponse();
   }
 
   const code = body.code.trim();

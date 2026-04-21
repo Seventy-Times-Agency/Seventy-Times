@@ -12,6 +12,7 @@ import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import SectionDivider from "@/components/SectionDivider";
+import StructuredData from "@/components/StructuredData";
 import { useT } from "@/i18n/context";
 
 export default function HomePage() {
@@ -19,6 +20,7 @@ export default function HomePage() {
 
   return (
     <>
+      <StructuredData />
       <Nav />
       <main>
         <Hero />

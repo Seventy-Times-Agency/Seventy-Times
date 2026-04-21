@@ -18,6 +18,8 @@ const INITIAL = {
   contact: "",
   business: "",
   request: "",
+  // Honeypot: a field real users never see. Bots fill every input they find.
+  website: "",
 };
 
 /**
@@ -124,7 +126,13 @@ export default function LeadForm() {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, contact, business, request }),
+        body: JSON.stringify({
+          name,
+          contact,
+          business,
+          request,
+          website: fields.website,
+        }),
       });
 
       if (!res.ok) {
@@ -197,6 +205,22 @@ export default function LeadForm() {
                 </div>
 
                 <form onSubmit={submit} className={styles.form} noValidate>
+                  {/* Honeypot: invisible to humans (aria-hidden, tabindex=-1,
+                      off-screen). Bots fill it → server silently drops. */}
+                  <div className={styles.honeypot} aria-hidden="true">
+                    <label>
+                      Website
+                      <input
+                        type="text"
+                        name="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={fields.website}
+                        onChange={setField("website")}
+                      />
+                    </label>
+                  </div>
+
                   <label className={styles.field}>
                     <span className={styles.label}>{t.leadName}</span>
                     <input

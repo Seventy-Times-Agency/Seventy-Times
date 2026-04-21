@@ -3,8 +3,10 @@ import {
   checkOrigin,
   forbiddenOriginResponse,
   getClientIp,
+  isHoneypotTripped,
   rateLimit,
   rateLimitResponse,
+  silentSuccessResponse,
 } from "@/lib/apiGuard";
 import { escapeMarkdown } from "@/lib/telegram";
 
@@ -86,6 +88,19 @@ export async function POST(req: Request) {
       { error: "Не хватает полей в заявке" },
       { status: 400 }
     );
+  }
+
+  // Honeypot: bots fill every field they see. Humans never see this one.
+  if (
+    typeof body === "object" &&
+    body !== null &&
+    isHoneypotTripped((body as Record<string, unknown>).website)
+  ) {
+    console.warn("[LEAD] honeypot tripped", {
+      at: new Date().toISOString(),
+      ip: getClientIp(req),
+    });
+    return silentSuccessResponse();
   }
 
   const name = body.name.trim();
