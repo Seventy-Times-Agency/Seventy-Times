@@ -21,8 +21,8 @@ const dict = {
     heroTitle3: "вашего",
     heroTitle4: "бизнеса.",
     heroSub:
-      "Seventy Times превращает AI и digital-маркетинг в предсказуемый поток квалифицированных клиентов. Реклама, автоматизация и умные боты — всё работает на одну метрику: ваш рост.",
-    heroCta1: "Оставить заявку",
+      "Seventy Times превращает рекламу, автоматизацию и AI в поток клиентов для вашего бизнеса. От первого звонка до первых лидов — 2–3 недели. Без долгих контрактов, с понятными цифрами каждую неделю.",
+    heroCta1: "Запустить консультацию",
     heroCta2: "Поговорить с Венесой",
     heroHint: "Ответ за 10 секунд · Без обязательств",
     statGoal: "Потенциал роста",
@@ -45,11 +45,11 @@ const dict = {
     svc1Tag: "Реклама, которая приводит реальных клиентов",
     svc1Note: "Рекламный бюджет оплачивается отдельно",
     svc1Inc: [
-      "Настройка рекламного кабинета с нуля",
-      "Ведение рекламы на Meta, Google и TikTok",
-      "Креативы — баннеры и тексты объявлений",
-      "Настройка аудиторий и таргетинга",
-      "Постоянная оптимизация кампаний",
+      "Первые лиды обычно за 3–7 дней после запуска",
+      "Рекламные кабинеты на Meta, Google и TikTok под ключ",
+      "Проверенные креативы: баннеры и тексты с A/B-тестами",
+      "Аудитории и таргетинг — точно под вашего клиента",
+      "Еженедельная оптимизация: режем то, что не окупается",
     ],
     svc1Add: [
       "AI-генерация рекламных материалов",
@@ -62,9 +62,9 @@ const dict = {
     svc2Tag: "Убираем рутину — бизнес работает сам",
     svc2Note: null as string | null,
     svc2Inc: [
-      "Аудит процессов: находим где теряется время и деньги",
-      "Автоматизация одного ключевого процесса",
-      "Например: заявка → уведомление → таблица → ответ клиенту",
+      "Аудит процессов: находим где утекают время и деньги",
+      "Автоматизация одного ключевого процесса — от заявки до ответа клиенту",
+      "10–20 часов в неделю обратно команде — без ручного копипаста",
     ],
     svc2Add: [
       "Автоматизация дополнительных процессов",
@@ -78,10 +78,10 @@ const dict = {
     svc3Tag: "Умный помощник, который работает за вас 24/7",
     svc3Note: null as string | null,
     svc3Inc: [
-      "Бот на любой платформе: Telegram, Instagram, Facebook или сайт",
-      "AI-консультант, обученный под ваш бизнес и бренд",
-      "Автоматический сбор контактов в Google Sheets или другие программы",
-      "Поддержка любого языка",
+      "Клиент получает ответ за секунды — в Telegram, Instagram, Facebook или на сайте",
+      "AI-консультант обучен под ваш бизнес, говорит вашим голосом",
+      "Контакты автоматически падают в Google Sheets или CRM — ничего не теряется",
+      "24/7 на любом языке, без выходных и больничных",
     ],
     svc3Add: [
       "Онлайн-запись и бронирование",
@@ -125,10 +125,10 @@ const dict = {
     venLead:
       "Венеса — AI-ассистент на базе Claude, обученный под ваш бизнес. Она общается с клиентами на сайте, в Telegram и Instagram, квалифицирует лиды и передаёт горячих вам напрямую. Такого же бота мы создаём под каждый проект.",
     venBullets: [
-      "Обучена на материалах и тон-оф-войсе вашего бренда",
-      "Отвечает на любом языке, работает 24/7",
-      "Собирает заявки прямо в CRM или Telegram",
-      "Вы контролируете что она знает и как общается",
+      "Знает ваш бизнес изнутри — обучена на ваших материалах и тоне",
+      "Отвечает на любом языке, работает 24/7 без выходных",
+      "Сама квалифицирует лиды и складывает их в CRM или Telegram",
+      "До 10–15 часов в неделю, которые команда не тратит на первую коммуникацию",
     ],
     venCta: "Написать Венесе",
     venBadgeLabel: "AI Agent",
@@ -173,7 +173,7 @@ const dict = {
       "Мы не называем цены заранее — обсуждаем их после брифинга, чтобы предложить вилку под конкретную задачу. Типичные проекты стартуют от $1000 в месяц, но точная цифра зависит от масштаба и целей.",
     faq2q: "Когда будут первые результаты?",
     faq2a:
-      "По таргету — первые лиды обычно приходят в течение 3–7 дней после запуска. По автоматизации — сразу после внедрения. По AI-ботам — в день запуска. Стабильная динамика в рекламе формируется к концу первого месяца после оптимизации.",
+      "По рекламе — первые лиды обычно за 3–7 дней после запуска. За 2–3 недели уже ясно какие объявления тянут, а какие нет — масштабируем то что работает. По автоматизации и AI-ботам — отдача с первого дня. К концу первого месяца у вас будет рабочая стратегия, а не догадки.",
     faq3q: "Работаете ли с моей нишей?",
     faq3a:
       "Наша методология рассчитана на e-commerce, услуги, перевозки, ритейл одежды, авто-аксессуары и beauty-индустрию. Если вашей ниши нет в списке — всё равно пишите, обсудим как можем помочь.",
@@ -199,7 +199,7 @@ const dict = {
     simTitle2: "свой",
     simTitle3: "стек.",
     simLead:
-      "Выберите уровень под каждое направление — увидите как они компонуются в совокупный рост. Модель иллюстративная, основана на средних отраслевых значениях эффективности digital-каналов.",
+      "Калькулятор вашего роста. Выберите уровень каждого направления — посмотрите как они перемножаются в итоговый рост за 6 месяцев. В основе — средние отраслевые эффекты digital-каналов.",
     simCurrent: "Что это включает",
     simContribution: "Вклад в рост",
     simAdsTag: "01 / Реклама",
@@ -244,7 +244,7 @@ const dict = {
     simFormula: "Как считаем",
     simFormulaDesc: "Каждое направление даёт свой % прироста. Они перемножаются — так работает compounding. Базовое значение 100 лидов/мес — просто для наглядности, у вас будет ваше.",
     simDisclaimer:
-      "Модель носит иллюстративный характер. Реальные результаты зависят от ниши, рынка, качества исполнения и ряда других факторов. Seventy Times не гарантирует конкретных цифр.",
+      "Это прогноз на основе реальных digital-бенчмарков, не гарантия. Ваш результат зависит от ниши, рынка, бюджета и качества исполнения. Мы даём честные ориентиры, не обещания чудес.",
     simCta: "Обсудить мой стек с Венесой",
 
     // CTA
@@ -490,8 +490,8 @@ const dict = {
     heroTitle3: "business",
     heroTitle4: "growth.",
     heroSub:
-      "Seventy Times turns AI and performance marketing into a predictable stream of qualified clients. Ads, automation and smart bots — all built around one metric: your growth.",
-    heroCta1: "Get a quote",
+      "Seventy Times turns ads, automation, and AI into a steady flow of qualified clients. From first call to first leads — 2–3 weeks. No long contracts, weekly numbers, no fluff.",
+    heroCta1: "Book a free strategy call",
     heroCta2: "Talk to Venesa",
     heroHint: "Response in 10 seconds · No obligations",
     statGoal: "Growth potential",
@@ -514,11 +514,11 @@ const dict = {
     svc1Tag: "Ads that bring real customers",
     svc1Note: "Ad budget is billed separately",
     svc1Inc: [
-      "Ad account setup from scratch",
-      "Campaign management on Meta, Google & TikTok",
-      "Creatives — banners and ad copy",
-      "Audience and targeting setup",
-      "Ongoing campaign optimization",
+      "First leads typically within 3–7 days after launch",
+      "Turnkey ad accounts on Meta, Google & TikTok",
+      "A/B-tested creatives: banners and copy that actually pull",
+      "Audiences and targeting built around your real customer",
+      "Weekly optimization — we cut what doesn't earn",
     ],
     svc1Add: [
       "AI-generated ad creatives",
@@ -531,9 +531,9 @@ const dict = {
     svc2Tag: "We eliminate the routine — your business runs itself",
     svc2Note: null as string | null,
     svc2Inc: [
-      "Process audit: find where time and money leak",
-      "Automation of one key process",
-      "Example: lead → notification → spreadsheet → client reply",
+      "Audit first: we find where hours and dollars leak out",
+      "One key workflow automated end-to-end — lead → alert → sheet → reply",
+      "10–20 hours a week back to your team, no manual copy-paste",
     ],
     svc2Add: [
       "Automation of additional processes",
@@ -547,10 +547,10 @@ const dict = {
     svc3Tag: "A smart assistant that works for you 24/7",
     svc3Note: null as string | null,
     svc3Inc: [
-      "Bot on any platform: Telegram, Instagram, Facebook or website",
-      "AI consultant trained for your brand and business",
-      "Automated lead capture into Google Sheets or other tools",
-      "Multi-language support",
+      "Replies in seconds — Telegram, Instagram, Facebook, or your website",
+      "Trained on your business and tone; it sounds like your team",
+      "Contacts drop straight into Google Sheets or CRM — nothing lost",
+      "24/7, any language, no sick days",
     ],
     svc3Add: [
       "Online booking and scheduling",
@@ -594,10 +594,10 @@ const dict = {
     venLead:
       "Venesa is a Claude-powered AI assistant trained for your business. She talks to clients on your website, Telegram and Instagram, qualifies leads and passes hot ones directly to you. We build the same bot for every project.",
     venBullets: [
-      "Trained on your brand's materials and tone of voice",
-      "Responds in any language, works 24/7",
-      "Captures leads straight into CRM or Telegram",
-      "You control what she knows and how she talks",
+      "Knows your business inside out — trained on your materials and tone",
+      "Responds in any language, works 24/7 without breaks",
+      "Qualifies leads and drops them straight into your CRM or Telegram",
+      "Frees up ~10–15 hours a week your team spends on first-touch chats",
     ],
     venCta: "Talk to Venesa",
     venBadgeLabel: "AI Agent",
@@ -642,7 +642,7 @@ const dict = {
       "We don't quote prices upfront — we discuss them after the briefing to offer a range tailored to your specific task. Typical projects start from around $1,000/month, but the exact figure depends on scope and goals.",
     faq2q: "When will I see results?",
     faq2a:
-      "For ads — first leads usually come within 3–7 days after launch. For automation — immediately after implementation. For AI bots — on launch day. Stable ad performance forms by the end of the first month after optimization.",
+      "For ads — first leads typically come within 3–7 days of launch. By week 2–3 it's clear which ads pull and which don't — we scale the winners. Automation and AI bots pay off from day one. By end of month one you have a working strategy, not guesses.",
     faq3q: "Do you work with my industry?",
     faq3a:
       "Our methodology is built for e-commerce, services, transportation, fashion retail, auto accessories and beauty industry. If your niche isn't listed — reach out anyway, we'll discuss how we can help.",
@@ -668,7 +668,7 @@ const dict = {
     simTitle2: "your",
     simTitle3: "stack.",
     simLead:
-      "Pick a level for each pillar — see how they compound into overall growth. An illustrative model based on industry-average digital channel efficiency.",
+      "Your growth calculator. Pick a level for each pillar — see how they compound into 6-month growth. Built on industry-average digital channel benchmarks.",
     simCurrent: "What's included",
     simContribution: "Growth contribution",
     simAdsTag: "01 / Ads",
@@ -713,7 +713,7 @@ const dict = {
     simFormula: "How we calculate",
     simFormulaDesc: "Each pillar adds its own growth %. They multiply together — that's how compounding works. The baseline 100 leads/mo is an illustrative anchor; your actual number is yours.",
     simDisclaimer:
-      "Model is illustrative. Actual results depend on niche, market, execution quality and many other factors. Seventy Times does not guarantee specific numbers.",
+      "A projection based on real digital marketing benchmarks, not a guarantee. Your results depend on niche, market, budget, and execution. We give honest numbers, not miracle promises.",
     simCta: "Discuss my stack with Venesa",
 
     // CTA
@@ -959,8 +959,8 @@ const dict = {
     heroTitle3: "f\u00FCr Ihr",
     heroTitle4: "Unternehmen.",
     heroSub:
-      "Seventy Times verwandelt KI und Performance-Marketing in einen planbaren Strom qualifizierter Kunden. Werbung, Automatisierung und smarte Bots — alle auf eine Kennzahl ausgerichtet: Ihr Wachstum.",
-    heroCta1: "Anfrage senden",
+      "Seventy Times verwandelt Werbung, Automatisierung und KI in einen stabilen Strom qualifizierter Kunden. Vom ersten Gespräch bis zu ersten Leads — 2–3 Wochen. Keine langen Verträge, wöchentliche Zahlen, keine Floskeln.",
+    heroCta1: "Kostenlose Beratung starten",
     heroCta2: "Mit Venesa sprechen",
     heroHint: "Antwort in 10 Sekunden · Unverbindlich",
     statGoal: "Wachstumspotenzial",
@@ -983,11 +983,11 @@ const dict = {
     svc1Tag: "Werbung, die echte Kunden bringt",
     svc1Note: "Werbebudget wird separat abgerechnet",
     svc1Inc: [
-      "Einrichtung des Werbekontos von Grund auf",
-      "Kampagnenmanagement auf Meta, Google & TikTok",
-      "Kreativmaterial — Banner und Anzeigentexte",
-      "Zielgruppen- und Targeting-Einrichtung",
-      "Laufende Kampagnenoptimierung",
+      "Erste Leads in der Regel nach 3–7 Tagen nach Start",
+      "Werbekonten auf Meta, Google & TikTok schlüsselfertig",
+      "A/B-getestete Kreative: Banner und Texte, die wirklich ziehen",
+      "Zielgruppen und Targeting exakt auf Ihren echten Kunden",
+      "Wöchentliche Optimierung — wir streichen, was sich nicht rechnet",
     ],
     svc1Add: [
       "KI-generierte Werbematerialien",
@@ -1000,9 +1000,9 @@ const dict = {
     svc2Tag: "Wir eliminieren Routine — Ihr Geschäft läuft von selbst",
     svc2Note: null as string | null,
     svc2Inc: [
-      "Prozessaudit: finden, wo Zeit und Geld verloren gehen",
-      "Automatisierung eines Schlüsselprozesses",
-      "Beispiel: Lead → Benachrichtigung → Tabelle → Kundenantwort",
+      "Audit zuerst: wir finden, wo Stunden und Euro verloren gehen",
+      "Ein Kernprozess end-to-end automatisiert — Lead → Alert → Tabelle → Antwort",
+      "10–20 Stunden pro Woche zurück an Ihr Team, kein manuelles Copy-Paste",
     ],
     svc2Add: [
       "Automatisierung weiterer Prozesse",
@@ -1016,10 +1016,10 @@ const dict = {
     svc3Tag: "Ein smarter Assistent, der 24/7 für Sie arbeitet",
     svc3Note: null as string | null,
     svc3Inc: [
-      "Bot auf jeder Plattform: Telegram, Instagram, Facebook oder Website",
-      "KI-Berater, trainiert für Ihre Marke und Ihr Geschäft",
-      "Automatische Lead-Erfassung in Google Sheets oder andere Tools",
-      "Mehrsprachiger Support",
+      "Antwortet in Sekunden — Telegram, Instagram, Facebook oder Website",
+      "Trainiert auf Ihr Business und Ihren Ton, klingt wie Ihr Team",
+      "Kontakte laufen direkt in Google Sheets oder CRM — nichts geht verloren",
+      "24/7, jede Sprache, keine Krankheitstage",
     ],
     svc3Add: [
       "Online-Buchung und Terminplanung",
@@ -1063,10 +1063,10 @@ const dict = {
     venLead:
       "Venesa ist eine KI-Assistentin auf Basis von Claude, trainiert für Ihr Unternehmen. Sie spricht mit Kunden auf Ihrer Website, in Telegram und Instagram, qualifiziert Leads und leitet heiße Kontakte direkt an Sie weiter. Denselben Bot erstellen wir für jedes Projekt.",
     venBullets: [
-      "Trainiert auf die Materialien und den Tonfall Ihrer Marke",
-      "Antwortet in jeder Sprache, arbeitet 24/7",
-      "Erfasst Leads direkt ins CRM oder Telegram",
-      "Sie kontrollieren, was sie wei\u00DF und wie sie kommuniziert",
+      "Kennt Ihr Business von innen — trainiert auf Ihre Materialien und Tonalität",
+      "Antwortet in jeder Sprache, arbeitet 24/7 ohne Pause",
+      "Qualifiziert Leads und legt sie direkt ins CRM oder Telegram",
+      "Spart rund 10–15 Stunden pro Woche, die Ihr Team sonst auf Erstkontakte verwendet",
     ],
     venCta: "Mit Venesa sprechen",
     venBadgeLabel: "KI-Agent",
@@ -1111,7 +1111,7 @@ const dict = {
       "Wir nennen keine Preise vorab — wir besprechen sie nach dem Briefing, um eine auf Ihre Aufgabe zugeschnittene Preisspanne anzubieten. Typische Projekte starten ab ca. 1.000 $/Monat, der genaue Betrag hängt von Umfang und Zielen ab.",
     faq2q: "Wann sehe ich erste Ergebnisse?",
     faq2a:
-      "Bei Werbung — erste Leads kommen in der Regel innerhalb von 3–7 Tagen nach dem Start. Bei Automatisierung — sofort nach der Implementierung. Bei KI-Bots — am Starttag. Stabile Werbeleistung bildet sich bis Ende des ersten Monats nach der Optimierung.",
+      "Bei Werbung — erste Leads in der Regel nach 3–7 Tagen. Nach 2–3 Wochen ist klar, welche Anzeigen ziehen und welche nicht — wir skalieren die Gewinner. Automatisierung und KI-Bots wirken ab Tag eins. Bis Monatsende haben Sie eine belastbare Strategie, keine Vermutungen.",
     faq3q: "Arbeiten Sie mit meiner Branche?",
     faq3a:
       "Unsere Methodik ist ausgelegt für E-Commerce, Dienstleistungen, Transport, Mode-Einzelhandel, Auto-Zubehör und Beauty-Branche. Wenn Ihre Nische nicht dabei ist — kontaktieren Sie uns trotzdem, wir besprechen wie wir helfen können.",
@@ -1137,7 +1137,7 @@ const dict = {
     simTitle2: "Sie Ihren",
     simTitle3: "Stack.",
     simLead:
-      "Wählen Sie ein Level für jede Säule — sehen Sie, wie sie zum Gesamtwachstum kombinieren. Ein illustratives Modell auf Basis branchenüblicher Digital-Kanal-Effizienz.",
+      "Ihr Wachstums-Kalkulator. Wählen Sie ein Level für jede Säule — sehen Sie, wie sie sich über 6 Monate multiplizieren. Basierend auf branchenüblichen Digital-Benchmarks.",
     simCurrent: "Was enthalten ist",
     simContribution: "Wachstumsbeitrag",
     simAdsTag: "01 / Werbung",
@@ -1182,7 +1182,7 @@ const dict = {
     simFormula: "So rechnen wir",
     simFormulaDesc: "Jede Säule fügt ihren eigenen Wachstums-% hinzu. Sie werden miteinander multipliziert — so funktioniert Compounding. Die Basis von 100 Leads/Monat ist nur ein illustrativer Anker; Ihre tatsächliche Zahl gehört Ihnen.",
     simDisclaimer:
-      "Das Modell ist illustrativ. Tatsächliche Ergebnisse hängen von Nische, Markt, Umsetzungsqualität und vielen weiteren Faktoren ab. Seventy Times garantiert keine konkreten Zahlen.",
+      "Eine Prognose auf Basis echter Digital-Marketing-Benchmarks, keine Garantie. Ihr Ergebnis hängt von Nische, Markt, Budget und Umsetzung ab. Wir geben ehrliche Zahlen, keine Wunderversprechen.",
     simCta: "Meinen Stack mit Venesa besprechen",
 
     // CTA
