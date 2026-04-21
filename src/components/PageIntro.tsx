@@ -89,9 +89,9 @@ export default function PageIntro() {
             type="button"
             className={styles.skipBtn}
             onClick={dismiss}
-            aria-label="Skip"
+            aria-label={t.introSkip}
           >
-            Skip →
+            {t.introSkip} <span aria-hidden="true">→</span>
           </button>
 
           <div className={styles.content}>

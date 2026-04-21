@@ -1,11 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { cookies } from "next/headers";
 import { Manrope } from "next/font/google";
 import { siteConfig } from "@/data/siteConfig";
 import { I18nProvider } from "@/i18n/context";
 import HtmlLangSync from "@/i18n/HtmlLangSync";
-import { DEFAULT_LOCALE, LOCALES, type Locale } from "@/i18n/config";
-import { getLocaleMeta } from "@/lib/localizedMeta";
+import { getLocaleMeta, readLocaleFromCookies } from "@/lib/localizedMeta";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import FloatingGlyphs from "@/components/FloatingGlyphs";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -22,13 +20,6 @@ const manrope = Manrope({
   variable: "--font-manrope",
   display: "swap",
 });
-
-function readLocaleFromCookies(): Locale {
-  const saved = cookies().get("lang")?.value;
-  return (LOCALES as readonly string[]).includes(saved ?? "")
-    ? (saved as Locale)
-    : DEFAULT_LOCALE;
-}
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = readLocaleFromCookies();

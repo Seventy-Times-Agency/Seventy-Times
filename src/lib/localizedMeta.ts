@@ -1,4 +1,12 @@
-import type { Locale } from "@/i18n/config";
+import { cookies } from "next/headers";
+import { DEFAULT_LOCALE, LOCALES, type Locale } from "@/i18n/config";
+
+export function readLocaleFromCookies(): Locale {
+  const saved = cookies().get("lang")?.value;
+  return (LOCALES as readonly string[]).includes(saved ?? "")
+    ? (saved as Locale)
+    : DEFAULT_LOCALE;
+}
 
 type LocaleMeta = {
   description: string;
@@ -63,4 +71,53 @@ const META: Record<Locale, LocaleMeta> = {
 
 export function getLocaleMeta(locale: Locale): LocaleMeta {
   return META[locale] ?? META.en;
+}
+
+type LegalMeta = {
+  title: string;
+  description: string;
+};
+
+const PRIVACY: Record<Locale, LegalMeta> = {
+  en: {
+    title: "Privacy Policy",
+    description:
+      "How Seventy Times collects, uses, and protects your data. An honest minimum for the early stage — to be revised with legal counsel as we grow.",
+  },
+  ru: {
+    title: "Политика конфиденциальности",
+    description:
+      "Как Seventy Times собирает, использует и защищает ваши данные. Честный минимум для ранней стадии — будет пересмотрен с юристом по мере роста.",
+  },
+  de: {
+    title: "Datenschutzerklärung",
+    description:
+      "Wie Seventy Times Ihre Daten erhebt, verwendet und schützt. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
+  },
+};
+
+const TERMS: Record<Locale, LegalMeta> = {
+  en: {
+    title: "Terms of Use",
+    description:
+      "Terms of use for seventy-times.com. An honest minimum for the early stage — to be revised with legal counsel as we grow.",
+  },
+  ru: {
+    title: "Условия использования",
+    description:
+      "Условия использования сайта seventy-times.com. Честный минимум для ранней стадии — будет пересмотрен с юристом по мере роста.",
+  },
+  de: {
+    title: "Nutzungsbedingungen",
+    description:
+      "Nutzungsbedingungen für seventy-times.com. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
+  },
+};
+
+export function getPrivacyMeta(locale: Locale): LegalMeta {
+  return PRIVACY[locale] ?? PRIVACY.en;
+}
+
+export function getTermsMeta(locale: Locale): LegalMeta {
+  return TERMS[locale] ?? TERMS.en;
 }

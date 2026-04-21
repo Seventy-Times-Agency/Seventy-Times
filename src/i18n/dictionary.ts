@@ -294,6 +294,7 @@ const dict = {
     introTag3: "AI",
     introLocation: "США → Весь мир",
     introLoading: "Загружаем…",
+    introSkip: "Пропустить",
 
     // Lead form
     leadEyebrow: "— Оставить заявку",
@@ -762,6 +763,7 @@ const dict = {
     introTag3: "AI",
     introLocation: "USA → Worldwide",
     introLoading: "Loading…",
+    introSkip: "Skip",
 
     // Lead form
     leadEyebrow: "— Get a quote",
@@ -1230,6 +1232,7 @@ const dict = {
     introTag3: "KI",
     introLocation: "USA → Weltweit",
     introLoading: "Laden…",
+    introSkip: "Überspringen",
 
     // Lead form
     leadEyebrow: "— Anfrage senden",
