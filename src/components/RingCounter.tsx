@@ -35,7 +35,7 @@ export default function RingCounter({
   to,
   suffix = "",
   label,
-  duration = 0.5,
+  duration = 2.5,
   fillPct = 100,
   decimals = 0,
   delay = 0,
@@ -79,7 +79,7 @@ export default function RingCounter({
     const controls = animate(0, fillPct, {
       duration,
       delay,
-      ease: "easeOut",
+      ease: "easeInOut",
       onUpdate: (v) => setProgress(v),
       onComplete: () => setProgress(fillPct),
     });
@@ -94,7 +94,7 @@ export default function RingCounter({
     const controls = animate(0, to, {
       duration,
       delay,
-      ease: "easeOut",
+      ease: "easeInOut",
       onUpdate(value) {
         const formatted =
           decimals > 0 ? value.toFixed(decimals) : String(Math.floor(value));
