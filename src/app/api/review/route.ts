@@ -9,6 +9,7 @@ import {
   silentSuccessResponse,
 } from "@/lib/apiGuard";
 import { escapeMarkdown } from "@/lib/telegram";
+import { sendReviewToNotion } from "@/lib/notion";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -179,10 +180,14 @@ export async function POST(req: Request) {
   const telegramConfigured = Boolean(
     process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID
   );
+  const notionConfigured = Boolean(
+    process.env.NOTION_TOKEN && process.env.NOTION_DATABASE_REVIEWS_ID
+  );
 
   console.log("[REVIEW] accepted", {
     at: new Date().toISOString(),
     telegram: telegramConfigured,
+    notion: notionConfigured,
     sizes: {
       name: name.length,
       role: role.length,
@@ -191,13 +196,16 @@ export async function POST(req: Request) {
     },
   });
 
-  if (!telegramConfigured) {
+  if (!telegramConfigured && !notionConfigured) {
     console.warn(
-      "[REVIEW] Telegram not configured — review accepted but not forwarded"
+      "[REVIEW] No outbound channels configured — review accepted but not forwarded"
     );
   }
 
-  await notifyTelegram({ name, role, location, content }, code);
+  await Promise.allSettled([
+    notifyTelegram({ name, role, location, content }, code),
+    sendReviewToNotion({ name, role, location, content, code }),
+  ]);
 
   return NextResponse.json({ ok: true });
 }

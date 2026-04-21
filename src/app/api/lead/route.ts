@@ -9,6 +9,7 @@ import {
   silentSuccessResponse,
 } from "@/lib/apiGuard";
 import { escapeMarkdown } from "@/lib/telegram";
+import { sendLeadToNotion } from "@/lib/notion";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -130,10 +131,14 @@ export async function POST(req: Request) {
   const telegramConfigured = Boolean(
     process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID
   );
+  const notionConfigured = Boolean(
+    process.env.NOTION_TOKEN && process.env.NOTION_DATABASE_LEADS_ID
+  );
 
   console.log("[LEAD] received", {
     at: new Date().toISOString(),
     telegram: telegramConfigured,
+    notion: notionConfigured,
     sizes: {
       name: name.length,
       contact: contact.length,
@@ -142,13 +147,24 @@ export async function POST(req: Request) {
     },
   });
 
-  if (!telegramConfigured) {
+  if (!telegramConfigured && !notionConfigured) {
     console.warn(
-      "[LEAD] Telegram not configured — lead accepted but not forwarded"
+      "[LEAD] No outbound channels configured — lead accepted but not forwarded"
     );
   }
 
-  await notifyTelegram({ name, contact, business, request });
+  // Read the user's selected locale from the cookie set by I18nProvider.
+  const localeMatch = req.headers
+    .get("cookie")
+    ?.match(/(?:^|;\s*)lang=(en|ru|de)/);
+  const locale = localeMatch?.[1] ?? "en";
+
+  // Fan out to both channels in parallel so one slow/failed provider
+  // doesn't block the other.
+  await Promise.allSettled([
+    notifyTelegram({ name, contact, business, request }),
+    sendLeadToNotion({ name, contact, business, request, locale }),
+  ]);
 
   return NextResponse.json({ ok: true });
 }
