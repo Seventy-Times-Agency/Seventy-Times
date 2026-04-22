@@ -5,6 +5,7 @@ import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
 import Magnetic from "@/components/ui/Magnetic";
+import Globe from "@/components/ui/Globe";
 import { useT } from "@/i18n/context";
 import {
   TelegramIcon,
@@ -60,6 +61,16 @@ export default function CTA() {
       />
       <Reveal>
         <div className={styles.inner}>
+          <div className={styles.bgGlobe} aria-hidden="true">
+            <Globe
+              size={720}
+              density={5}
+              showArcs={false}
+              showRings={false}
+              autoRotate
+            />
+          </div>
+          <div className={styles.content}>
           <div className={styles.eyebrowRow}>
             <span className="eyebrow">{t.ctaEyebrow}</span>
             <span className={styles.eyebrowEnd}>{t.ctaEnd}</span>
@@ -104,6 +115,7 @@ export default function CTA() {
           <div className={styles.metaBottom}>
             <span>{t.ctaMeta1}</span>
             <span>{t.ctaMeta2}</span>
+          </div>
           </div>
         </div>
       </Reveal>

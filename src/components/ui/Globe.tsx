@@ -392,16 +392,72 @@ export default function Globe({
 
     const state = {
       running: true,
+      visible: true,
+      dragging: false,
+      lastX: 0,
+      lastY: 0,
       rotY: 0,
       rotX: 0.15,
       autoRot: 0.95,
     };
+
+    // Drag-to-rotate (optional). Auto-rotation keeps ticking in the
+    // background; pointer movement just nudges rotY/rotX on top.
+    const onPointerDown = (e: PointerEvent) => {
+      if (!interactive) return;
+      state.dragging = true;
+      state.lastX = e.clientX;
+      state.lastY = e.clientY;
+      container.style.cursor = "grabbing";
+      (e.target as Element).setPointerCapture?.(e.pointerId);
+    };
+    const onPointerMove = (e: PointerEvent) => {
+      if (!interactive || !state.dragging) return;
+      state.rotY += (e.clientX - state.lastX) * 0.005;
+      state.rotX += (e.clientY - state.lastY) * 0.005;
+      state.rotX = Math.max(-1.2, Math.min(1.2, state.rotX));
+      state.lastX = e.clientX;
+      state.lastY = e.clientY;
+    };
+    const onPointerUp = () => {
+      if (!interactive) return;
+      state.dragging = false;
+      container.style.cursor = "grab";
+    };
+    if (interactive) {
+      container.dataset.interactive = "true";
+      container.style.cursor = "grab";
+      container.addEventListener("pointerdown", onPointerDown);
+      window.addEventListener("pointermove", onPointerMove);
+      window.addEventListener("pointerup", onPointerUp);
+      window.addEventListener("pointercancel", onPointerUp);
+    }
+
+    // Pause the render loop when the globe scrolls out of view —
+    // a second WebGL context on the same page is cheap only while
+    // visible, and we can give that budget back to the browser.
+    const io =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            (entries) => {
+              state.visible = entries.some((e) => e.isIntersecting);
+            },
+            { rootMargin: "100px" },
+          )
+        : null;
+    io?.observe(container);
 
     const clock = new THREE.Clock();
     let raf = 0;
 
     const tick = () => {
       if (!state.running) return;
+      if (!state.visible) {
+        raf = requestAnimationFrame(tick);
+        // keep the clock ticking but don't burn a draw call
+        clock.getDelta();
+        return;
+      }
       // IMPORTANT: getDelta() must be called *before* reading
       // elapsedTime, because getElapsedTime() internally consumes
       // the delta. Calling them in the reverse order always yields
@@ -465,6 +521,13 @@ export default function Globe({
     return () => {
       state.running = false;
       cancelAnimationFrame(raf);
+      io?.disconnect();
+      if (interactive) {
+        container.removeEventListener("pointerdown", onPointerDown);
+        window.removeEventListener("pointermove", onPointerMove);
+        window.removeEventListener("pointerup", onPointerUp);
+        window.removeEventListener("pointercancel", onPointerUp);
+      }
       arcs.forEach((a) => {
         a.geo.dispose();
         a.mat.dispose();

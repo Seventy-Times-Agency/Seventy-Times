@@ -5,6 +5,14 @@
   pointer-events: none;
 }
 
+.stage[data-interactive="true"] {
+  pointer-events: auto;
+}
+
+.stage[data-interactive="true"] canvas {
+  touch-action: none;
+}
+
 .stage canvas {
   display: block;
   width: 100%;

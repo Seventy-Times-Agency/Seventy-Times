@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import AnimatedText from "@/components/ui/AnimatedText";
 import RingCounter from "@/components/ui/RingCounter";
 import Magnetic from "@/components/ui/Magnetic";
+import Globe from "@/components/ui/Globe";
 import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
 import styles from "@/components/sections/Hero.module.css";
@@ -76,6 +77,18 @@ export default function Hero() {
       <span className={styles.heroWordmark} aria-hidden="true">
         70<span className={styles.heroWordmarkOutline}>×</span>
       </span>
+
+      <div className={styles.heroGlobe} aria-hidden="true">
+        <span className={styles.heroGlobeLabelTop}>
+          <span>N 40.71°</span>
+          <span className={styles.heroGlobeLabelLine} />
+          <span>W 74.00°</span>
+        </span>
+        <Globe size={220} density={4} interactive autoRotate />
+        <span className={styles.heroGlobeLabelBot}>
+          USA → WORLDWIDE
+        </span>
+      </div>
 
       <motion.div variants={container} initial="hidden" animate="visible">
         {/* Editorial meta strip */}
