@@ -3,11 +3,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
-import Globe from "@/components/ui/Globe";
 import styles from "@/components/layout/PageIntro.module.css";
 
 const EASE = [0.85, 0, 0.15, 1] as const;
-const INTRO_DURATION = 2800;
+const INTRO_DURATION = 1200;
 
 /**
  * Cinematic intro shown once per browser session. User can press any
@@ -19,7 +18,6 @@ const INTRO_DURATION = 2800;
  */
 export default function PageIntro() {
   const [visible, setVisible] = useState(true);
-  const [globeSize, setGlobeSize] = useState(300);
   const { t } = useT();
 
   const markGone = () => {
@@ -44,24 +42,13 @@ export default function PageIntro() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const computeSize = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      const m = Math.min(w, h);
-      setGlobeSize(Math.round(Math.max(220, Math.min(360, m * 0.55))));
-    };
-    computeSize();
-    window.addEventListener("resize", computeSize);
-
     const seen = sessionStorage.getItem("st-intro-seen");
     if (seen) {
       setVisible(false);
       setTimeout(() => {
         window.dispatchEvent(new Event("st-intro-gone"));
       }, 0);
-      return () => {
-        window.removeEventListener("resize", computeSize);
-      };
+      return;
     }
 
     const prevOverflow = document.body.style.overflow;
@@ -84,7 +71,6 @@ export default function PageIntro() {
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener("keydown", onKey);
-      window.removeEventListener("resize", computeSize);
       document.body.style.overflow = prevOverflow;
     };
   }, []);
@@ -118,19 +104,10 @@ export default function PageIntro() {
             </motion.div>
 
             <motion.div
-              className={styles.globeWrap}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
-            >
-              <Globe size={globeSize} density={6} />
-            </motion.div>
-
-            <motion.div
               className={styles.wordmark}
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+              transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
             >
               70<span className={styles.outline}>×</span>
             </motion.div>
@@ -139,7 +116,7 @@ export default function PageIntro() {
               className={styles.tagline}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.5 }}
+              transition={{ duration: 0.4, delay: 0.45 }}
             >
               {t.introTag1} <span className={styles.taglineDot} /> {t.introTag2}{" "}
               <span className={styles.taglineDot} /> {t.introTag3}

@@ -36,53 +36,6 @@
   50% { transform: translate(calc(-50% + 30px), calc(-50% - 10px)); }
 }
 
-/* Interactive globe — floats top-right of the hero. Drag to rotate,
-   auto-rotates otherwise. Decorative but alive. pointer-events
-   are managed by Globe itself via data-interactive. */
-.heroGlobe {
-  position: absolute;
-  top: 72px;
-  right: 48px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  pointer-events: none;
-}
-
-.heroGlobeLabelTop,
-.heroGlobeLabelBot {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  font-variant-numeric: tabular-nums;
-}
-
-.heroGlobeLabelLine {
-  width: 28px;
-  height: 1px;
-  background: var(--line-strong);
-}
-
-@media (max-width: 1100px) {
-  .heroGlobe {
-    top: 64px;
-    right: 24px;
-  }
-}
-
-@media (max-width: 900px) {
-  .heroGlobe {
-    display: none;
-  }
-}
-
 /* Editorial meta strip: scattered tiny info ─────────────── */
 .meta {
   display: grid;

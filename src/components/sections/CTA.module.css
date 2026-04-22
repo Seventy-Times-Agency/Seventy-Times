@@ -17,39 +17,6 @@
   overflow: hidden;
 }
 
-/* Ambient background globe — sits bottom-center of the card,
-   cropped and fades at edges so it reads as a decorative world
-   map glow rather than another content element. */
-.bgGlobe {
-  position: absolute;
-  left: 50%;
-  bottom: -38%;
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.55;
-  mask-image: radial-gradient(circle at center, black 35%, transparent 70%);
-  -webkit-mask-image: radial-gradient(circle at center, black 35%, transparent 70%);
-}
-
-.bgGlobe > * {
-  pointer-events: none !important;
-}
-
-.content {
-  position: relative;
-  z-index: 1;
-}
-
-@media (max-width: 900px) {
-  .bgGlobe {
-    bottom: -30%;
-    opacity: 0.4;
-    transform: translateX(-50%) scale(0.65);
-    transform-origin: center;
-  }
-}
-
 /* Top editorial line */
 .inner::before {
   content: "";

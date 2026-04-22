@@ -21,15 +21,8 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   align-items: center;
-}
-
-.globeWrap {
-  position: relative;
-  display: grid;
-  place-items: center;
-  margin: 4px 0 0;
 }
 
 .eyebrow {
@@ -44,7 +37,7 @@
   display: inline-flex;
   align-items: baseline;
   gap: 0.04em;
-  font-size: clamp(56px, 8vw, 112px);
+  font-size: clamp(96px, 14vw, 220px);
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 0.85;
