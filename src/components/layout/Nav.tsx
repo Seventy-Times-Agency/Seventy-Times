@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
 import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
+import Logo from "@/components/ui/Logo";
 import styles from "@/components/layout/Nav.module.css";
 
 const SECTION_IDS = ["services", "process", "chat", "faq"] as const;
@@ -46,10 +47,7 @@ export default function Nav() {
   return (
     <nav className={styles.nav}>
       <a href="#top" className={styles.logo} aria-label={siteConfig.name}>
-        <span className={styles.logoMark}>
-          70<span className={styles.logoOutline}>×</span>
-        </span>
-        <span className={styles.logoSub}>times</span>
+        <Logo variant="compact" />
       </a>
 
       <div className={styles.links}>

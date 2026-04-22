@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
+import Logo from "@/components/ui/Logo";
 import styles from "@/components/layout/Footer.module.css";
 
 export default function Footer() {
@@ -13,12 +14,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.top}>
         <div className={styles.brand}>
-          <span className={styles.logo}>
-            <span className={styles.logoMark}>
-              70<span className={styles.logoOutline}>×</span>
-            </span>
-            <span className={styles.logoSub}>times</span>
-          </span>
+          <Logo variant="full" className={styles.brandLogo} />
           <p className={styles.brandText}>{siteConfig.description}</p>
         </div>
 
