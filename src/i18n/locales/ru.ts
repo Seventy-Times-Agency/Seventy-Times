@@ -289,6 +289,45 @@ const strings = {
     divQuestions: "— вопросы",
     divTalk: "— связаться",
     divSimulator: "— посчитайте свой рост",
+    divCases: "— наши проекты",
+
+    // Nav
+    navCases: "Кейсы",
+
+    // Cases section
+    casesEyebrow: "— Кейсы / 2026",
+    casesTitle1: "Что",
+    casesTitle2: "мы",
+    casesTitle3: "сделали",
+    casesLead:
+      "Часть проектов уже в проде, часть в активной разработке. Откройте карточку, чтобы увидеть короткий разбор — или перейти к полноценному кейсу.",
+    casesStatusLive: "В продакшене",
+    casesStatusProgress: "В разработке",
+    casesStatusSoon: "Скоро",
+    casesCta: "Посмотреть кейс",
+    casesCtaSoon: "Кейс готовится",
+    casesPlaceholderTitle: "Ваш проект здесь",
+    casesPlaceholderSummary:
+      "Мы берём ограниченное число проектов в работу одновременно — обсудим задачу, если формат подходит.",
+    casesPlaceholderCta: "Обсудить задачу",
+    case1Title: "Matcha",
+    case1Tag: "TELEGRAM · BOT · AI",
+    case1Summary:
+      "Анонимный чат-бот с дейтинг-слоем: знакомство, общение, матчи — всё внутри одного Telegram-бота, без внешних приложений. Модерация и безопасность встроены.",
+    case1Metrics: [
+      "Анонимный чат",
+      "Подбор мэтчей",
+      "Модерация и анти-спам",
+    ],
+    case2Title: "Legen",
+    case2Tag: "SITE · BOT · LEAD ENGINE",
+    case2Summary:
+      "Парсер интернета, превращённый в движок для сбора клиентов. Сайт + Telegram-бот автоматически собирают базу под ваш запрос — нишу, гео, критерии.",
+    case2Metrics: [
+      "Парсинг под нишу",
+      "Готовая база клиентов",
+      "Интеграция с CRM",
+    ],
 
     // Intro
     introTag1: "Реклама",

@@ -289,6 +289,45 @@ const strings = {
     divQuestions: "— Fragen",
     divTalk: "— Kontakt",
     divSimulator: "— modellieren Sie Ihr Wachstum",
+    divCases: "— unsere Projekte",
+
+    // Nav
+    navCases: "Projekte",
+
+    // Cases section
+    casesEyebrow: "— Projekte / 2026",
+    casesTitle1: "Was",
+    casesTitle2: "wir",
+    casesTitle3: "gebaut haben",
+    casesLead:
+      "Einige Projekte sind bereits live, andere in aktiver Entwicklung. Öffnen Sie eine Karte für die Kurzfassung — oder springen Sie zur vollständigen Fallstudie.",
+    casesStatusLive: "Live",
+    casesStatusProgress: "In Entwicklung",
+    casesStatusSoon: "Bald",
+    casesCta: "Fallstudie öffnen",
+    casesCtaSoon: "Fallstudie in Arbeit",
+    casesPlaceholderTitle: "Ihr Projekt hier",
+    casesPlaceholderSummary:
+      "Wir nehmen gleichzeitig nur eine begrenzte Anzahl von Projekten an — lassen Sie uns sprechen, wenn das Format passt.",
+    casesPlaceholderCta: "Gespräch starten",
+    case1Title: "Matcha",
+    case1Tag: "TELEGRAM · BOT · AI",
+    case1Summary:
+      "Anonymer Chatbot mit Dating-Ebene: kennenlernen, reden, matchen — alles in einem einzigen Telegram-Bot, ohne externe App. Moderation und Sicherheit integriert.",
+    case1Metrics: [
+      "Anonymer Chat",
+      "Match-Engine",
+      "Moderation & Anti-Spam",
+    ],
+    case2Title: "Legen",
+    case2Tag: "SITE · BOT · LEAD ENGINE",
+    case2Summary:
+      "Ein Web-Parser, verwandelt in eine Lead-Engine. Website + Telegram-Bot bauen automatisch eine Kontaktbasis auf Ihre Nische, Geo und Kriterien zugeschnitten.",
+    case2Metrics: [
+      "Nischenspezifisches Parsing",
+      "Fertige Lead-Basis",
+      "CRM-Integration",
+    ],
 
     // Intro
     introTag1: "Werbung",

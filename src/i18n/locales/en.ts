@@ -289,6 +289,45 @@ const strings = {
     divQuestions: "— questions",
     divTalk: "— get in touch",
     divSimulator: "— model your growth",
+    divCases: "— our work",
+
+    // Nav
+    navCases: "Work",
+
+    // Cases section
+    casesEyebrow: "— Work / 2026",
+    casesTitle1: "What",
+    casesTitle2: "we",
+    casesTitle3: "built",
+    casesLead:
+      "Some projects are already live, others are in active development. Open a card for the short version — or jump to the full case study.",
+    casesStatusLive: "Live",
+    casesStatusProgress: "In development",
+    casesStatusSoon: "Soon",
+    casesCta: "Open case",
+    casesCtaSoon: "Case in progress",
+    casesPlaceholderTitle: "Your project here",
+    casesPlaceholderSummary:
+      "We take on a limited number of projects at a time — let's talk if the shape looks right.",
+    casesPlaceholderCta: "Start a conversation",
+    case1Title: "Matcha",
+    case1Tag: "TELEGRAM · BOT · AI",
+    case1Summary:
+      "Anonymous chat bot with a dating layer: meet, talk, match — all inside a single Telegram bot, no external app. Moderation and safety built in.",
+    case1Metrics: [
+      "Anonymous chat",
+      "Match-making engine",
+      "Moderation & anti-spam",
+    ],
+    case2Title: "Legen",
+    case2Tag: "SITE · BOT · LEAD ENGINE",
+    case2Summary:
+      "A web parser turned into a lead-gen engine. A website + Telegram bot pair automatically build a contact base tailored to your niche, geo and criteria.",
+    case2Metrics: [
+      "Niche-specific parsing",
+      "Ready-to-use lead base",
+      "CRM integration",
+    ],
 
     // Intro
     introTag1: "Ads",
