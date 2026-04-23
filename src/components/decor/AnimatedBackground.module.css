@@ -70,11 +70,19 @@
   .bigNumeral {
     display: none;
   }
-  /* Two 560 px blurred glows drifting on a 30/38 s loop are the
-     single biggest GPU hit on low-end mobile. Static gradient +
-     grid still carry the look without burning paint budget. */
+  /* Keep the drifting glows on mobile, just make each frame
+     cheaper: smaller blur radius (paint cost scales ~quadratically
+     with blur) and slightly smaller footprint. Motion stays. */
   .glow {
-    display: none;
+    filter: blur(40px);
+  }
+  .glowA {
+    width: 360px;
+    height: 360px;
+  }
+  .glowB {
+    width: 340px;
+    height: 340px;
   }
 }
 

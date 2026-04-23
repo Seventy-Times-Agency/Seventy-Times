@@ -65,9 +65,4 @@
     font-size: clamp(120px, 32vw, 260px);
     -webkit-text-stroke-width: 1px;
   }
-  /* Drifting the huge stroked text on every section is a repaint
-     magnet on mobile. Keep the text, drop the motion. */
-  .drift .text {
-    animation: none;
-  }
 }
