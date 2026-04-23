@@ -70,6 +70,12 @@
   .bigNumeral {
     display: none;
   }
+  /* Two 560 px blurred glows drifting on a 30/38 s loop are the
+     single biggest GPU hit on low-end mobile. Static gradient +
+     grid still carry the look without burning paint budget. */
+  .glow {
+    display: none;
+  }
 }
 
 /* Thin highlight line at the top of the page */

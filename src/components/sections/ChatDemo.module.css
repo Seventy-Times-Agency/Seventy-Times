@@ -235,5 +235,11 @@
     bottom: 14px;
     left: 14px;
     right: 14px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .portraitLabel {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
 }

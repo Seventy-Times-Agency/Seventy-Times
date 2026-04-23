@@ -226,6 +226,15 @@
   .nav {
     padding: 16px 20px;
     grid-template-columns: 1fr auto;
+    /* Heavy blur on a sticky bar is the #1 scroll-jank source on
+       iOS. Keep the frosted look but at a fraction of the cost. */
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .mobileMenu {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
   .links {
     display: none;

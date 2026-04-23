@@ -36,9 +36,10 @@
   white-space: nowrap;
   width: max-content;
   animation: tickerScroll 60s linear infinite;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
+  /* Deliberately no `will-change` here: on iOS Safari, promoting a
+     very-wide element that exceeds the GPU tile size can disable the
+     animation entirely. translate3d in the keyframes is enough to
+     put this on the compositor. */
 }
 
 /* Ticker always moves — no hover pause */
@@ -49,6 +50,14 @@
   }
   to {
     transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  /* Shorter row on mobile — speed the cycle up so the motion
+     reads as motion rather than imperceptible drift. */
+  .row {
+    animation-duration: 32s;
   }
 }
 
