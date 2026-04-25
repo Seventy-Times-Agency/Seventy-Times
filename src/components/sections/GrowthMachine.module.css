@@ -1,0 +1,468 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  padding: 80px 48px 64px;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.header {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 56px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--line);
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.title {
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  color: var(--white);
+}
+
+.titleItalic {
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--line-hi);
+}
+
+.headerRight {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.lead {
+  font-size: var(--fs-body-lg);
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 460px;
+}
+
+.discountTag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-strong);
+  background: rgba(74, 222, 128, 0.06);
+}
+
+.discountValue {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--accent-green);
+  font-variant-numeric: tabular-nums;
+}
+
+.discountLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ── Grid ───────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+/* ── Card ───────────────────────────────────────────────── */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 28px 28px;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.005)),
+    var(--surface);
+  border: 1px solid var(--line);
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform 0.4s var(--ease),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Subtle corner brackets — tech accent */
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--line-strong);
+  border-style: solid;
+  border-width: 0;
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+.card::before {
+  top: 14px;
+  left: 14px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.card::after {
+  bottom: 14px;
+  right: 14px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--line-hi);
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.6);
+}
+
+.card:hover::before,
+.card:hover::after {
+  border-color: var(--accent);
+}
+
+/* Recommended (middle) card — subtle glow + brighter accents */
+.cardRecommended {
+  border-color: rgba(200, 212, 222, 0.32);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200, 212, 222, 0.08), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.005)),
+    var(--surface-2);
+  box-shadow:
+    0 0 0 1px rgba(200, 212, 222, 0.06) inset,
+    0 24px 60px -36px rgba(200, 212, 222, 0.15);
+}
+
+.cardRecommended::before,
+.cardRecommended::after {
+  border-color: var(--accent);
+}
+
+.recommendedBadge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--black);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  z-index: 1;
+  box-shadow: 0 12px 32px -10px var(--accent-glow);
+}
+
+.recommendedDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--black);
+}
+
+/* ── Card header ────────────────────────────────────────── */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 22px;
+}
+
+.cardNum {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.cardTier {
+  font-family: ui-monospace, "SF Mono", "Roboto Mono", monospace;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--accent);
+}
+
+/* ── Card body ──────────────────────────────────────────── */
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.cardTitle {
+  font-size: clamp(24px, 2.2vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--white);
+}
+
+.cardSub {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.cardListLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+.cardList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.cardListItem {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.cardListBullet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 212, 222, 0.3);
+  font-size: 8px;
+  color: var(--accent);
+  transform: translateY(2px);
+}
+
+.cardRecommended .cardListBullet {
+  border-color: rgba(200, 212, 222, 0.5);
+  background: rgba(200, 212, 222, 0.08);
+}
+
+/* ── Card footer ────────────────────────────────────────── */
+.cardFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.cardTerm {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.cardTermLabel {
+  color: var(--text-dim);
+}
+
+.cardTermValue {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-size: 13px;
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--line-strong);
+  background: rgba(200, 212, 222, 0.025);
+}
+
+.priceLabel {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+
+.priceHint {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  line-height: 1.45;
+}
+
+.cardCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--black);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition:
+    background 0.25s ease,
+    transform 0.25s var(--ease),
+    box-shadow 0.3s ease;
+  box-shadow: 0 16px 40px -20px var(--accent-glow);
+}
+
+.cardCta:hover {
+  background: var(--accent-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 26px 60px -20px var(--accent-glow);
+}
+
+.cardCtaArrow {
+  display: inline-flex;
+  transition: transform 0.25s var(--ease);
+}
+
+.cardCta:hover .cardCtaArrow {
+  transform: translateX(3px);
+}
+
+/* GROWTH card has the most prominent CTA */
+.cardRecommended .cardCta {
+  background: var(--accent-strong);
+}
+
+/* ── Guarantee block ────────────────────────────────────── */
+.guarantee {
+  margin-top: 36px;
+  padding: 22px 26px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 50%, rgba(74, 222, 128, 0.06), transparent 60%),
+    rgba(255, 255, 255, 0.018);
+}
+
+.guaranteeShield {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(74, 222, 128, 0.35);
+  background: rgba(74, 222, 128, 0.06);
+  color: var(--accent-green);
+}
+
+.guaranteeShield svg {
+  width: 22px;
+  height: 22px;
+}
+
+.guaranteeText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.guaranteeTitle {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-green);
+}
+
+.guaranteeBody {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 56px 20px 48px;
+  }
+  .header {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    align-items: start;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+  }
+  .headerRight {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .lead {
+    max-width: none;
+  }
+  .title {
+    font-size: clamp(32px, 8vw, 56px);
+  }
+  .guarantee {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+}

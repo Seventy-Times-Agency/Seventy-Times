@@ -7,7 +7,7 @@ import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
 import Logo from "@/components/ui/Logo";
 import styles from "@/components/layout/Nav.module.css";
 
-const SECTION_IDS = ["services", "process", "chat", "cases", "faq"] as const;
+const SECTION_IDS = ["growth-machine", "services", "process", "chat", "cases", "faq"] as const;
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,10 +38,10 @@ export default function Nav() {
   const close = () => setMenuOpen(false);
 
   const NAV_LINKS = [
+    { href: "#growth-machine", id: "growth-machine", label: t.navMachine },
     { href: "#services", id: "services", label: t.navServices },
-    { href: "#process", id: "process", label: t.navProcess },
-    { href: "#chat", id: "chat", label: t.navVenesa },
     { href: "#cases", id: "cases", label: t.navCases },
+    { href: "#process", id: "process", label: t.navProcess },
     { href: "#faq", id: "faq", label: t.navFaq },
   ];
 

@@ -29,10 +29,14 @@ export const siteConfig = {
     },
   },
 
+  // Hero ring values in display order. Labels live in i18n
+  // (statGoal/statServices/statSupport/statLaunch). The Hero
+  // overrides count-up targets per ring; non-numeric values like
+  // "24/7" stay static.
   stats: [
-    { value: "3.5×", label: "Потенциал" },
-    { value: "3", label: "Направления" },
-    { value: "24/7", label: "AI-консультант" },
-    { value: "2026", label: "Запуск" },
+    { value: "30", label: "Запуск (дней)" },
+    { value: "24/7", label: "AI на связи" },
+    { value: "3", label: "Платформы" },
+    { value: "25%", label: "Эффект комбо" },
   ],
 } as const;

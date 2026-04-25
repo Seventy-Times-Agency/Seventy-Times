@@ -53,14 +53,14 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
 /* Editorial numbered card ────────────────────────────────── */
 .card {
   position: relative;
-  padding: 36px 34px 32px;
+  padding: 30px 26px 26px;
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.018);
   border: 1px solid var(--line);
@@ -72,6 +72,7 @@
     background 0.3s ease;
 }
 
+/* Mouse-tracked highlight */
 .card::before {
   content: "";
   position: absolute;
@@ -86,6 +87,24 @@
   pointer-events: none;
 }
 
+/* Tech-accent corner brackets — appear stronger on hover */
+.card::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: 12px;
+  border: 1px solid transparent;
+  border-image: linear-gradient(
+      135deg,
+      var(--accent) 0%,
+      transparent 14%,
+      transparent 86%,
+      var(--accent) 100%
+    ) 1;
+  opacity: 0.18;
+  transition: opacity 0.3s ease;
+}
+
 .card:hover {
   transform: translateY(-4px);
   border-color: var(--line-hi);
@@ -96,6 +115,10 @@
   opacity: 1;
 }
 
+.card:hover::after {
+  opacity: 0.7;
+}
+
 .cardOpen {
   border-color: var(--line-hi);
   background: rgba(255, 255, 255, 0.04);
@@ -103,11 +126,13 @@
 }
 
 .number {
-  font-size: 13px;
+  font-family: ui-monospace, "SF Mono", "Roboto Mono", monospace;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   color: var(--text-dim);
-  margin-bottom: 44px;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;

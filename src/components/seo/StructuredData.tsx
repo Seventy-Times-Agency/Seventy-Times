@@ -24,6 +24,11 @@ export default function StructuredData() {
     { q: t.faq6q, a: t.faq6a },
     { q: t.faq7q, a: t.faq7a },
     { q: t.faq8q, a: t.faq8a },
+    { q: t.faq9q, a: t.faq9a },
+    { q: t.faq10q, a: t.faq10a },
+    { q: t.faq11q, a: t.faq11a },
+    { q: t.faq12q, a: t.faq12a },
+    { q: t.faq13q, a: t.faq13a },
   ];
 
   const faqSchema = {

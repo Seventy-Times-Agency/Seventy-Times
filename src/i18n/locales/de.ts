@@ -15,22 +15,22 @@ const strings = {
     navCloseMenu: "Menü schließen",
 
     // Hero meta
-    heroMeta1: "Werbung · Automatisierung · KI",
+    heroMeta1: "Marketing · KI · Automatisierung",
     heroMeta2: "Projekte willkommen · 2026",
     heroMeta3: "USA → Weltweit",
-    heroTitle1: "Wachstum",
-    heroTitle2: "automatisiert",
-    heroTitle3: "f\u00FCr Ihr",
-    heroTitle4: "Unternehmen.",
+    heroTitle1: "Werbung ×",
+    heroTitle2: "KI ×",
+    heroTitle3: "Automatisierung",
+    heroTitle4: "eine Wachstumsmaschine.",
     heroSub:
-      "Seventy Times verwandelt Werbung, Automatisierung und KI in einen stabilen Strom qualifizierter Kunden. Vom ersten Gespräch bis zu ersten Leads — 2–3 Wochen. Keine langen Verträge, wöchentliche Zahlen, keine Floskeln.",
-    heroCta1: "Kostenlose Beratung starten",
-    heroCta2: "Mit Venesa sprechen",
-    heroHint: "Antwort in 10 Sekunden · Unverbindlich",
-    statGoal: "Wachstumspotenzial",
-    statServices: "Leistungen",
-    statSupport: "KI jederzeit",
-    statLaunch: "Gegr.",
+      "Start in 30 Tagen, optimiert in 90. Werbung bringt Leads, KI fängt sie im Chat auf, Automatisierung führt sie durch den Funnel. Keine drei Leistungen im Paket — ein funktionierendes System.",
+    heroCta1: "Angebot anfordern",
+    heroCta2: "Pakete ansehen",
+    heroHint: "Antwort in 24 Stunden · Unverbindlich",
+    statGoal: "Start (Tage)",
+    statServices: "KI rund um die Uhr",
+    statSupport: "Plattformen",
+    statLaunch: "Combo-Effekt",
 
     // Services
     svcEyebrow: "— Leistungen / 2026",
@@ -93,6 +93,23 @@ const strings = {
       "CRM-Integration",
       "Verkaufstrichter",
       "Support und Updates nach dem Launch",
+    ],
+    svc4Title: "Websites + SEO",
+    svc4Tag: "Eine Website, die verkauft — nicht nur gut aussieht",
+    svc4Note: "Texte und Brand-Assets liefert der Kunde. Hosting und Domain bleiben auf Ihrem Konto.",
+    svc4Inc: [
+      "Responsives Design für alle Geräte, ohne Mobile-Bugs",
+      "Basis-SEO: Sitemap, Meta, schema.org, Core Web Vitals",
+      "Google Analytics und nötige Pixel angebunden",
+      "30 Tage garantierte Bugfixes nach Launch",
+      "Funnel passt mit Werbung und KI-Bot — alles greift ineinander",
+    ],
+    svc4Add: [
+      "Zusätzliche Sprache auf der Website",
+      "Professionelle Fotografie für das Projekt",
+      "Erweiterte Animation und Interaktivität",
+      "Multi-Currency / Multi-Region für E-Commerce",
+      "Maintenance-Retainer nach dem Launch",
     ],
 
     // Process
@@ -172,28 +189,43 @@ const strings = {
     faqStillCta: "Fragen Sie uns direkt →",
     faq1q: "Was kosten Ihre Leistungen?",
     faq1a:
-      "Wir nennen keine Preise vorab — wir besprechen sie nach dem Briefing, um eine auf Ihre Aufgabe zugeschnittene Preisspanne anzubieten. Typische Projekte starten ab ca. 1.000 $/Monat, der genaue Betrag hängt von Umfang und Zielen ab.",
-    faq2q: "Wann sehe ich erste Ergebnisse?",
+      "Wir kalkulieren pro Fall — eine fixe Zahl im Voraus zu nennen, ergibt selten Sinn. Nach einem kurzen Briefing schicken wir per E-Mail eine detaillierte Preisliste mit Aufschlüsselung nach Leistung und Combo-Paket. Mindestschwellen nennen wir sofort, damit niemand Zeit verliert.",
+    faq2q: "Wer zahlt das Werbebudget?",
     faq2a:
-      "Bei Werbung — erste Leads in der Regel nach 3–7 Tagen. Nach 2–3 Wochen ist klar, welche Anzeigen ziehen und welche nicht — wir skalieren die Gewinner. Automatisierung und KI-Bots wirken ab Tag eins. Bis Monatsende haben Sie eine belastbare Strategie, keine Vermutungen.",
-    faq3q: "Arbeiten Sie mit meiner Branche?",
+      "Der Kunde. Das Meta / Google / TikTok-Werbekonto läuft auf Ihren Namen, Sie zahlen die Plattform direkt. Wir richten ein und optimieren. Das ist transparenter, und die Konten bleiben Ihnen — auch nach einer Trennung.",
+    faq3q: "Wer zahlt KI-Token und SaaS-Abos?",
     faq3a:
-      "Unsere Methodik ist ausgelegt für E-Commerce, Dienstleistungen, Transport, Mode-Einzelhandel, Auto-Zubehör und Beauty-Branche. Wenn Ihre Nische nicht dabei ist — kontaktieren Sie uns trotzdem, wir besprechen wie wir helfen können.",
-    faq4q: "Was wenn die Werbung nicht funktioniert?",
+      "Standardmäßig — der Kunde. OpenAI/Claude-API-Keys und Make/Zapier-Abos laufen auf Ihrem Konto, Kosten sind direkt sichtbar. Vollständig managed? Wir rechnen den Verbrauch mit 30 % Management-Aufschlag ab.",
+    faq4q: "Wie schnell sehe ich Ergebnisse?",
     faq4a:
-      "Wir versprechen keine '100% Leads in einer Woche' — das wären leere Worte. Aber wir arbeiten mit transparenten KPIs, zeigen wöchentlich Zahlen, und wenn eine Kampagne nicht performt — schwenken wir schnell um, statt monatelang Budget zu verbrennen.",
-    faq5q: "Brauche ich einen eigenen Marketer?",
+      "Erste Leads aus Werbung — 3–7 Tage nach Launch. Der KI-Bot arbeitet ab Tag eins. Vollständige Optimierung — bis Ende des 90-Tage-Fensters.",
+    faq5q: "Was, wenn ich aussteigen will?",
     faq5a:
-      "Nein. Wir übernehmen den gesamten operativen Betrieb — von der Anzeigenerstellung bis zum Reporting. Ihre Aufgabe ist es, Feedback zu Leads zu geben und wichtige Entscheidungen zu genehmigen.",
-    faq6q: "Wie läuft die Kommunikation?",
+      "Mindestlaufzeit steht im Vertrag (3–6 Monate je nach Paket). Danach — monatlich kündbar mit 30 Tagen Vorlauf. Schaffen wir den Launch in 90 Tagen nicht — 50 % der Setup-Gebühr zurück.",
+    faq6q: "Wie viel Zeit muss ich investieren?",
     faq6a:
-      "Wir erstellen einen gemeinsamen Telegram-Chat, senden wöchentliche Berichte am Montag und beantworten dringende Fragen innerhalb einer Stunde während der Geschäftszeiten. Einmal im Monat — ein Strategiegespräch für die nächste Periode.",
-    faq7q: "Kann ich mit nur einer Leistung starten?",
+      "2–4 Stunden pro Woche zu Beginn: Briefing, Materialien, Freigaben. Nach dem Launch — 30 Minuten pro Woche für Berichte und Entscheidungen an heiklen Stellen.",
+    faq7q: "Schreiben Sie Texte oder gestalten Logos?",
     faq7a:
-      "Ja. Viele Kunden starten nur mit Werbung oder nur mit einem KI-Bot und fügen 1–2 Monate später mehr hinzu, sobald sie Ergebnisse sehen. Wir drängen keine Pakete auf.",
-    faq8q: "Unterzeichnen Sie NDAs?",
+      "Wir adaptieren bestehende Texte an die Seitenstruktur, schreiben aber kein originales Copywriting von Null. Logos und Branding ebenfalls nicht — wir arbeiten mit Ihren Materialien. Bei Bedarf empfehlen wir einen Partner.",
+    faq8q: "Gibt es einen Combo-Rabatt?",
     faq8a:
-      "Ja, bei Bedarf — wir unterzeichnen ein NDA vor Arbeitsbeginn. Alle Projektinformationen bleiben vertraulich.",
+      "Ja. Das 70× Growth-Machine-Combo gibt 20–25 % Rabatt gegenüber dem Einzelkauf. Je höher das Paket, desto höher der Rabatt.",
+    faq9q: "Arbeiten Sie mit meiner Branche?",
+    faq9a:
+      "Hauptfokus: E-Commerce, Dienstleistungen, Einzelhandel, Auto-Zubehör und Beauty. B2B SaaS — auf Anfrage. Kennen wir die Nische nicht, sagen wir das ehrlich, statt auf Ihre Kosten zu lernen.",
+    faq10q: "Wie nehmen Sie Zahlungen entgegen?",
+    faq10a:
+      "Banküberweisung, Stripe, PayPal Business. Setup — 100 % Vorkasse. Retainer — monatlich im Voraus.",
+    faq11q: "Mit welchen Währungen arbeiten Sie?",
+    faq11a:
+      "Hauptsächlich USD. EUR akzeptieren wir zum EZB-Kurs. RUB / UAH auf Anfrage.",
+    faq12q: "Unterzeichnen Sie einen Vertrag?",
+    faq12a:
+      "Ja, immer. Der Vertrag schützt beide Seiten: klarer Scope, Fristen, Sanktionen, Garantien. Ohne Vertrag arbeiten wir nicht.",
+    faq13q: "Unterzeichnen Sie NDAs?",
+    faq13a:
+      "Ja, wir unterzeichnen ein gegenseitiges Standard-NDA vor Arbeitsbeginn. Alle Projektinformationen bleiben vertraulich.",
 
     // Growth Simulator (levels-based with concrete descriptions)
     simEyebrow: "— 70× Wachstumssimulator",
@@ -290,9 +322,61 @@ const strings = {
     divTalk: "— Kontakt",
     divSimulator: "— modellieren Sie Ihr Wachstum",
     divCases: "— unsere Projekte",
+    divMachine: "— flagship",
 
     // Nav
     navCases: "Projekte",
+    navMachine: "Wachstumsmaschine",
+
+    // 70× Growth Machine combo
+    gmEyebrow: "— 70× / Flagship-Combo",
+    gmTitle1: "Eine",
+    gmTitle2: "Wachstums-",
+    gmTitle3: "maschine.",
+    gmLead:
+      "Werbung bringt Leads. Der KI-Bot fängt sie auf. Automatisierung führt sie durch den Funnel. Einzeln decken die Bausteine nur Teile des Wegs ab — zusammen decken sie ihn ganz und sparen 20–25 % Budget.",
+    gmRecommended: "Empfohlen",
+    gmTerm: "Mindestlaufzeit",
+    gmIncludes: "Was drin ist",
+    gmPriceLabel: "Preis individuell",
+    gmPriceHint:
+      "Wir kalkulieren passend zu Ihrem Fall. Die detaillierte Preisliste kommt per E-Mail — klicken Sie „Angebot anfordern\".",
+    gmCta: "Angebot anfordern",
+    gmGuaranteeTitle: "Launch-Garantie",
+    gmGuaranteeBody:
+      "Wir starten das gesamte System in 30 Tagen, optimieren in 90. Schaffen wir es nicht — 50 % der Setup-Gebühr zurück.",
+    gmDiscount: "−25 %",
+    gmDiscountLabel: "vs. einzeln gekauft",
+    gm1Tier: "LAUNCH",
+    gm1Title: "Start bei null",
+    gm1Sub: "Startup, neues Produkt, lokales Geschäft",
+    gm1Inc: [
+      "Landing-Website + Basis-SEO",
+      "Ads Starter (1 Plattform, 3 Kreative)",
+      "KI-Bot Starter (bis 30 Szenarien)",
+      "Lead Flow Mini (1 Schlüsselautomatisierung)",
+    ],
+    gm1Term: "Mind. 4 Monate",
+    gm2Tier: "GROWTH",
+    gm2Title: "Wachsendes Geschäft",
+    gm2Sub: "Laufendes Geschäft mit Bestandsumsatz",
+    gm2Inc: [
+      "Ads Growth (2–3 Plattformen, A/B, Retargeting)",
+      "KI-Bot Growth (bis 80 Szenarien, CRM)",
+      "Lead Flow Standard (3–5 Automatisierungen)",
+      "Business-Website — optional mit Rabatt",
+    ],
+    gm2Term: "Mind. 4 Monate",
+    gm3Tier: "SCALE",
+    gm3Title: "Skalierung",
+    gm3Sub: "Reifes Geschäft, bereit für ernsthaftes Wachstum",
+    gm3Inc: [
+      "Ads Scale (alle Plattformen, Look-alike, Strategie 2×/Monat)",
+      "KI-Bot Pro (unbegrenzte Szenarien + Custom Code)",
+      "Lead Flow Pro (Python + KI-Lead-Klassifikation)",
+      "E-Commerce-Website — optional mit Rabatt",
+    ],
+    gm3Term: "Mind. 6 Monate",
 
     // Cases section
     casesEyebrow: "— Projekte / 2026",
@@ -327,6 +411,15 @@ const strings = {
       "Nischenspezifisches Parsing",
       "Fertige Lead-Basis",
       "CRM-Integration",
+    ],
+    case3Title: "AutoMats",
+    case3Tag: "E-COM · ADS · BOT",
+    case3Summary:
+      "Hersteller von Auto-Fußmatten. Online-Shop mit Katalog und Checkout, KI-Assistent in Telegram, bezahlte Werbung auf Meta + Google. Fallstudie in Arbeit — Zahlen veröffentlichen wir nach Freigabe des Kunden.",
+    case3Metrics: [
+      "Online-Shop mit Katalog",
+      "KI-Assistent in Telegram",
+      "Bezahlte Werbung Meta + Google",
     ],
 
     // Intro
