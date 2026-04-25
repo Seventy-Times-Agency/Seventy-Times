@@ -96,7 +96,7 @@ const strings = {
     ],
     svc4Title: "Websites + SEO",
     svc4Tag: "Eine Website, die verkauft — nicht nur gut aussieht",
-    svc4Note: "Texte und Brand-Assets liefert der Kunde. Hosting und Domain bleiben auf Ihrem Konto.",
+    svc4Note: "Hosting und Domain bleiben auf Ihrem Konto. Texte schreiben wir; Branding auf Anfrage als Add-on.",
     svc4Inc: [
       "Responsives Design für alle Geräte, ohne Mobile-Bugs",
       "Basis-SEO: Sitemap, Meta, schema.org, Core Web Vitals",
@@ -155,10 +155,10 @@ const strings = {
     venBadgeRole: "KI-Beraterin · Online",
 
     // Principles — how we work (no "promises" / "guarantees" wording)
-    testEyebrow: "— Prinzipien",
-    testTitle1: "Wie",
-    testTitle2: "wir",
-    testTitle3: "arbeiten",
+    testEyebrow: "— Team / 70×",
+    testTitle1: "Unsere",
+    testTitle2: "leitenden",
+    testTitle3: "Prinzipien",
     testLead:
       "Keine lauten Versprechen, keine Standardgarantien. Vier Prinzipien, an denen wir uns bei jeder Projektentscheidung orientieren.",
     testReviewBtn: "Projekt besprechen",
@@ -201,13 +201,13 @@ const strings = {
       "Erste Leads aus Werbung — 3–7 Tage nach Launch. Der KI-Bot arbeitet ab Tag eins. Vollständige Optimierung — bis Ende des 90-Tage-Fensters.",
     faq5q: "Was, wenn ich aussteigen will?",
     faq5a:
-      "Mindestlaufzeit steht im Vertrag (3–6 Monate je nach Paket). Danach — monatlich kündbar mit 30 Tagen Vorlauf. Schaffen wir den Launch in 90 Tagen nicht — 50 % der Setup-Gebühr zurück.",
+      "Die Mindestlaufzeit steht im Vertrag (3–6 Monate je nach Paket). Ein vorzeitiger Ausstieg ist möglich. Eine Rückerstattung bereits gezahlter Beträge wird jedoch individuell besprochen — die finale Entscheidung trifft unser Team und hängt davon ab, wie viel Zeit und Geld bereits ins Projekt geflossen ist und aus welchem Grund der Kunde vorzeitig aussteigt. Die 90-Tage-Launch-Garantie (50 % Setup zurück, falls wir den Launch verpassen) ist davon getrennt und bleibt in jedem Fall bestehen.",
     faq6q: "Wie viel Zeit muss ich investieren?",
     faq6a:
       "2–4 Stunden pro Woche zu Beginn: Briefing, Materialien, Freigaben. Nach dem Launch — 30 Minuten pro Woche für Berichte und Entscheidungen an heiklen Stellen.",
     faq7q: "Schreiben Sie Texte oder gestalten Logos?",
     faq7a:
-      "Wir adaptieren bestehende Texte an die Seitenstruktur, schreiben aber kein originales Copywriting von Null. Logos und Branding ebenfalls nicht — wir arbeiten mit Ihren Materialien. Bei Bedarf empfehlen wir einen Partner.",
+      "Website-Texte schreiben wir selbst — das ist Teil der Arbeit. Wenn Sie bereits fertige Texte haben oder bestimmte Brand-Formulierungen wünschen, senden Sie sie uns, damit der Text genau so klingt, wie geplant. Logo und Basis-Identität können wir bei Bedarf ebenfalls erstellen — wird als separater Add-on besprochen.",
     faq8q: "Gibt es einen Combo-Rabatt?",
     faq8a:
       "Ja. Das 70× Growth-Machine-Combo gibt 20–25 % Rabatt gegenüber dem Einzelkauf. Je höher das Paket, desto höher der Rabatt.",
@@ -216,10 +216,10 @@ const strings = {
       "Hauptfokus: E-Commerce, Dienstleistungen, Einzelhandel, Auto-Zubehör und Beauty. B2B SaaS — auf Anfrage. Kennen wir die Nische nicht, sagen wir das ehrlich, statt auf Ihre Kosten zu lernen.",
     faq10q: "Wie nehmen Sie Zahlungen entgegen?",
     faq10a:
-      "Banküberweisung, Stripe, PayPal Business. Setup — 100 % Vorkasse. Retainer — monatlich im Voraus.",
+      "Wir sind flexibel beim Zahlungsformat — Banküberweisung, Krypto, landesinterne Überweisungen und weitere bequeme Optionen. Den konkreten Weg wählen wir gemeinsam, abhängig davon, wo Sie sind und was für Sie am einfachsten ist. Setup wird im Voraus bezahlt, der Retainer monatlich im Voraus.",
     faq11q: "Mit welchen Währungen arbeiten Sie?",
     faq11a:
-      "Hauptsächlich USD. EUR akzeptieren wir zum EZB-Kurs. RUB / UAH auf Anfrage.",
+      "Hauptwährung sind US-Dollar. Eine Zahlung in Euro ist ebenfalls möglich (aktueller Kurs). Alles andere — wird im Gespräch individuell geklärt.",
     faq12q: "Unterzeichnen Sie einen Vertrag?",
     faq12a:
       "Ja, immer. Der Vertrag schützt beide Seiten: klarer Scope, Fristen, Sanktionen, Garantien. Ohne Vertrag arbeiten wir nicht.",

@@ -96,7 +96,7 @@ const strings = {
     ],
     svc4Title: "Sites + SEO",
     svc4Tag: "A site that sells — not just looks pretty",
-    svc4Note: "Copy and brand assets are on you. Hosting and domain stay on your account.",
+    svc4Note: "Hosting and domain stay on your account. Copy is on us; branding available as an add-on on request.",
     svc4Inc: [
       "Responsive design across all devices, no bugs on mobile",
       "Baseline SEO: sitemap, meta, schema.org, Core Web Vitals",
@@ -155,10 +155,10 @@ const strings = {
     venBadgeRole: "AI consultant · Online",
 
     // Principles — how we work (no "promises" / "guarantees" wording)
-    testEyebrow: "— Principles",
-    testTitle1: "How",
-    testTitle2: "we",
-    testTitle3: "work",
+    testEyebrow: "— Team / 70×",
+    testTitle1: "Our",
+    testTitle2: "guiding",
+    testTitle3: "principles",
     testLead:
       "No loud promises, no template guarantees. Four principles we actually rely on when making decisions on a project.",
     testReviewBtn: "Discuss a project",
@@ -201,13 +201,13 @@ const strings = {
       "First leads from ads — 3–7 days after launch. The AI bot works from day one. Full system optimisation — by the end of 90 days.",
     faq5q: "What if I want to leave?",
     faq5a:
-      "Minimum term is in the contract (3–6 months depending on the package). After that — month-to-month with 30 days' notice. If we haven't launched the full system within 90 days — 50% of the setup fee comes back.",
+      "The minimum term is in the contract (3–6 months depending on the package). Yes, you can leave earlier. But a refund of fees already paid is discussed individually — the final call stays with us and depends on how much time and money have already been put into the project and the reason for the early exit. The 90-day launch guarantee (50% setup back if we miss the launch) is a separate commitment and stands no matter what.",
     faq6q: "How much time do I have to spend?",
     faq6a:
       "2–4 hours per week at the start: briefing, materials, approvals. After launch — 30 minutes per week for reports and decisions on edge cases.",
     faq7q: "Do you write copy or design logos?",
     faq7a:
-      "We adapt existing copy to the site structure, but don't write original copywriting from scratch. Logos and branding aren't on us either — we work from your existing materials. If you need someone — we can recommend a partner.",
+      "We write site copy ourselves — it's part of the build. If you already have ready copy or need specific brand wording, send it our way so the text reads exactly the way you want. Logos and basic brand identity — we can produce them too if you need; handled separately as an add-on.",
     faq8q: "Is there a discount for the bundle?",
     faq8a:
       "Yes. The 70× Growth Machine combo gives a 20–25% discount versus buying services standalone. The higher the tier — the bigger the discount.",
@@ -216,10 +216,10 @@ const strings = {
       "Primary focus: e-commerce, services, retail, auto accessories and beauty. B2B SaaS — case by case. If we don't know your niche, we'll say so honestly instead of learning on your dime.",
     faq10q: "How do you accept payment?",
     faq10a:
-      "Bank transfer, Stripe, PayPal Business. Setup — 100% upfront. Retainer — monthly in advance.",
+      "We're flexible on payment format — bank transfer, crypto, country-local transfers and a few other convenient options. We pick the specific method together based on where you are and what's easiest for you. Setup is paid upfront, the retainer is paid monthly in advance.",
     faq11q: "What currencies do you work with?",
     faq11a:
-      "Primary — USD. We accept EUR at the ECB rate. RUB / UAH on request.",
+      "Our primary currency is US dollars. Euros are also accepted at the current rate. Anything else — handled individually when we talk.",
     faq12q: "Do you sign a contract?",
     faq12a:
       "Yes, always. The contract protects both sides: clear scope, deadlines, penalties, guarantees. We don't work without one.",

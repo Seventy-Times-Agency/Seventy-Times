@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   isolation: isolate;
-  padding: 88px 48px 56px;
+  padding: 120px 48px 80px;
   max-width: var(--container);
   margin: 0 auto;
   /* Safety net: keep the giant background wordmark and any oversized
@@ -97,7 +97,9 @@
 /* Huge editorial title ──────────────────────────────────── */
 .titleBlock {
   text-align: center;
-  margin-bottom: 64px;
+  /* Generous spacing below the headline so the CTA buttons in the
+     grid below never visually butt against the title. */
+  margin-bottom: 96px;
   max-width: 100%;
 }
 
@@ -231,8 +233,8 @@
 
 /* Stats strip ───────────────────────────────────────────── */
 .stats {
-  margin-top: 64px;
-  padding-top: 32px;
+  margin-top: 88px;
+  padding-top: 36px;
   border-top: 1px solid var(--line);
   display: grid;
   grid-template-columns: repeat(4, 1fr);

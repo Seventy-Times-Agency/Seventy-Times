@@ -1,7 +1,7 @@
 .section {
   position: relative;
   isolation: isolate;
-  padding: 72px 48px 56px;
+  padding: 80px 48px 64px;
   max-width: var(--container);
   margin: 0 auto;
 }
@@ -11,8 +11,8 @@
   grid-template-columns: 1fr 1fr;
   gap: 48px;
   align-items: end;
-  margin-bottom: 64px;
-  padding-bottom: 36px;
+  margin-bottom: 56px;
+  padding-bottom: 32px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -51,46 +51,45 @@
   max-width: 420px;
 }
 
+/* ── Card grid — always four equal compact cards on a single row ──
+   Cards never grow on click. The expanded detail copy lives in
+   .detailsPanel below the grid, so the four cards stay visible no
+   matter which one is active. */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 18px;
   align-items: stretch;
 }
 
-/* ── Editorial numbered card ───────────────────────────────
-   Card is a flex column. Inside, the body grows to fill
-   available space and the toggle row sticks to the bottom via
-   margin-top:auto. That keeps all four cards visually aligned
-   regardless of which ones carry an optional `.note` pill.
-*/
 .card {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 28px 24px 22px;
+  min-height: 280px;
+  padding: 22px 22px 18px;
   border-radius: var(--radius-lg);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0.005)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005)),
     var(--surface);
   border: 1px solid var(--line);
   cursor: pointer;
   isolation: isolate;
   transition:
-    transform 0.4s var(--ease),
+    transform 0.35s var(--ease),
     border-color 0.3s ease,
+    background 0.3s ease,
     box-shadow 0.3s ease;
 }
 
-/* Mouse-tracked highlight (sits below content via z-index) */
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   background: radial-gradient(
-    420px circle at var(--mx, 50%) var(--my, 0%),
+    360px circle at var(--mx, 50%) var(--my, 0%),
     rgba(255, 255, 255, 0.06),
     transparent 50%
   );
@@ -101,79 +100,79 @@
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: var(--line-hi);
-  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 24px 60px -36px rgba(0, 0, 0, 0.55);
 }
 
 .card:hover::before {
   opacity: 1;
 }
 
-.cardOpen {
-  border-color: var(--line-hi);
+.cardActive {
+  border-color: var(--accent);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.005)),
+    linear-gradient(180deg, rgba(200, 212, 222, 0.05), rgba(200, 212, 222, 0.01)),
     var(--surface-2);
-  box-shadow: var(--shadow-card);
+  box-shadow:
+    0 0 0 1px rgba(200, 212, 222, 0.08) inset,
+    0 24px 60px -36px rgba(200, 212, 222, 0.18);
 }
 
-/* Tech-accent corner brackets — tiny, stable pseudo-element pair
-   in opposite corners. Replaces the fragile border-image trick
-   that rendered unevenly in the previous pass. */
+/* Tech accent corner brackets */
 .cornerTL,
 .cornerBR {
   position: absolute;
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   pointer-events: none;
   border-color: var(--line-strong);
   border-style: solid;
   border-width: 0;
   transition: border-color 0.3s ease;
 }
-
 .cornerTL {
-  top: 12px;
-  left: 12px;
+  top: 10px;
+  left: 10px;
   border-top-width: 1px;
   border-left-width: 1px;
 }
-
 .cornerBR {
-  bottom: 12px;
-  right: 12px;
+  bottom: 10px;
+  right: 10px;
   border-bottom-width: 1px;
   border-right-width: 1px;
 }
-
 .card:hover .cornerTL,
 .card:hover .cornerBR,
-.cardOpen .cornerTL,
-.cardOpen .cornerBR {
+.cardActive .cornerTL,
+.cardActive .cornerBR {
   border-color: var(--accent);
 }
 
-/* ── Card head — index + icon ─────────────────────────────── */
-.number {
+/* ── Card head ──────────────────────────────────────────── */
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.cardNum {
   font-family: ui-monospace, "SF Mono", "Roboto Mono", monospace;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.22em;
   color: var(--text-dim);
   font-variant-numeric: tabular-nums;
-  margin-bottom: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .iconBox {
   display: inline-grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   border: 1px solid var(--line);
   background: rgba(200, 212, 222, 0.025);
   color: var(--accent);
@@ -181,121 +180,65 @@
 }
 
 .iconSvg {
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   display: block;
 }
 
 .card:hover .iconBox,
-.cardOpen .iconBox {
+.cardActive .iconBox {
   border-color: var(--accent);
   background: rgba(200, 212, 222, 0.06);
   color: var(--accent-strong);
 }
 
-/* ── Body — grows to fill, keeps toggle row pinned to bottom ── */
-.body {
+/* ── Body — title + tagline + optional note ─────────────── */
+.cardBody {
   display: flex;
   flex-direction: column;
   flex: 1;
   min-width: 0;
+  gap: 8px;
 }
 
 .cardTitle {
-  font-size: clamp(20px, 1.7vw, 24px);
+  font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 800;
   letter-spacing: -0.025em;
-  line-height: 1.1;
-  margin-bottom: 12px;
+  line-height: 1.15;
   color: var(--white);
 }
 
 .tagline {
   color: var(--text-muted);
-  font-size: 13.5px;
-  line-height: 1.55;
-  margin-bottom: 16px;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .note {
   align-self: flex-start;
-  font-size: 10px;
+  margin-top: 4px;
+  font-size: 9.5px;
   color: var(--text-dim);
   border: 1px solid var(--line);
-  padding: 4px 10px;
+  padding: 4px 9px;
   border-radius: var(--radius-pill);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-weight: 700;
-  margin-bottom: 4px;
 }
 
-.details {
-  overflow: hidden;
-}
-
-.detailsInner {
-  padding-top: 8px;
-}
-
-.divider {
-  height: 1px;
-  background: var(--line);
-  margin: 16px 0;
-}
-
-.listLabel {
-  font-size: var(--fs-mini);
-  font-weight: 800;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  margin-bottom: 12px;
-}
-
-.list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-}
-
-.listItem {
-  display: flex;
-  gap: 10px;
-  font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.55;
-}
-
-.muted {
-  color: var(--text-dim);
-}
-
-.bullet {
-  color: var(--white);
-  flex-shrink: 0;
-  margin-top: 1px;
-  font-weight: 800;
-  width: 14px;
-  display: inline-block;
-}
-
-.bulletMuted {
-  color: var(--text-dim);
-}
-
-/* Toggle pinned to the bottom — guarantees aligned footers across
-   cards regardless of how much copy lives above. */
+/* Toggle pinned to the bottom of every card so the four cards line
+   up perfectly even when one of them carries a .note pill. */
 .toggleRow {
   margin-top: auto;
-  padding-top: 18px;
+  padding-top: 16px;
   border-top: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  font-size: var(--fs-mini);
+  font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.22em;
@@ -305,27 +248,156 @@
 .toggleArrow {
   display: inline-grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   border: 1px solid var(--line-strong);
   border-radius: 50%;
+  font-size: 11px;
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s var(--ease), border-color 0.2s ease;
 }
 
 .card:hover .toggleArrow,
-.cardOpen .toggleArrow {
+.cardActive .toggleArrow {
   background: var(--accent);
   color: var(--black);
   border-color: var(--accent);
 }
 
-.cardOpen .toggleArrow {
+.cardActive .toggleArrow {
   transform: rotate(180deg);
 }
 
+/* ── Details panel — single shared block under the grid ─── */
+.detailsPanel {
+  overflow: hidden;
+}
+
+.detailsInner {
+  margin-top: 22px;
+  padding: 32px 36px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line-strong);
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 0%, rgba(200, 212, 222, 0.05), transparent 60%),
+    var(--surface);
+  position: relative;
+}
+
+.detailsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 22px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.detailsLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detailsKicker {
+  font-family: ui-monospace, "SF Mono", "Roboto Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.detailsTitle {
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--white);
+}
+
+.detailsClose {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.detailsClose:hover {
+  color: var(--text);
+  border-color: var(--line-hi);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.detailsCols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+}
+
+.detailsCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detailsColLabel {
+  font-size: var(--fs-mini);
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
+.detailsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.detailsItem {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.detailsItemMuted {
+  color: var(--text-muted);
+}
+
+.detailsBullet {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-weight: 800;
+  width: 14px;
+  display: inline-block;
+}
+
+.detailsBulletMuted {
+  color: var(--text-dim);
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .detailsCols {
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
 }
 
@@ -337,8 +409,8 @@
     grid-template-columns: 1fr;
     gap: 20px;
     align-items: start;
-    margin-bottom: 40px;
-    padding-bottom: 28px;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
   }
   .title {
     font-size: clamp(32px, 8vw, 56px);
@@ -349,15 +421,18 @@
   }
   .grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
   .card {
-    padding: 24px 22px 22px;
+    min-height: auto;
+    padding: 22px 20px 18px;
   }
-  .cardTitle {
-    font-size: 22px;
+  .detailsInner {
+    padding: 24px 22px;
   }
-  .number {
-    margin-bottom: 22px;
+  .detailsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }

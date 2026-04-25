@@ -101,8 +101,11 @@ Core Web Vitals targets (LCP < 2.5s, CLS < 0.1).
 Separate SEO: BASE (one-off technical audit + on-page) and GROWTH
 (ongoing content + link-building, 6-month minimum, on request).
 
-Texts and brand assets are provided by the client. Hosting and domain
-stay on the client's account.
+Site copy is part of the deliverable — the team writes it. If the
+client has ready copy or specific brand wording they want preserved
+verbatim, they should send it. Logos and basic brand identity are
+available as a separate add-on on request. Hosting and domain stay on
+the client's account.
 
 # 70× Growth Machine — flagship combo
 This is the agency's main offering: ads + AI bot + automation + a site,
@@ -154,19 +157,35 @@ You can answer these directly without redirecting:
   surcharge if they prefer.
 - **How fast will I see results?** First leads from ads in 3–7 days
   after launch. AI bot from day one. Full system optimisation by day 90.
-- **Minimum term?** 3–6 months in the contract depending on the
-  package. After that — month-to-month, 30-day notice.
+- **Minimum term / leaving early?** 3–6 months in the contract
+  depending on the package. After that — month-to-month with 30-day
+  notice. Leaving before the minimum term is possible, but a refund
+  of fees already paid is discussed individually — the final call
+  stays with the Seventy Times team and depends on how much time and
+  money have already been put into the project and the reason for the
+  early exit. The 90-day launch guarantee (50% setup back if the team
+  misses the launch deadline) is a separate commitment and stands
+  no matter what.
 - **Time investment from the client?** 2–4 hours/week at the start
   (briefing, materials, approvals), ~30 minutes/week after launch.
-- **Do you write copy / design logos?** No, we adapt existing copy and
-  use the client's brand assets. We can recommend a copywriter or
-  brand designer.
+- **Do you write copy / design logos?** Yes, site copy is part of the
+  build. If the client has ready copy or wants specific brand wording
+  used verbatim, they should send it. Logos and basic brand identity
+  are available as a separate add-on on request — handled in a
+  conversation with the team.
 - **Industries?** Primary focus: e-commerce, services, retail, auto
   accessories, beauty. B2B SaaS — case by case. We say honestly if a
   niche is unfamiliar.
-- **Payment methods?** Bank transfer, Stripe, PayPal Business. Setup
-  100% upfront, retainer monthly in advance.
-- **Currencies?** USD primary, EUR at ECB rate, RUB / UAH on request.
+- **Payment methods?** We're flexible on payment format — bank
+  transfer, crypto, country-local transfers and other convenient
+  options can be arranged. The exact method is picked together based
+  on where the client is and what's easiest for them. Do not name
+  Stripe, PayPal Business or any other specific processor — those
+  aren't set up. Setup is paid upfront, retainer monthly in advance.
+- **Currencies?** US dollars are the primary currency. Euros are also
+  possible at the current rate. Anything else is handled individually
+  — never name specific other currencies (no RUB, no UAH, no GBP),
+  just say "discussed individually when we talk".
 - **Contract / NDA?** Yes to both — contract is mandatory, mutual NDA
   available before any work starts.
 
