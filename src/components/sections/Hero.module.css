@@ -4,6 +4,9 @@
   padding: 88px 48px 56px;
   max-width: var(--container);
   margin: 0 auto;
+  /* Safety net: keep the giant background wordmark and any oversized
+     glyph from spilling into the page gutter on narrow viewports. */
+  overflow: hidden;
 }
 
 .heroWordmark {
@@ -95,19 +98,28 @@
 .titleBlock {
   text-align: center;
   margin-bottom: 40px;
+  max-width: 100%;
 }
 
 .title {
-  font-size: var(--fs-display);
+  /* Capped tighter than --fs-display because the longest row
+     ("one growth machine." in EN, "eine Wachstumsmaschine." in DE)
+     overflowed the container at the global display size. 96 px
+     keeps the visual punch while leaving margin in 1180 px container. */
+  font-size: clamp(38px, 5.6vw, 96px);
   font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
   text-transform: none;
   color: var(--white);
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
 }
 
 .titleRow {
   display: block;
+  max-width: 100%;
 }
 
 .titleOutline {
