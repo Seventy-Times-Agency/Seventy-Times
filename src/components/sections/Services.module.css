@@ -11,15 +11,15 @@
   grid-template-columns: 1fr 1fr;
   gap: 48px;
   align-items: end;
-  margin-bottom: 80px;
-  padding-bottom: 40px;
+  margin-bottom: 64px;
+  padding-bottom: 36px;
   border-bottom: 1px solid var(--line);
 }
 
 .headerLeft {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 22px;
 }
 
 .title {
@@ -55,84 +55,114 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  align-items: stretch;
 }
 
-/* Editorial numbered card ────────────────────────────────── */
+/* ── Editorial numbered card ───────────────────────────────
+   Card is a flex column. Inside, the body grows to fill
+   available space and the toggle row sticks to the bottom via
+   margin-top:auto. That keeps all four cards visually aligned
+   regardless of which ones carry an optional `.note` pill.
+*/
 .card {
   position: relative;
-  padding: 30px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 28px 24px 22px;
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.018);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0.005)),
+    var(--surface);
   border: 1px solid var(--line);
   cursor: pointer;
-  overflow: hidden;
+  isolation: isolate;
   transition:
     transform 0.4s var(--ease),
     border-color 0.3s ease,
-    background 0.3s ease;
+    box-shadow 0.3s ease;
 }
 
-/* Mouse-tracked highlight */
+/* Mouse-tracked highlight (sits below content via z-index) */
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background: radial-gradient(
-    500px circle at var(--mx, 50%) var(--my, 0%),
+    420px circle at var(--mx, 50%) var(--my, 0%),
     rgba(255, 255, 255, 0.06),
-    transparent 40%
+    transparent 50%
   );
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
-}
-
-/* Tech-accent corner brackets — appear stronger on hover */
-.card::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  inset: 12px;
-  border: 1px solid transparent;
-  border-image: linear-gradient(
-      135deg,
-      var(--accent) 0%,
-      transparent 14%,
-      transparent 86%,
-      var(--accent) 100%
-    ) 1;
-  opacity: 0.18;
-  transition: opacity 0.3s ease;
+  z-index: -1;
 }
 
 .card:hover {
   transform: translateY(-4px);
   border-color: var(--line-hi);
-  background: rgba(255, 255, 255, 0.035);
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.6);
 }
 
 .card:hover::before {
   opacity: 1;
 }
 
-.card:hover::after {
-  opacity: 0.7;
-}
-
 .cardOpen {
   border-color: var(--line-hi);
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.005)),
+    var(--surface-2);
   box-shadow: var(--shadow-card);
 }
 
+/* Tech-accent corner brackets — tiny, stable pseudo-element pair
+   in opposite corners. Replaces the fragile border-image trick
+   that rendered unevenly in the previous pass. */
+.cornerTL,
+.cornerBR {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  border-color: var(--line-strong);
+  border-style: solid;
+  border-width: 0;
+  transition: border-color 0.3s ease;
+}
+
+.cornerTL {
+  top: 12px;
+  left: 12px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.cornerBR {
+  bottom: 12px;
+  right: 12px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+.card:hover .cornerTL,
+.card:hover .cornerBR,
+.cardOpen .cornerTL,
+.cardOpen .cornerBR {
+  border-color: var(--accent);
+}
+
+/* ── Card head — index + icon ─────────────────────────────── */
 .number {
   font-family: ui-monospace, "SF Mono", "Roboto Mono", monospace;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.22em;
   color: var(--text-dim);
   font-variant-numeric: tabular-nums;
-  margin-bottom: 32px;
+  margin-bottom: 26px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -141,9 +171,9 @@
 .iconBox {
   display: inline-grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   border: 1px solid var(--line);
   background: rgba(200, 212, 222, 0.025);
   color: var(--accent);
@@ -151,8 +181,8 @@
 }
 
 .iconSvg {
-  width: 34px;
-  height: 34px;
+  width: 28px;
+  height: 28px;
   display: block;
 }
 
@@ -163,26 +193,33 @@
   color: var(--accent-strong);
 }
 
+/* ── Body — grows to fill, keeps toggle row pinned to bottom ── */
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
 .cardTitle {
-  font-size: 28px;
+  font-size: clamp(20px, 1.7vw, 24px);
   font-weight: 800;
   letter-spacing: -0.025em;
   line-height: 1.1;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
+  color: var(--white);
 }
 
 .tagline {
   color: var(--text-muted);
-  font-size: 14px;
-  line-height: 1.6;
-  margin-bottom: 24px;
-  max-width: 30ch;
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin-bottom: 16px;
 }
 
 .note {
-  display: inline-block;
-  margin-bottom: 18px;
-  font-size: 10.5px;
+  align-self: flex-start;
+  font-size: 10px;
   color: var(--text-dim);
   border: 1px solid var(--line);
   padding: 4px 10px;
@@ -190,6 +227,7 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-weight: 700;
+  margin-bottom: 4px;
 }
 
 .details {
@@ -197,13 +235,13 @@
 }
 
 .detailsInner {
-  padding-top: 10px;
+  padding-top: 8px;
 }
 
 .divider {
   height: 1px;
   background: var(--line);
-  margin: 18px 0 18px;
+  margin: 16px 0;
 }
 
 .listLabel {
@@ -212,20 +250,20 @@
   color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 0.22em;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
 }
 
 .listItem {
   display: flex;
-  gap: 12px;
-  font-size: 13.5px;
+  gap: 10px;
+  font-size: 13px;
   color: var(--text-muted);
   line-height: 1.55;
 }
@@ -247,13 +285,16 @@
   color: var(--text-dim);
 }
 
+/* Toggle pinned to the bottom — guarantees aligned footers across
+   cards regardless of how much copy lives above. */
 .toggleRow {
-  margin-top: 28px;
-  padding-top: 22px;
+  margin-top: auto;
+  padding-top: 18px;
   border-top: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
   font-size: var(--fs-mini);
   font-weight: 800;
   text-transform: uppercase;
@@ -264,11 +305,11 @@
 .toggleArrow {
   display: inline-grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border: 1px solid var(--line-strong);
   border-radius: 50%;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s var(--ease);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s var(--ease), border-color 0.2s ease;
 }
 
 .card:hover .toggleArrow,
@@ -284,7 +325,7 @@
 
 @media (max-width: 1100px) {
   .grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -296,7 +337,7 @@
     grid-template-columns: 1fr;
     gap: 20px;
     align-items: start;
-    margin-bottom: 44px;
+    margin-bottom: 40px;
     padding-bottom: 28px;
   }
   .title {
@@ -311,12 +352,12 @@
     gap: 16px;
   }
   .card {
-    padding: 26px 22px 24px;
+    padding: 24px 22px 22px;
   }
   .cardTitle {
     font-size: 22px;
   }
   .number {
-    margin-bottom: 32px;
+    margin-bottom: 22px;
   }
 }

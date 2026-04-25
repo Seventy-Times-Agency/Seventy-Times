@@ -38,7 +38,7 @@ const strings = {
     svcTitle2: "wir",
     svcTitle3: "tun",
     svcLead:
-      "Drei Säulen, die als ein einziger Wachstumsmotor funktionieren. Klicken Sie auf eine Karte für Details.",
+      "Vier Säulen, die als ein einziger Wachstumsmotor funktionieren. Klicken Sie auf eine Karte für die Details.",
     svcIncludes: "Inklusive",
     svcAddons: "+ Optionale Extras",
     svcExpand: "Details",
@@ -154,27 +154,27 @@ const strings = {
     venBadgeName: "Venesa",
     venBadgeRole: "KI-Beraterin · Online",
 
-    // Principles
-    testEyebrow: "— Prinzipien / Versprechen",
-    testTitle1: "Was",
+    // Principles — how we work (no "promises" / "guarantees" wording)
+    testEyebrow: "— Prinzipien",
+    testTitle1: "Wie",
     testTitle2: "wir",
-    testTitle3: "versprechen",
+    testTitle3: "arbeiten",
     testLead:
-      "Wir sind ein neues Studio und posten keine erfundenen Bewertungen. Stattdessen — vier Prinzipien, nach denen wir wirklich arbeiten.",
-    testReviewBtn: "Erster Kunde werden",
+      "Keine lauten Versprechen, keine Standardgarantien. Vier Prinzipien, an denen wir uns bei jeder Projektentscheidung orientieren.",
+    testReviewBtn: "Projekt besprechen",
     testPrev: "Vorheriges Prinzip",
     testNext: "Nächstes Prinzip",
     prin1Title: "Klein starten, dann skalieren",
-    prin1Body: "Wir starten mit einer Leistung, zeigen Ergebnisse in 2–3 Wochen, dann erweitern wir. Keine langen Verträge — Sie können jederzeit stoppen.",
+    prin1Body: "Wir starten mit einer Leistung, zeigen ein Ergebnis in 2–3 Wochen und erweitern erst danach. Keine langen Verträge — Sie können jederzeit pausieren.",
     prin1Badge: "01",
     prin2Title: "Zahlen jeden Montag",
-    prin2Body: "Wöchentlicher Bericht mit klaren KPIs. Sie sehen was funktioniert hat, was nicht, und was wir in der nächsten Woche ändern. Kein Nebel, keine Floskeln.",
+    prin2Body: "Wöchentlicher Bericht mit klaren KPIs: was funktioniert hat, was nicht, was wir nächste Woche ändern. Kein Nebel, keine Floskeln, keine geschlossenen Dashboards.",
     prin2Badge: "02",
-    prin3Title: "Keine garantierten Wunder",
-    prin3Body: "Wir versprechen kein '100× in einer Woche' — das wäre gelogen. Wir versprechen messbaren Fortschritt und ehrliche Iteration. Ergebnisse hängen von Nische, Budget und Markt ab.",
+    prin3Title: "Ehrlich zum Ergebnis",
+    prin3Body: "Wir verkaufen kein '100× in einer Woche' — solche Zahlen gibt es im Marketing nicht. Wir arbeiten an messbarem Fortschritt — bei jeder Iteration sehen Sie, in welche Richtung sich die Projekt-Ökonomie bewegt.",
     prin3Badge: "03",
-    prin4Title: "Stopp-Loss eingebaut",
-    prin4Body: "Wenn der Ansatz nach 6–8 Wochen nicht funktioniert, sagen wir es als Erste. Ihr Budget bleibt Ihnen, unsere Ethik bleibt uns. Integrität vor Rechnung.",
+    prin4Title: "Stopppunkt standardmäßig",
+    prin4Body: "Wenn der Ansatz nach 6–8 Wochen kein Ergebnis bringt, sagen wir es als Erste. Das Budget bleibt bei Ihnen, die Reputation bei uns. Vertrauen wiegt mehr als eine Rechnung.",
     prin4Badge: "04",
 
     // FAQ

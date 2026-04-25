@@ -84,6 +84,9 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
   align-items: stretch;
+  /* Top padding leaves a clean gutter above the Recommended badge
+     so it never collides with the divider above. */
+  padding-top: 18px;
 }
 
 /* ── Card ───────────────────────────────────────────────── */
@@ -98,7 +101,9 @@
     var(--surface);
   border: 1px solid var(--line);
   isolation: isolate;
-  overflow: hidden;
+  /* No overflow:hidden — the "Recommended" badge sits at top:-12px
+     on the middle card and was getting clipped. Background gradient
+     is still bound by border-radius automatically. */
   transition:
     transform 0.4s var(--ease),
     border-color 0.3s ease,

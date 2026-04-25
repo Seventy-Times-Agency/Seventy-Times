@@ -1,11 +1,10 @@
 .wrap {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  max-width: 100vw;
+  inset: 0;
+  /* Fills the section box, NOT 100vw. Using 100vw + translateX(-50%)
+     was overflowing horizontally because vw includes the scrollbar
+     width while the body doesn't — that produced a site-wide left
+     shift on viewports with a vertical scrollbar visible. */
   overflow: hidden;
   pointer-events: none;
   z-index: -1;

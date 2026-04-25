@@ -144,6 +144,9 @@ function ServiceCard({
       }}
       aria-expanded={isOpen}
     >
+      <span className={styles.cornerTL} aria-hidden="true" />
+      <span className={styles.cornerBR} aria-hidden="true" />
+
       <div className={styles.number}>
         <span>/ {num}</span>
         {Icon && (
@@ -153,56 +156,58 @@ function ServiceCard({
         )}
       </div>
 
-      <h3 className={styles.cardTitle}>{service.title}</h3>
-      <p className={styles.tagline}>{service.tagline}</p>
-      {service.note && <span className={styles.note}>{service.note}</span>}
+      <div className={styles.body}>
+        <h3 className={styles.cardTitle}>{service.title}</h3>
+        <p className={styles.tagline}>{service.tagline}</p>
+        {service.note && <span className={styles.note}>{service.note}</span>}
 
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            key="content"
-            className={styles.details}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}
-          >
-            <div className={styles.detailsInner}>
-              <div className={styles.divider} />
-              <div className={styles.listLabel}>{t.svcIncludes}</div>
-              <ul className={styles.list}>
-                {service.includes.map((item) => (
-                  <li key={item} className={styles.listItem}>
-                    <span className={styles.bullet}>→</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className={styles.divider} />
-              <div className={styles.listLabel}>{t.svcAddons}</div>
-              <ul className={styles.list}>
-                {service.addons.map((item) => (
-                  <li
-                    key={item}
-                    className={`${styles.listItem} ${styles.muted}`}
-                  >
-                    <span className={`${styles.bullet} ${styles.bulletMuted}`}>
-                      +
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              key="content"
+              className={styles.details}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}
+            >
+              <div className={styles.detailsInner}>
+                <div className={styles.divider} />
+                <div className={styles.listLabel}>{t.svcIncludes}</div>
+                <ul className={styles.list}>
+                  {service.includes.map((item) => (
+                    <li key={item} className={styles.listItem}>
+                      <span className={styles.bullet}>→</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className={styles.divider} />
+                <div className={styles.listLabel}>{t.svcAddons}</div>
+                <ul className={styles.list}>
+                  {service.addons.map((item) => (
+                    <li
+                      key={item}
+                      className={`${styles.listItem} ${styles.muted}`}
+                    >
+                      <span className={`${styles.bullet} ${styles.bulletMuted}`}>
+                        +
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-      <div className={styles.toggleRow}>
-        <span>{isOpen ? t.svcCollapse : t.svcExpand}</span>
-        <span className={styles.toggleArrow} aria-hidden="true">
-          ↓
-        </span>
+        <div className={styles.toggleRow}>
+          <span>{isOpen ? t.svcCollapse : t.svcExpand}</span>
+          <span className={styles.toggleArrow} aria-hidden="true">
+            ↓
+          </span>
+        </div>
       </div>
     </div>
   );

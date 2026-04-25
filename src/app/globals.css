@@ -70,6 +70,11 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  /* Reserve space for the scrollbar even on pages that don't need
+     to scroll — without this, `100vw` and document width disagree
+     on viewports where the OS shows a scrollbar, which produced a
+     site-wide left shift. */
+  scrollbar-gutter: stable;
 }
 
 body {

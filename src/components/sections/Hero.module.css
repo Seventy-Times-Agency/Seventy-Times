@@ -97,7 +97,7 @@
 /* Huge editorial title ──────────────────────────────────── */
 .titleBlock {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 64px;
   max-width: 100%;
 }
 
@@ -167,7 +167,9 @@
 
 .actionsRow {
   display: flex;
-  gap: 12px;
+  /* Generous horizontal gap so the magnetic-hover wobble on each
+     button can never bring them visually flush together. */
+  gap: 22px;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
