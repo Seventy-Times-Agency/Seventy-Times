@@ -38,6 +38,14 @@ export default function Services() {
       includes: t.svc3Inc,
       addons: t.svc3Add,
     },
+    {
+      key: "sites",
+      title: t.svc4Title,
+      tagline: t.svc4Tag,
+      note: t.svc4Note,
+      includes: t.svc4Inc,
+      addons: t.svc4Add,
+    },
   ];
 
   return (

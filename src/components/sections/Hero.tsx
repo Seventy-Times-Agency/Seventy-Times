@@ -27,46 +27,45 @@ const item: Variants = {
 export default function Hero() {
   const { t } = useT();
 
-  // Stats are visual rings; display values live in siteConfig so they
-  // stay in sync with other numeric mentions on the site.
-  // Each ring fills over ~2.5s with easeInOut so the digit visibly
-  // counts up. A 0.12s stagger gives a subtle L→R cascade.
-  const [goal, services, support, launch] = siteConfig.stats;
+  // Stats are visual rings; display values live in siteConfig.
+  // Ring 0 counts up to 30 (launch days), ring 1 stays static
+  // ("24/7" — no count-up since the value isn't a single number),
+  // ring 2 counts to 3 (platforms), ring 3 to 25% (combo savings).
+  const [launchDays, aiOn, platforms, comboBonus] = siteConfig.stats;
   const stats = [
     {
-      display: goal.value,
-      to: 3.5,
-      decimals: 1,
-      suffix: "×",
+      display: launchDays.value,
+      to: 30,
+      suffix: "",
       label: t.statGoal,
       fillPct: 100,
-      id: "goal",
+      id: "launch-days",
       delay: 0,
     },
     {
-      display: services.value,
-      to: 3,
-      suffix: "",
+      display: aiOn.value,
+      // No `to` — RingCounter renders the display value as static.
       label: t.statServices,
       fillPct: 100,
-      id: "services",
+      id: "ai-on",
       delay: 0.12,
     },
     {
-      display: support.value,
-      to: 24,
-      suffix: "/7",
+      display: platforms.value,
+      to: 3,
+      suffix: "",
       label: t.statSupport,
       fillPct: 100,
-      id: "support",
+      id: "platforms",
       delay: 0.24,
     },
     {
-      display: launch.value,
-      to: 2026,
+      display: comboBonus.value,
+      to: 25,
+      suffix: "%",
       label: t.statLaunch,
       fillPct: 100,
-      id: "launch",
+      id: "combo-bonus",
       delay: 0.36,
     },
   ];
@@ -131,7 +130,7 @@ export default function Hero() {
                 </a>
               </Magnetic>
               <Magnetic strength={0.3}>
-                <a href="#chat" className={styles.secondary}>
+                <a href="#growth-machine" className={styles.secondary}>
                   {t.heroCta2}
                 </a>
               </Magnetic>
@@ -149,7 +148,6 @@ export default function Hero() {
               display={s.display}
               to={s.to}
               suffix={s.suffix}
-              decimals={s.decimals}
               label={s.label}
               fillPct={s.fillPct}
               delay={s.delay}

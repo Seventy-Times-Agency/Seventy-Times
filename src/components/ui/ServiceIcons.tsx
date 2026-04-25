@@ -81,8 +81,36 @@ export function AiIcon({ className }: IconProps) {
   );
 }
 
+export function SiteIcon({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {/* Browser frame */}
+      <rect x="6" y="9" width="36" height="30" rx="3" />
+      <line x1="6" y1="17" x2="42" y2="17" />
+      {/* Window dots */}
+      <circle cx="11" cy="13" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="14.5" cy="13" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="18" cy="13" r="0.9" fill="currentColor" stroke="none" />
+      {/* Page bars suggesting content blocks */}
+      <line x1="12" y1="23" x2="28" y2="23" />
+      <line x1="12" y1="28" x2="36" y2="28" />
+      <line x1="12" y1="33" x2="22" y2="33" />
+    </svg>
+  );
+}
+
 export const SERVICE_ICONS: Record<string, (props: IconProps) => JSX.Element> = {
   targeting: TargetingIcon,
   automation: AutomationIcon,
   aibot: AiIcon,
+  sites: SiteIcon,
 };

@@ -124,9 +124,10 @@
 }
 
 .number {
-  font-size: var(--fs-mini);
+  font-family: ui-monospace, "SF Mono", "Roboto Mono", monospace;
+  font-size: 11.5px;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   color: var(--text-dim);
   font-variant-numeric: tabular-nums;
 }
@@ -176,9 +177,10 @@
 
 /* ── Body text ────────────────────────────────────────────── */
 .tag {
+  font-family: ui-monospace, "SF Mono", "Roboto Mono", monospace;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.28em;
   color: var(--accent);
   text-transform: uppercase;
   margin-top: 2px;

@@ -15,22 +15,22 @@ const strings = {
     navCloseMenu: "Close menu",
 
     // Hero meta
-    heroMeta1: "Ads · Automation · AI",
+    heroMeta1: "Marketing · AI · Automation",
     heroMeta2: "Accepting projects · 2026",
     heroMeta3: "USA → Worldwide",
-    heroTitle1: "We automate",
-    heroTitle2: "your",
-    heroTitle3: "business",
-    heroTitle4: "growth.",
+    heroTitle1: "Ads ×",
+    heroTitle2: "AI ×",
+    heroTitle3: "automation",
+    heroTitle4: "one growth machine.",
     heroSub:
-      "Seventy Times turns ads, automation, and AI into a steady flow of qualified clients. From first call to first leads — 2–3 weeks. No long contracts, weekly numbers, no fluff.",
-    heroCta1: "Book a free strategy call",
-    heroCta2: "Talk to Venesa",
-    heroHint: "Response in 10 seconds · No obligations",
-    statGoal: "Growth potential",
-    statServices: "Core services",
-    statSupport: "AI always on",
-    statLaunch: "Est.",
+      "Launched in 30 days, optimised in 90. Ads bring leads, AI catches them in chat, automation walks them through the funnel. Not three services bundled — one working system.",
+    heroCta1: "Get a quote",
+    heroCta2: "See the packages",
+    heroHint: "Reply in 24 hours · No obligations",
+    statGoal: "Launch (days)",
+    statServices: "AI always on",
+    statSupport: "Platforms",
+    statLaunch: "Combo effect",
 
     // Services
     svcEyebrow: "— Services / 2026",
@@ -93,6 +93,23 @@ const strings = {
       "CRM integration",
       "Sales funnel",
       "Post-launch support and updates",
+    ],
+    svc4Title: "Sites + SEO",
+    svc4Tag: "A site that sells — not just looks pretty",
+    svc4Note: "Copy and brand assets are on you. Hosting and domain stay on your account.",
+    svc4Inc: [
+      "Responsive design across all devices, no bugs on mobile",
+      "Baseline SEO: sitemap, meta, schema.org, Core Web Vitals",
+      "Google Analytics + the pixels you need, wired up",
+      "30 days of guaranteed fixes after launch",
+      "Funnel ready for the ads and the AI bot — works as one system",
+    ],
+    svc4Add: [
+      "Additional language on the site",
+      "Professional photography for the project",
+      "Advanced animation and interactivity",
+      "Multi-currency / multi-region for e-commerce",
+      "Maintenance retainer after launch",
     ],
 
     // Process
@@ -172,28 +189,43 @@ const strings = {
     faqStillCta: "Ask us directly →",
     faq1q: "How much do your services cost?",
     faq1a:
-      "We don't quote prices upfront — we discuss them after the briefing to offer a range tailored to your specific task. Typical projects start from around $1,000/month, but the exact figure depends on scope and goals.",
-    faq2q: "When will I see results?",
+      "Pricing is built per case — there's no point quoting a fixed number before we know your project. After a short briefing call we send a detailed pricelist by email with a breakdown of services and combo packages. Minimum thresholds we mention up front, so neither side wastes time.",
+    faq2q: "Who pays for the ad budget?",
     faq2a:
-      "For ads — first leads typically come within 3–7 days of launch. By week 2–3 it's clear which ads pull and which don't — we scale the winners. Automation and AI bots pay off from day one. By end of month one you have a working strategy, not guesses.",
-    faq3q: "Do you work with my industry?",
+      "The client. The Meta / Google / TikTok ad account stays on your name, you pay the platform directly. We only set up and optimise. It's more transparent and the accounts stay yours even if we part ways.",
+    faq3q: "Who pays for AI tokens and SaaS subscriptions?",
     faq3a:
-      "Our methodology is built for e-commerce, services, transportation, fashion retail, auto accessories and beauty industry. If your niche isn't listed — reach out anyway, we'll discuss how we can help.",
-    faq4q: "What if the ads don't work?",
+      "By default — the client. OpenAI/Claude API keys and Make/Zapier subscriptions are created on your account, you see the spend directly. Want it fully managed? We invoice usage with a 30% management fee.",
+    faq4q: "How fast will I see results?",
     faq4a:
-      "We don't promise '100% leads in a week' — that would be empty words. But we work on transparent KPIs, show numbers weekly, and if a campaign isn't performing — we pivot quickly instead of burning through the budget for months.",
-    faq5q: "Do I need my own marketer?",
+      "First leads from ads — 3–7 days after launch. The AI bot works from day one. Full system optimisation — by the end of 90 days.",
+    faq5q: "What if I want to leave?",
     faq5a:
-      "No. We handle all operations — from creating ads to reporting. Your job is to give feedback on leads and approve key decisions.",
-    faq6q: "How does communication work?",
+      "Minimum term is in the contract (3–6 months depending on the package). After that — month-to-month with 30 days' notice. If we haven't launched the full system within 90 days — 50% of the setup fee comes back.",
+    faq6q: "How much time do I have to spend?",
     faq6a:
-      "We create a shared Telegram chat, send weekly reports on Mondays, and respond to urgent questions within an hour during business hours. Once a month — a strategy call for the next period.",
-    faq7q: "Can I start with just one service?",
+      "2–4 hours per week at the start: briefing, materials, approvals. After launch — 30 minutes per week for reports and decisions on edge cases.",
+    faq7q: "Do you write copy or design logos?",
     faq7a:
-      "Yes. Many clients start with ads only or just an AI bot, then add more 1–2 months later once they see results. We don't push bundles.",
-    faq8q: "Do you sign NDAs?",
+      "We adapt existing copy to the site structure, but don't write original copywriting from scratch. Logos and branding aren't on us either — we work from your existing materials. If you need someone — we can recommend a partner.",
+    faq8q: "Is there a discount for the bundle?",
     faq8a:
-      "Yes, if needed — we sign an NDA before starting work. All project information remains confidential.",
+      "Yes. The 70× Growth Machine combo gives a 20–25% discount versus buying services standalone. The higher the tier — the bigger the discount.",
+    faq9q: "Do you work with my industry?",
+    faq9a:
+      "Primary focus: e-commerce, services, retail, auto accessories and beauty. B2B SaaS — case by case. If we don't know your niche, we'll say so honestly instead of learning on your dime.",
+    faq10q: "How do you accept payment?",
+    faq10a:
+      "Bank transfer, Stripe, PayPal Business. Setup — 100% upfront. Retainer — monthly in advance.",
+    faq11q: "What currencies do you work with?",
+    faq11a:
+      "Primary — USD. We accept EUR at the ECB rate. RUB / UAH on request.",
+    faq12q: "Do you sign a contract?",
+    faq12a:
+      "Yes, always. The contract protects both sides: clear scope, deadlines, penalties, guarantees. We don't work without one.",
+    faq13q: "Do you sign NDAs?",
+    faq13a:
+      "Yes, we sign a standard mutual NDA before any work starts. All project information stays confidential.",
 
     // Growth Simulator (levels-based with concrete descriptions)
     simEyebrow: "— 70× Growth Simulator",
@@ -290,9 +322,61 @@ const strings = {
     divTalk: "— get in touch",
     divSimulator: "— model your growth",
     divCases: "— our work",
+    divMachine: "— flagship",
 
     // Nav
     navCases: "Work",
+    navMachine: "Growth Machine",
+
+    // 70× Growth Machine combo
+    gmEyebrow: "— 70× / flagship combo",
+    gmTitle1: "One",
+    gmTitle2: "growth",
+    gmTitle3: "machine.",
+    gmLead:
+      "Ads bring leads. The AI bot catches them. Automation walks them through the funnel. Each piece does part of the job alone — together they cover the entire customer path and save 20–25% of budget.",
+    gmRecommended: "Recommended",
+    gmTerm: "Minimum term",
+    gmIncludes: "What's inside",
+    gmPriceLabel: "Pricing on request",
+    gmPriceHint:
+      "We tailor the quote to your case. A detailed pricelist arrives by email — hit \"Get a quote\".",
+    gmCta: "Get a quote",
+    gmGuaranteeTitle: "Launch guarantee",
+    gmGuaranteeBody:
+      "We launch the full system within 30 days and optimise it within 90. If we don't deliver — 50% of the setup fee comes back.",
+    gmDiscount: "−25%",
+    gmDiscountLabel: "vs buying standalone",
+    gm1Tier: "LAUNCH",
+    gm1Title: "From zero",
+    gm1Sub: "Startup, new product, local business",
+    gm1Inc: [
+      "Landing site + baseline SEO",
+      "Ads Starter (1 platform, 3 creatives)",
+      "AI Bot Starter (up to 30 scenarios)",
+      "Lead Flow Mini (1 key automation)",
+    ],
+    gm1Term: "4-month minimum",
+    gm2Tier: "GROWTH",
+    gm2Title: "Growing business",
+    gm2Sub: "Working business with existing sales",
+    gm2Inc: [
+      "Ads Growth (2–3 platforms, A/B, retargeting)",
+      "AI Bot Growth (up to 80 scenarios, CRM)",
+      "Lead Flow Standard (3–5 automations)",
+      "Business site — optional with discount",
+    ],
+    gm2Term: "4-month minimum",
+    gm3Tier: "SCALE",
+    gm3Title: "Scaling up",
+    gm3Sub: "Mature business ready for serious growth",
+    gm3Inc: [
+      "Ads Scale (all platforms, look-alike, 2× monthly strategy)",
+      "AI Bot Pro (unlimited scenarios + custom code)",
+      "Lead Flow Pro (Python + AI lead classification)",
+      "E-commerce site — optional with discount",
+    ],
+    gm3Term: "6-month minimum",
 
     // Cases section
     casesEyebrow: "— Work / 2026",
@@ -327,6 +411,15 @@ const strings = {
       "Niche-specific parsing",
       "Ready-to-use lead base",
       "CRM integration",
+    ],
+    case3Title: "AutoMats",
+    case3Tag: "E-COM · ADS · BOT",
+    case3Summary:
+      "Auto floor mats manufacturer. Online store with catalogue and checkout, AI assistant on Telegram, paid ads on Meta + Google. Case study in progress — numbers published once cleared with the client.",
+    case3Metrics: [
+      "Online store with catalogue",
+      "AI assistant on Telegram",
+      "Paid ads on Meta + Google",
     ],
 
     // Intro

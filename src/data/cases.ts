@@ -8,10 +8,10 @@ export type CaseStatus = "live" | "progress" | "soon";
 
 export type CaseItem = {
   id: string;
-  titleKey: "case1Title" | "case2Title";
-  tagKey: "case1Tag" | "case2Tag";
-  summaryKey: "case1Summary" | "case2Summary";
-  metricsKey?: "case1Metrics" | "case2Metrics";
+  titleKey: "case1Title" | "case2Title" | "case3Title";
+  tagKey: "case1Tag" | "case2Tag" | "case3Tag";
+  summaryKey: "case1Summary" | "case2Summary" | "case3Summary";
+  metricsKey?: "case1Metrics" | "case2Metrics" | "case3Metrics";
   status: CaseStatus;
   url?: string;
 };
@@ -32,6 +32,14 @@ export const CASES: readonly CaseItem[] = [
     tagKey: "case2Tag",
     summaryKey: "case2Summary",
     metricsKey: "case2Metrics",
+    status: "progress",
+  },
+  {
+    id: "carpets",
+    titleKey: "case3Title",
+    tagKey: "case3Tag",
+    summaryKey: "case3Summary",
+    metricsKey: "case3Metrics",
     status: "progress",
   },
 ] as const;

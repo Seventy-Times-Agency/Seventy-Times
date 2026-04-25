@@ -2,6 +2,7 @@
 
 import Nav from "@/components/layout/Nav";
 import Hero from "@/components/sections/Hero";
+import GrowthMachine from "@/components/sections/GrowthMachine";
 import VelocityTicker from "@/components/sections/VelocityTicker";
 import Services from "@/components/sections/Services";
 import Process from "@/components/sections/Process";
@@ -25,6 +26,8 @@ export default function HomePage() {
       <Nav />
       <main>
         <Hero />
+        <SectionDivider label={t.divMachine} />
+        <GrowthMachine />
         <VelocityTicker />
         <Services />
         <SectionDivider label={t.divNext} />
