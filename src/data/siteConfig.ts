@@ -16,8 +16,8 @@ export const siteConfig = {
       url: "mailto:info@seventy-times.com",
     },
     whatsapp: {
-      handle: "+1 (000) 000-0000",
-      url: "https://wa.me/10000000000",
+      handle: "+1 (585) 685-4437",
+      url: "https://wa.me/15856854437",
     },
     instagram: {
       handle: "@seventytimesagency",
