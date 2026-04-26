@@ -96,10 +96,11 @@
 
 /* Huge editorial title ──────────────────────────────────── */
 .titleBlock {
+  /* Span wrapper inside the h1 — inline by default, so margin
+     never applied. Force block here so the bottom gap below
+     actually does something. */
+  display: block;
   text-align: center;
-  /* Generous spacing below the headline so the CTA buttons in the
-     grid below never visually butt against the title. */
-  margin-bottom: 96px;
   max-width: 100%;
 }
 
@@ -117,6 +118,9 @@
   overflow-wrap: break-word;
   word-break: normal;
   hyphens: auto;
+  /* The real spacing below the headline lives on the h1 (block-
+     level) — margin-bottom on an inline span never worked. */
+  margin-bottom: 112px;
 }
 
 .titleRow {
