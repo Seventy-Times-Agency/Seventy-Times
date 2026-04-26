@@ -16,74 +16,133 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "80px",
+          padding: "72px 80px",
           background:
-            "radial-gradient(circle at 30% 20%, #1a1f2e 0%, #0a0b10 60%, #000000 100%)",
+            "radial-gradient(ellipse 80% 60% at 35% 20%, #1c2233 0%, #0a0b10 55%, #06060c 100%)",
           color: "#e8eef4",
           fontFamily: "sans-serif",
+          position: "relative",
         }}
       >
+        {/* Massive 70× watermark on the right edge */}
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            right: -40,
+            transform: "translateY(-50%)",
+            fontSize: 520,
+            fontWeight: 800,
+            lineHeight: 1,
+            letterSpacing: "-0.06em",
+            color: "rgba(200, 212, 222, 0.06)",
+            display: "flex",
+          }}
+        >
+          70×
+        </div>
+
+        {/* Top row — status + brand mark */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 16,
-            fontSize: 28,
-            letterSpacing: "0.2em",
+            justifyContent: "space-between",
+            fontSize: 22,
+            letterSpacing: "0.22em",
             textTransform: "uppercase",
             color: "#a8b4c0",
           }}
         >
-          <span
-            style={{
-              display: "inline-block",
-              width: 12,
-              height: 12,
-              borderRadius: "50%",
-              background: "#7be495",
-              boxShadow: "0 0 16px #7be495",
-            }}
-          />
-          {siteConfig.shortName}
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <span
+              style={{
+                display: "inline-block",
+                width: 10,
+                height: 10,
+                borderRadius: "50%",
+                background: "#4ade80",
+                boxShadow: "0 0 16px #4ade80",
+              }}
+            />
+            Accepting projects · 2026
+          </div>
           <div
             style={{
-              fontSize: 128,
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              fontSize: 28,
               fontWeight: 800,
-              lineHeight: 1,
-              letterSpacing: "-0.04em",
+              letterSpacing: "-0.02em",
+              textTransform: "none",
+              color: "#e8eef4",
             }}
           >
-            {siteConfig.name}
-          </div>
-          <div
-            style={{
-              fontSize: 56,
-              fontWeight: 500,
-              color: "#a8b4c0",
-              letterSpacing: "-0.01em",
-            }}
-          >
-            {siteConfig.tagline}
+            70<span style={{ color: "#c8d4de", fontStyle: "italic" }}>×</span>
           </div>
         </div>
 
+        {/* Headline block */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 84,
+              fontWeight: 800,
+              lineHeight: 1.0,
+              letterSpacing: "-0.04em",
+              color: "#e8eef4",
+            }}
+          >
+            Marketing × AI × Automation
+          </div>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 84,
+              fontWeight: 800,
+              lineHeight: 1.0,
+              letterSpacing: "-0.04em",
+              color: "#c8d4de",
+            }}
+          >
+            = one growth machine.
+          </div>
+          <div
+            style={{
+              display: "flex",
+              marginTop: 18,
+              fontSize: 26,
+              color: "#a8b4c0",
+              maxWidth: 880,
+              lineHeight: 1.4,
+            }}
+          >
+            Launched in 30 days, optimised in 90. Ads, AI, automation and sites
+            wired into a single working system.
+          </div>
+        </div>
+
+        {/* Bottom row — services + URL */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            fontSize: 24,
+            fontSize: 20,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
             color: "#6c7480",
           }}
         >
-          <span>Ads · Automation · AI</span>
-          <span>{siteConfig.url.replace(/^https?:\/\//, "")}</span>
+          <span>Ads · Automation · AI · Sites</span>
+          <span style={{ color: "#a8b4c0" }}>
+            {siteConfig.url.replace(/^https?:\/\//, "")}
+          </span>
         </div>
       </div>
     ),
-    { ...size }
+    { ...size },
   );
 }

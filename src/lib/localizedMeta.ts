@@ -121,3 +121,25 @@ export function getPrivacyMeta(locale: Locale): LegalMeta {
 export function getTermsMeta(locale: Locale): LegalMeta {
   return TERMS[locale] ?? TERMS.en;
 }
+
+const ABOUT: Record<Locale, LegalMeta> = {
+  en: {
+    title: "About — Seventy Times",
+    description:
+      "Who's behind Seventy Times — the team, the principles, and how we built the agency.",
+  },
+  ru: {
+    title: "О нас — Seventy Times",
+    description:
+      "Кто стоит за Seventy Times — команда, принципы и как мы выстраивали агентство.",
+  },
+  de: {
+    title: "Über uns — Seventy Times",
+    description:
+      "Wer hinter Seventy Times steht — das Team, die Prinzipien und wie wir die Agentur aufgebaut haben.",
+  },
+};
+
+export function getAboutMeta(locale: Locale): LegalMeta {
+  return ABOUT[locale] ?? ABOUT.en;
+}

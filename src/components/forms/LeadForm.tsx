@@ -13,11 +13,19 @@ import styles from "@/components/forms/LeadForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
 
+type LeadPackage =
+  | "not_sure"
+  | "standalone"
+  | "launch"
+  | "growth"
+  | "scale";
+
 const INITIAL = {
   name: "",
   contact: "",
   business: "",
   request: "",
+  package: "not_sure" as LeadPackage,
   // Honeypot: a field real users never see. Bots fill every input they find.
   website: "",
 };
@@ -96,6 +104,9 @@ export default function LeadForm() {
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setFields((prev) => ({ ...prev, [key]: e.target.value }));
 
+  const setPackage = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setFields((prev) => ({ ...prev, package: e.target.value as LeadPackage }));
+
   const submit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -131,6 +142,7 @@ export default function LeadForm() {
           contact,
           business,
           request,
+          package: fields.package,
           website: fields.website,
         }),
       });
@@ -260,6 +272,21 @@ export default function LeadForm() {
                       maxLength={500}
                       required
                     />
+                  </label>
+
+                  <label className={styles.field}>
+                    <span className={styles.label}>{t.leadPackage}</span>
+                    <select
+                      className={styles.input}
+                      value={fields.package}
+                      onChange={setPackage}
+                    >
+                      <option value="not_sure">{t.leadPackageNotSure}</option>
+                      <option value="launch">{t.leadPackageLaunch}</option>
+                      <option value="growth">{t.leadPackageGrowth}</option>
+                      <option value="scale">{t.leadPackageScale}</option>
+                      <option value="standalone">{t.leadPackageStandalone}</option>
+                    </select>
                   </label>
 
                   <label className={styles.field}>

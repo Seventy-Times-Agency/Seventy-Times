@@ -444,6 +444,12 @@ const strings = {
       "Thank you! We've received your request and will reply within an hour during business hours. Talk soon 👋",
     leadClose: "Close",
     leadFillAll: "Please fill in all fields",
+    leadPackage: "Which format are you interested in?",
+    leadPackageNotSure: "Not sure yet — please advise",
+    leadPackageStandalone: "Single service (standalone)",
+    leadPackageLaunch: "LAUNCH — starting from zero",
+    leadPackageGrowth: "GROWTH ⭐ — growing business",
+    leadPackageScale: "SCALE — serious scale",
 
     // Chat widget
     chatGreeting:
@@ -540,7 +546,7 @@ const strings = {
       },
       {
         heading: "Cookies",
-        text: 'We use a single technical cookie to remember your chosen interface language. This is not tracking — purely for convenience.',
+        text: 'We use a minimum of technical cookies — only to remember your chosen interface language. If we add analytics in the future, it will only be activated after explicit consent in the on-site banner. Your current cookie choice is stored in localStorage until you change it.',
       },
       {
         heading: "Children",
@@ -579,6 +585,18 @@ const strings = {
         text: 'By submitting a request form you confirm that the information is accurate and provided voluntarily. Reviews require a personal code issued to a real client; fake reviews are not published.',
       },
       {
+        heading: "Refunds and early exit",
+        text: 'A minimum term is set in the contract (3–6 months depending on the package). Leaving earlier is possible, but a refund of fees already paid is discussed individually — the final call sits with Seventy Times and depends on how much time and money have been put into the project and the reason for the early exit. The 90-day launch guarantee (50% setup back if we miss the launch) is a separate commitment and stands no matter what.',
+      },
+      {
+        heading: "Copy and branding",
+        text: 'Site copy is part of the work. If the client has ready copy or wants specific brand wording used verbatim, they should send it. Logos and basic brand identity are available on request as a separate add-on.',
+      },
+      {
+        heading: "Payment",
+        text: 'We accept several payment formats; the exact method is picked together based on the client\'s location and convenience. Setup is paid upfront; the retainer is paid monthly in advance. Primary currency is USD, with EUR also accepted; other currencies are handled individually.',
+      },
+      {
         heading: "Limitation of liability",
         text: 'The site is provided "as is". We do our best to keep everything working, but we do not guarantee 24/7 availability or that every piece of information is always 100% current. Decisions based on site content are your responsibility.',
       },
@@ -593,6 +611,21 @@ const strings = {
     ],
 
     legalBack: "← Back to home",
+
+    // About page
+    aboutTitle: "About",
+    aboutLead:
+      "Seventy Times is a small studio sitting at the intersection of marketing, AI and automation. The full team write-up is in the works — placeholder for now.",
+    aboutDraftNote:
+      "This page is in progress. A short story about the team, the way we work and how 70× came together as an agency format will land here soon.",
+
+    // Cookie consent banner
+    cookieTitle: "Cookies",
+    cookieBody:
+      "We use a minimum of technical cookies to remember your language preference. Analytics is only enabled with your consent —",
+    cookieLink: "details in the policy",
+    cookieAccept: "Accept",
+    cookieEssential: "Essential only",
   
   };
 

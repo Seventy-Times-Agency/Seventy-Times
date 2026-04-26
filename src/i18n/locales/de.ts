@@ -444,6 +444,12 @@ const strings = {
       "Vielen Dank! Wir haben Ihre Anfrage erhalten und antworten innerhalb einer Stunde während der Geschäftszeiten. Bis bald 👋",
     leadClose: "Schließen",
     leadFillAll: "Bitte füllen Sie alle Felder aus",
+    leadPackage: "Welches Format interessiert Sie?",
+    leadPackageNotSure: "Noch nicht sicher — bitte beraten",
+    leadPackageStandalone: "Einzelne Leistung (standalone)",
+    leadPackageLaunch: "LAUNCH — Start bei null",
+    leadPackageGrowth: "GROWTH ⭐ — wachsendes Geschäft",
+    leadPackageScale: "SCALE — ernsthafte Skalierung",
 
     // Chat widget
     chatGreeting:
@@ -543,7 +549,7 @@ const strings = {
       },
       {
         heading: "Cookies",
-        text: 'Wir verwenden einen einzigen technischen Cookie, um Ihre gewählte Oberflächensprache zu speichern. Kein Tracking — rein zur Bequemlichkeit.',
+        text: 'Wir verwenden ein Minimum an technischen Cookies — wir merken uns nur Ihre gewählte Oberflächensprache. Falls wir später Analytics einbinden, wird sie nur nach ausdrücklicher Zustimmung im Banner aktiviert. Ihre aktuelle Cookie-Entscheidung wird in localStorage gespeichert, bis Sie sie ändern.',
       },
       {
         heading: "Kinder",
@@ -582,6 +588,18 @@ const strings = {
         text: 'Mit dem Absenden des Anfrageformulars bestätigen Sie, dass die Angaben korrekt und freiwillig gemacht sind. Bewertungen erfordern einen persönlichen Code, der an echte Kunden vergeben wird; gefälschte Bewertungen werden nicht veröffentlicht.',
       },
       {
+        heading: "Erstattung und vorzeitiger Ausstieg",
+        text: 'Eine Mindestlaufzeit ist im Vertrag festgelegt (3–6 Monate je nach Paket). Ein vorzeitiger Ausstieg ist möglich, eine Rückerstattung bereits gezahlter Beträge wird jedoch individuell besprochen — die finale Entscheidung trifft Seventy Times und hängt davon ab, wie viel Zeit und Geld bereits ins Projekt geflossen ist und aus welchem Grund der Kunde aussteigt. Die 90-Tage-Launch-Garantie (50 % Setup zurück, falls wir den Launch verpassen) ist davon getrennt und bleibt in jedem Fall bestehen.',
+      },
+      {
+        heading: "Texte und Branding",
+        text: 'Website-Texte schreiben wir selbst — das ist Teil der Arbeit. Wenn der Kunde fertige Texte hat oder bestimmte Brand-Formulierungen wortwörtlich übernehmen möchte, sollte er sie uns senden. Logos und Basis-Identität sind auf Anfrage als separater Add-on verfügbar.',
+      },
+      {
+        heading: "Zahlung",
+        text: 'Wir akzeptieren mehrere Zahlungsformate; den genauen Weg wählen wir gemeinsam, abhängig vom Standort des Kunden und davon, was am bequemsten ist. Setup wird im Voraus gezahlt, der Retainer monatlich im Voraus. Hauptwährung ist USD, EUR wird ebenfalls akzeptiert; andere Währungen werden individuell geregelt.',
+      },
+      {
         heading: "Haftungsbeschränkung",
         text: 'Die Website wird „wie besehen" bereitgestellt. Wir bemühen uns, dass alles funktioniert, garantieren aber keine 24/7-Verfügbarkeit und nicht, dass alle Informationen zu 100% aktuell sind. Entscheidungen auf Basis der Website-Inhalte liegen in Ihrer Verantwortung.',
       },
@@ -596,6 +614,21 @@ const strings = {
     ],
 
     legalBack: "← Zurück zur Startseite",
+
+    // About page
+    aboutTitle: "Über uns",
+    aboutLead:
+      "Seventy Times ist ein kleines Studio an der Schnittstelle von Marketing, KI und Automatisierung. Der ausführliche Team-Text ist in Arbeit — vorerst ein Platzhalter.",
+    aboutDraftNote:
+      "Diese Seite ist in Arbeit. Eine kurze Geschichte über das Team, unsere Arbeitsweise und wie 70× als Agenturformat entstanden ist, kommt bald hierher.",
+
+    // Cookie consent banner
+    cookieTitle: "Cookies",
+    cookieBody:
+      "Wir verwenden ein Minimum an technischen Cookies, um Ihre Sprachwahl zu speichern. Analytics wird nur mit Ihrer Zustimmung aktiviert —",
+    cookieLink: "Details in den Richtlinien",
+    cookieAccept: "Akzeptieren",
+    cookieEssential: "Nur notwendige",
   
   };
 

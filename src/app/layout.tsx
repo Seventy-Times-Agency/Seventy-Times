@@ -10,6 +10,7 @@ import ScrollProgress from "@/components/decor/ScrollProgress";
 import SmoothScroll from "@/components/decor/SmoothScroll";
 import PageIntro from "@/components/layout/PageIntro";
 import LeadForm from "@/components/forms/LeadForm";
+import CookieConsent from "@/components/layout/CookieConsent";
 import ReviewForm from "@/components/forms/ReviewForm";
 import ChatWidget from "@/components/chat/ChatWidget";
 import "./globals.css";
@@ -126,6 +127,7 @@ export default function RootLayout({
           <ChatWidget />
           <LeadForm />
           <ReviewForm />
+          <CookieConsent />
         </I18nProvider>
       </body>
     </html>

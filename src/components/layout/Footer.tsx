@@ -39,7 +39,7 @@ export default function Footer() {
 
         <div className={styles.col}>
           <span className={styles.colTitle}>{t.ftCompany}</span>
-          <a href="#top">{t.ftAbout}</a>
+          <Link href="/about">{t.ftAbout}</Link>
           <a href="#contact">{t.ftCollab}</a>
           <span>{t.ftAccepting}</span>
         </div>

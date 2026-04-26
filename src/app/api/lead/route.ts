@@ -14,12 +14,35 @@ import { sendLeadToNotion } from "@/lib/notion";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+type LeadPackage =
+  | "not_sure"
+  | "standalone"
+  | "launch"
+  | "growth"
+  | "scale";
+
 type LeadPayload = {
   name: string;
   contact: string;
   business: string;
   request: string;
+  package?: LeadPackage;
 };
+
+const PACKAGE_LABEL: Record<LeadPackage, string> = {
+  not_sure: "Пока не уверен",
+  standalone: "Одна услуга (standalone)",
+  launch: "LAUNCH",
+  growth: "GROWTH ⭐",
+  scale: "SCALE",
+};
+
+function isLeadPackage(v: unknown): v is LeadPackage {
+  return (
+    typeof v === "string" &&
+    ["not_sure", "standalone", "launch", "growth", "scale"].includes(v)
+  );
+}
 
 const LIMITS = {
   name: 100,
@@ -44,12 +67,17 @@ async function notifyTelegram(lead: LeadPayload) {
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
 
+  const packageLine = lead.package
+    ? `📦 *Пакет:* ${escapeMarkdown(PACKAGE_LABEL[lead.package])}`
+    : null;
+
   const text = [
-    "📩 *Новая заявка с сайта IAA agency*",
+    "📩 *Новая заявка с сайта Seventy Times*",
     "",
     `👤 *Имя:* ${escapeMarkdown(lead.name)}`,
     `📞 *Контакт:* ${escapeMarkdown(lead.contact)}`,
     `🏢 *Бизнес:* ${escapeMarkdown(lead.business)}`,
+    ...(packageLine ? [packageLine] : []),
     "",
     `💬 *Запрос:*`,
     escapeMarkdown(lead.request),
@@ -108,6 +136,9 @@ export async function POST(req: Request) {
   const contact = body.contact.trim();
   const business = body.business.trim();
   const request = body.request.trim();
+  // Optional preferred package — only forwarded when valid.
+  const rawPackage = (body as Record<string, unknown>).package;
+  const leadPackage = isLeadPackage(rawPackage) ? rawPackage : undefined;
 
   if (!name || !contact || !business || !request) {
     return NextResponse.json(
@@ -161,9 +192,27 @@ export async function POST(req: Request) {
 
   // Fan out to both channels in parallel so one slow/failed provider
   // doesn't block the other.
+  // Prepend package label to the request body for Notion (no schema
+  // change required) and pass it as a structured field to Telegram.
+  const requestForNotion = leadPackage
+    ? `[${PACKAGE_LABEL[leadPackage]}]\n\n${request}`
+    : request;
+
   await Promise.allSettled([
-    notifyTelegram({ name, contact, business, request }),
-    sendLeadToNotion({ name, contact, business, request, locale }),
+    notifyTelegram({
+      name,
+      contact,
+      business,
+      request,
+      package: leadPackage,
+    }),
+    sendLeadToNotion({
+      name,
+      contact,
+      business,
+      request: requestForNotion,
+      locale,
+    }),
   ]);
 
   return NextResponse.json({ ok: true });
