@@ -20,12 +20,12 @@ export const siteConfig = {
       url: "https://wa.me/10000000000",
     },
     instagram: {
-      handle: "@seventytimes",
-      url: "https://instagram.com/seventytimes",
+      handle: "@seventytimesagency",
+      url: "https://instagram.com/seventytimesagency",
     },
     facebook: {
-      handle: "Seventy Times",
-      url: "https://facebook.com/seventytimes",
+      handle: "Seventy Times Agency",
+      url: "https://facebook.com/seventytimesagency",
     },
   },
 
