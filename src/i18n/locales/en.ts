@@ -394,29 +394,20 @@ const strings = {
     casesPlaceholderSummary:
       "We take on a limited number of projects at a time — let's talk if the shape looks right.",
     casesPlaceholderCta: "Start a conversation",
-    case1Title: "Matcha",
-    case1Tag: "TELEGRAM · BOT · AI",
+    case1Title: "Convioo",
+    case1Tag: "SITE · BOT · LEAD ENGINE",
     case1Summary:
-      "Anonymous chat bot with a dating layer: meet, talk, match — all inside a single Telegram bot, no external app. Moderation and safety built in.",
-    case1Metrics: [
-      "Anonymous chat",
-      "Match-making engine",
-      "Moderation & anti-spam",
-    ],
-    case2Title: "Legen",
-    case2Tag: "SITE · BOT · LEAD ENGINE",
-    case2Summary:
       "A web parser turned into a lead-gen engine. A website + Telegram bot pair automatically build a contact base tailored to your niche, geo and criteria.",
-    case2Metrics: [
+    case1Metrics: [
       "Niche-specific parsing",
       "Ready-to-use lead base",
       "CRM integration",
     ],
-    case3Title: "AutoMats",
-    case3Tag: "E-COM · ADS · BOT",
-    case3Summary:
+    case2Title: "EliteCarMats",
+    case2Tag: "E-COM · ADS · BOT",
+    case2Summary:
       "Auto floor mats manufacturer. Online store with catalogue and checkout, AI assistant on Telegram, paid ads on Meta + Google. Case study in progress — numbers published once cleared with the client.",
-    case3Metrics: [
+    case2Metrics: [
       "Online store with catalogue",
       "AI assistant on Telegram",
       "Paid ads on Meta + Google",

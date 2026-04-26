@@ -394,29 +394,20 @@ const strings = {
     casesPlaceholderSummary:
       "Мы берём ограниченное число проектов в работу одновременно — обсудим задачу, если формат подходит.",
     casesPlaceholderCta: "Обсудить задачу",
-    case1Title: "Matcha",
-    case1Tag: "TELEGRAM · BOT · AI",
+    case1Title: "Convioo",
+    case1Tag: "SITE · BOT · LEAD ENGINE",
     case1Summary:
-      "Анонимный чат-бот с дейтинг-слоем: знакомство, общение, матчи — всё внутри одного Telegram-бота, без внешних приложений. Модерация и безопасность встроены.",
-    case1Metrics: [
-      "Анонимный чат",
-      "Подбор мэтчей",
-      "Модерация и анти-спам",
-    ],
-    case2Title: "Legen",
-    case2Tag: "SITE · BOT · LEAD ENGINE",
-    case2Summary:
       "Парсер интернета, превращённый в движок для сбора клиентов. Сайт + Telegram-бот автоматически собирают базу под ваш запрос — нишу, гео, критерии.",
-    case2Metrics: [
+    case1Metrics: [
       "Парсинг под нишу",
       "Готовая база клиентов",
       "Интеграция с CRM",
     ],
-    case3Title: "AutoMats",
-    case3Tag: "E-COM · ADS · BOT",
-    case3Summary:
+    case2Title: "EliteCarMats",
+    case2Tag: "E-COM · ADS · BOT",
+    case2Summary:
       "Производитель автоковров. Сайт-магазин с каталогом и онлайн-заказом, AI-консультант в Telegram, таргет в Meta + Google. Кейс готовим — цифры по результатам публикуем после согласования.",
-    case3Metrics: [
+    case2Metrics: [
       "Сайт-магазин с каталогом",
       "AI-консультант в Telegram",
       "Таргет Meta + Google",

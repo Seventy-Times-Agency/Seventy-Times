@@ -394,29 +394,20 @@ const strings = {
     casesPlaceholderSummary:
       "Wir nehmen gleichzeitig nur eine begrenzte Anzahl von Projekten an — lassen Sie uns sprechen, wenn das Format passt.",
     casesPlaceholderCta: "Gespräch starten",
-    case1Title: "Matcha",
-    case1Tag: "TELEGRAM · BOT · AI",
+    case1Title: "Convioo",
+    case1Tag: "SITE · BOT · LEAD ENGINE",
     case1Summary:
-      "Anonymer Chatbot mit Dating-Ebene: kennenlernen, reden, matchen — alles in einem einzigen Telegram-Bot, ohne externe App. Moderation und Sicherheit integriert.",
-    case1Metrics: [
-      "Anonymer Chat",
-      "Match-Engine",
-      "Moderation & Anti-Spam",
-    ],
-    case2Title: "Legen",
-    case2Tag: "SITE · BOT · LEAD ENGINE",
-    case2Summary:
       "Ein Web-Parser, verwandelt in eine Lead-Engine. Website + Telegram-Bot bauen automatisch eine Kontaktbasis auf Ihre Nische, Geo und Kriterien zugeschnitten.",
-    case2Metrics: [
+    case1Metrics: [
       "Nischenspezifisches Parsing",
       "Fertige Lead-Basis",
       "CRM-Integration",
     ],
-    case3Title: "AutoMats",
-    case3Tag: "E-COM · ADS · BOT",
-    case3Summary:
+    case2Title: "EliteCarMats",
+    case2Tag: "E-COM · ADS · BOT",
+    case2Summary:
       "Hersteller von Auto-Fußmatten. Online-Shop mit Katalog und Checkout, KI-Assistent in Telegram, bezahlte Werbung auf Meta + Google. Fallstudie in Arbeit — Zahlen veröffentlichen wir nach Freigabe des Kunden.",
-    case3Metrics: [
+    case2Metrics: [
       "Online-Shop mit Katalog",
       "KI-Assistent in Telegram",
       "Bezahlte Werbung Meta + Google",
