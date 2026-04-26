@@ -7,7 +7,7 @@ const strings = {
     // Nav
     navServices: "Services",
     navProcess: "Process",
-    navVenesa: "Venesa",
+    navTess: "Tess",
     navFaq: "FAQ",
     navStatus: "Accepting projects",
     navCta: "Get a quote",
@@ -136,22 +136,22 @@ const strings = {
       "We review numbers weekly. Cut what doesn't work, scale what does. Monday reports, dashboard access — always.",
     proc4t: "Ongoing",
 
-    // Venesa promo
-    venEyebrow: "— Meet Venesa",
+    // Tess promo
+    venEyebrow: "— Meet Tess",
     venTitle1: "Your",
     venTitle2: "AI consultant",
-    venTitle3: "Venesa.",
+    venTitle3: "Tess.",
     venLead:
-      "Venesa is a Claude-powered AI assistant trained for your business. She talks to clients on your website, Telegram and Instagram, qualifies leads and passes hot ones directly to you. We build the same bot for every project.",
+      "Tess is a Claude-powered AI assistant trained for your business. She talks to clients on your website, Telegram and Instagram, qualifies leads and passes hot ones directly to you. We build the same bot for every project.",
     venBullets: [
       "Knows your business inside out — trained on your materials and tone",
       "Responds in any language, works 24/7 without breaks",
       "Qualifies leads and drops them straight into your CRM or Telegram",
       "Frees up ~10–15 hours a week your team spends on first-touch chats",
     ],
-    venCta: "Talk to Venesa",
+    venCta: "Talk to Tess",
     venBadgeLabel: "AI Agent",
-    venBadgeName: "Venesa",
+    venBadgeName: "Tess",
     venBadgeRole: "AI consultant · Online",
 
     // Principles — how we work (no "promises" / "guarantees" wording)
@@ -260,11 +260,11 @@ const strings = {
     simAutoLvl3Desc: "Complete system: leads, CRM, invoicing, analytics",
     simAiTag: "03 / AI",
     simAiName: "AI consultant",
-    simAiDesc: "Where Venesa works",
+    simAiDesc: "Where Tess works",
     simAiLvl0: "None",
     simAiLvl0Desc: "No AI consultant — human-only communication",
     simAiLvl1: "Website",
-    simAiLvl1Desc: "Venesa on your site — qualifies visitors",
+    simAiLvl1Desc: "Tess on your site — qualifies visitors",
     simAiLvl2: "Multi-channel",
     simAiLvl2Desc: "+ Telegram/Instagram — one AI across all channels",
     simAiLvl3: "Full",
@@ -279,7 +279,7 @@ const strings = {
     simFormulaDesc: "Each pillar adds its own growth %. They multiply together — that's how compounding works. The baseline 100 leads/mo is an illustrative anchor; your actual number is yours.",
     simDisclaimer:
       "A projection based on real digital marketing benchmarks, not a guarantee. Your results depend on niche, market, budget, and execution. We give honest numbers, not miracle promises.",
-    simCta: "Discuss my stack with Venesa",
+    simCta: "Discuss my stack with Tess",
 
     // CTA
     ctaEyebrow: "— Get in touch",
@@ -300,7 +300,7 @@ const strings = {
     ftAds: "Ads / Targeting",
     ftAutomation: "Automation",
     ftBots: "AI bots",
-    ftVenesa: "Venesa",
+    ftTess: "Tess",
     ftProcess: "Process",
     ftFaq: "FAQ",
     ftContacts: "Contacts",
@@ -316,7 +316,7 @@ const strings = {
 
     // Dividers
     divNext: "— next",
-    divMeet: "— meet venesa",
+    divMeet: "— meet tess",
     divProof: "— testimonials",
     divQuestions: "— questions",
     divTalk: "— get in touch",
@@ -447,18 +447,18 @@ const strings = {
 
     // Chat widget
     chatGreeting:
-      "Hi 👋 My name is Venesa, I'm the AI consultant at Seventy Times.\n\nTell me a bit about your business — I'll suggest the right solution for your goals.",
-    chatName: "Venesa · AI consultant",
+      "Hi 👋 My name is Tess, I'm the AI consultant at Seventy Times.\n\nTell me a bit about your business — I'll suggest the right solution for your goals.",
+    chatName: "Tess · AI consultant",
     chatStatus: "Online",
     chatPh: "Type a message...",
-    chatLabel: "Venesa",
+    chatLabel: "Tess",
     chatError: "Connection error. Please try again later.",
     chatFallback: "Something went wrong. Please try again.",
-    chatOpen: "Talk to Venesa",
+    chatOpen: "Talk to Tess",
     chatClose: "Close chat",
     chatSend: "Send",
     chatMessage: "Message",
-    chatAlt: "Venesa — AI consultant at Seventy Times",
+    chatAlt: "Tess — AI consultant at Seventy Times",
 
     // Consent (shared between forms)
     consentPrefix: "I agree to the ",
@@ -520,7 +520,7 @@ const strings = {
       },
       {
         heading: "What data we collect",
-        text: 'Through the request form: your name, contact (email or Telegram), business name, and a description of your task. Through the review form: name, role, location, review text, and a personal client code. Through the chat with Venesa: the text of messages you send us. We do not collect payment information and do not use tracking cookies.',
+        text: 'Through the request form: your name, contact (email or Telegram), business name, and a description of your task. Through the review form: name, role, location, review text, and a personal client code. Through the chat with Tess: the text of messages you send us. We do not collect payment information and do not use tracking cookies.',
       },
       {
         heading: "Why we collect it",
@@ -528,7 +528,7 @@ const strings = {
       },
       {
         heading: "Where it is stored",
-        text: 'Requests and reviews are forwarded to our internal Telegram chat. Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Venesa is processed via the Anthropic API to generate responses.',
+        text: 'Requests and reviews are forwarded to our internal Telegram chat. Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Tess is processed via the Anthropic API to generate responses.',
       },
       {
         heading: "How long we keep it",
@@ -564,7 +564,7 @@ const strings = {
       },
       {
         heading: "What we promise",
-        text: 'We describe our services honestly, discuss prices individually, and agree on specific KPIs before we start. The chat with Venesa is a helper tool, not a legal offer.',
+        text: 'We describe our services honestly, discuss prices individually, and agree on specific KPIs before we start. The chat with Tess is a helper tool, not a legal offer.',
       },
       {
         heading: "What we do not promise",

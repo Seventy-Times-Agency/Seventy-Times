@@ -94,8 +94,8 @@ export default function GrowthSimulator() {
   const projected = Math.round(baseline * total);
   const delta = projected - baseline;
 
-  const openVenesa = () => {
-    window.dispatchEvent(new Event("open-venesa"));
+  const openTess = () => {
+    window.dispatchEvent(new Event("open-tess"));
   };
 
   const pillars = [
@@ -249,7 +249,7 @@ export default function GrowthSimulator() {
               <span className={styles.resultMultiSign}>×</span>
             </div>
             <p className={styles.resultMultiLabel}>{t.simMultiLabel}</p>
-            <button type="button" className={styles.cta} onClick={openVenesa}>
+            <button type="button" className={styles.cta} onClick={openTess}>
               {t.simCta} <span aria-hidden="true">→</span>
             </button>
           </div>

@@ -12,7 +12,7 @@ export default function ChatDemo() {
   const { t } = useT();
 
   const openChat = () => {
-    window.dispatchEvent(new Event("open-venesa"));
+    window.dispatchEvent(new Event("open-tess"));
   };
 
   return (
@@ -68,7 +68,7 @@ export default function ChatDemo() {
             />
             <div className={styles.portraitFrame}>
               <Image
-                src="/venesa.jpg"
+                src="/tess.jpg"
                 alt={t.chatAlt}
                 className={styles.portraitImg}
                 width={480}

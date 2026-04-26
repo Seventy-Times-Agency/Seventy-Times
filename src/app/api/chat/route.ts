@@ -87,7 +87,7 @@ export async function POST(req: Request) {
   try {
     const response = await client.messages.create({
       model,
-      // Bumped from 1024 so Venesa can give a substantive answer to
+      // Bumped from 1024 so Tess can give a substantive answer to
       // a deep marketing / automation question without getting cut.
       max_tokens: 1500,
       // Slightly cooler than default — cuts marketing-speak drift

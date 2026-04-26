@@ -7,7 +7,7 @@ const strings = {
     // Nav
     navServices: "Leistungen",
     navProcess: "Prozess",
-    navVenesa: "Venesa",
+    navTess: "Tess",
     navFaq: "FAQ",
     navStatus: "Projekte willkommen",
     navCta: "Anfrage",
@@ -136,22 +136,22 @@ const strings = {
       "Wir prüfen Zahlen wöchentlich. Streichen was nicht funktioniert, skalieren was funktioniert. Montagsberichte, Dashboard-Zugang — immer.",
     proc4t: "Laufend",
 
-    // Venesa promo
-    venEyebrow: "— Lernen Sie Venesa kennen",
+    // Tess promo
+    venEyebrow: "— Lernen Sie Tess kennen",
     venTitle1: "Ihre",
     venTitle2: "KI-Beraterin",
-    venTitle3: "Venesa.",
+    venTitle3: "Tess.",
     venLead:
-      "Venesa ist eine KI-Assistentin auf Basis von Claude, trainiert für Ihr Unternehmen. Sie spricht mit Kunden auf Ihrer Website, in Telegram und Instagram, qualifiziert Leads und leitet heiße Kontakte direkt an Sie weiter. Denselben Bot erstellen wir für jedes Projekt.",
+      "Tess ist eine KI-Assistentin auf Basis von Claude, trainiert für Ihr Unternehmen. Sie spricht mit Kunden auf Ihrer Website, in Telegram und Instagram, qualifiziert Leads und leitet heiße Kontakte direkt an Sie weiter. Denselben Bot erstellen wir für jedes Projekt.",
     venBullets: [
       "Kennt Ihr Business von innen — trainiert auf Ihre Materialien und Tonalität",
       "Antwortet in jeder Sprache, arbeitet 24/7 ohne Pause",
       "Qualifiziert Leads und legt sie direkt ins CRM oder Telegram",
       "Spart rund 10–15 Stunden pro Woche, die Ihr Team sonst auf Erstkontakte verwendet",
     ],
-    venCta: "Mit Venesa sprechen",
+    venCta: "Mit Tess sprechen",
     venBadgeLabel: "KI-Agent",
-    venBadgeName: "Venesa",
+    venBadgeName: "Tess",
     venBadgeRole: "KI-Beraterin · Online",
 
     // Principles — how we work (no "promises" / "guarantees" wording)
@@ -260,11 +260,11 @@ const strings = {
     simAutoLvl3Desc: "Komplettsystem: Leads, CRM, Rechnungen, Analytik",
     simAiTag: "03 / KI",
     simAiName: "KI-Beraterin",
-    simAiDesc: "Wo Venesa arbeitet",
+    simAiDesc: "Wo Tess arbeitet",
     simAiLvl0: "Keine",
     simAiLvl0Desc: "Keine KI-Beraterin — nur menschliche Kommunikation",
     simAiLvl1: "Website",
-    simAiLvl1Desc: "Venesa auf der Website — qualifiziert Besucher",
+    simAiLvl1Desc: "Tess auf der Website — qualifiziert Besucher",
     simAiLvl2: "Multi-Kanal",
     simAiLvl2Desc: "+ Telegram/Instagram — eine KI über alle Kanäle",
     simAiLvl3: "Voll",
@@ -279,7 +279,7 @@ const strings = {
     simFormulaDesc: "Jede Säule fügt ihren eigenen Wachstums-% hinzu. Sie werden miteinander multipliziert — so funktioniert Compounding. Die Basis von 100 Leads/Monat ist nur ein illustrativer Anker; Ihre tatsächliche Zahl gehört Ihnen.",
     simDisclaimer:
       "Eine Prognose auf Basis echter Digital-Marketing-Benchmarks, keine Garantie. Ihr Ergebnis hängt von Nische, Markt, Budget und Umsetzung ab. Wir geben ehrliche Zahlen, keine Wunderversprechen.",
-    simCta: "Meinen Stack mit Venesa besprechen",
+    simCta: "Meinen Stack mit Tess besprechen",
 
     // CTA
     ctaEyebrow: "— Kontakt aufnehmen",
@@ -300,7 +300,7 @@ const strings = {
     ftAds: "Werbung / Targeting",
     ftAutomation: "Automatisierung",
     ftBots: "KI-Bots",
-    ftVenesa: "Venesa",
+    ftTess: "Tess",
     ftProcess: "Prozess",
     ftFaq: "FAQ",
     ftContacts: "Kontakt",
@@ -316,7 +316,7 @@ const strings = {
 
     // Dividers
     divNext: "— weiter",
-    divMeet: "— lernen Sie Venesa kennen",
+    divMeet: "— lernen Sie Tess kennen",
     divProof: "— Kundenstimmen",
     divQuestions: "— Fragen",
     divTalk: "— Kontakt",
@@ -447,18 +447,18 @@ const strings = {
 
     // Chat widget
     chatGreeting:
-      "Hallo 👋 Mein Name ist Venesa, ich bin die KI-Beraterin bei Seventy Times.\n\nErzählen Sie mir ein wenig über Ihr Unternehmen — ich schlage die passende Lösung für Ihre Ziele vor.",
-    chatName: "Venesa · KI-Beraterin",
+      "Hallo 👋 Mein Name ist Tess, ich bin die KI-Beraterin bei Seventy Times.\n\nErzählen Sie mir ein wenig über Ihr Unternehmen — ich schlage die passende Lösung für Ihre Ziele vor.",
+    chatName: "Tess · KI-Beraterin",
     chatStatus: "Online",
     chatPh: "Nachricht eingeben...",
-    chatLabel: "Venesa",
+    chatLabel: "Tess",
     chatError: "Verbindungsfehler. Bitte versuchen Sie es später erneut.",
     chatFallback: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
-    chatOpen: "Mit Venesa sprechen",
+    chatOpen: "Mit Tess sprechen",
     chatClose: "Chat schließen",
     chatSend: "Senden",
     chatMessage: "Nachricht",
-    chatAlt: "Venesa — KI-Beraterin bei Seventy Times",
+    chatAlt: "Tess — KI-Beraterin bei Seventy Times",
 
     // Consent (shared between forms)
     consentPrefix: "Ich stimme der ",
@@ -523,7 +523,7 @@ const strings = {
       },
       {
         heading: "Welche Daten wir erheben",
-        text: 'Über das Anfrageformular: Ihren Namen, Kontakt (E-Mail oder Telegram), Firmennamen und eine Beschreibung Ihrer Aufgabe. Über das Bewertungsformular: Name, Position, Standort, Bewertungstext und persönlichen Kundencode. Über den Chat mit Venesa: den Text der an uns gesendeten Nachrichten. Wir erheben keine Zahlungsdaten und verwenden keine Tracking-Cookies.',
+        text: 'Über das Anfrageformular: Ihren Namen, Kontakt (E-Mail oder Telegram), Firmennamen und eine Beschreibung Ihrer Aufgabe. Über das Bewertungsformular: Name, Position, Standort, Bewertungstext und persönlichen Kundencode. Über den Chat mit Tess: den Text der an uns gesendeten Nachrichten. Wir erheben keine Zahlungsdaten und verwenden keine Tracking-Cookies.',
       },
       {
         heading: "Warum wir Daten erheben",
@@ -531,7 +531,7 @@ const strings = {
       },
       {
         heading: "Wo Daten gespeichert werden",
-        text: 'Anfragen und Bewertungen werden an unseren internen Telegram-Chat weitergeleitet. Website-Logs werden bei unserem Hosting-Anbieter (Vercel) in technischer Form gespeichert und enthalten keine persönlichen Daten. Der Chat mit Venesa wird über die Anthropic-API für die Antwortgenerierung verarbeitet.',
+        text: 'Anfragen und Bewertungen werden an unseren internen Telegram-Chat weitergeleitet. Website-Logs werden bei unserem Hosting-Anbieter (Vercel) in technischer Form gespeichert und enthalten keine persönlichen Daten. Der Chat mit Tess wird über die Anthropic-API für die Antwortgenerierung verarbeitet.',
       },
       {
         heading: "Wie lange wir Daten aufbewahren",
@@ -567,7 +567,7 @@ const strings = {
       },
       {
         heading: "Was wir versprechen",
-        text: 'Wir beschreiben unsere Leistungen ehrlich, besprechen Preise individuell und vereinbaren konkrete KPIs vor dem Start. Der Chat mit Venesa ist ein Hilfswerkzeug, kein rechtliches Angebot.',
+        text: 'Wir beschreiben unsere Leistungen ehrlich, besprechen Preise individuell und vereinbaren konkrete KPIs vor dem Start. Der Chat mit Tess ist ein Hilfswerkzeug, kein rechtliches Angebot.',
       },
       {
         heading: "Was wir nicht versprechen",

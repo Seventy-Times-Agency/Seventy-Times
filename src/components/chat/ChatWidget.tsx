@@ -55,8 +55,8 @@ export default function ChatWidget() {
 
   useEffect(() => {
     const handler = () => setOpen(true);
-    window.addEventListener("open-venesa", handler);
-    return () => window.removeEventListener("open-venesa", handler);
+    window.addEventListener("open-tess", handler);
+    return () => window.removeEventListener("open-tess", handler);
   }, []);
 
   useEffect(() => {
@@ -145,7 +145,7 @@ export default function ChatWidget() {
             <div className={styles.header}>
               <div className={styles.avatar}>
                 <Image
-                  src="/venesa.jpg"
+                  src="/tess.jpg"
                   alt={t.chatAlt}
                   className={styles.avatarImg}
                   width={48}
@@ -233,7 +233,7 @@ export default function ChatWidget() {
         type="button"
       >
         <Image
-          src="/venesa.jpg"
+          src="/tess.jpg"
           alt=""
           className={styles.toggleImg}
           width={56}

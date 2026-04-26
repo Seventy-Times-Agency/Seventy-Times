@@ -23,7 +23,7 @@ export default function Footer() {
           <a href="#services">{t.ftAds}</a>
           <a href="#services">{t.ftAutomation}</a>
           <a href="#services">{t.ftBots}</a>
-          <a href="#chat">{t.ftVenesa}</a>
+          <a href="#chat">{t.ftTess}</a>
           <a href="#process">{t.ftProcess}</a>
           <a href="#faq">{t.ftFaq}</a>
         </div>

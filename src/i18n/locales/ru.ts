@@ -7,7 +7,7 @@ const strings = {
     // Nav
     navServices: "Услуги",
     navProcess: "Процесс",
-    navVenesa: "Венеса",
+    navTess: "Тесс",
     navFaq: "FAQ",
     navStatus: "Принимаем проекты",
     navCta: "Заявка",
@@ -136,13 +136,13 @@ const strings = {
       "Смотрим цифры еженедельно. Режем неэффективное, масштабируем что работает. Отчёты по понедельникам, доступ к дашборду — всегда.",
     proc4t: "Постоянно",
 
-    // Venesa promo
-    venEyebrow: "— Знакомьтесь / Венеса",
+    // Tess promo
+    venEyebrow: "— Знакомьтесь / Тесс",
     venTitle1: "Ваш",
     venTitle2: "AI-консультант",
-    venTitle3: "Венеса.",
+    venTitle3: "Тесс.",
     venLead:
-      "Венеса — AI-ассистент на базе Claude, обученный под ваш бизнес. Она общается с клиентами на сайте, в Telegram и Instagram, квалифицирует лиды и передаёт горячих вам напрямую. Такого же бота мы создаём под каждый проект.",
+      "Тесс — AI-ассистент на базе Claude, обученный под ваш бизнес. Она общается с клиентами на сайте, в Telegram и Instagram, квалифицирует лиды и передаёт горячих вам напрямую. Такого же бота мы создаём под каждый проект.",
     venBullets: [
       "Знает ваш бизнес изнутри — обучена на ваших материалах и тоне",
       "Отвечает на любом языке, работает 24/7 без выходных",
@@ -151,7 +151,7 @@ const strings = {
     ],
     venCta: "Написать Венесе",
     venBadgeLabel: "AI Agent",
-    venBadgeName: "Венеса",
+    venBadgeName: "Тесс",
     venBadgeRole: "AI-консультант · Онлайн",
 
     // Principles — how we work (no "promises" / "guarantees" wording)
@@ -260,11 +260,11 @@ const strings = {
     simAutoLvl3Desc: "Комплексная система: лиды, CRM, счета, аналитика",
     simAiTag: "03 / AI",
     simAiName: "AI-консультант",
-    simAiDesc: "Где работает Венеса",
+    simAiDesc: "Где работает Тесс",
     simAiLvl0: "Нет",
     simAiLvl0Desc: "Без AI-консультанта — коммуникация только от людей",
     simAiLvl1: "Сайт",
-    simAiLvl1Desc: "Венеса на сайте — квалифицирует посетителей",
+    simAiLvl1Desc: "Тесс на сайте — квалифицирует посетителей",
     simAiLvl2: "Мульти",
     simAiLvl2Desc: "+ Telegram/Instagram — единый AI через все каналы",
     simAiLvl3: "Полный",
@@ -300,7 +300,7 @@ const strings = {
     ftAds: "Реклама / Таргет",
     ftAutomation: "Автоматизация",
     ftBots: "AI-боты",
-    ftVenesa: "Венеса",
+    ftTess: "Тесс",
     ftProcess: "Процесс",
     ftFaq: "FAQ",
     ftContacts: "Контакты",
@@ -447,18 +447,18 @@ const strings = {
 
     // Chat widget
     chatGreeting:
-      "Привет 👋 Меня зовут Венеса, я AI-консультант Seventy Times.\n\nРасскажи немного о своём бизнесе — подберу решение под твои задачи.",
-    chatName: "Венеса · AI-консультант",
+      "Привет 👋 Меня зовут Тесс, я AI-консультант Seventy Times.\n\nРасскажи немного о своём бизнесе — подберу решение под твои задачи.",
+    chatName: "Тесс · AI-консультант",
     chatStatus: "Онлайн",
     chatPh: "Напишите сообщение...",
-    chatLabel: "Венеса",
+    chatLabel: "Тесс",
     chatError: "Ошибка соединения. Попробуй чуть позже.",
     chatFallback: "Что-то пошло не так. Попробуй снова.",
     chatOpen: "Написать Венесе",
     chatClose: "Закрыть чат",
     chatSend: "Отправить",
     chatMessage: "Сообщение",
-    chatAlt: "Венеса — AI-консультант Seventy Times",
+    chatAlt: "Тесс — AI-консультант Seventy Times",
 
     // Consent (shared between forms)
     consentPrefix: "Я согласен(на) с ",
