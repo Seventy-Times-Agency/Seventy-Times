@@ -16,7 +16,9 @@ export const siteConfig = {
       url: "mailto:info@seventy-times.com",
     },
     whatsapp: {
-      handle: "+1 (585) 685-4437",
+      // Public-facing label intentionally hides the phone number.
+      // The URL deeplink still routes to the right chat.
+      handle: "Seventy Times",
       url: "https://wa.me/15856854437",
     },
     instagram: {
