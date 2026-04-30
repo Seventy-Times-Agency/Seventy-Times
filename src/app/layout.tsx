@@ -102,8 +102,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const locale = readLocaleFromCookies();
   return (
-    <html lang="en" className={manrope.variable}>
+    <html lang={locale} className={manrope.variable}>
       <head>
         <script
           type="application/ld+json"
@@ -113,7 +114,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <I18nProvider>
+        <I18nProvider initialLocale={locale}>
           <a href="#top" className="skipLink">
             Skip to content
           </a>

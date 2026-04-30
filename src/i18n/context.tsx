@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -23,25 +22,18 @@ const I18nContext = createContext<I18nContextValue>({
   setLocale: () => {},
 });
 
-function readCookie(): Locale | null {
-  if (typeof document === "undefined") return null;
-  const match = document.cookie.match(/(?:^|;\s*)lang=(\w+)/);
-  return match ? (match[1] as Locale) : null;
-}
-
 function writeCookie(locale: Locale) {
   document.cookie = `lang=${locale};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`;
 }
 
-export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
-
-  useEffect(() => {
-    const saved = readCookie();
-    if (saved && saved !== locale) {
-      setLocaleState(saved);
-    }
-  }, []);
+export function I18nProvider({
+  children,
+  initialLocale,
+}: {
+  children: ReactNode;
+  initialLocale: Locale;
+}) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
 
   const setLocale = useCallback((l: Locale) => {
     setLocaleState(l);
