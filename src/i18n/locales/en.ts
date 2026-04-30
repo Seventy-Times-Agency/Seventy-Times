@@ -627,7 +627,14 @@ const strings = {
     cookieLink: "details in the policy",
     cookieAccept: "Accept",
     cookieEssential: "Essential only",
-  
+
+    // 404
+    notFoundEyebrow: "404 / Lost link",
+    notFoundTitle: "We couldn't find that page",
+    notFoundLead:
+      "The link is broken or the page was moved. Head back to the landing — everything important is one click away.",
+    notFoundCta: "Back to home",
+
   };
 
 export default strings;

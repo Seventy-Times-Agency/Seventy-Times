@@ -169,7 +169,11 @@ export default function ChatWidget() {
               </button>
             </div>
 
-            <div className={styles.messages}>
+            <div
+              className={styles.messages}
+              aria-live="polite"
+              aria-busy={loading}
+            >
               <AnimatePresence initial={false}>
                 {messages.map((msg, i) => (
                   <motion.div
@@ -191,6 +195,8 @@ export default function ChatWidget() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
                     className={styles.typing}
+                    role="status"
+                    aria-label={t.chatStatus}
                   >
                     <span className={styles.typingDot} />
                     <span className={styles.typingDot} />

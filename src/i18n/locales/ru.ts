@@ -627,7 +627,14 @@ const strings = {
     cookieLink: "подробнее в политике",
     cookieAccept: "Принять",
     cookieEssential: "Только необходимые",
-  
+
+    // 404
+    notFoundEyebrow: "404 / Сломанная ссылка",
+    notFoundTitle: "Такой страницы нет",
+    notFoundLead:
+      "Ссылка устарела или страницу перенесли. Возвращайтесь на главную — всё важное в одном клике.",
+    notFoundCta: "На главную",
+
   };
 
 export default strings;

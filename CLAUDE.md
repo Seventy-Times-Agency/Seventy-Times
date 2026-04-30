@@ -191,8 +191,8 @@ instructions and example values.
 
 | Variable | Purpose |
 |---|---|
-| `ANTHROPIC_API_KEY` | Claude Sonnet 4.5 for Tess (required) |
-| `ANTHROPIC_MODEL` | Override model id (default: `claude-sonnet-4-5`) |
+| `ANTHROPIC_API_KEY` | Claude Sonnet 4.6 for Tess (required) |
+| `ANTHROPIC_MODEL` | Override model id (default: `claude-sonnet-4-6`) |
 | `ALLOWED_ORIGINS` | Comma-separated origins allowed to call /api/* |
 | `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` | Forward leads/reviews to Telegram |
 | `CLIENT_CODES` | Comma-separated codes for the review form |

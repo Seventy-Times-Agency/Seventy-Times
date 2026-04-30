@@ -74,7 +74,7 @@ async function notifyTelegram(review: Omit<ReviewPayload, "code">, code: string)
   if (!token || !chatId) return;
 
   const text = [
-    "⭐️ *Новый отзыв на сайте IAA agency*",
+    "⭐️ *Новый отзыв на сайте Seventy Times*",
     "",
     `🔑 *Код клиента:* \`${escapeMarkdown(code)}\``,
     `👤 *Имя:* ${escapeMarkdown(review.name)}`,
@@ -83,8 +83,6 @@ async function notifyTelegram(review: Omit<ReviewPayload, "code">, code: string)
     "",
     `💬 *Отзыв:*`,
     escapeMarkdown(review.content),
-    "",
-    "_Добавь вручную в src/data/testimonials.ts_",
   ].join("\n");
 
   try {
