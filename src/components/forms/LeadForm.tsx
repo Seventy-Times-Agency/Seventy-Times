@@ -30,6 +30,35 @@ const INITIAL = {
   website: "",
 };
 
+const DRAFT_KEY = "st-lead-draft-v1";
+
+type LeadDraft = Omit<typeof INITIAL, "website">;
+
+function isLeadPackage(v: unknown): v is LeadPackage {
+  return (
+    typeof v === "string" &&
+    ["not_sure", "standalone", "launch", "growth", "scale"].includes(v)
+  );
+}
+
+function readDraft(): LeadDraft | null {
+  try {
+    const raw = window.localStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<LeadDraft>;
+    if (typeof parsed !== "object" || parsed === null) return null;
+    return {
+      name: typeof parsed.name === "string" ? parsed.name : "",
+      contact: typeof parsed.contact === "string" ? parsed.contact : "",
+      business: typeof parsed.business === "string" ? parsed.business : "",
+      request: typeof parsed.request === "string" ? parsed.request : "",
+      package: isLeadPackage(parsed.package) ? parsed.package : "not_sure",
+    };
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Accepts common contact formats: email, @username (telegram),
  * or any string containing digits (phone). Anything else we treat
@@ -52,12 +81,49 @@ function isPlausibleContact(value: string): boolean {
  * Mounted once at the layout level.
  */
 export default function LeadForm() {
-  const { t } = useT();
+  const { t, localePath } = useT();
   const [open, setOpen] = useState(false);
   const [fields, setFields] = useState(INITIAL);
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const [hydrated, setHydrated] = useState(false);
+
+  // Restore the user's draft (everything except the honeypot) on mount.
+  useEffect(() => {
+    const draft = readDraft();
+    if (draft) setFields((prev) => ({ ...prev, ...draft }));
+    setHydrated(true);
+  }, []);
+
+  // Persist any user-typed changes — survives accidental reloads,
+  // navigation, or coming back tomorrow. Cleared after a successful
+  // submit (see `submit` below).
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      const draft: LeadDraft = {
+        name: fields.name,
+        contact: fields.contact,
+        business: fields.business,
+        request: fields.request,
+        package: fields.package,
+      };
+      const empty =
+        !draft.name &&
+        !draft.contact &&
+        !draft.business &&
+        !draft.request &&
+        draft.package === "not_sure";
+      if (empty) {
+        window.localStorage.removeItem(DRAFT_KEY);
+      } else {
+        window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      }
+    } catch {
+      // localStorage may be blocked / full — ignore.
+    }
+  }, [hydrated, fields.name, fields.contact, fields.business, fields.request, fields.package]);
 
   // Listen to URL hash to know when to open.
   useEffect(() => {
@@ -156,6 +222,11 @@ export default function LeadForm() {
       setStatus("success");
       setFields(INITIAL);
       setConsent(false);
+      try {
+        window.localStorage.removeItem(DRAFT_KEY);
+      } catch {
+        // ignore
+      }
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : t.chatError);
@@ -308,11 +379,11 @@ export default function LeadForm() {
                     />
                     <span>
                       {t.consentPrefix}
-                      <Link href="/privacy" target="_blank">
+                      <Link href={localePath("/privacy")} target="_blank">
                         {t.consentPrivacy}
                       </Link>
                       {t.consentAnd}
-                      <Link href="/terms" target="_blank">
+                      <Link href={localePath("/terms")} target="_blank">
                         {t.consentTerms}
                       </Link>
                       {t.consentSuffix}

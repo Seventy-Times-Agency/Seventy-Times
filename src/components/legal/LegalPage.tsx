@@ -14,12 +14,13 @@ type Props = {
 };
 
 export default function LegalPage({ title, updated, draftNote, body }: Props) {
-  const { t } = useT();
+  const { t, localePath } = useT();
+  const home = localePath("/");
 
   return (
     <main className={styles.main}>
       <div className={styles.inner}>
-        <Link href="/" className={styles.back}>
+        <Link href={home} className={styles.back}>
           {t.legalBack}
         </Link>
 
@@ -37,7 +38,7 @@ export default function LegalPage({ title, updated, draftNote, body }: Props) {
           ))}
         </div>
 
-        <Link href="/" className={styles.back}>
+        <Link href={home} className={styles.back}>
           {t.legalBack}
         </Link>
       </div>

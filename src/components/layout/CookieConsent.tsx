@@ -18,7 +18,7 @@ type Choice = "accepted" | "essential";
  * a banner under live traffic. Decision is persisted in localStorage.
  */
 export default function CookieConsent() {
-  const { t } = useT();
+  const { t, localePath } = useT();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function CookieConsent() {
         >
           <div className={styles.text}>
             <strong>{t.cookieTitle}</strong> {t.cookieBody}{" "}
-            <Link href="/privacy" className={styles.link}>
+            <Link href={localePath("/privacy")} className={styles.link}>
               {t.cookieLink}
             </Link>
           </div>

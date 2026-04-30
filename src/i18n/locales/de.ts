@@ -411,6 +411,17 @@ const strings = {
       "KI-Assistent in Telegram",
       "Bezahlte Werbung Meta + Google",
     ],
+    casesBack: "Zurück zu allen Projekten",
+    casesWhatWeBuilt: "Was wir gebaut haben",
+    casesStatusHeading: "Status",
+    casesStatusBodyLive:
+      "Das System ist live und bedient echte Nutzer. Wir tracken die Zahlen und iterieren wöchentlich.",
+    casesStatusBodyProgress:
+      "Projekt in aktiver Entwicklung. Konkrete Zahlen veröffentlichen wir, sobald sie mit dem Kunden abgestimmt sind.",
+    casesStatusBodySoon:
+      "Discovery-Phase. Wir stimmen das Briefing ab, planen den Build und bereiten den Launch vor.",
+    casesPrimaryCta: "Ich möchte ein solches Projekt",
+    casesExternalCta: "Live-Projekt öffnen",
 
     // Intro
     introTag1: "Werbung",

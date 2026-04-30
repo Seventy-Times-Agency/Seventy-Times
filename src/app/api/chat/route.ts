@@ -84,29 +84,56 @@ export async function POST(req: Request) {
   const client = new Anthropic({ apiKey });
   const model = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6";
 
-  try {
-    const response = await client.messages.create({
-      model,
-      // Bumped from 1024 so Tess can give a substantive answer to
-      // a deep marketing / automation question without getting cut.
-      max_tokens: 1500,
-      // Slightly cooler than default — cuts marketing-speak drift
-      // without making her sound robotic.
-      temperature: 0.7,
-      system: SYSTEM_PROMPT,
-      messages,
-    });
+  // Stream Claude's response token-by-token. We forward each text delta
+  // as a JSON line ({"text":"..."} or {"done":true} or {"error":"..."})
+  // separated by newlines — simpler than SSE on the client and gives the
+  // chat widget the same `read line, append to bubble` loop.
+  const encoder = new TextEncoder();
 
-    const textBlock = response.content.find((block) => block.type === "text");
-    if (!textBlock || textBlock.type !== "text") {
-      return NextResponse.json({ error: "EMPTY_REPLY" }, { status: 502 });
-    }
+  const stream = new ReadableStream({
+    async start(controller) {
+      const send = (payload: unknown) => {
+        controller.enqueue(
+          encoder.encode(JSON.stringify(payload) + "\n"),
+        );
+      };
 
-    return NextResponse.json({ reply: textBlock.text });
-  } catch (error) {
-    const status =
-      error instanceof Anthropic.APIError ? error.status : "network";
-    console.error("[CHAT] upstream error", { status });
-    return NextResponse.json({ error: "UPSTREAM_ERROR" }, { status: 502 });
-  }
+      try {
+        const upstream = await client.messages.stream({
+          model,
+          max_tokens: 1500,
+          temperature: 0.7,
+          system: SYSTEM_PROMPT,
+          messages,
+        });
+
+        for await (const event of upstream) {
+          if (
+            event.type === "content_block_delta" &&
+            event.delta.type === "text_delta"
+          ) {
+            send({ text: event.delta.text });
+          }
+        }
+
+        send({ done: true });
+      } catch (error) {
+        const status =
+          error instanceof Anthropic.APIError ? error.status : "network";
+        console.error("[CHAT] upstream error", { status });
+        send({ error: "UPSTREAM_ERROR" });
+      } finally {
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/x-ndjson; charset=utf-8",
+      "Cache-Control": "no-store",
+      "X-Accel-Buffering": "no",
+    },
+  });
 }
