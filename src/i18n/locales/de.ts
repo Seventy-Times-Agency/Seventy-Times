@@ -649,6 +649,11 @@ const strings = {
       "Der Link ist defekt oder die Seite wurde verschoben. Zurück zur Startseite — alles Wichtige ist nur einen Klick entfernt.",
     notFoundCta: "Zur Startseite",
 
+    // Trust bar
+    trustAria: "Tools und Plattformen",
+    trustPoweredBy: "Powered by",
+    trustWeRunAdsOn: "Wir schalten Werbung auf",
+
   };
 
 export default strings;

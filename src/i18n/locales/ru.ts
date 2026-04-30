@@ -646,6 +646,11 @@ const strings = {
       "Ссылка устарела или страницу перенесли. Возвращайтесь на главную — всё важное в одном клике.",
     notFoundCta: "На главную",
 
+    // Trust bar
+    trustAria: "Инструменты и платформы",
+    trustPoweredBy: "На чём построено",
+    trustWeRunAdsOn: "Где запускаем рекламу",
+
   };
 
 export default strings;
