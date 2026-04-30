@@ -109,12 +109,12 @@ export async function POST(req: Request) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    return NextResponse.json({ error: "INVALID_JSON" }, { status: 400 });
   }
 
   if (!isValid(body)) {
     return NextResponse.json(
-      { error: "Не хватает полей в заявке" },
+      { error: "MISSING_FIELDS" },
       { status: 400 }
     );
   }
@@ -142,7 +142,7 @@ export async function POST(req: Request) {
 
   if (!name || !contact || !business || !request) {
     return NextResponse.json(
-      { error: "Заполни, пожалуйста, все поля" },
+      { error: "MISSING_FIELDS" },
       { status: 400 }
     );
   }
@@ -154,7 +154,7 @@ export async function POST(req: Request) {
     request.length > LIMITS.request
   ) {
     return NextResponse.json(
-      { error: "Один из ответов слишком длинный" },
+      { error: "TOO_LONG" },
       { status: 400 }
     );
   }

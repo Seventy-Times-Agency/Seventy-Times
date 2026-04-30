@@ -148,11 +148,8 @@ export default function LeadForm() {
       });
 
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
         const msg =
-          res.status === 429
-            ? t.leadTooMany
-            : data.error || t.chatFallback;
+          res.status === 429 ? t.leadTooMany : t.chatFallback;
         throw new Error(msg);
       }
 

@@ -23,7 +23,13 @@ export default function Footer() {
           <a href="#services">{t.ftAds}</a>
           <a href="#services">{t.ftAutomation}</a>
           <a href="#services">{t.ftBots}</a>
-          <a href="#chat">{t.ftTess}</a>
+          <button
+            type="button"
+            className={styles.linkBtn}
+            onClick={() => window.dispatchEvent(new Event("open-tess"))}
+          >
+            {t.ftTess}
+          </button>
           <a href="#process">{t.ftProcess}</a>
           <a href="#faq">{t.ftFaq}</a>
         </div>

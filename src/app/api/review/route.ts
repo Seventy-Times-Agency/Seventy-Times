@@ -74,7 +74,7 @@ async function notifyTelegram(review: Omit<ReviewPayload, "code">, code: string)
   if (!token || !chatId) return;
 
   const text = [
-    "⭐️ *Новый отзыв на сайте IAA agency*",
+    "⭐️ *Новый отзыв на сайте Seventy Times*",
     "",
     `🔑 *Код клиента:* \`${escapeMarkdown(code)}\``,
     `👤 *Имя:* ${escapeMarkdown(review.name)}`,
@@ -83,8 +83,6 @@ async function notifyTelegram(review: Omit<ReviewPayload, "code">, code: string)
     "",
     `💬 *Отзыв:*`,
     escapeMarkdown(review.content),
-    "",
-    "_Добавь вручную в src/data/testimonials.ts_",
   ].join("\n");
 
   try {
@@ -113,12 +111,12 @@ export async function POST(req: Request) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    return NextResponse.json({ error: "INVALID_JSON" }, { status: 400 });
   }
 
   if (!isValid(body)) {
     return NextResponse.json(
-      { error: "Не хватает полей в отзыве" },
+      { error: "MISSING_FIELDS" },
       { status: 400 }
     );
   }
@@ -143,7 +141,7 @@ export async function POST(req: Request) {
 
   if (!code || !name || !role || !location || !content) {
     return NextResponse.json(
-      { error: "Заполни все поля" },
+      { error: "MISSING_FIELDS" },
       { status: 400 }
     );
   }
@@ -156,7 +154,7 @@ export async function POST(req: Request) {
     content.length > LIMITS.content
   ) {
     return NextResponse.json(
-      { error: "Одно из полей слишком длинное" },
+      { error: "TOO_LONG" },
       { status: 400 }
     );
   }
@@ -169,10 +167,7 @@ export async function POST(req: Request) {
       codeLen: code.length,
     });
     return NextResponse.json(
-      {
-        error:
-          "Код не подходит. Если вы реальный клиент — напишите нам в Telegram, мы выдадим вам персональный код.",
-      },
+      { error: "INVALID_CODE" },
       { status: 401 }
     );
   }

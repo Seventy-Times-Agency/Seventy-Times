@@ -47,14 +47,26 @@
 }
 
 .col a,
-.col span {
+.col span,
+.col .linkBtn {
   font-size: 13.5px;
   color: var(--text-muted);
   transition: color 0.2s ease;
 }
 
-.col a:hover {
+.col a:hover,
+.col .linkBtn:hover {
   color: var(--white);
+}
+
+.linkBtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
 /* Huge wordmark */

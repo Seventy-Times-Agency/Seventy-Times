@@ -9,10 +9,7 @@ import FloatingGlyphs from "@/components/decor/FloatingGlyphs";
 import ScrollProgress from "@/components/decor/ScrollProgress";
 import SmoothScroll from "@/components/decor/SmoothScroll";
 import PageIntro from "@/components/layout/PageIntro";
-import LeadForm from "@/components/forms/LeadForm";
-import CookieConsent from "@/components/layout/CookieConsent";
-import ReviewForm from "@/components/forms/ReviewForm";
-import ChatWidget from "@/components/chat/ChatWidget";
+import ClientOverlays from "@/components/layout/ClientOverlays";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -55,11 +52,25 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${siteConfig.name} — ${siteConfig.tagline}`,
       description: meta.description,
       siteName: siteConfig.name,
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${siteConfig.name} — ${siteConfig.tagline}`,
       description: meta.description,
+      images: [
+        {
+          url: "/opengraph-image",
+          alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+        },
+      ],
     },
     icons: { icon: "/favicon.svg" },
     robots: { index: true, follow: true },
@@ -102,8 +113,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const locale = readLocaleFromCookies();
   return (
-    <html lang="en" className={manrope.variable}>
+    <html lang={locale} className={manrope.variable}>
       <head>
         <script
           type="application/ld+json"
@@ -113,7 +125,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <I18nProvider>
+        <I18nProvider initialLocale={locale}>
           <a href="#top" className="skipLink">
             Skip to content
           </a>
@@ -124,10 +136,7 @@ export default function RootLayout({
           <FloatingGlyphs />
           <ScrollProgress />
           {children}
-          <ChatWidget />
-          <LeadForm />
-          <ReviewForm />
-          <CookieConsent />
+          <ClientOverlays />
         </I18nProvider>
       </body>
     </html>

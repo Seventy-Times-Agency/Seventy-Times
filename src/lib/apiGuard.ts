@@ -122,7 +122,7 @@ export function checkOrigin(req: Request): boolean {
 
 export function rateLimitResponse(result: Extract<RateLimitResult, { ok: false }>) {
   return NextResponse.json(
-    { error: "Слишком много запросов. Попробуй чуть позже." },
+    { error: "RATE_LIMITED" },
     {
       status: 429,
       headers: { "Retry-After": String(result.retryAfter) },
@@ -131,7 +131,7 @@ export function rateLimitResponse(result: Extract<RateLimitResult, { ok: false }
 }
 
 export function forbiddenOriginResponse() {
-  return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  return NextResponse.json({ error: "FORBIDDEN" }, { status: 403 });
 }
 
 /**
