@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import Nav from "@/components/layout/Nav";
 import Hero from "@/components/sections/Hero";
+import TrustBar from "@/components/sections/TrustBar";
 import GrowthMachine from "@/components/sections/GrowthMachine";
 import VelocityTicker from "@/components/sections/VelocityTicker";
 import Services from "@/components/sections/Services";
@@ -30,6 +31,7 @@ export default function HomePage() {
       <Nav />
       <main>
         <Hero />
+        <TrustBar />
         <SectionDivider labelKey="divMachine" />
         <GrowthMachine />
         <VelocityTicker />

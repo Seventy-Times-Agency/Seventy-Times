@@ -646,6 +646,11 @@ const strings = {
       "The link is broken or the page was moved. Head back to the landing — everything important is one click away.",
     notFoundCta: "Back to home",
 
+    // Trust bar
+    trustAria: "Tools and platforms",
+    trustPoweredBy: "Powered by",
+    trustWeRunAdsOn: "We run ads on",
+
   };
 
 export default strings;
