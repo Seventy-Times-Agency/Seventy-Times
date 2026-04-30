@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { Manrope } from "next/font/google";
 import { siteConfig } from "@/data/siteConfig";
+import { getLocaleMeta } from "@/lib/localizedMeta";
+import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "@/i18n/config";
 import { I18nProvider } from "@/i18n/context";
-import HtmlLangSync from "@/i18n/HtmlLangSync";
-import { getLocaleMeta, readLocaleFromCookies } from "@/lib/localizedMeta";
 import AnimatedBackground from "@/components/decor/AnimatedBackground";
 import FloatingGlyphs from "@/components/decor/FloatingGlyphs";
 import ScrollProgress from "@/components/decor/ScrollProgress";
@@ -19,11 +20,36 @@ const manrope = Manrope({
   display: "swap",
 });
 
+// Middleware sets `x-locale` on every request based on the URL prefix
+// (or cookie / Accept-Language as fallback). We trust it here so the
+// SSR'd HTML, metadata, and <html lang> all match the URL the user
+// is actually loading.
+function readLocale(): Locale {
+  const fromHeader = headers().get("x-locale");
+  return isLocale(fromHeader) ? fromHeader : DEFAULT_LOCALE;
+}
+
+const OG_LOCALE_TAGS: Record<Locale, string> = {
+  en: "en_US",
+  ru: "ru_RU",
+  de: "de_DE",
+};
+
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = readLocaleFromCookies();
+  const locale = readLocale();
   const meta = getLocaleMeta(locale);
-  const alternateLocales = (["en_US", "ru_RU", "de_DE"] as const).filter(
-    (l) => l !== meta.ogLocale
+  const ogLocale = OG_LOCALE_TAGS[locale];
+  const alternateLocales = LOCALES.filter((l) => l !== locale).map(
+    (l) => OG_LOCALE_TAGS[l],
+  );
+
+  // Each locale lives at /<locale>; the home of the default locale is
+  // also reachable at `/`, but the canonical points to the prefixed URL
+  // so search engines never collapse RU/DE into the EN canonical.
+  const canonical =
+    locale === DEFAULT_LOCALE ? siteConfig.url : `${siteConfig.url}/${locale}`;
+  const languageAlternates = Object.fromEntries(
+    LOCALES.map((l) => [l, `${siteConfig.url}/${l}`]),
   );
 
   return {
@@ -36,19 +62,17 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: meta.keywords,
     authors: [{ name: siteConfig.name }],
     alternates: {
-      canonical: siteConfig.url,
+      canonical,
       languages: {
-        en: `${siteConfig.url}?lang=en`,
-        ru: `${siteConfig.url}?lang=ru`,
-        de: `${siteConfig.url}?lang=de`,
+        ...languageAlternates,
         "x-default": siteConfig.url,
       },
     },
     openGraph: {
       type: "website",
-      locale: meta.ogLocale,
-      alternateLocale: [...alternateLocales],
-      url: siteConfig.url,
+      locale: ogLocale,
+      alternateLocale: alternateLocales,
+      url: canonical,
       title: `${siteConfig.name} — ${siteConfig.tagline}`,
       description: meta.description,
       siteName: siteConfig.name,
@@ -113,7 +137,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const locale = readLocaleFromCookies();
+  const locale = readLocale();
   return (
     <html lang={locale} className={manrope.variable}>
       <head>
@@ -125,11 +149,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <I18nProvider initialLocale={locale}>
+        <I18nProvider locale={locale}>
           <a href="#top" className="skipLink">
             Skip to content
           </a>
-          <HtmlLangSync />
           <SmoothScroll />
           <PageIntro />
           <AnimatedBackground />

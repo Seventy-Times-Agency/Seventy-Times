@@ -1,12 +1,4 @@
-import { cookies } from "next/headers";
-import { DEFAULT_LOCALE, LOCALES, type Locale } from "@/i18n/config";
-
-export function readLocaleFromCookies(): Locale {
-  const saved = cookies().get("lang")?.value;
-  return (LOCALES as readonly string[]).includes(saved ?? "")
-    ? (saved as Locale)
-    : DEFAULT_LOCALE;
-}
+import type { Locale } from "@/i18n/config";
 
 type LocaleMeta = {
   description: string;

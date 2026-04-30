@@ -411,6 +411,17 @@ const strings = {
       "AI-консультант в Telegram",
       "Таргет Meta + Google",
     ],
+    casesBack: "Ко всем кейсам",
+    casesWhatWeBuilt: "Что собрали",
+    casesStatusHeading: "Статус",
+    casesStatusBodyLive:
+      "Система работает с реальными пользователями. Снимаем цифры и улучшаем неделя за неделей.",
+    casesStatusBodyProgress:
+      "Проект в активной разработке. Конкретные цифры опубликуем после согласования с клиентом.",
+    casesStatusBodySoon:
+      "Стадия дискавери. Согласуем бриф, проектируем сборку, готовим к запуску.",
+    casesPrimaryCta: "Хочу такой же проект",
+    casesExternalCta: "Открыть рабочий проект",
 
     // Intro
     introTag1: "Реклама",

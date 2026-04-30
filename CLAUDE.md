@@ -28,35 +28,44 @@ This file is the short orientation map. Read it first when opening the repo.
 src/
 ├── app/                          Next.js App Router
 │   ├── api/
-│   │   ├── chat/route.ts         /api/chat — Anthropic proxy for Tess
+│   │   ├── chat/route.ts         /api/chat — Anthropic proxy for Tess (streaming)
 │   │   ├── lead/route.ts         /api/lead — lead form → Telegram + Notion
 │   │   └── review/route.ts       /api/review — review form → Telegram + Notion
-│   ├── about/                    /about page (i18n-aware metadata)
-│   │   ├── page.tsx              server component, generates metadata
-│   │   └── AboutClient.tsx       client component, renders copy
-│   ├── privacy/                  /privacy page (same shape as about)
-│   │   ├── page.tsx
-│   │   └── PrivacyClient.tsx
-│   ├── terms/                    /terms page (same shape)
-│   │   ├── page.tsx
-│   │   └── TermsClient.tsx
-│   ├── layout.tsx                Root layout, <html lang> from cookie,
-│   │                             JSON-LD, fonts, mounts forms + ChatWidget
-│   ├── page.tsx                  Landing page — composes all sections
+│   ├── [locale]/                 All public routes are locale-prefixed:
+│   │   │                         /en, /ru, /de + their subpages
+│   │   ├── layout.tsx            Validates the locale segment
+│   │   ├── page.tsx              Landing — composes all sections
+│   │   ├── about/                /<locale>/about
+│   │   │   ├── page.tsx
+│   │   │   └── AboutClient.tsx
+│   │   ├── cases/[slug]/         /<locale>/cases/<id> — per-case page
+│   │   │   ├── page.tsx          generateStaticParams over CASES × LOCALES
+│   │   │   ├── CaseDetail.tsx    Detail layout, status, metrics, CTAs
+│   │   │   └── CaseDetail.module.css
+│   │   ├── privacy/              /<locale>/privacy
+│   │   │   ├── page.tsx
+│   │   │   └── PrivacyClient.tsx
+│   │   └── terms/                /<locale>/terms
+│   │       ├── page.tsx
+│   │       └── TermsClient.tsx
+│   ├── layout.tsx                Root: <html lang> + I18nProvider read
+│   │                             locale from `x-locale` header set by
+│   │                             middleware. Mounts overlays + decor.
+│   ├── not-found.tsx             Branded localized 404 (cookie / header)
 │   ├── globals.css               Design tokens + reset + shimmer/reduced-motion
 │   ├── robots.ts                 /robots.txt
-│   ├── sitemap.ts                /sitemap.xml (home + legal + hreflang)
+│   ├── sitemap.ts                /sitemap.xml — every locale × every page
 │   └── opengraph-image.tsx       Dynamic OG preview at /opengraph-image
 │
 ├── components/                   Grouped by role
 │   ├── layout/                   Chrome: Nav, Footer, PageIntro,
-│   │                             CookieConsent
+│   │                             ClientOverlays, CookieConsent
 │   ├── sections/                 Landing sections in scroll order:
 │   │                             Hero, GrowthMachine, VelocityTicker,
 │   │                             Services, Process, ChatDemo, Testimonials,
 │   │                             Cases, GrowthSimulator, FAQ, CTA
 │   ├── forms/                    LeadForm + ReviewForm (share CSS module)
-│   ├── chat/                     ChatWidget (floating Tess chat)
+│   ├── chat/                     ChatWidget (floating Tess chat, streaming)
 │   ├── decor/                    Non-content: AnimatedBackground,
 │   │                             FloatingGlyphs, ScrollProgress, SmoothScroll,
 │   │                             SectionDivider, SectionWatermark
@@ -71,11 +80,9 @@ src/
 │   └── cases.ts                  Portfolio cases (i18n keys + status + url)
 │
 ├── i18n/                         Localization
-│   ├── config.ts                 Locale list and labels (en/ru/de)
-│   ├── context.tsx               I18nProvider + useT() hook,
-│   │                             takes initialLocale from server
-│   ├── HtmlLangSync.tsx          Keeps <html lang="..."> in sync when the
-│   │                             user switches locale on the client
+│   ├── config.ts                 Locale list, labels, isLocale + localizedPath
+│   ├── context.tsx               I18nProvider + useT() (locale, t, setLocale,
+│   │                             localePath helper for building URLs)
 │   ├── dictionary.ts             Aggregates three locale files
 │   └── locales/
 │       ├── en.ts                 English strings
@@ -86,10 +93,12 @@ src/
 │   ├── apiGuard.ts               Rate limit, Origin check, honeypot helpers
 │   ├── telegram.ts               Telegram MarkdownV2 escape
 │   ├── notion.ts                 Notion REST helpers (lead + review create)
-│   ├── localizedMeta.ts          Per-locale metadata + cookie reader
+│   ├── localizedMeta.ts          Per-locale metadata getters
 │   └── systemPrompt.ts           Tess's Claude system prompt (English)
 │
-└── middleware.ts                 Blocks scanner user-agents on / and /api/*
+└── middleware.ts                 Locale prefix detection + redirect of /,
+                                  ?lang= → cookie + clean URL, sets x-locale
+                                  header for the layout, blocks scanner UAs.
 public/
 ├── tess.jpg                      Tess portrait (optimized via next/image)
 └── favicon.svg
@@ -118,18 +127,23 @@ during the restructure.
 
 ## Key concepts
 
-### i18n
+### i18n & routing
 - Three locales: `en` (default), `ru`, `de`. Defined in `src/i18n/config.ts`.
-- User's choice is saved in a `lang` cookie. `RootLayout` reads it on the
-  server with `readLocaleFromCookies()` and passes it both to
-  `<html lang={...}>` and `<I18nProvider initialLocale={...}>`. This means
-  the SSR'd HTML is already in the user's language — no English flash, no
-  hydration mismatch.
-- Client components call `useT()` → get `{ locale, t, setLocale }`.
-- `setLocale` writes the cookie and re-renders. `HtmlLangSync` keeps the
-  `<html lang>` attribute updated when the user switches locale on the fly.
-- Server components for `/about`, `/privacy`, `/terms` page.tsx call
-  `readLocaleFromCookies()` to localize their metadata.
+- **Every public URL is locale-prefixed**: `/en`, `/ru/about`, `/de/cases/X`.
+  Each locale × page is statically pre-rendered at build time
+  (`generateStaticParams`).
+- Middleware does the locale routing:
+  - `/` (no prefix) → 307 to `/<cookie>` if a cookie is set, otherwise the
+    first match in `Accept-Language`, otherwise `/en`.
+  - `/<prefix>/...` → refreshes the `lang` cookie and sets an `x-locale`
+    request header so the root layout can render the right `<html lang>`.
+  - `?lang=ru|de|en` → 308 redirect to `/<locale>` plus cookie set.
+- Client components call `useT()` → get `{ locale, t, setLocale, localePath }`.
+  Use `localePath("/about")` to build any internal URL.
+- `setLocale(next)` writes the cookie and `router.push`-es to the same path
+  with the new locale prefix.
+- Server components (legal/about pages, case pages) read locale from
+  `params.locale` directly — they never need the cookie.
 - Tess (the AI chat) detects the user's language from their first message,
   not from the cookie — rules are in `src/lib/systemPrompt.ts`.
 
@@ -166,6 +180,19 @@ localized strings via the dictionary (e.g. 401 → `t.reviewInvalidCode`,
 in parallel via `Promise.allSettled`. Either channel failing does not block
 the user's success response. See `src/lib/notion.ts` and the `notifyTelegram`
 function inside each route.
+
+### Streaming chat
+`POST /api/chat` returns `application/x-ndjson`: one JSON object per
+newline (`{"text":"..."}` per token, `{"done":true}` at the end, or
+`{"error":"UPSTREAM_ERROR"}` on failure). The widget reads the body via
+a `ReadableStream` reader and appends each text delta to the live
+assistant bubble.
+
+### Lead-form draft persistence
+`LeadForm` saves every keystroke (everything except the honeypot) to
+`localStorage` under `st-lead-draft-v1`. On mount it restores the draft
+so a user who closed the modal — or the tab — comes back to a partially
+filled form. The key is wiped on a successful submit.
 
 ### Hero ring animation
 `components/ui/RingCounter.tsx` drives the four hero stats. It writes to the
@@ -257,14 +284,17 @@ per-Vercel-instance — switch to Upstash Redis if you need global counters.
 - **CookieConsent** stores the user's choice in `localStorage` under
   `st-cookie-consent-v1` (values `"accepted"` or `"essential"`). Gate any
   new analytics scripts on this value.
+- **LeadForm draft** persists in `localStorage` under `st-lead-draft-v1`
+  (everything except the honeypot). Wiped on a successful submit.
 - **Honeypot field**: every form has an invisible `website` input. If a bot
   fills it, the server returns 200 and silently drops the payload — no
   Telegram, no Notion, one warn line in logs. Don't add a visible field
   named `website` without renaming the honeypot.
 - **Next-image + tess.jpg**: rendered with explicit width/height because
   the source is a JPEG. Replace carefully.
-- **Middleware** runs on `/` and `/api/*` only. If you add a new route
-  that should be protected, update the `matcher` in `src/middleware.ts`.
+- **Middleware** runs on every page route (locale routing) and `/api/*`.
+  Static assets and the file-based prerender outputs are excluded by
+  the `matcher` in `src/middleware.ts`.
 - **`overrides` in `package.json`** pins `glob ≥ 10.5.0` and
   `postcss ≥ 8.5.10` to patch transitive CVEs. Keep these unless the upstream
   versions ship newer fixes — `npm audit` will flag regressions.

@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { getDictionary } from "@/i18n/dictionary";
-import { readLocaleFromCookies } from "@/lib/localizedMeta";
+import { DEFAULT_LOCALE, isLocale } from "@/i18n/config";
 import styles from "./not-found.module.css";
 
 export default function NotFound() {
-  const t = getDictionary(readLocaleFromCookies());
+  const fromHeader = headers().get("x-locale");
+  const locale = isLocale(fromHeader) ? fromHeader : DEFAULT_LOCALE;
+  const t = getDictionary(locale);
 
   return (
     <main className={styles.main}>
@@ -15,7 +18,7 @@ export default function NotFound() {
         </h1>
         <h2 className={styles.subtitle}>{t.notFoundTitle}</h2>
         <p className={styles.lead}>{t.notFoundLead}</p>
-        <Link href="/" className={styles.cta}>
+        <Link href={`/${locale}`} className={styles.cta}>
           {t.notFoundCta} <span aria-hidden="true">→</span>
         </Link>
       </div>

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
 import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
@@ -12,7 +14,15 @@ const SECTION_IDS = ["growth-machine", "services", "process", "chat", "cases", "
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
-  const { locale, t, setLocale } = useT();
+  const { locale, t, setLocale, localePath } = useT();
+  const pathname = usePathname();
+  const home = localePath("/");
+  // On the landing page, anchor links scroll within the page; on
+  // other routes (legal pages, case pages), they need to send the
+  // user back to the landing first.
+  const onHome = pathname === home || pathname === `/${locale}`;
+  const anchor = (id: string) => (onHome ? `#${id}` : `${home}#${id}`);
+  const leadHref = onHome ? "#lead" : `${home}#lead`;
 
   useEffect(() => {
     const nodes = SECTION_IDS
@@ -38,18 +48,18 @@ export default function Nav() {
   const close = () => setMenuOpen(false);
 
   const NAV_LINKS = [
-    { href: "#growth-machine", id: "growth-machine", label: t.navMachine },
-    { href: "#services", id: "services", label: t.navServices },
-    { href: "#cases", id: "cases", label: t.navCases },
-    { href: "#process", id: "process", label: t.navProcess },
-    { href: "#faq", id: "faq", label: t.navFaq },
+    { href: anchor("growth-machine"), id: "growth-machine", label: t.navMachine },
+    { href: anchor("services"), id: "services", label: t.navServices },
+    { href: anchor("cases"), id: "cases", label: t.navCases },
+    { href: anchor("process"), id: "process", label: t.navProcess },
+    { href: anchor("faq"), id: "faq", label: t.navFaq },
   ];
 
   return (
     <nav className={styles.nav}>
-      <a href="#top" className={styles.logo} aria-label={siteConfig.name}>
+      <Link href={home} className={styles.logo} aria-label={siteConfig.name}>
         <Logo variant="compact" />
-      </a>
+      </Link>
 
       <div className={styles.links}>
         {NAV_LINKS.map((l) => (
@@ -80,7 +90,7 @@ export default function Nav() {
             </button>
           ))}
         </div>
-        <a href="#lead" className={styles.cta}>
+        <a href={leadHref} className={styles.cta}>
           {t.navCta} <span className={styles.ctaArrow} aria-hidden="true">→</span>
         </a>
         <button
@@ -121,7 +131,7 @@ export default function Nav() {
               </button>
             ))}
           </div>
-          <a href="#lead" className={styles.mobileCta} onClick={close}>
+          <a href={leadHref} className={styles.mobileCta} onClick={close}>
             {t.heroCta1} →
           </a>
         </div>

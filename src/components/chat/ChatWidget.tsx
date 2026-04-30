@@ -86,40 +86,75 @@ export default function ChatWidget() {
     setInput("");
     setLoading(true);
 
-    // Retry transient network / 5xx errors with exponential backoff.
-    // Rate-limit (429) and client errors (4xx other than 408) are
-    // surfaced immediately — no point in retrying a banned request.
-    const DELAYS_MS = [0, 800, 2000];
+    // Append an empty assistant bubble we can stream into.
+    setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
-    let reply = t.chatError;
-    for (let attempt = 0; attempt < DELAYS_MS.length; attempt++) {
-      if (DELAYS_MS[attempt] > 0) {
-        await new Promise((r) => setTimeout(r, DELAYS_MS[attempt]));
-      }
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: next }),
-        });
-        const data = await res.json().catch(() => ({}));
+    let streamed = "";
+    let errored = false;
 
-        if (res.ok && typeof data.reply === "string" && data.reply.length > 0) {
-          reply = data.reply;
-          break;
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: next }),
+      });
+
+      if (!res.ok || !res.body) {
+        errored = true;
+      } else {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+
+          // Server sends one JSON object per line — parse complete
+          // lines, stash any trailing partial line back into the buffer.
+          const lines = buffer.split("\n");
+          buffer = lines.pop() ?? "";
+
+          for (const line of lines) {
+            if (!line.trim()) continue;
+            let parsed: { text?: string; done?: boolean; error?: string };
+            try {
+              parsed = JSON.parse(line);
+            } catch {
+              continue;
+            }
+            if (parsed.error) {
+              errored = true;
+              continue;
+            }
+            if (parsed.text) {
+              streamed += parsed.text;
+              const current = streamed;
+              // Update the last (assistant) bubble with what we have so
+              // far. React batches these so the DOM stays smooth.
+              setMessages((prev) => {
+                const copy = prev.slice(0, -1);
+                copy.push({ role: "assistant", content: current });
+                return copy;
+              });
+            }
+          }
         }
-
-        const retriable = res.status >= 500 || res.status === 408;
-        if (!retriable) {
-          reply = t.chatFallback;
-          break;
-        }
-      } catch {
-        // network error — fall through to retry
       }
+    } catch {
+      errored = true;
     }
 
-    setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+    if (errored || streamed.length === 0) {
+      const fallback = streamed.length === 0 ? t.chatError : t.chatFallback;
+      setMessages((prev) => {
+        const copy = prev.slice(0, -1);
+        copy.push({ role: "assistant", content: fallback });
+        return copy;
+      });
+    }
+
     setLoading(false);
     inputRef.current?.focus();
   }, [input, loading, messages, t.chatError, t.chatFallback]);

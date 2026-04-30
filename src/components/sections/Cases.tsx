@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
@@ -9,7 +10,7 @@ import type { Dictionary } from "@/i18n/dictionary";
 import styles from "@/components/sections/Cases.module.css";
 
 export default function Cases() {
-  const { t } = useT();
+  const { t, localePath } = useT();
 
   const statusLabel: Record<CaseStatus, string> = {
     live: t.casesStatusLive,
@@ -58,13 +59,14 @@ export default function Cases() {
               metrics={item.metricsKey ? t[item.metricsKey] : undefined}
               status={item.status}
               statusLabel={statusLabel[item.status]}
-              ctaLabel={item.url ? t.casesCta : t.casesCtaSoon}
-              url={item.url}
+              ctaLabel={t.casesCta}
+              href={localePath(`/cases/${item.id}`)}
             />
           </Reveal>
         ))}
         <Reveal delay={CASES.length * 0.08}>
           <PlaceholderCard
+            href={`${localePath("/")}#lead`}
             title={t.casesPlaceholderTitle}
             summary={t.casesPlaceholderSummary}
             ctaLabel={t.casesPlaceholderCta}
@@ -84,7 +86,7 @@ type CaseCardProps = {
   status: CaseStatus;
   statusLabel: string;
   ctaLabel: string;
-  url?: string;
+  href: string;
 };
 
 function CaseCard({
@@ -96,12 +98,12 @@ function CaseCard({
   status,
   statusLabel,
   ctaLabel,
-  url,
+  href,
 }: CaseCardProps) {
   const num = String(index).padStart(2, "0");
 
-  const body = (
-    <>
+  return (
+    <Link href={href} className={`${styles.card} ${styles.cardLink}`}>
       <div className={styles.cardTop}>
         <span className={styles.number}>/ {num}</span>
         <span
@@ -133,39 +135,27 @@ function CaseCard({
       <div className={styles.cta}>
         <span>{ctaLabel}</span>
         <span className={styles.ctaArrow} aria-hidden="true">
-          {url ? "↗" : "…"}
+          →
         </span>
       </div>
-    </>
+    </Link>
   );
-
-  if (url) {
-    return (
-      <a
-        href={url}
-        className={`${styles.card} ${styles.cardLink}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {body}
-      </a>
-    );
-  }
-  return <div className={styles.card}>{body}</div>;
 }
 
 function PlaceholderCard({
+  href,
   title,
   summary,
   ctaLabel,
 }: {
+  href: string;
   title: string;
   summary: string;
   ctaLabel: Dictionary["casesPlaceholderCta"];
 }) {
   return (
     <a
-      href="#lead"
+      href={href}
       className={`${styles.card} ${styles.cardPlaceholder} ${styles.cardLink}`}
     >
       <div className={styles.cardTop}>

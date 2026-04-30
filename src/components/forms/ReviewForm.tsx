@@ -23,7 +23,7 @@ const INITIAL = {
 };
 
 export default function ReviewForm() {
-  const { t } = useT();
+  const { t, localePath } = useT();
   const [open, setOpen] = useState(false);
   const [fields, setFields] = useState(INITIAL);
   const [consent, setConsent] = useState(false);
@@ -282,11 +282,11 @@ export default function ReviewForm() {
                     />
                     <span>
                       {t.consentPrefix}
-                      <Link href="/privacy" target="_blank">
+                      <Link href={localePath("/privacy")} target="_blank">
                         {t.consentPrivacy}
                       </Link>
                       {t.consentAnd}
-                      <Link href="/terms" target="_blank">
+                      <Link href={localePath("/terms")} target="_blank">
                         {t.consentTerms}
                       </Link>
                       {t.consentSuffix}

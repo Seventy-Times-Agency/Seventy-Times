@@ -411,6 +411,17 @@ const strings = {
       "AI assistant on Telegram",
       "Paid ads on Meta + Google",
     ],
+    casesBack: "Back to all cases",
+    casesWhatWeBuilt: "What we built",
+    casesStatusHeading: "Status",
+    casesStatusBodyLive:
+      "The system is live and serving real users. We're tracking the numbers and iterating week by week.",
+    casesStatusBodyProgress:
+      "Project is in active development. We'll publish concrete numbers once they're cleared with the client.",
+    casesStatusBodySoon:
+      "Discovery phase. We're aligning the brief, scoping the build, and preparing for launch.",
+    casesPrimaryCta: "Start a project like this",
+    casesExternalCta: "Open the live project",
 
     // Intro
     introTag1: "Ads",
