@@ -111,7 +111,7 @@ export default function ChatWidget() {
 
         const retriable = res.status >= 500 || res.status === 408;
         if (!retriable) {
-          reply = data.error || t.chatFallback;
+          reply = t.chatFallback;
           break;
         }
       } catch {

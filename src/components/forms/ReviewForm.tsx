@@ -114,11 +114,12 @@ export default function ReviewForm() {
       });
 
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
         const msg =
           res.status === 429
             ? t.reviewTooMany
-            : data.error || t.reviewError;
+            : res.status === 401
+              ? t.reviewInvalidCode
+              : t.reviewError;
         throw new Error(msg);
       }
 

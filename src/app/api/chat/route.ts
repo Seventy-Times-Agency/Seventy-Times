@@ -42,7 +42,7 @@ export async function POST(req: Request) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
-      { error: "ANTHROPIC_API_KEY is not configured on the server" },
+      { error: "NOT_CONFIGURED" },
       { status: 500 }
     );
   }
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    return NextResponse.json({ error: "INVALID_JSON" }, { status: 400 });
   }
 
   const rawMessages =
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
 
   if (!Array.isArray(rawMessages) || rawMessages.length === 0) {
     return NextResponse.json(
-      { error: "messages must be a non-empty array" },
+      { error: "MISSING_MESSAGES" },
       { status: 400 }
     );
   }
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
 
   if (messages.length === 0) {
     return NextResponse.json(
-      { error: "No valid messages provided" },
+      { error: "MISSING_MESSAGES" },
       { status: 400 }
     );
   }
@@ -98,19 +98,15 @@ export async function POST(req: Request) {
     });
 
     const textBlock = response.content.find((block) => block.type === "text");
-    const reply =
-      textBlock && textBlock.type === "text"
-        ? textBlock.text
-        : "Извини, что-то пошло не так. Попробуй ещё раз.";
+    if (!textBlock || textBlock.type !== "text") {
+      return NextResponse.json({ error: "EMPTY_REPLY" }, { status: 502 });
+    }
 
-    return NextResponse.json({ reply });
+    return NextResponse.json({ reply: textBlock.text });
   } catch (error) {
     const status =
       error instanceof Anthropic.APIError ? error.status : "network";
     console.error("[CHAT] upstream error", { status });
-    return NextResponse.json(
-      { error: "Ошибка соединения с AI. Попробуй чуть позже." },
-      { status: 502 }
-    );
+    return NextResponse.json({ error: "UPSTREAM_ERROR" }, { status: 502 });
   }
 }

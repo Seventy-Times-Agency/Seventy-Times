@@ -7,7 +7,6 @@ const strings = {
     // Nav
     navServices: "Услуги",
     navProcess: "Процесс",
-    navTess: "Тесс",
     navFaq: "FAQ",
     navStatus: "Принимаем проекты",
     navCta: "Заявка",
@@ -508,6 +507,8 @@ const strings = {
     reviewError: "Ошибка соединения. Попробуй позже.",
     reviewCloseAria: "Закрыть форму",
     reviewTooMany: "Слишком много попыток. Попробуйте позже.",
+    reviewInvalidCode:
+      "Код не подходит. Если вы реальный клиент — напишите нам в Telegram, мы выдадим персональный код.",
 
     // Footer — legal links
     ftLegal: "Правовое",

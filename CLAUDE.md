@@ -2,7 +2,7 @@
 
 Marketing landing for **Seventy Times**, a US-based AI + performance-marketing
 agency. Single page with a lead form, a review form, and a live Claude-powered
-chat assistant named Venesa. Trilingual (en / ru / de).
+chat assistant named Tess. Trilingual (en / ru / de).
 
 This file is the short orientation map. Read it first when opening the repo.
 
@@ -28,16 +28,20 @@ This file is the short orientation map. Read it first when opening the repo.
 src/
 ├── app/                          Next.js App Router
 │   ├── api/
-│   │   ├── chat/route.ts         /api/chat — Anthropic proxy for Venesa
+│   │   ├── chat/route.ts         /api/chat — Anthropic proxy for Tess
 │   │   ├── lead/route.ts         /api/lead — lead form → Telegram + Notion
 │   │   └── review/route.ts       /api/review — review form → Telegram + Notion
-│   ├── privacy/                  /privacy page (i18n-aware metadata)
+│   ├── about/                    /about page (i18n-aware metadata)
 │   │   ├── page.tsx              server component, generates metadata
-│   │   └── PrivacyClient.tsx     client component, renders copy
-│   ├── terms/                    /terms page (same shape as privacy)
+│   │   └── AboutClient.tsx       client component, renders copy
+│   ├── privacy/                  /privacy page (same shape as about)
+│   │   ├── page.tsx
+│   │   └── PrivacyClient.tsx
+│   ├── terms/                    /terms page (same shape)
 │   │   ├── page.tsx
 │   │   └── TermsClient.tsx
-│   ├── layout.tsx                Root layout, <html>, JSON-LD, fonts
+│   ├── layout.tsx                Root layout, <html lang> from cookie,
+│   │                             JSON-LD, fonts, mounts forms + ChatWidget
 │   ├── page.tsx                  Landing page — composes all sections
 │   ├── globals.css               Design tokens + reset + shimmer/reduced-motion
 │   ├── robots.ts                 /robots.txt
@@ -45,33 +49,33 @@ src/
 │   └── opengraph-image.tsx       Dynamic OG preview at /opengraph-image
 │
 ├── components/                   Grouped by role
-│   ├── layout/                   Chrome: Nav, Footer, PageIntro
+│   ├── layout/                   Chrome: Nav, Footer, PageIntro,
+│   │                             CookieConsent
 │   ├── sections/                 Landing sections in scroll order:
-│   │                             Hero, VelocityTicker, Services, Process,
-│   │                             ChatDemo, Testimonials, GrowthSimulator,
-│   │                             FAQ, CTA
+│   │                             Hero, GrowthMachine, VelocityTicker,
+│   │                             Services, Process, ChatDemo, Testimonials,
+│   │                             Cases, GrowthSimulator, FAQ, CTA
 │   ├── forms/                    LeadForm + ReviewForm (share CSS module)
-│   ├── chat/                     ChatWidget (floating Venesa chat)
+│   ├── chat/                     ChatWidget (floating Tess chat)
 │   ├── decor/                    Non-content: AnimatedBackground,
 │   │                             FloatingGlyphs, ScrollProgress, SmoothScroll,
 │   │                             SectionDivider, SectionWatermark
 │   ├── ui/                       Reusable primitives: Reveal, Magnetic,
 │   │                             AnimatedText, RingCounter, Counter,
-│   │                             ContactIcons, ServiceIcons
+│   │                             ContactIcons, ServiceIcons, Logo
 │   ├── legal/                    LegalPage (shared shell for /privacy /terms)
 │   └── seo/                      StructuredData (FAQPage + Service JSON-LD)
 │
 ├── data/                         Static content
 │   ├── siteConfig.ts             Brand name, URL, contact URLs, hero stats
-│   ├── services.ts               (legacy, kept for reference)
-│   ├── process.ts                (legacy)
-│   ├── faq.ts                    (legacy)
-│   └── principles.ts             (legacy)
+│   └── cases.ts                  Portfolio cases (i18n keys + status + url)
 │
 ├── i18n/                         Localization
 │   ├── config.ts                 Locale list and labels (en/ru/de)
-│   ├── context.tsx               I18nProvider + useT() hook, cookie-backed
-│   ├── HtmlLangSync.tsx          Keeps <html lang="..."> in sync on client
+│   ├── context.tsx               I18nProvider + useT() hook,
+│   │                             takes initialLocale from server
+│   ├── HtmlLangSync.tsx          Keeps <html lang="..."> in sync when the
+│   │                             user switches locale on the client
 │   ├── dictionary.ts             Aggregates three locale files
 │   └── locales/
 │       ├── en.ts                 English strings
@@ -83,11 +87,11 @@ src/
 │   ├── telegram.ts               Telegram MarkdownV2 escape
 │   ├── notion.ts                 Notion REST helpers (lead + review create)
 │   ├── localizedMeta.ts          Per-locale metadata + cookie reader
-│   └── systemPrompt.ts           Venesa's Claude system prompt (English)
+│   └── systemPrompt.ts           Tess's Claude system prompt (English)
 │
 └── middleware.ts                 Blocks scanner user-agents on / and /api/*
 public/
-├── venesa.jpg                    Venesa portrait (optimized via next/image)
+├── tess.jpg                      Tess portrait (optimized via next/image)
 └── favicon.svg
 ```
 
@@ -116,12 +120,17 @@ during the restructure.
 
 ### i18n
 - Three locales: `en` (default), `ru`, `de`. Defined in `src/i18n/config.ts`.
-- User's choice is saved in a `lang` cookie by `I18nProvider`.
+- User's choice is saved in a `lang` cookie. `RootLayout` reads it on the
+  server with `readLocaleFromCookies()` and passes it both to
+  `<html lang={...}>` and `<I18nProvider initialLocale={...}>`. This means
+  the SSR'd HTML is already in the user's language — no English flash, no
+  hydration mismatch.
 - Client components call `useT()` → get `{ locale, t, setLocale }`.
-- Server components (layout, `/privacy`, `/terms` page.tsx) call
-  `readLocaleFromCookies()` from `src/lib/localizedMeta.ts` to localize
-  metadata.
-- Venesa (the AI chat) detects the user's language from their first message,
+- `setLocale` writes the cookie and re-renders. `HtmlLangSync` keeps the
+  `<html lang>` attribute updated when the user switches locale on the fly.
+- Server components for `/about`, `/privacy`, `/terms` page.tsx call
+  `readLocaleFromCookies()` to localize their metadata.
+- Tess (the AI chat) detects the user's language from their first message,
   not from the cookie — rules are in `src/lib/systemPrompt.ts`.
 
 ### Dictionary shape
@@ -143,6 +152,14 @@ stack, applied in this order:
 5. Business logic.
 
 Every helper lives in `src/lib/apiGuard.ts`.
+
+### Error responses
+On non-2xx, every route returns `{ error: "<CODE>" }` with one of:
+`INVALID_JSON`, `MISSING_FIELDS`, `TOO_LONG`, `INVALID_CODE`, `RATE_LIMITED`,
+`FORBIDDEN`, `NOT_CONFIGURED`, `MISSING_MESSAGES`, `EMPTY_REPLY`,
+`UPSTREAM_ERROR`. Codes are English and stable; the client maps them to
+localized strings via the dictionary (e.g. 401 → `t.reviewInvalidCode`,
+429 → `t.leadTooMany`). Server text is never displayed directly to the user.
 
 ### Lead / review fan-out
 `POST /api/lead` and `POST /api/review` send to **both** Telegram and Notion
@@ -174,7 +191,7 @@ instructions and example values.
 
 | Variable | Purpose |
 |---|---|
-| `ANTHROPIC_API_KEY` | Claude Sonnet 4.5 for Venesa (required) |
+| `ANTHROPIC_API_KEY` | Claude Sonnet 4.5 for Tess (required) |
 | `ANTHROPIC_MODEL` | Override model id (default: `claude-sonnet-4-5`) |
 | `ALLOWED_ORIGINS` | Comma-separated origins allowed to call /api/* |
 | `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` | Forward leads/reviews to Telegram |
@@ -235,16 +252,19 @@ per-Vercel-instance — switch to Upstash Redis if you need global counters.
   again. The intro also dispatches `st-intro-gone` on dismissal — hero rings
   subscribe and wait for that before animating.
 - **Chat history persists** to `localStorage` under `st-chat-history-v1`,
-  last 50 messages. Clear that key to wipe Venesa's memory of the session.
+  last 50 messages. Clear that key to wipe Tess's memory of the session.
 - **GrowthSimulator** saves slider levels in `st-simulator-levels-v1`.
+- **CookieConsent** stores the user's choice in `localStorage` under
+  `st-cookie-consent-v1` (values `"accepted"` or `"essential"`). Gate any
+  new analytics scripts on this value.
 - **Honeypot field**: every form has an invisible `website` input. If a bot
   fills it, the server returns 200 and silently drops the payload — no
   Telegram, no Notion, one warn line in logs. Don't add a visible field
   named `website` without renaming the honeypot.
-- **Next-image + venesa.jpg**: rendered with explicit width/height because
+- **Next-image + tess.jpg**: rendered with explicit width/height because
   the source is a JPEG. Replace carefully.
 - **Middleware** runs on `/` and `/api/*` only. If you add a new route
   that should be protected, update the `matcher` in `src/middleware.ts`.
-- **`data/*.ts` legacy files** (`services.ts`, `faq.ts`, etc.) exist from
-  the pre-i18n era. Runtime content now comes from `i18n/locales/*.ts`;
-  these files stay as reference only and are safe to delete later.
+- **`overrides` in `package.json`** pins `glob ≥ 10.5.0` and
+  `postcss ≥ 8.5.10` to patch transitive CVEs. Keep these unless the upstream
+  versions ship newer fixes — `npm audit` will flag regressions.
