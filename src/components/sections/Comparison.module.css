@@ -1,0 +1,228 @@
+.section {
+  position: relative;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 96px 48px;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 32px;
+  margin-bottom: 56px;
+  align-items: end;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.title {
+  font-size: clamp(40px, 6vw, 76px);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.titleItalic {
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 480px;
+}
+
+.tableWrap {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 14px);
+  overflow: hidden;
+  background: rgba(200, 212, 222, 0.02);
+}
+
+.colHeaders {
+  display: grid;
+  grid-template-columns: 1.4fr 1.3fr 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  background: rgba(200, 212, 222, 0.025);
+}
+
+.headCell {
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-left: 1px solid var(--line);
+  min-height: 80px;
+  justify-content: center;
+}
+
+.headCell:first-child {
+  border-left: 0;
+}
+
+.headCellUs {
+  background: rgba(200, 212, 222, 0.05);
+}
+
+.headBadge {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--accent);
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.headName {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.headLabel {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1.4fr 1.3fr 1fr 1fr;
+  border-top: 1px solid var(--line);
+}
+
+.row:first-child {
+  border-top: 0;
+}
+
+.rowLabel {
+  padding: 18px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+}
+
+.cell {
+  padding: 18px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  border-left: 1px solid var(--line);
+}
+
+.cellUs {
+  color: var(--text);
+  background: rgba(200, 212, 222, 0.03);
+  font-weight: 600;
+}
+
+.checkUs {
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.disclaimer {
+  margin-top: 24px;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-dim);
+  max-width: 720px;
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 80px 24px;
+  }
+
+  .header {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* On narrow screens the table flips to a stacked card layout —
+     each row becomes a labelled block with the three values inside. */
+  .colHeaders {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    padding: 14px 18px;
+  }
+
+  .rowLabel {
+    padding: 4px 0 8px;
+  }
+
+  .cell {
+    padding: 8px 0;
+    border-left: 0;
+    border-top: 1px dashed var(--line);
+    font-size: 14px;
+  }
+
+  .cell::before {
+    content: attr(data-label);
+  }
+
+  .cellUs {
+    background: transparent;
+    color: var(--text);
+  }
+}
+
+/* Stacked-mode pseudo headers */
+@media (max-width: 900px) {
+  .cell:nth-child(2)::before {
+    content: "Seventy Times — ";
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-right: 4px;
+  }
+
+  .cell:nth-child(3)::before {
+    content: "Agency — ";
+    color: var(--text-dim);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-right: 4px;
+  }
+
+  .cell:nth-child(4)::before {
+    content: "Freelancer — ";
+    color: var(--text-dim);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-right: 4px;
+  }
+}
