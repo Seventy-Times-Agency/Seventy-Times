@@ -30,22 +30,6 @@ const BAD_UA = [
 
 const LOCALE_PREFIX = new RegExp(`^/(${LOCALES.join("|")})(?=/|$)`);
 
-function preferredLocaleFromAcceptLanguage(value: string | null): Locale {
-  if (!value) return DEFAULT_LOCALE;
-  // Accept-Language is a comma-separated list of language tags with
-  // optional ;q= quality. Take the first tag that maps to a supported
-  // locale; otherwise fall back to the default.
-  const tags = value
-    .split(",")
-    .map((t) => t.split(";")[0]?.trim().toLowerCase())
-    .filter(Boolean);
-  for (const tag of tags) {
-    const base = tag.split("-")[0];
-    if (isLocale(base)) return base;
-  }
-  return DEFAULT_LOCALE;
-}
-
 export function middleware(req: NextRequest) {
   const ua = req.headers.get("user-agent")?.toLowerCase() ?? "";
 
@@ -102,15 +86,13 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
-  // No locale prefix → pick one (cookie > Accept-Language > default)
-  // and redirect once so the URL truthfully reflects the language.
-  const cookieLocale = req.cookies.get("lang")?.value;
-  const preferred: Locale = isLocale(cookieLocale)
-    ? cookieLocale
-    : preferredLocaleFromAcceptLanguage(req.headers.get("accept-language"));
-
+  // No locale prefix → always redirect to the default locale (English).
+  // Browser Accept-Language is intentionally ignored: the agency operates
+  // in English first, RU and DE are opt-in via the language switcher or
+  // a direct /ru / /de URL. This keeps marketing analytics, ad-link
+  // landings and shared screenshots predictable.
   const url = req.nextUrl.clone();
-  url.pathname = `/${preferred}${url.pathname === "/" ? "" : url.pathname}`;
+  url.pathname = `/${DEFAULT_LOCALE}${url.pathname === "/" ? "" : url.pathname}`;
   return NextResponse.redirect(url, 307);
 }
 
@@ -119,6 +101,6 @@ export const config = {
   // get redirected to a locale-prefixed URL). Static assets and Next.js
   // internals stay excluded.
   matcher: [
-    "/((?!_next/static|_next/image|favicon|opengraph-image|robots.txt|sitemap.xml|.*\\.[a-z]+$).*)",
+    "/((?!_next/static|_next/image|favicon|opengraph-image|robots.txt|sitemap.xml|.*\\..*).*)",
   ],
 };
