@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
 import Logo from "@/components/ui/Logo";
-import styles from "@/components/layout/Footer.module.css";
+import styles from "@/components/chrome/Footer.module.css";
 
 export default function Footer() {
   const year = new Date().getFullYear();

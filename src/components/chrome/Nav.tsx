@@ -7,7 +7,7 @@ import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
 import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
 import Logo from "@/components/ui/Logo";
-import styles from "@/components/layout/Nav.module.css";
+import styles from "@/components/chrome/Nav.module.css";
 
 const SECTION_IDS = ["growth-machine", "services", "process", "chat", "cases", "faq"] as const;
 

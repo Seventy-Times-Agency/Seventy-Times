@@ -9,7 +9,12 @@ import {
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
-import styles from "@/components/forms/LeadForm.module.css";
+import {
+  clearReviewDraft,
+  readReviewDraft,
+  writeReviewDraft,
+} from "@/lib/reviewDraft";
+import styles from "@/components/overlays/forms/LeadForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -22,28 +27,6 @@ const INITIAL = {
   website: "",
 };
 
-const DRAFT_KEY = "st-review-draft-v1";
-
-type ReviewDraft = Omit<typeof INITIAL, "website">;
-
-function readDraft(): ReviewDraft | null {
-  try {
-    const raw = window.localStorage.getItem(DRAFT_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as Partial<ReviewDraft>;
-    if (typeof parsed !== "object" || parsed === null) return null;
-    return {
-      code: typeof parsed.code === "string" ? parsed.code : "",
-      name: typeof parsed.name === "string" ? parsed.name : "",
-      role: typeof parsed.role === "string" ? parsed.role : "",
-      location: typeof parsed.location === "string" ? parsed.location : "",
-      content: typeof parsed.content === "string" ? parsed.content : "",
-    };
-  } catch {
-    return null;
-  }
-}
-
 export default function ReviewForm() {
   const { t, localePath } = useT();
   const [open, setOpen] = useState(false);
@@ -55,7 +38,7 @@ export default function ReviewForm() {
 
   // Restore draft on mount.
   useEffect(() => {
-    const draft = readDraft();
+    const draft = readReviewDraft();
     if (draft) setFields((prev) => ({ ...prev, ...draft }));
     setHydrated(true);
   }, []);
@@ -63,23 +46,13 @@ export default function ReviewForm() {
   // Persist on every keystroke (except the honeypot).
   useEffect(() => {
     if (!hydrated) return;
-    try {
-      const draft: ReviewDraft = {
-        code: fields.code,
-        name: fields.name,
-        role: fields.role,
-        location: fields.location,
-        content: fields.content,
-      };
-      const empty = Object.values(draft).every((v) => !v);
-      if (empty) {
-        window.localStorage.removeItem(DRAFT_KEY);
-      } else {
-        window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-      }
-    } catch {
-      // ignore
-    }
+    writeReviewDraft({
+      code: fields.code,
+      name: fields.name,
+      role: fields.role,
+      location: fields.location,
+      content: fields.content,
+    });
   }, [hydrated, fields.code, fields.name, fields.role, fields.location, fields.content]);
 
   useEffect(() => {
@@ -178,11 +151,7 @@ export default function ReviewForm() {
       setStatus("success");
       setFields(INITIAL);
       setConsent(false);
-      try {
-        window.localStorage.removeItem(DRAFT_KEY);
-      } catch {
-        // ignore
-      }
+      clearReviewDraft();
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : t.reviewError);

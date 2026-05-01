@@ -6,32 +6,32 @@ import dynamic from "next/dynamic";
 // triggers them (open chat, open #lead, open #review) or after a delay
 // (cookie banner). Loading them as a separate chunk keeps the initial
 // JS for the landing smaller and removes them from the SSR'd HTML.
-const ChatWidget = dynamic(() => import("@/components/chat/ChatWidget"), {
+const ChatWidget = dynamic(() => import("@/components/overlays/chat/ChatWidget"), {
   ssr: false,
 });
-const LeadForm = dynamic(() => import("@/components/forms/LeadForm"), {
+const LeadForm = dynamic(() => import("@/components/overlays/forms/LeadForm"), {
   ssr: false,
 });
-const ReviewForm = dynamic(() => import("@/components/forms/ReviewForm"), {
+const ReviewForm = dynamic(() => import("@/components/overlays/forms/ReviewForm"), {
   ssr: false,
 });
 const CookieConsent = dynamic(
-  () => import("@/components/layout/CookieConsent"),
+  () => import("@/components/overlays/CookieConsent"),
   { ssr: false },
 );
 const MobileStickyCta = dynamic(
-  () => import("@/components/layout/MobileStickyCta"),
+  () => import("@/components/overlays/MobileStickyCta"),
   { ssr: false },
 );
-const ExitIntent = dynamic(() => import("@/components/layout/ExitIntent"), {
+const ExitIntent = dynamic(() => import("@/components/overlays/ExitIntent"), {
   ssr: false,
 });
 const ServiceWorkerRegister = dynamic(
-  () => import("@/components/layout/ServiceWorkerRegister"),
+  () => import("@/components/system/ServiceWorkerRegister"),
   { ssr: false },
 );
 const ErrorReporter = dynamic(
-  () => import("@/components/layout/ErrorReporter"),
+  () => import("@/components/system/ErrorReporter"),
   { ssr: false },
 );
 

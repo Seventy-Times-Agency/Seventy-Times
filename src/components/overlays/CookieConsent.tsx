@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
-import styles from "@/components/layout/CookieConsent.module.css";
+import styles from "@/components/overlays/CookieConsent.module.css";
 
 const STORAGE_KEY = "st-cookie-consent-v1";
 
