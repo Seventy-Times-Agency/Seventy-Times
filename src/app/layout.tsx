@@ -9,8 +9,8 @@ import AnimatedBackground from "@/components/decor/AnimatedBackground";
 import FloatingGlyphs from "@/components/decor/FloatingGlyphs";
 import ScrollProgress from "@/components/decor/ScrollProgress";
 import SmoothScroll from "@/components/decor/SmoothScroll";
-import PageIntro from "@/components/layout/PageIntro";
-import ClientOverlays from "@/components/layout/ClientOverlays";
+import PageIntro from "@/components/overlays/PageIntro";
+import ClientOverlays from "@/components/overlays/ClientOverlays";
 import "./globals.css";
 
 const manrope = Manrope({

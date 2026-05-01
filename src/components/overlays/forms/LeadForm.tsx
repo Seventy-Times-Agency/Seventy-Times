@@ -10,16 +10,17 @@ import {
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
-import styles from "@/components/forms/LeadForm.module.css";
+import { isPlausibleContact } from "@/lib/contactValidation";
+import {
+  clearLeadDraft,
+  LEAD_MODE_KEY,
+  readLeadDraft,
+  writeLeadDraft,
+  type LeadPackage,
+} from "@/lib/leadDraft";
+import styles from "@/components/overlays/forms/LeadForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
-
-type LeadPackage =
-  | "not_sure"
-  | "standalone"
-  | "launch"
-  | "growth"
-  | "scale";
 
 const INITIAL = {
   name: "",
@@ -30,50 +31,6 @@ const INITIAL = {
   // Honeypot: a field real users never see. Bots fill every input they find.
   website: "",
 };
-
-const DRAFT_KEY = "st-lead-draft-v1";
-const MODE_KEY = "st-lead-mode-v1";
-
-type LeadDraft = Omit<typeof INITIAL, "website">;
-
-function isLeadPackage(v: unknown): v is LeadPackage {
-  return (
-    typeof v === "string" &&
-    ["not_sure", "standalone", "launch", "growth", "scale"].includes(v)
-  );
-}
-
-function readDraft(): LeadDraft | null {
-  try {
-    const raw = window.localStorage.getItem(DRAFT_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as Partial<LeadDraft>;
-    if (typeof parsed !== "object" || parsed === null) return null;
-    return {
-      name: typeof parsed.name === "string" ? parsed.name : "",
-      contact: typeof parsed.contact === "string" ? parsed.contact : "",
-      business: typeof parsed.business === "string" ? parsed.business : "",
-      request: typeof parsed.request === "string" ? parsed.request : "",
-      package: isLeadPackage(parsed.package) ? parsed.package : "not_sure",
-    };
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Accepts common contact formats: email, @username (telegram),
- * or any string containing digits (phone). Anything else we treat
- * as suspicious and ask the user to check.
- */
-function isPlausibleContact(value: string): boolean {
-  const v = value.trim();
-  if (v.length < 3) return false;
-  const emailLike = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-  const handleLike = /^@[\w.]{2,}$/.test(v);
-  const phoneLike = /\d{5,}/.test(v);
-  return emailLike || handleLike || phoneLike;
-}
 
 type FormMode = "steps" | "all";
 
@@ -102,10 +59,10 @@ export default function LeadForm() {
   // Restore the user's draft (everything except the honeypot) and
   // their preferred form mode on mount.
   useEffect(() => {
-    const draft = readDraft();
+    const draft = readLeadDraft();
     if (draft) setFields((prev) => ({ ...prev, ...draft }));
     try {
-      const saved = window.localStorage.getItem(MODE_KEY);
+      const saved = window.localStorage.getItem(LEAD_MODE_KEY);
       if (saved === "all" || saved === "steps") setMode(saved);
     } catch {
       // ignore
@@ -118,35 +75,20 @@ export default function LeadForm() {
   // submit (see `submit` below).
   useEffect(() => {
     if (!hydrated) return;
-    try {
-      const draft: LeadDraft = {
-        name: fields.name,
-        contact: fields.contact,
-        business: fields.business,
-        request: fields.request,
-        package: fields.package,
-      };
-      const empty =
-        !draft.name &&
-        !draft.contact &&
-        !draft.business &&
-        !draft.request &&
-        draft.package === "not_sure";
-      if (empty) {
-        window.localStorage.removeItem(DRAFT_KEY);
-      } else {
-        window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-      }
-    } catch {
-      // localStorage may be blocked / full — ignore.
-    }
+    writeLeadDraft({
+      name: fields.name,
+      contact: fields.contact,
+      business: fields.business,
+      request: fields.request,
+      package: fields.package,
+    });
   }, [hydrated, fields.name, fields.contact, fields.business, fields.request, fields.package]);
 
   // Persist the user's chosen form mode.
   useEffect(() => {
     if (!hydrated) return;
     try {
-      window.localStorage.setItem(MODE_KEY, mode);
+      window.localStorage.setItem(LEAD_MODE_KEY, mode);
     } catch {
       // ignore
     }
@@ -271,11 +213,7 @@ export default function LeadForm() {
       setFields(INITIAL);
       setConsent(false);
       setStep(0);
-      try {
-        window.localStorage.removeItem(DRAFT_KEY);
-      } catch {
-        // ignore
-      }
+      clearLeadDraft();
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : t.chatError);

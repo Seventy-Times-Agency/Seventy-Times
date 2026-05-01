@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
 import { CASES, type CaseStatus } from "@/data/cases";
 import { useT } from "@/i18n/context";
-import type { Dictionary } from "@/i18n/dictionary";
+import CaseCard from "@/components/sections/cases/CaseCard";
+import PlaceholderCard from "@/components/sections/cases/PlaceholderCard";
 import styles from "@/components/sections/Cases.module.css";
 
 export default function Cases() {
@@ -74,101 +74,5 @@ export default function Cases() {
         </Reveal>
       </div>
     </section>
-  );
-}
-
-type CaseCardProps = {
-  index: number;
-  title: string;
-  tag: string;
-  summary: string;
-  metrics?: readonly string[];
-  status: CaseStatus;
-  statusLabel: string;
-  ctaLabel: string;
-  href: string;
-};
-
-function CaseCard({
-  index,
-  title,
-  tag,
-  summary,
-  metrics,
-  status,
-  statusLabel,
-  ctaLabel,
-  href,
-}: CaseCardProps) {
-  const num = String(index).padStart(2, "0");
-
-  return (
-    <Link href={href} className={`${styles.card} ${styles.cardLink}`}>
-      <div className={styles.cardTop}>
-        <span className={styles.number}>/ {num}</span>
-        <span
-          className={`${styles.status} ${styles[`status_${status}`]}`}
-          aria-label={statusLabel}
-        >
-          <span className={styles.statusDot} />
-          {statusLabel}
-        </span>
-      </div>
-
-      <span className={styles.tag}>{tag}</span>
-      <h3 className={styles.cardTitle}>{title}</h3>
-      <p className={styles.summary}>{summary}</p>
-
-      {metrics && metrics.length > 0 && (
-        <ul className={styles.metricList}>
-          {metrics.map((m) => (
-            <li key={m} className={styles.metricItem}>
-              <span className={styles.metricBullet} aria-hidden="true">
-                ◆
-              </span>
-              {m}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <div className={styles.cta}>
-        <span>{ctaLabel}</span>
-        <span className={styles.ctaArrow} aria-hidden="true">
-          →
-        </span>
-      </div>
-    </Link>
-  );
-}
-
-function PlaceholderCard({
-  href,
-  title,
-  summary,
-  ctaLabel,
-}: {
-  href: string;
-  title: string;
-  summary: string;
-  ctaLabel: Dictionary["casesPlaceholderCta"];
-}) {
-  return (
-    <a
-      href={href}
-      className={`${styles.card} ${styles.cardPlaceholder} ${styles.cardLink}`}
-    >
-      <div className={styles.cardTop}>
-        <span className={styles.number}>+</span>
-      </div>
-      <h3 className={styles.cardTitle}>{title}</h3>
-      <p className={styles.summary}>{summary}</p>
-      <div className={styles.cta}>
-        <span>{ctaLabel}</span>
-        <span className={styles.ctaArrow} aria-hidden="true">
-          →
-        </span>
-      </div>
-    </a>
   );
 }
