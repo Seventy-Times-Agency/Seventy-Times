@@ -422,6 +422,8 @@ const strings = {
       "Стадия дискавери. Согласуем бриф, проектируем сборку, готовим к запуску.",
     casesPrimaryCta: "Хочу такой же проект",
     casesExternalCta: "Открыть рабочий проект",
+    casesBreadcrumbs: "Навигация",
+    casesRelatedTitle: "Другие проекты",
 
     // Intro
     introTag1: "Реклама",
@@ -650,6 +652,36 @@ const strings = {
     trustAria: "Инструменты и платформы",
     trustPoweredBy: "На чём построено",
     trustWeRunAdsOn: "Где запускаем рекламу",
+
+    // Exit-intent prompt
+    exitEyebrow: "Подождите",
+    exitTitle: "60 секунд — и мы на связи",
+    exitBody:
+      "Оставьте короткий запрос — вернёмся в течение 24 часов с конкретным следующим шагом. Без обязательств.",
+    exitCta: "Оставить заявку",
+    exitDismiss: "Позже",
+    exitClose: "Закрыть",
+
+    // Chat quick prompts
+    chatSuggestAria: "Быстрые подсказки",
+    chatSuggestPricing: "Сколько стоит?",
+    chatSuggestCases: "Покажите кейсы",
+    chatSuggestGrowth: "Расскажи про GROWTH",
+    chatSuggestBot: "Хочу Telegram-бота",
+
+    // Lead form — multi-step + progress
+    leadProgressAria: "Прогресс заявки",
+    leadStepLabel: "Шаг {n} из {total}",
+    leadStep1Sub: "Два быстрых поля — имя и удобный способ связи.",
+    leadStep2Sub: "Расскажите, чем занимаетесь, и выберите пакет, если уже понимаете.",
+    leadStep3Sub: "Последнее: с чем нужна помощь? Достаточно нескольких предложений.",
+    leadFillStep1: "Заполните имя и контакт",
+    leadFillStep2: "Расскажите, чем занимаетесь",
+    leadFillStep3: "Опишите, что нужно сделать",
+    leadNext: "Дальше",
+    leadBack: "Назад",
+    leadModeAll: "Показать все поля сразу",
+    leadModeSteps: "Лучше пошагово",
 
   };
 

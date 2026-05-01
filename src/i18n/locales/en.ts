@@ -422,6 +422,8 @@ const strings = {
       "Discovery phase. We're aligning the brief, scoping the build, and preparing for launch.",
     casesPrimaryCta: "Start a project like this",
     casesExternalCta: "Open the live project",
+    casesBreadcrumbs: "Breadcrumbs",
+    casesRelatedTitle: "Other projects",
 
     // Intro
     introTag1: "Ads",
@@ -650,6 +652,36 @@ const strings = {
     trustAria: "Tools and platforms",
     trustPoweredBy: "Powered by",
     trustWeRunAdsOn: "We run ads on",
+
+    // Exit-intent prompt
+    exitEyebrow: "Before you go",
+    exitTitle: "60 seconds is all it takes",
+    exitBody:
+      "Drop a quick brief — we'll come back within 24 hours with a concrete next step. No commitments.",
+    exitCta: "Send a brief",
+    exitDismiss: "Maybe later",
+    exitClose: "Close",
+
+    // Chat quick prompts
+    chatSuggestAria: "Quick prompts",
+    chatSuggestPricing: "How much does it cost?",
+    chatSuggestCases: "Show me cases",
+    chatSuggestGrowth: "Tell me about GROWTH",
+    chatSuggestBot: "Set up a Telegram bot",
+
+    // Lead form — multi-step + progress
+    leadProgressAria: "Form progress",
+    leadStepLabel: "Step {n} of {total}",
+    leadStep1Sub: "Just two quick fields — your name and the easiest way to reach you.",
+    leadStep2Sub: "Tell us what you do, and pick a package if you already have one in mind.",
+    leadStep3Sub: "Last bit: what would you like us to help with? A few sentences is enough.",
+    leadFillStep1: "Please fill in your name and contact",
+    leadFillStep2: "Please tell us what you do",
+    leadFillStep3: "Please describe what you need",
+    leadNext: "Continue",
+    leadBack: "Back",
+    leadModeAll: "Show all fields at once",
+    leadModeSteps: "Step-by-step instead",
 
   };
 

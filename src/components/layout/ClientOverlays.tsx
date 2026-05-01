@@ -19,6 +19,21 @@ const CookieConsent = dynamic(
   () => import("@/components/layout/CookieConsent"),
   { ssr: false },
 );
+const MobileStickyCta = dynamic(
+  () => import("@/components/layout/MobileStickyCta"),
+  { ssr: false },
+);
+const ExitIntent = dynamic(() => import("@/components/layout/ExitIntent"), {
+  ssr: false,
+});
+const ServiceWorkerRegister = dynamic(
+  () => import("@/components/layout/ServiceWorkerRegister"),
+  { ssr: false },
+);
+const ErrorReporter = dynamic(
+  () => import("@/components/layout/ErrorReporter"),
+  { ssr: false },
+);
 
 export default function ClientOverlays() {
   return (
@@ -27,6 +42,10 @@ export default function ClientOverlays() {
       <LeadForm />
       <ReviewForm />
       <CookieConsent />
+      <MobileStickyCta />
+      <ExitIntent />
+      <ServiceWorkerRegister />
+      <ErrorReporter />
     </>
   );
 }

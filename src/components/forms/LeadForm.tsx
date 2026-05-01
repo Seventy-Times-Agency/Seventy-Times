@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useMemo,
   useState,
   type FormEvent,
 } from "react";
@@ -31,6 +32,7 @@ const INITIAL = {
 };
 
 const DRAFT_KEY = "st-lead-draft-v1";
+const MODE_KEY = "st-lead-mode-v1";
 
 type LeadDraft = Omit<typeof INITIAL, "website">;
 
@@ -73,12 +75,18 @@ function isPlausibleContact(value: string): boolean {
   return emailLike || handleLike || phoneLike;
 }
 
+type FormMode = "steps" | "all";
+
+const TOTAL_STEPS = 3;
+
 /**
  * Global lead-capture modal. Opens whenever the URL hash is `#lead`,
  * so any element with `href="#lead"` anywhere on the page acts as a
  * trigger. Also closable by Escape or clicking the backdrop.
  *
- * Mounted once at the layout level.
+ * Mounted once at the layout level. Defaults to a 3-step wizard
+ * (smaller cognitive load per screen, higher completion rate);
+ * users can toggle to "all fields at once" via the footer link.
  */
 export default function LeadForm() {
   const { t, localePath } = useT();
@@ -88,11 +96,20 @@ export default function LeadForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const [hydrated, setHydrated] = useState(false);
+  const [mode, setMode] = useState<FormMode>("steps");
+  const [step, setStep] = useState(0);
 
-  // Restore the user's draft (everything except the honeypot) on mount.
+  // Restore the user's draft (everything except the honeypot) and
+  // their preferred form mode on mount.
   useEffect(() => {
     const draft = readDraft();
     if (draft) setFields((prev) => ({ ...prev, ...draft }));
+    try {
+      const saved = window.localStorage.getItem(MODE_KEY);
+      if (saved === "all" || saved === "steps") setMode(saved);
+    } catch {
+      // ignore
+    }
     setHydrated(true);
   }, []);
 
@@ -125,6 +142,16 @@ export default function LeadForm() {
     }
   }, [hydrated, fields.name, fields.contact, fields.business, fields.request, fields.package]);
 
+  // Persist the user's chosen form mode.
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      window.localStorage.setItem(MODE_KEY, mode);
+    } catch {
+      // ignore
+    }
+  }, [hydrated, mode]);
+
   // Listen to URL hash to know when to open.
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -153,6 +180,7 @@ export default function LeadForm() {
     window.setTimeout(() => {
       setStatus("idle");
       setError("");
+      setStep(0);
     }, 400);
   }, []);
 
@@ -173,9 +201,20 @@ export default function LeadForm() {
   const setPackage = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setFields((prev) => ({ ...prev, package: e.target.value as LeadPackage }));
 
-  const submit = async (e: FormEvent) => {
-    e.preventDefault();
+  // Track how many of the four required fields are filled, for the
+  // progress bar at the top of the modal.
+  const filledCount = useMemo(() => {
+    let n = 0;
+    if (fields.name.trim()) n++;
+    if (fields.contact.trim()) n++;
+    if (fields.business.trim()) n++;
+    if (fields.request.trim()) n++;
+    return n;
+  }, [fields.name, fields.contact, fields.business, fields.request]);
+  const totalFields = 4;
+  const progressPct = (filledCount / totalFields) * 100;
 
+  const submit = useCallback(async () => {
     const name = fields.name.trim();
     const contact = fields.contact.trim();
     const business = fields.business.trim();
@@ -183,16 +222,25 @@ export default function LeadForm() {
 
     if (!name || !contact || !business || !request) {
       setError(t.leadFillAll);
+      // Bounce the user back to the first step that still has empty
+      // required fields.
+      if (mode === "steps") {
+        if (!name || !contact) setStep(0);
+        else if (!business) setStep(1);
+        else setStep(2);
+      }
       return;
     }
 
     if (!isPlausibleContact(contact)) {
       setError(t.leadInvalidContact);
+      if (mode === "steps") setStep(0);
       return;
     }
 
     if (!consent) {
       setError(t.consentRequired);
+      if (mode === "steps") setStep(2);
       return;
     }
 
@@ -222,6 +270,7 @@ export default function LeadForm() {
       setStatus("success");
       setFields(INITIAL);
       setConsent(false);
+      setStep(0);
       try {
         window.localStorage.removeItem(DRAFT_KEY);
       } catch {
@@ -231,7 +280,53 @@ export default function LeadForm() {
       setStatus("error");
       setError(err instanceof Error ? err.message : t.chatError);
     }
+  }, [fields, consent, mode, t]);
+
+  const handleFormSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (mode === "all" || step === TOTAL_STEPS - 1) {
+      submit();
+    } else {
+      goNext();
+    }
   };
+
+  // Step-by-step mode helpers.
+  const validateStep = (n: number): string | null => {
+    if (n === 0) {
+      const name = fields.name.trim();
+      const contact = fields.contact.trim();
+      if (!name) return t.leadFillStep1;
+      if (!contact) return t.leadFillStep1;
+      if (!isPlausibleContact(contact)) return t.leadInvalidContact;
+    }
+    if (n === 1) {
+      if (!fields.business.trim()) return t.leadFillStep2;
+    }
+    if (n === 2) {
+      if (!fields.request.trim()) return t.leadFillStep3;
+    }
+    return null;
+  };
+
+  const goNext = () => {
+    const err = validateStep(step);
+    if (err) {
+      setError(err);
+      return;
+    }
+    setError("");
+    setStep((s) => Math.min(s + 1, TOTAL_STEPS - 1));
+  };
+
+  const goBack = () => {
+    setError("");
+    setStep((s) => Math.max(s - 1, 0));
+  };
+
+  const stepLabel = t.leadStepLabel
+    .replace("{n}", String(step + 1))
+    .replace("{total}", String(TOTAL_STEPS));
 
   return (
     <AnimatePresence>
@@ -276,15 +371,47 @@ export default function LeadForm() {
             ) : (
               <>
                 <div className={styles.header}>
-                  <span className={styles.eyebrow}>{t.leadEyebrow}</span>
+                  <span className={styles.eyebrow}>
+                    {mode === "steps" ? stepLabel : t.leadEyebrow}
+                  </span>
                   <h3 className={styles.title} id="lead-form-title">
                     {t.leadTitle}{" "}
                     <span className={styles.titleItalic}>{t.leadTitleAccent}</span>
                   </h3>
-                  <p className={styles.subtitle}>{t.leadSub}</p>
+                  <p className={styles.subtitle}>
+                    {mode === "steps"
+                      ? step === 0
+                        ? t.leadStep1Sub
+                        : step === 1
+                          ? t.leadStep2Sub
+                          : t.leadStep3Sub
+                      : t.leadSub}
+                  </p>
                 </div>
 
-                <form onSubmit={submit} className={styles.form} noValidate>
+                <div
+                  className={styles.progress}
+                  role="progressbar"
+                  aria-valuenow={
+                    mode === "steps" ? step + 1 : filledCount
+                  }
+                  aria-valuemin={0}
+                  aria-valuemax={mode === "steps" ? TOTAL_STEPS : totalFields}
+                  aria-label={t.leadProgressAria}
+                >
+                  <div
+                    className={styles.progressBar}
+                    style={{
+                      width: `${
+                        mode === "steps"
+                          ? ((step + 1) / TOTAL_STEPS) * 100
+                          : progressPct
+                      }%`,
+                    }}
+                  />
+                </div>
+
+                <form onSubmit={handleFormSubmit} className={styles.form} noValidate>
                   {/* Honeypot: invisible to humans (aria-hidden, tabindex=-1,
                       off-screen). Bots fill it → server silently drops. */}
                   <div className={styles.honeypot} aria-hidden="true">
@@ -301,109 +428,154 @@ export default function LeadForm() {
                     </label>
                   </div>
 
-                  <label className={styles.field}>
-                    <span className={styles.label}>{t.leadName}</span>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      value={fields.name}
-                      onChange={setField("name")}
-                      placeholder={t.leadNamePh}
-                      maxLength={100}
-                      autoComplete="name"
-                      required
-                    />
-                  </label>
+                  {(mode === "all" || step === 0) && (
+                    <>
+                      <label className={styles.field}>
+                        <span className={styles.label}>{t.leadName}</span>
+                        <input
+                          className={styles.input}
+                          type="text"
+                          value={fields.name}
+                          onChange={setField("name")}
+                          placeholder={t.leadNamePh}
+                          maxLength={100}
+                          autoComplete="name"
+                          required
+                          autoFocus={mode === "steps" && step === 0}
+                        />
+                      </label>
 
-                  <label className={styles.field}>
-                    <span className={styles.label}>{t.leadContact}</span>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      value={fields.contact}
-                      onChange={setField("contact")}
-                      placeholder={t.leadContactPh}
-                      maxLength={200}
-                      autoComplete="email"
-                      required
-                    />
-                  </label>
+                      <label className={styles.field}>
+                        <span className={styles.label}>{t.leadContact}</span>
+                        <input
+                          className={styles.input}
+                          type="text"
+                          value={fields.contact}
+                          onChange={setField("contact")}
+                          placeholder={t.leadContactPh}
+                          maxLength={200}
+                          autoComplete="email"
+                          required
+                        />
+                      </label>
+                    </>
+                  )}
 
-                  <label className={styles.field}>
-                    <span className={styles.label}>{t.leadBusiness}</span>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      value={fields.business}
-                      onChange={setField("business")}
-                      placeholder={t.leadBusinessPh}
-                      maxLength={500}
-                      required
-                    />
-                  </label>
+                  {(mode === "all" || step === 1) && (
+                    <>
+                      <label className={styles.field}>
+                        <span className={styles.label}>{t.leadBusiness}</span>
+                        <input
+                          className={styles.input}
+                          type="text"
+                          value={fields.business}
+                          onChange={setField("business")}
+                          placeholder={t.leadBusinessPh}
+                          maxLength={500}
+                          required
+                          autoFocus={mode === "steps" && step === 1}
+                        />
+                      </label>
 
-                  <label className={styles.field}>
-                    <span className={styles.label}>{t.leadPackage}</span>
-                    <select
-                      className={styles.input}
-                      value={fields.package}
-                      onChange={setPackage}
-                    >
-                      <option value="not_sure">{t.leadPackageNotSure}</option>
-                      <option value="launch">{t.leadPackageLaunch}</option>
-                      <option value="growth">{t.leadPackageGrowth}</option>
-                      <option value="scale">{t.leadPackageScale}</option>
-                      <option value="standalone">{t.leadPackageStandalone}</option>
-                    </select>
-                  </label>
+                      <label className={styles.field}>
+                        <span className={styles.label}>{t.leadPackage}</span>
+                        <select
+                          className={styles.input}
+                          value={fields.package}
+                          onChange={setPackage}
+                        >
+                          <option value="not_sure">{t.leadPackageNotSure}</option>
+                          <option value="launch">{t.leadPackageLaunch}</option>
+                          <option value="growth">{t.leadPackageGrowth}</option>
+                          <option value="scale">{t.leadPackageScale}</option>
+                          <option value="standalone">{t.leadPackageStandalone}</option>
+                        </select>
+                      </label>
+                    </>
+                  )}
 
-                  <label className={styles.field}>
-                    <span className={styles.label}>{t.leadTask}</span>
-                    <textarea
-                      className={styles.textarea}
-                      value={fields.request}
-                      onChange={setField("request")}
-                      placeholder={t.leadTaskPh}
-                      maxLength={2000}
-                      rows={5}
-                      required
-                    />
-                  </label>
+                  {(mode === "all" || step === 2) && (
+                    <>
+                      <label className={styles.field}>
+                        <span className={styles.label}>{t.leadTask}</span>
+                        <textarea
+                          className={styles.textarea}
+                          value={fields.request}
+                          onChange={setField("request")}
+                          placeholder={t.leadTaskPh}
+                          maxLength={2000}
+                          rows={5}
+                          required
+                          autoFocus={mode === "steps" && step === 2}
+                        />
+                      </label>
 
-                  <label className={styles.consent}>
-                    <input
-                      type="checkbox"
-                      checked={consent}
-                      onChange={(e) => setConsent(e.target.checked)}
-                      required
-                    />
-                    <span>
-                      {t.consentPrefix}
-                      <Link href={localePath("/privacy")} target="_blank">
-                        {t.consentPrivacy}
-                      </Link>
-                      {t.consentAnd}
-                      <Link href={localePath("/terms")} target="_blank">
-                        {t.consentTerms}
-                      </Link>
-                      {t.consentSuffix}
-                    </span>
-                  </label>
+                      <label className={styles.consent}>
+                        <input
+                          type="checkbox"
+                          checked={consent}
+                          onChange={(e) => setConsent(e.target.checked)}
+                          required
+                        />
+                        <span>
+                          {t.consentPrefix}
+                          <Link href={localePath("/privacy")} target="_blank">
+                            {t.consentPrivacy}
+                          </Link>
+                          {t.consentAnd}
+                          <Link href={localePath("/terms")} target="_blank">
+                            {t.consentTerms}
+                          </Link>
+                          {t.consentSuffix}
+                        </span>
+                      </label>
+                    </>
+                  )}
 
                   {error && <div className={styles.error}>{error}</div>}
 
-                  <button
-                    type="submit"
-                    className={styles.submit}
-                    disabled={status === "loading" || !consent}
-                  >
-                    {status === "loading" ? (
-                      t.leadSubmitting
-                    ) : (
-                      <>
-                        {t.leadSubmit} <span aria-hidden="true">→</span>
-                      </>
+                  <div className={styles.actions}>
+                    {mode === "steps" && step > 0 && (
+                      <button
+                        type="button"
+                        className={styles.back}
+                        onClick={goBack}
+                      >
+                        ← {t.leadBack}
+                      </button>
                     )}
+
+                    <button
+                      type="submit"
+                      className={styles.submit}
+                      disabled={
+                        status === "loading" ||
+                        ((mode === "all" || step === TOTAL_STEPS - 1) &&
+                          !consent)
+                      }
+                    >
+                      {status === "loading" ? (
+                        t.leadSubmitting
+                      ) : mode === "steps" && step < TOTAL_STEPS - 1 ? (
+                        <>
+                          {t.leadNext} <span aria-hidden="true">→</span>
+                        </>
+                      ) : (
+                        <>
+                          {t.leadSubmit} <span aria-hidden="true">→</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <button
+                    type="button"
+                    className={styles.modeToggle}
+                    onClick={() =>
+                      setMode((m) => (m === "steps" ? "all" : "steps"))
+                    }
+                  >
+                    {mode === "steps" ? t.leadModeAll : t.leadModeSteps}
                   </button>
                 </form>
               </>
