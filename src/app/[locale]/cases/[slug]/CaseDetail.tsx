@@ -2,12 +2,16 @@
 
 import Link from "next/link";
 import { useT } from "@/i18n/context";
+import { siteConfig } from "@/data/siteConfig";
 import type { CaseItem, CaseStatus } from "@/data/cases";
 import styles from "./CaseDetail.module.css";
 
-type Props = { item: CaseItem };
+type Props = {
+  item: CaseItem;
+  related: readonly CaseItem[];
+};
 
-export default function CaseDetail({ item }: Props) {
+export default function CaseDetail({ item, related }: Props) {
   const { t, localePath } = useT();
   const home = localePath("/");
 
@@ -25,9 +29,17 @@ export default function CaseDetail({ item }: Props) {
   return (
     <main className={styles.main}>
       <div className={styles.inner}>
-        <Link href={`${home}#cases`} className={styles.back}>
-          ← {t.casesBack}
-        </Link>
+        {/* Breadcrumbs — match the JSON-LD on the page so users and
+            search engines see the same trail. */}
+        <nav className={styles.breadcrumbs} aria-label={t.casesBreadcrumbs}>
+          <Link href={home}>{siteConfig.shortName}</Link>
+          <span aria-hidden="true">›</span>
+          <Link href={`${home}#cases`}>{t.navCases}</Link>
+          <span aria-hidden="true">›</span>
+          <span className={styles.breadcrumbCurrent} aria-current="page">
+            {title}
+          </span>
+        </nav>
 
         <div className={styles.head}>
           <span className={styles.tag}>{tag}</span>
@@ -81,6 +93,27 @@ export default function CaseDetail({ item }: Props) {
             </a>
           )}
         </div>
+
+        {related.length > 0 && (
+          <section className={styles.relatedSection}>
+            <h2 className={styles.sectionTitle}>{t.casesRelatedTitle}</h2>
+            <div className={styles.relatedGrid}>
+              {related.map((r) => (
+                <Link
+                  key={r.id}
+                  href={localePath(`/cases/${r.id}`)}
+                  className={styles.relatedCard}
+                >
+                  <span className={styles.relatedTag}>{t[r.tagKey]}</span>
+                  <span className={styles.relatedTitle}>{t[r.titleKey]}</span>
+                  <span className={styles.relatedArrow} aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </main>
   );

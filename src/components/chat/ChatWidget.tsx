@@ -76,8 +76,8 @@ export default function ChatWidget() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const send = useCallback(async () => {
-    const trimmed = input.trim();
+  const send = useCallback(async (override?: string) => {
+    const trimmed = (override ?? input).trim();
     if (!trimmed || loading) return;
 
     const userMsg: Message = { role: "user", content: trimmed };
@@ -166,6 +166,17 @@ export default function ChatWidget() {
     }
   };
 
+  // Show the quick-prompt chips only on a fresh chat — once the
+  // conversation has any user turn, they get out of the way.
+  const showSuggestions =
+    !loading && messages.every((m) => m.role !== "user");
+  const suggestions = [
+    t.chatSuggestPricing,
+    t.chatSuggestCases,
+    t.chatSuggestGrowth,
+    t.chatSuggestBot,
+  ];
+
   return (
     <div className={styles.widget}>
       <AnimatePresence>
@@ -242,6 +253,21 @@ export default function ChatWidget() {
               <div ref={endRef} />
             </div>
 
+            {showSuggestions && (
+              <div className={styles.suggestions} aria-label={t.chatSuggestAria}>
+                {suggestions.map((label) => (
+                  <button
+                    key={label}
+                    type="button"
+                    className={styles.suggestion}
+                    onClick={() => send(label)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+
             <div className={styles.inputRow}>
               <input
                 ref={inputRef}
@@ -255,7 +281,7 @@ export default function ChatWidget() {
               />
               <button
                 className={styles.sendBtn}
-                onClick={send}
+                onClick={() => send()}
                 disabled={loading || !input.trim()}
                 aria-label={t.chatSend}
                 type="button"

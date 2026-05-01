@@ -42,5 +42,48 @@ export default function CasePage({
 }) {
   const item = CASES.find((c) => c.id === params.slug);
   if (!item) notFound();
-  return <CaseDetail item={item} />;
+
+  const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
+  const t = getDictionary(locale);
+  const title = t[item.titleKey];
+
+  // BreadcrumbList JSON-LD — gives Google a real navigation trail it
+  // can render directly under the search result instead of the raw URL.
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: siteConfig.name,
+        item: `${siteConfig.url}/${locale}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: t.navCases,
+        item: `${siteConfig.url}/${locale}#cases`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: title,
+        item: `${siteConfig.url}/${locale}/cases/${item.id}`,
+      },
+    ],
+  };
+
+  // Up to 3 sibling cases for the "related" rail at the bottom.
+  const related = CASES.filter((c) => c.id !== item.id).slice(0, 3);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <CaseDetail item={item} related={related} />
+    </>
+  );
 }

@@ -147,6 +147,12 @@ export default function RootLayout({
             __html: JSON.stringify(organizationJsonLd),
           }}
         />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title={`${siteConfig.name} RSS`}
+          href="/feed.xml"
+        />
       </head>
       <body>
         <I18nProvider locale={locale}>

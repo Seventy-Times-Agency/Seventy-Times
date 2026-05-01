@@ -22,6 +22,28 @@ const INITIAL = {
   website: "",
 };
 
+const DRAFT_KEY = "st-review-draft-v1";
+
+type ReviewDraft = Omit<typeof INITIAL, "website">;
+
+function readDraft(): ReviewDraft | null {
+  try {
+    const raw = window.localStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<ReviewDraft>;
+    if (typeof parsed !== "object" || parsed === null) return null;
+    return {
+      code: typeof parsed.code === "string" ? parsed.code : "",
+      name: typeof parsed.name === "string" ? parsed.name : "",
+      role: typeof parsed.role === "string" ? parsed.role : "",
+      location: typeof parsed.location === "string" ? parsed.location : "",
+      content: typeof parsed.content === "string" ? parsed.content : "",
+    };
+  } catch {
+    return null;
+  }
+}
+
 export default function ReviewForm() {
   const { t, localePath } = useT();
   const [open, setOpen] = useState(false);
@@ -29,6 +51,36 @@ export default function ReviewForm() {
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const [hydrated, setHydrated] = useState(false);
+
+  // Restore draft on mount.
+  useEffect(() => {
+    const draft = readDraft();
+    if (draft) setFields((prev) => ({ ...prev, ...draft }));
+    setHydrated(true);
+  }, []);
+
+  // Persist on every keystroke (except the honeypot).
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      const draft: ReviewDraft = {
+        code: fields.code,
+        name: fields.name,
+        role: fields.role,
+        location: fields.location,
+        content: fields.content,
+      };
+      const empty = Object.values(draft).every((v) => !v);
+      if (empty) {
+        window.localStorage.removeItem(DRAFT_KEY);
+      } else {
+        window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      }
+    } catch {
+      // ignore
+    }
+  }, [hydrated, fields.code, fields.name, fields.role, fields.location, fields.content]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -126,6 +178,11 @@ export default function ReviewForm() {
       setStatus("success");
       setFields(INITIAL);
       setConsent(false);
+      try {
+        window.localStorage.removeItem(DRAFT_KEY);
+      } catch {
+        // ignore
+      }
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : t.reviewError);
