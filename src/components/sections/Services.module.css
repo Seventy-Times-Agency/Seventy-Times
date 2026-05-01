@@ -332,6 +332,26 @@
   transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
+.detailsCta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 12px 22px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--black);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  transition: transform 0.18s var(--ease);
+}
+
+.detailsCta:hover {
+  transform: translateY(-2px);
+}
+
 .detailsClose:hover {
   color: var(--text);
   border-color: var(--line-hi);

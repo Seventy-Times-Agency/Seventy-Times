@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/data/siteConfig";
 import { LOCALES, DEFAULT_LOCALE } from "@/i18n/config";
 import { CASES } from "@/data/cases";
+import { SERVICES } from "@/data/services";
 
 const PAGES = [
   { path: "", priority: 1, changeFrequency: "weekly" as const },
@@ -50,6 +51,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
           languages: {
             ...languages,
             "x-default": `${siteConfig.url}/${DEFAULT_LOCALE}/cases/${item.id}`,
+          },
+        },
+      });
+    }
+  }
+
+  for (const service of SERVICES) {
+    for (const locale of LOCALES) {
+      const url = `${siteConfig.url}/${locale}/services/${service.slug}`;
+      const languages = Object.fromEntries(
+        LOCALES.map((l) => [
+          l,
+          `${siteConfig.url}/${l}/services/${service.slug}`,
+        ]),
+      );
+      entries.push({
+        url,
+        lastModified: now,
+        changeFrequency: "monthly",
+        priority: 0.7,
+        alternates: {
+          languages: {
+            ...languages,
+            "x-default": `${siteConfig.url}/${DEFAULT_LOCALE}/services/${service.slug}`,
           },
         },
       });

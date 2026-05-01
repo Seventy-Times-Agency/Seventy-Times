@@ -1,16 +1,19 @@
 "use client";
 
 import { useState, type MouseEvent } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
 import { SERVICE_ICONS } from "@/components/ui/ServiceIcons";
+import { SERVICES } from "@/data/services";
 import { useT } from "@/i18n/context";
 import styles from "@/components/sections/Services.module.css";
 
 type ServiceData = {
   key: string;
+  slug: string;
   title: string;
   tagline: string;
   note: string | null;
@@ -20,42 +23,17 @@ type ServiceData = {
 
 export default function Services() {
   const [activeKey, setActiveKey] = useState<string | null>(null);
-  const { t } = useT();
+  const { t, localePath } = useT();
 
-  const services: ServiceData[] = [
-    {
-      key: "targeting",
-      title: t.svc1Title,
-      tagline: t.svc1Tag,
-      note: t.svc1Note,
-      includes: t.svc1Inc,
-      addons: t.svc1Add,
-    },
-    {
-      key: "automation",
-      title: t.svc2Title,
-      tagline: t.svc2Tag,
-      note: t.svc2Note,
-      includes: t.svc2Inc,
-      addons: t.svc2Add,
-    },
-    {
-      key: "aibot",
-      title: t.svc3Title,
-      tagline: t.svc3Tag,
-      note: t.svc3Note,
-      includes: t.svc3Inc,
-      addons: t.svc3Add,
-    },
-    {
-      key: "sites",
-      title: t.svc4Title,
-      tagline: t.svc4Tag,
-      note: t.svc4Note,
-      includes: t.svc4Inc,
-      addons: t.svc4Add,
-    },
-  ];
+  const services: ServiceData[] = SERVICES.map((s) => ({
+    key: s.key,
+    slug: s.slug,
+    title: t[s.i18n.title],
+    tagline: t[s.i18n.tag],
+    note: t[s.i18n.note],
+    includes: t[s.i18n.inc],
+    addons: t[s.i18n.add],
+  }));
 
   const activeService = services.find((s) => s.key === activeKey) ?? null;
 
@@ -175,6 +153,13 @@ export default function Services() {
                   </ul>
                 </div>
               </div>
+
+              <Link
+                href={localePath(`/services/${activeService.slug}`)}
+                className={styles.detailsCta}
+              >
+                {t.svcReadMore} <span aria-hidden="true">→</span>
+              </Link>
             </div>
           </motion.div>
         )}

@@ -11,6 +11,7 @@ import StructuredData from "@/components/seo/StructuredData";
 // Below-fold sections — code-split so the initial route bundle stays
 // lean. Still SSR'd (no `ssr: false`) so search engines and the first
 // paint keep the content; only the client JS for hydration is deferred.
+const Comparison = dynamic(() => import("@/components/sections/Comparison"));
 const Process = dynamic(() => import("@/components/sections/Process"));
 const ChatDemo = dynamic(() => import("@/components/sections/ChatDemo"));
 const Testimonials = dynamic(
@@ -34,6 +35,8 @@ export default function HomePage() {
         <SectionDivider labelKey="divMachine" />
         <GrowthMachine />
         <Services />
+        <SectionDivider labelKey="divCompare" />
+        <Comparison />
         <SectionDivider labelKey="divNext" />
         <Process />
         <SectionDivider labelKey="divMeet" />
