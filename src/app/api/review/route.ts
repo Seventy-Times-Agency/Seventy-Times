@@ -8,8 +8,13 @@ import {
   rateLimitResponse,
   silentSuccessResponse,
 } from "@/lib/apiGuard";
-import { escapeMarkdown } from "@/lib/telegram";
-import { sendReviewToNotion } from "@/lib/notion";
+import {
+  escapeMarkdown,
+  isTelegramConfigured,
+  sendTelegramMessage,
+} from "@/lib/telegram";
+import { isNotionReviewsConfigured, sendReviewToNotion } from "@/lib/notion";
+import { isEmailConfigured, sendEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -42,25 +47,12 @@ function isValid(p: unknown): p is ReviewPayload {
   );
 }
 
-/**
- * Check the provided code against the CLIENT_CODES env var, which
- * holds a comma-separated list of valid one-off client codes. Each
- * real client gets a code after their project ends; only people with
- * a real code can submit a review.
- *
- * Matching is case-insensitive and whitespace-insensitive, and
- * accepts codes with or without spaces/dashes for convenience.
- */
 function isCodeValid(code: string): boolean {
-  const normalize = (s: string) =>
-    s.replace(/[\s\-_]/g, "").toLowerCase();
-
+  const normalize = (s: string) => s.replace(/[\s\-_]/g, "").toLowerCase();
   const raw = process.env.CLIENT_CODES || "";
   if (!raw.trim()) return false;
-
   const needle = normalize(code);
   if (!needle) return false;
-
   return raw
     .split(",")
     .map((c) => normalize(c))
@@ -68,11 +60,11 @@ function isCodeValid(code: string): boolean {
     .includes(needle);
 }
 
-async function notifyTelegram(review: Omit<ReviewPayload, "code">, code: string) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
-
+async function notifyTelegram(
+  review: Omit<ReviewPayload, "code">,
+  code: string,
+) {
+  if (!isTelegramConfigured()) return false;
   const text = [
     "⭐️ *Новый отзыв на сайте Seventy Times*",
     "",
@@ -84,20 +76,19 @@ async function notifyTelegram(review: Omit<ReviewPayload, "code">, code: string)
     `💬 *Отзыв:*`,
     escapeMarkdown(review.content),
   ].join("\n");
+  return sendTelegramMessage(text);
+}
 
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: "MarkdownV2",
-      }),
-    });
-  } catch (err) {
-    console.error("[REVIEW] Telegram notification failed:", err);
-  }
+function buildEmailText(review: Omit<ReviewPayload, "code">, code: string) {
+  return [
+    `Code: ${code}`,
+    `Name: ${review.name}`,
+    `Role: ${review.role}`,
+    `Location: ${review.location}`,
+    "",
+    "Content:",
+    review.content,
+  ].join("\n");
 }
 
 export async function POST(req: Request) {
@@ -115,10 +106,7 @@ export async function POST(req: Request) {
   }
 
   if (!isValid(body)) {
-    return NextResponse.json(
-      { error: "MISSING_FIELDS" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
   }
 
   if (
@@ -140,10 +128,7 @@ export async function POST(req: Request) {
   const content = body.content.trim();
 
   if (!code || !name || !role || !location || !content) {
-    return NextResponse.json(
-      { error: "MISSING_FIELDS" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
   }
 
   if (
@@ -153,10 +138,7 @@ export async function POST(req: Request) {
     location.length > LIMITS.location ||
     content.length > LIMITS.content
   ) {
-    return NextResponse.json(
-      { error: "TOO_LONG" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "TOO_LONG" }, { status: 400 });
   }
 
   if (!isCodeValid(code)) {
@@ -166,40 +148,33 @@ export async function POST(req: Request) {
       at: new Date().toISOString(),
       codeLen: code.length,
     });
-    return NextResponse.json(
-      { error: "INVALID_CODE" },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: "INVALID_CODE" }, { status: 401 });
   }
 
-  const telegramConfigured = Boolean(
-    process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID
-  );
-  const notionConfigured = Boolean(
-    process.env.NOTION_TOKEN && process.env.NOTION_DATABASE_REVIEWS_ID
-  );
+  const telegramOn = isTelegramConfigured();
+  const notionOn = isNotionReviewsConfigured();
+  const emailOn = isEmailConfigured();
 
   console.log("[REVIEW] accepted", {
     at: new Date().toISOString(),
-    telegram: telegramConfigured,
-    notion: notionConfigured,
-    sizes: {
-      name: name.length,
-      role: role.length,
-      location: location.length,
-      content: content.length,
-    },
+    channels: { telegram: telegramOn, notion: notionOn, email: emailOn },
   });
 
-  if (!telegramConfigured && !notionConfigured) {
-    console.warn(
-      "[REVIEW] No outbound channels configured — review accepted but not forwarded"
+  if (!telegramOn && !notionOn && !emailOn) {
+    console.error("[REVIEW] no outbound channels configured — refusing");
+    return NextResponse.json(
+      { error: "NOT_CONFIGURED" },
+      { status: 503 },
     );
   }
 
   await Promise.allSettled([
     notifyTelegram({ name, role, location, content }, code),
     sendReviewToNotion({ name, role, location, content, code }),
+    sendEmail({
+      subject: `Review: ${name}`,
+      text: buildEmailText({ name, role, location, content }, code),
+    }),
   ]);
 
   return NextResponse.json({ ok: true });

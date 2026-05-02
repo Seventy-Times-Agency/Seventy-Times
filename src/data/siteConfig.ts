@@ -21,6 +21,14 @@ export const siteConfig = {
       handle: "Seventy Times",
       url: "https://wa.me/15856854437",
     },
+    phone: {
+      // Display label is shown on the site; raw is the E.164 number
+      // wired into the tel: deeplink. Update both together if the
+      // number ever changes.
+      label: "+1 (585) 685-4437",
+      raw: "+15856854437",
+      url: "tel:+15856854437",
+    },
     instagram: {
       handle: "@seventytimesagency",
       url: "https://instagram.com/seventytimesagency",

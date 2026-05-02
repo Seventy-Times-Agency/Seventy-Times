@@ -573,6 +573,34 @@ const strings = {
     ftLegal: "Legal",
     ftPrivacy: "Privacy Policy",
     ftTerms: "Terms of Use",
+    ftReview: "Leave a review",
+    ftReviewNote: "For clients with a personal code only",
+    ftCallback: "Request a callback",
+
+    // Callback (request a call) modal
+    callbackEyebrow: "— Request a callback",
+    callbackTitle: "We'll call you",
+    callbackTitleAccent: "back",
+    callbackSub:
+      "Just your name and a number. We'll call within an hour during US business hours.",
+    callbackName: "Name",
+    callbackNamePh: "What should we call you",
+    callbackPhone: "Phone",
+    callbackPhonePh: "+1 555 555 5555",
+    callbackNote: "Anything we should know? (optional)",
+    callbackNotePh: "Project type, best time to call, etc.",
+    callbackSubmit: "Request a callback",
+    callbackSuccessTitle: "On our list",
+    callbackSuccessText:
+      "Got it — we'll call you back within an hour during US business hours. Talk soon 👋",
+    callbackFillAll: "Please fill in your name and phone",
+    callbackInvalidPhone:
+      "That doesn't look like a phone number — please check",
+    callbackUnavailable:
+      "Our callback queue isn't available right now. Please reach us on Telegram or WhatsApp.",
+    callbackOrCall: "Or call us directly:",
+    callbackBusinessFiller: "(callback request)",
+    callbackRequestPrefix: "Callback request from website",
 
     // Privacy Policy page
     privacyTitle: "Privacy Policy",

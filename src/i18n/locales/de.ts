@@ -576,6 +576,34 @@ const strings = {
     ftLegal: "Rechtliches",
     ftPrivacy: "Datenschutzerklärung",
     ftTerms: "Nutzungsbedingungen",
+    ftReview: "Bewertung abgeben",
+    ftReviewNote: "Nur für Kunden mit persönlichem Code",
+    ftCallback: "Rückruf anfordern",
+
+    // Callback (request a call) modal
+    callbackEyebrow: "— Rückruf anfordern",
+    callbackTitle: "Wir rufen",
+    callbackTitleAccent: "Sie zurück",
+    callbackSub:
+      "Nur Name und Nummer. Wir rufen innerhalb einer Stunde während der US-Geschäftszeiten zurück.",
+    callbackName: "Name",
+    callbackNamePh: "Wie sollen wir Sie ansprechen",
+    callbackPhone: "Telefon",
+    callbackPhonePh: "+1 555 555 5555",
+    callbackNote: "Sonst noch etwas? (optional)",
+    callbackNotePh: "Projekttyp, beste Anrufzeit usw.",
+    callbackSubmit: "Rückruf anfordern",
+    callbackSuccessTitle: "Notiert",
+    callbackSuccessText:
+      "Erhalten — wir rufen innerhalb einer Stunde während der US-Geschäftszeiten zurück. Bis bald 👋",
+    callbackFillAll: "Bitte Name und Telefon ausfüllen",
+    callbackInvalidPhone:
+      "Das sieht nicht wie eine Telefonnummer aus — bitte prüfen",
+    callbackUnavailable:
+      "Unsere Rückrufwarteschlange ist momentan nicht verfügbar. Bitte erreichen Sie uns über Telegram oder WhatsApp.",
+    callbackOrCall: "Oder rufen Sie uns direkt an:",
+    callbackBusinessFiller: "(Rückrufanfrage)",
+    callbackRequestPrefix: "Rückrufanfrage von der Website",
 
     // Privacy Policy page
     privacyTitle: "Datenschutzerklärung",

@@ -5,20 +5,55 @@ import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
 import { useT } from "@/i18n/context";
+import type { ApprovedReview } from "@/lib/notion";
 import styles from "@/components/sections/Testimonials.module.css";
 
-export default function Testimonials() {
+type Props = {
+  reviews?: ApprovedReview[];
+};
+
+type Card =
+  | {
+      kind: "review";
+      key: string;
+      badge: string;
+      name: string;
+      meta: string;
+      body: string;
+    }
+  | {
+      kind: "principle";
+      key: string;
+      badge: string;
+      title: string;
+      body: string;
+    };
+
+export default function Testimonials({ reviews = [] }: Props) {
   const { t } = useT();
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
 
-  const principles = [
-    { badge: t.prin1Badge, title: t.prin1Title, body: t.prin1Body },
-    { badge: t.prin2Badge, title: t.prin2Title, body: t.prin2Body },
-    { badge: t.prin3Badge, title: t.prin3Title, body: t.prin3Body },
-    { badge: t.prin4Badge, title: t.prin4Title, body: t.prin4Body },
+  const principles: Card[] = [
+    { kind: "principle", key: "p1", badge: t.prin1Badge, title: t.prin1Title, body: t.prin1Body },
+    { kind: "principle", key: "p2", badge: t.prin2Badge, title: t.prin2Title, body: t.prin2Body },
+    { kind: "principle", key: "p3", badge: t.prin3Badge, title: t.prin3Title, body: t.prin3Body },
+    { kind: "principle", key: "p4", badge: t.prin4Badge, title: t.prin4Title, body: t.prin4Body },
   ];
-  const total = principles.length;
+
+  // Real client reviews come first, then the brand principles. Real
+  // ones get a R-prefixed badge to set them apart visually.
+  const reviewCards: Card[] = reviews.map((r, i) => ({
+    kind: "review",
+    key: r.id,
+    badge: `R${String(i + 1).padStart(2, "0")}`,
+    name: r.name,
+    meta: [r.role, r.location].filter(Boolean).join(" · "),
+    body: r.content,
+  }));
+
+  const cards = [...reviewCards, ...principles];
+  const total = cards.length;
 
   useEffect(() => {
     const el = trackRef.current;
@@ -54,11 +89,11 @@ export default function Testimonials() {
     const rect = e.currentTarget.getBoundingClientRect();
     e.currentTarget.style.setProperty(
       "--mx",
-      `${((e.clientX - rect.left) / rect.width) * 100}%`
+      `${((e.clientX - rect.left) / rect.width) * 100}%`,
     );
     e.currentTarget.style.setProperty(
       "--my",
-      `${((e.clientY - rect.top) / rect.height) * 100}%`
+      `${((e.clientY - rect.top) / rect.height) * 100}%`,
     );
   };
 
@@ -93,15 +128,32 @@ export default function Testimonials() {
       </div>
       <div className={styles.carousel}>
         <div className={styles.track} ref={trackRef}>
-          {principles.map((p) => (
+          {cards.map((card) => (
             <div
-              key={p.badge}
+              key={card.key}
               className={styles.card}
               onMouseMove={handleMove}
             >
-              <span className={styles.principleBadge}>/ {p.badge}</span>
-              <h3 className={styles.principleTitle}>{p.title}</h3>
-              <p className={styles.principleBody}>{p.body}</p>
+              <span className={styles.principleBadge}>/ {card.badge}</span>
+              {card.kind === "review" ? (
+                <>
+                  <p className={styles.principleBody}>“{card.body}”</p>
+                  <h3 className={styles.principleTitle}>{card.name}</h3>
+                  {card.meta && (
+                    <p
+                      className={styles.principleBody}
+                      style={{ opacity: 0.7, marginTop: 4 }}
+                    >
+                      {card.meta}
+                    </p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <h3 className={styles.principleTitle}>{card.title}</h3>
+                  <p className={styles.principleBody}>{card.body}</p>
+                </>
+              )}
             </div>
           ))}
         </div>

@@ -12,7 +12,23 @@ type Message = {
 };
 
 const STORAGE_KEY = "st-chat-history-v1";
+const SESSION_KEY = "st-chat-session-v1";
 const MAX_STORED = 50;
+
+function getSessionId(): string {
+  try {
+    const existing = window.localStorage.getItem(SESSION_KEY);
+    if (existing) return existing;
+    const fresh =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `s-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    window.localStorage.setItem(SESSION_KEY, fresh);
+    return fresh;
+  } catch {
+    return `s-${Date.now().toString(36)}`;
+  }
+}
 
 export default function ChatWidget() {
   const { t } = useT();
@@ -96,7 +112,10 @@ export default function ChatWidget() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next }),
+        body: JSON.stringify({
+          messages: next,
+          sessionId: getSessionId(),
+        }),
       });
 
       if (!res.ok || !res.body) {

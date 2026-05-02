@@ -44,6 +44,10 @@ export default function Footer() {
 
         <div className={styles.col}>
           <span className={styles.colTitle}>{t.ftContacts}</span>
+          <a href={siteConfig.contacts.phone.url}>
+            {siteConfig.contacts.phone.label}
+          </a>
+          <a href={`${onHome ? "" : home}#callback`}>{t.ftCallback}</a>
           <a href={siteConfig.contacts.telegram.url} target="_blank" rel="noopener noreferrer">Telegram</a>
           <a href={siteConfig.contacts.whatsapp.url} target="_blank" rel="noopener noreferrer">WhatsApp</a>
           <a href={siteConfig.contacts.instagram.url} target="_blank" rel="noopener noreferrer">Instagram</a>
@@ -62,6 +66,9 @@ export default function Footer() {
           <span className={styles.colTitle}>{t.ftLegal}</span>
           <Link href={localePath("/privacy")}>{t.ftPrivacy}</Link>
           <Link href={localePath("/terms")}>{t.ftTerms}</Link>
+          <a href={`${onHome ? "" : home}#review`} title={t.ftReviewNote}>
+            {t.ftReview}
+          </a>
         </div>
       </div>
 

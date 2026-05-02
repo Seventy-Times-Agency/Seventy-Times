@@ -3,13 +3,20 @@ import {
   checkOrigin,
   forbiddenOriginResponse,
   getClientIp,
+  isFirstSeen,
   isHoneypotTripped,
+  normalizeContactKey,
   rateLimit,
   rateLimitResponse,
   silentSuccessResponse,
 } from "@/lib/apiGuard";
-import { escapeMarkdown } from "@/lib/telegram";
-import { sendLeadToNotion } from "@/lib/notion";
+import {
+  escapeMarkdown,
+  isTelegramConfigured,
+  sendTelegramMessage,
+} from "@/lib/telegram";
+import { isNotionLeadsConfigured, sendLeadToNotion } from "@/lib/notion";
+import { isEmailConfigured, sendEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,12 +28,16 @@ type LeadPackage =
   | "growth"
   | "scale";
 
+type LeadKind = "lead" | "callback";
+
 type LeadPayload = {
   name: string;
   contact: string;
   business: string;
   request: string;
   package?: LeadPackage;
+  phone?: string;
+  kind?: LeadKind;
 };
 
 const PACKAGE_LABEL: Record<LeadPackage, string> = {
@@ -49,6 +60,7 @@ const LIMITS = {
   contact: 200,
   business: 500,
   request: 2000,
+  phone: 40,
 };
 
 function isValid(p: unknown): p is LeadPayload {
@@ -62,20 +74,36 @@ function isValid(p: unknown): p is LeadPayload {
   );
 }
 
-async function notifyTelegram(lead: LeadPayload) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
+type TelegramArgs = {
+  lead: LeadPayload;
+  duplicate: boolean;
+  kind: LeadKind;
+};
+
+async function notifyTelegram({ lead, duplicate, kind }: TelegramArgs) {
+  if (!isTelegramConfigured()) return false;
+
+  const headerBase =
+    kind === "callback"
+      ? "📞 *Заявка на звонок*"
+      : "📩 *Новая заявка с сайта Seventy Times*";
+  const header = duplicate
+    ? `${headerBase}\n_⚠️ Возможный дубликат — этот контакт уже писал в последний час_`
+    : headerBase;
 
   const packageLine = lead.package
     ? `📦 *Пакет:* ${escapeMarkdown(PACKAGE_LABEL[lead.package])}`
     : null;
+  const phoneLine = lead.phone
+    ? `📱 *Телефон:* ${escapeMarkdown(lead.phone)}`
+    : null;
 
   const text = [
-    "📩 *Новая заявка с сайта Seventy Times*",
+    header,
     "",
     `👤 *Имя:* ${escapeMarkdown(lead.name)}`,
     `📞 *Контакт:* ${escapeMarkdown(lead.contact)}`,
+    ...(phoneLine ? [phoneLine] : []),
     `🏢 *Бизнес:* ${escapeMarkdown(lead.business)}`,
     ...(packageLine ? [packageLine] : []),
     "",
@@ -83,19 +111,22 @@ async function notifyTelegram(lead: LeadPayload) {
     escapeMarkdown(lead.request),
   ].join("\n");
 
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: "MarkdownV2",
-      }),
-    });
-  } catch (err) {
-    console.error("[LEAD] Telegram notification failed:", err);
-  }
+  return sendTelegramMessage(text);
+}
+
+function buildEmailText(lead: LeadPayload, duplicate: boolean) {
+  const lines = [
+    duplicate ? "[POSSIBLE DUPLICATE]" : null,
+    `Name: ${lead.name}`,
+    `Contact: ${lead.contact}`,
+    lead.phone ? `Phone: ${lead.phone}` : null,
+    `Business: ${lead.business}`,
+    lead.package ? `Package: ${PACKAGE_LABEL[lead.package]}` : null,
+    "",
+    "Request:",
+    lead.request,
+  ];
+  return lines.filter(Boolean).join("\n");
 }
 
 export async function POST(req: Request) {
@@ -113,13 +144,9 @@ export async function POST(req: Request) {
   }
 
   if (!isValid(body)) {
-    return NextResponse.json(
-      { error: "MISSING_FIELDS" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
   }
 
-  // Honeypot: bots fill every field they see. Humans never see this one.
   if (
     typeof body === "object" &&
     body !== null &&
@@ -127,7 +154,7 @@ export async function POST(req: Request) {
   ) {
     console.warn("[LEAD] honeypot tripped", {
       at: new Date().toISOString(),
-      ip: getClientIp(req),
+      ip,
     });
     return silentSuccessResponse();
   }
@@ -136,51 +163,55 @@ export async function POST(req: Request) {
   const contact = body.contact.trim();
   const business = body.business.trim();
   const request = body.request.trim();
-  // Optional preferred package — only forwarded when valid.
   const rawPackage = (body as Record<string, unknown>).package;
   const leadPackage = isLeadPackage(rawPackage) ? rawPackage : undefined;
+  const rawPhone = (body as Record<string, unknown>).phone;
+  const phone =
+    typeof rawPhone === "string" && rawPhone.trim()
+      ? rawPhone.trim()
+      : undefined;
+  const rawKind = (body as Record<string, unknown>).kind;
+  const kind: LeadKind = rawKind === "callback" ? "callback" : "lead";
 
   if (!name || !contact || !business || !request) {
-    return NextResponse.json(
-      { error: "MISSING_FIELDS" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
   }
 
   if (
     name.length > LIMITS.name ||
     contact.length > LIMITS.contact ||
     business.length > LIMITS.business ||
-    request.length > LIMITS.request
+    request.length > LIMITS.request ||
+    (phone !== undefined && phone.length > LIMITS.phone)
   ) {
-    return NextResponse.json(
-      { error: "TOO_LONG" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "TOO_LONG" }, { status: 400 });
   }
 
-  const telegramConfigured = Boolean(
-    process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID
-  );
-  const notionConfigured = Boolean(
-    process.env.NOTION_TOKEN && process.env.NOTION_DATABASE_LEADS_ID
-  );
+  // Detect repeat submissions from the same contact within the last
+  // hour. We don't block (one duplicate is cheaper than losing a real
+  // lead), but we tag downstream notifications so the team can spot it.
+  const dedupKey = `lead-dedup:${normalizeContactKey(contact)}`;
+  const isDuplicate = !isFirstSeen(dedupKey, 60 * 60_000);
+
+  const telegramOn = isTelegramConfigured();
+  const notionOn = isNotionLeadsConfigured();
+  const emailOn = isEmailConfigured();
 
   console.log("[LEAD] received", {
     at: new Date().toISOString(),
-    telegram: telegramConfigured,
-    notion: notionConfigured,
-    sizes: {
-      name: name.length,
-      contact: contact.length,
-      business: business.length,
-      request: request.length,
-    },
+    kind,
+    duplicate: isDuplicate,
+    channels: { telegram: telegramOn, notion: notionOn, email: emailOn },
   });
 
-  if (!telegramConfigured && !notionConfigured) {
-    console.warn(
-      "[LEAD] No outbound channels configured — lead accepted but not forwarded"
+  // If nothing is configured, a 200 would silently swallow the lead.
+  // Tell the user clearly so the form can show a fallback ("write to
+  // us on Telegram / WhatsApp directly") instead of a fake success.
+  if (!telegramOn && !notionOn && !emailOn) {
+    console.error("[LEAD] no outbound channels configured — refusing");
+    return NextResponse.json(
+      { error: "NOT_CONFIGURED" },
+      { status: 503 },
     );
   }
 
@@ -190,28 +221,35 @@ export async function POST(req: Request) {
     ?.match(/(?:^|;\s*)lang=(en|ru|de)/);
   const locale = localeMatch?.[1] ?? "en";
 
-  // Fan out to both channels in parallel so one slow/failed provider
-  // doesn't block the other.
-  // Prepend package label to the request body for Notion (no schema
-  // change required) and pass it as a structured field to Telegram.
-  const requestForNotion = leadPackage
-    ? `[${PACKAGE_LABEL[leadPackage]}]\n\n${request}`
-    : request;
+  const lead: LeadPayload = {
+    name,
+    contact,
+    business,
+    request,
+    package: leadPackage,
+    phone,
+    kind,
+  };
 
   await Promise.allSettled([
-    notifyTelegram({
-      name,
-      contact,
-      business,
-      request,
-      package: leadPackage,
-    }),
-    sendLeadToNotion({
-      name,
-      contact,
-      business,
-      request: requestForNotion,
-      locale,
+    notifyTelegram({ lead, duplicate: isDuplicate, kind }),
+    isDuplicate
+      ? Promise.resolve(false)
+      : sendLeadToNotion({
+          name,
+          contact,
+          business,
+          request,
+          locale,
+          package: leadPackage,
+          phone,
+        }),
+    sendEmail({
+      subject: isDuplicate
+        ? `[duplicate] ${kind === "callback" ? "Callback" : "Lead"}: ${name}`
+        : `${kind === "callback" ? "Callback" : "Lead"}: ${name}`,
+      text: buildEmailText(lead, isDuplicate),
+      replyTo: contact.includes("@") ? contact : undefined,
     }),
   ]);
 
