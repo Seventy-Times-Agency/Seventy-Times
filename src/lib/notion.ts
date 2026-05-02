@@ -10,8 +10,25 @@
 
 const NOTION_VERSION = "2022-06-28";
 const NOTION_ENDPOINT = "https://api.notion.com/v1/pages";
+const NOTION_QUERY_ENDPOINT = (databaseId: string) =>
+  `https://api.notion.com/v1/databases/${databaseId}/query`;
 
 type Locale = "en" | "ru" | "de";
+
+type LeadPackage =
+  | "not_sure"
+  | "standalone"
+  | "launch"
+  | "growth"
+  | "scale";
+
+const PACKAGE_NOTION_LABEL: Record<LeadPackage, string> = {
+  not_sure: "Not sure",
+  standalone: "Standalone",
+  launch: "Launch",
+  growth: "Growth",
+  scale: "Scale",
+};
 
 type LeadRecord = {
   name: string;
@@ -19,6 +36,8 @@ type LeadRecord = {
   business: string;
   request: string;
   locale?: Locale | string;
+  package?: LeadPackage;
+  phone?: string;
 };
 
 type ReviewRecord = {
@@ -27,6 +46,23 @@ type ReviewRecord = {
   location: string;
   content: string;
   code: string;
+};
+
+type ChatRecord = {
+  sessionId: string;
+  turnIndex: number;
+  user: string;
+  tess: string;
+  locale: Locale | string;
+};
+
+export type ApprovedReview = {
+  id: string;
+  name: string;
+  role: string;
+  location: string;
+  content: string;
+  submittedAt: string | null;
 };
 
 function richText(content: string) {
@@ -54,7 +90,7 @@ async function createPage(
   token: string,
   databaseId: string,
   properties: Record<string, unknown>,
-  label: string
+  label: string,
 ): Promise<void> {
   try {
     const res = await fetch(NOTION_ENDPOINT, {
@@ -82,39 +118,64 @@ async function createPage(
   }
 }
 
+export function isNotionLeadsConfigured(): boolean {
+  return Boolean(
+    process.env.NOTION_TOKEN && process.env.NOTION_DATABASE_LEADS_ID,
+  );
+}
+
+export function isNotionReviewsConfigured(): boolean {
+  return Boolean(
+    process.env.NOTION_TOKEN && process.env.NOTION_DATABASE_REVIEWS_ID,
+  );
+}
+
+export function isNotionChatsConfigured(): boolean {
+  return Boolean(
+    process.env.NOTION_TOKEN && process.env.NOTION_DATABASE_CHATS_ID,
+  );
+}
+
 export async function sendLeadToNotion(
-  lead: LeadRecord
-): Promise<void> {
+  lead: LeadRecord,
+): Promise<boolean> {
   const token = process.env.NOTION_TOKEN;
   const databaseId = process.env.NOTION_DATABASE_LEADS_ID;
-  if (!token || !databaseId) return;
+  if (!token || !databaseId) return false;
 
   const locale = (lead.locale ?? "en").toString();
   const localeOption = ["en", "ru", "de"].includes(locale) ? locale : "en";
 
-  await createPage(
-    token,
-    databaseId,
-    {
-      Name: { title: title(lead.name) },
-      Contact: { rich_text: richText(lead.contact) },
-      Business: { rich_text: richText(lead.business) },
-      Request: { rich_text: richText(lead.request) },
-      Status: { select: { name: "New" } },
-      Source: { select: { name: "Website" } },
-      Locale: { select: { name: localeOption } },
-      Submitted: { date: { start: new Date().toISOString() } },
-    },
-    "LEAD"
-  );
+  const properties: Record<string, unknown> = {
+    Name: { title: title(lead.name) },
+    Contact: { rich_text: richText(lead.contact) },
+    Business: { rich_text: richText(lead.business) },
+    Request: { rich_text: richText(lead.request) },
+    Status: { select: { name: "New" } },
+    Source: { select: { name: "Website" } },
+    Locale: { select: { name: localeOption } },
+    Submitted: { date: { start: new Date().toISOString() } },
+  };
+
+  if (lead.package) {
+    properties.Package = {
+      select: { name: PACKAGE_NOTION_LABEL[lead.package] },
+    };
+  }
+  if (lead.phone) {
+    properties.Phone = { phone_number: lead.phone };
+  }
+
+  await createPage(token, databaseId, properties, "LEAD");
+  return true;
 }
 
 export async function sendReviewToNotion(
-  review: ReviewRecord
-): Promise<void> {
+  review: ReviewRecord,
+): Promise<boolean> {
   const token = process.env.NOTION_TOKEN;
   const databaseId = process.env.NOTION_DATABASE_REVIEWS_ID;
-  if (!token || !databaseId) return;
+  if (!token || !databaseId) return false;
 
   await createPage(
     token,
@@ -128,6 +189,124 @@ export async function sendReviewToNotion(
       Status: { select: { name: "Pending" } },
       Submitted: { date: { start: new Date().toISOString() } },
     },
-    "REVIEW"
+    "REVIEW",
   );
+  return true;
+}
+
+export async function logChatTurn(turn: ChatRecord): Promise<void> {
+  const token = process.env.NOTION_TOKEN;
+  const databaseId = process.env.NOTION_DATABASE_CHATS_ID;
+  if (!token || !databaseId) return;
+
+  const locale = (turn.locale ?? "en").toString();
+  const localeOption = ["en", "ru", "de"].includes(locale) ? locale : "en";
+
+  await createPage(
+    token,
+    databaseId,
+    {
+      Session: { title: title(turn.sessionId) },
+      User: { rich_text: richText(turn.user) },
+      Tess: { rich_text: richText(turn.tess) },
+      Turn: { number: turn.turnIndex },
+      Locale: { select: { name: localeOption } },
+      Submitted: { date: { start: new Date().toISOString() } },
+    },
+    "CHAT",
+  );
+}
+
+/**
+ * Pull approved reviews from the Notion Reviews database, newest first.
+ * Returns an empty array when Notion is not configured or the request
+ * fails — the caller can render its fallback (principles).
+ */
+export async function fetchApprovedReviews(
+  pageSize = 12,
+): Promise<ApprovedReview[]> {
+  const token = process.env.NOTION_TOKEN;
+  const databaseId = process.env.NOTION_DATABASE_REVIEWS_ID;
+  if (!token || !databaseId) return [];
+
+  try {
+    const res = await fetch(NOTION_QUERY_ENDPOINT(databaseId), {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Notion-Version": NOTION_VERSION,
+      },
+      body: JSON.stringify({
+        filter: {
+          property: "Status",
+          select: { equals: "Approved" },
+        },
+        sorts: [{ property: "Submitted", direction: "descending" }],
+        page_size: pageSize,
+      }),
+      // Cache for 5 minutes — the section is part of an ISR'd page so
+      // this revalidates on the page tick anyway. Keeps repeat hits
+      // from the same render cheap.
+      next: { revalidate: 300 },
+    });
+
+    if (!res.ok) {
+      console.error("[REVIEWS] Notion query failed", { status: res.status });
+      return [];
+    }
+
+    const data = (await res.json()) as { results?: NotionPage[] };
+    if (!Array.isArray(data.results)) return [];
+
+    return data.results
+      .map(parseReview)
+      .filter((r): r is ApprovedReview => r !== null);
+  } catch (err) {
+    console.error("[REVIEWS] Notion request error", {
+      message: err instanceof Error ? err.message : "unknown",
+    });
+    return [];
+  }
+}
+
+type NotionPage = {
+  id: string;
+  properties?: Record<string, unknown>;
+};
+
+function readPlain(prop: unknown): string {
+  if (!prop || typeof prop !== "object") return "";
+  const p = prop as Record<string, unknown>;
+  const arr =
+    (Array.isArray(p.rich_text) && p.rich_text) ||
+    (Array.isArray(p.title) && p.title) ||
+    [];
+  return (arr as Array<{ plain_text?: string }>)
+    .map((b) => b.plain_text ?? "")
+    .join("")
+    .trim();
+}
+
+function readDate(prop: unknown): string | null {
+  if (!prop || typeof prop !== "object") return null;
+  const p = prop as Record<string, unknown>;
+  const date = p.date as { start?: string } | null | undefined;
+  return date?.start ?? null;
+}
+
+function parseReview(page: NotionPage): ApprovedReview | null {
+  const props = page.properties ?? {};
+  const name = readPlain(props["Name"]);
+  const content = readPlain(props["Content"]);
+  if (!name || !content) return null;
+
+  return {
+    id: page.id,
+    name,
+    role: readPlain(props["Role"]),
+    location: readPlain(props["Location"]),
+    content,
+    submittedAt: readDate(props["Submitted"]),
+  };
 }

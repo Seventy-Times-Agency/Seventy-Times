@@ -1,5 +1,18 @@
 import { NextResponse } from "next/server";
-import { checkOrigin, forbiddenOriginResponse, getClientIp, rateLimit, rateLimitResponse } from "@/lib/apiGuard";
+import { createHash } from "node:crypto";
+import {
+  checkOrigin,
+  forbiddenOriginResponse,
+  getClientIp,
+  isFirstSeen,
+  rateLimit,
+  rateLimitResponse,
+} from "@/lib/apiGuard";
+import {
+  escapeMarkdown,
+  isTelegramConfigured,
+  sendTelegramMessage,
+} from "@/lib/telegram";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,12 +34,36 @@ function clean(value: unknown): string | undefined {
   return value.slice(0, MAX_FIELD);
 }
 
+function signature(p: ErrorPayload): string {
+  // First line of the message + source + line keeps the signature
+  // narrow enough to dedup repeated errors but specific enough that
+  // genuinely different bugs each get their own alert.
+  const head = (p.message || "").split("\n")[0].slice(0, 200);
+  const seed = `${head}|${p.source ?? ""}|${p.line ?? ""}`;
+  return createHash("sha1").update(seed).digest("hex").slice(0, 12);
+}
+
+async function notifyTelegram(p: ErrorPayload, sig: string) {
+  if (!isTelegramConfigured()) return;
+  const lines = [
+    "🚨 *Client error on Seventy Times*",
+    `🔖 *Sig:* \`${escapeMarkdown(sig)}\``,
+    `💬 *Message:* ${escapeMarkdown(p.message.slice(0, 400))}`,
+  ];
+  if (p.url) lines.push(`🌐 *URL:* ${escapeMarkdown(p.url)}`);
+  if (p.source)
+    lines.push(`📄 *Source:* ${escapeMarkdown(p.source)}:${p.line ?? "?"}`);
+  if (p.userAgent)
+    lines.push(`🧭 *UA:* ${escapeMarkdown(p.userAgent.slice(0, 160))}`);
+  await sendTelegramMessage(lines.join("\n"));
+}
+
 /**
- * Lightweight error sink. Browser-side error boundaries POST a
- * JSON description here; we just emit a console.error so the
- * payload shows up in Vercel's runtime logs. Cheap, no third-party
- * SDK to babysit, and good enough until traffic is high enough to
- * justify a real APM.
+ * Lightweight error sink. Browser-side error boundaries POST a JSON
+ * description here. We log it for Vercel's runtime logs, and on the
+ * first occurrence within an hour we also push a Telegram alert so a
+ * regression doesn't sit silently in logs all weekend. Repeated hits
+ * with the same signature inside that window are deduplicated.
  */
 export async function POST(req: Request) {
   if (!checkOrigin(req)) return forbiddenOriginResponse();
@@ -56,11 +93,19 @@ export async function POST(req: Request) {
     userAgent: clean(r.userAgent),
   };
 
+  const sig = signature(payload);
   console.error("[CLIENT_ERROR]", {
     at: new Date().toISOString(),
     ip,
+    sig,
     ...payload,
   });
+
+  // One Telegram ping per signature per hour. Suppresses storms when
+  // a single visitor reloads a broken page.
+  if (isFirstSeen(`error-sig:${sig}`, 60 * 60_000)) {
+    await notifyTelegram(payload, sig);
+  }
 
   return NextResponse.json({ ok: true });
 }

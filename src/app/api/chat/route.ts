@@ -8,6 +8,7 @@ import {
   rateLimit,
   rateLimitResponse,
 } from "@/lib/apiGuard";
+import { logChatTurn } from "@/lib/notion";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -81,6 +82,25 @@ export async function POST(req: Request) {
     );
   }
 
+  const rawSessionId =
+    body && typeof body === "object" && "sessionId" in body
+      ? (body as { sessionId: unknown }).sessionId
+      : null;
+  const sessionId =
+    typeof rawSessionId === "string" && rawSessionId.length > 0
+      ? rawSessionId.slice(0, 64)
+      : "anon";
+
+  // Most recent user turn — what we'll log alongside Tess's response.
+  const lastUserMessage =
+    [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
+  const turnIndex = messages.filter((m) => m.role === "user").length;
+
+  const localeMatch = req.headers
+    .get("cookie")
+    ?.match(/(?:^|;\s*)lang=(en|ru|de)/);
+  const locale = localeMatch?.[1] ?? "en";
+
   const client = new Anthropic({ apiKey });
   const model = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6";
 
@@ -98,6 +118,9 @@ export async function POST(req: Request) {
         );
       };
 
+      let fullReply = "";
+      let success = false;
+
       try {
         const upstream = await client.messages.stream({
           model,
@@ -112,10 +135,12 @@ export async function POST(req: Request) {
             event.type === "content_block_delta" &&
             event.delta.type === "text_delta"
           ) {
+            fullReply += event.delta.text;
             send({ text: event.delta.text });
           }
         }
 
+        success = true;
         send({ done: true });
       } catch (error) {
         const status =
@@ -124,6 +149,23 @@ export async function POST(req: Request) {
         send({ error: "UPSTREAM_ERROR" });
       } finally {
         controller.close();
+
+        // Log the turn fire-and-forget so the response time the user
+        // sees doesn't include a Notion roundtrip. Skip on errors so we
+        // don't fill the database with empty Tess columns.
+        if (success && lastUserMessage) {
+          logChatTurn({
+            sessionId,
+            turnIndex,
+            user: lastUserMessage,
+            tess: fullReply,
+            locale,
+          }).catch((err) => {
+            console.error("[CHAT] log error", {
+              message: err instanceof Error ? err.message : "unknown",
+            });
+          });
+        }
       }
     },
   });

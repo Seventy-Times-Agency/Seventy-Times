@@ -15,6 +15,9 @@ const LeadForm = dynamic(() => import("@/components/overlays/forms/LeadForm"), {
 const ReviewForm = dynamic(() => import("@/components/overlays/forms/ReviewForm"), {
   ssr: false,
 });
+const CallbackForm = dynamic(() => import("@/components/overlays/forms/CallbackForm"), {
+  ssr: false,
+});
 const CookieConsent = dynamic(
   () => import("@/components/overlays/CookieConsent"),
   { ssr: false },
@@ -41,6 +44,7 @@ export default function ClientOverlays() {
       <ChatWidget />
       <LeadForm />
       <ReviewForm />
+      <CallbackForm />
       <CookieConsent />
       <MobileStickyCta />
       <ExitIntent />

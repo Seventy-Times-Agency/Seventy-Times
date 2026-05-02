@@ -147,3 +147,34 @@ export function isHoneypotTripped(value: unknown): boolean {
 export function silentSuccessResponse() {
   return NextResponse.json({ ok: true });
 }
+
+/**
+ * Sliding-window deduplication. Returns true the first time a key is
+ * seen within the window, false on subsequent calls until the window
+ * expires. Backed by the same in-memory bucket store as rateLimit, so
+ * it shares the same per-instance limitation on Vercel.
+ */
+export function isFirstSeen(key: string, windowMs: number): boolean {
+  const now = Date.now();
+  sweep(now);
+  const bucket = buckets.get(key);
+  if (!bucket || bucket.resetAt <= now) {
+    buckets.set(key, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  bucket.count += 1;
+  return false;
+}
+
+/**
+ * Normalise a contact string for dedup keys: lowercase, strip
+ * spaces / dashes / dots / @-prefix. "Email@host.com" and
+ * "email@HOST.COM " collapse to the same key.
+ */
+export function normalizeContactKey(contact: string): string {
+  return contact
+    .trim()
+    .toLowerCase()
+    .replace(/^@+/, "")
+    .replace(/[\s\-.]/g, "");
+}

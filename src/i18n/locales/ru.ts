@@ -573,6 +573,34 @@ const strings = {
     ftLegal: "Правовое",
     ftPrivacy: "Политика конфиденциальности",
     ftTerms: "Условия использования",
+    ftReview: "Оставить отзыв",
+    ftReviewNote: "Только для клиентов с персональным кодом",
+    ftCallback: "Заказать звонок",
+
+    // Callback (request a call) modal
+    callbackEyebrow: "— Заказать звонок",
+    callbackTitle: "Мы перезвоним",
+    callbackTitleAccent: "вам",
+    callbackSub:
+      "Только имя и номер. Перезвоним в течение часа в рабочее время США.",
+    callbackName: "Имя",
+    callbackNamePh: "Как к вам обращаться",
+    callbackPhone: "Телефон",
+    callbackPhonePh: "+1 555 555 5555",
+    callbackNote: "Что-то добавить? (необязательно)",
+    callbackNotePh: "Тип проекта, удобное время звонка и т.д.",
+    callbackSubmit: "Заказать звонок",
+    callbackSuccessTitle: "Записали",
+    callbackSuccessText:
+      "Принято — перезвоним в течение часа в рабочее время США. До связи 👋",
+    callbackFillAll: "Заполните имя и телефон",
+    callbackInvalidPhone:
+      "Это не похоже на телефон — проверьте, пожалуйста",
+    callbackUnavailable:
+      "Очередь звонков сейчас недоступна. Напишите нам в Telegram или WhatsApp.",
+    callbackOrCall: "Или позвоните напрямую:",
+    callbackBusinessFiller: "(заявка на звонок)",
+    callbackRequestPrefix: "Заявка на звонок с сайта",
 
     // Privacy Policy page
     privacyTitle: "Политика конфиденциальности",
