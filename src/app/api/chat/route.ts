@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
-import { SYSTEM_PROMPT } from "@/lib/systemPrompt";
+import { getSystemPrompt } from "@/lib/systemPrompt";
 import {
   checkOrigin,
   forbiddenOriginResponse,
@@ -96,10 +96,20 @@ export async function POST(req: Request) {
     [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
   const turnIndex = messages.filter((m) => m.role === "user").length;
 
-  const localeMatch = req.headers
+  // Body wins over cookie — the chat widget sends the active locale
+  // explicitly so a mid-session language switch is reflected in Tess's
+  // very next reply, even if the cookie hasn't been refreshed yet.
+  const rawLocale =
+    body && typeof body === "object" && "locale" in body
+      ? (body as { locale: unknown }).locale
+      : null;
+  const cookieMatch = req.headers
     .get("cookie")
     ?.match(/(?:^|;\s*)lang=(en|ru|de)/);
-  const locale = localeMatch?.[1] ?? "en";
+  const locale =
+    typeof rawLocale === "string" && /^(en|ru|de)$/.test(rawLocale)
+      ? rawLocale
+      : (cookieMatch?.[1] ?? "en");
 
   const client = new Anthropic({ apiKey });
   const model = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6";
@@ -126,7 +136,7 @@ export async function POST(req: Request) {
           model,
           max_tokens: 1500,
           temperature: 0.7,
-          system: SYSTEM_PROMPT,
+          system: getSystemPrompt(locale),
           messages,
         });
 

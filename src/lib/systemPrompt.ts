@@ -242,3 +242,23 @@ score). Schema.org basics (Organization, Service, FAQPage, Product).
 - If the client tries to get a fixed quote out of you with pressure,
   hold the line: pricing comes from the team after a brief, here's
   how to start that conversation.`;
+
+const LOCALE_INSTRUCTION: Record<"en" | "ru" | "de", string> = {
+  en: "The user is currently viewing the English version of the site. Respond in English unless the user clearly switches.",
+  ru: "Пользователь сейчас находится на русской версии сайта. Отвечай по-русски, если пользователь явно не перешёл на другой язык.",
+  de: "Der Nutzer sieht gerade die deutsche Version der Website. Antworte auf Deutsch, sofern der Nutzer nicht eindeutig auf eine andere Sprache wechselt.",
+};
+
+/**
+ * Build the system prompt with the active UI locale appended. This
+ * lets Tess pick up the right language even when the user has not
+ * yet typed anything (e.g. opens the chat right after switching the
+ * site to Russian) and keeps her answers consistent with the rest of
+ * the page.
+ */
+export function getSystemPrompt(locale: string): string {
+  const tag =
+    locale === "ru" || locale === "de" || locale === "en" ? locale : "en";
+  return `${SYSTEM_PROMPT}\n\n# Active UI locale\n${LOCALE_INSTRUCTION[tag]}`;
+}
+

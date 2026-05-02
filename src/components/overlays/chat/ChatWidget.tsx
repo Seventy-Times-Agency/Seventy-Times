@@ -31,7 +31,7 @@ function getSessionId(): string {
 }
 
 export default function ChatWidget() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: t.chatGreeting },
@@ -41,6 +41,7 @@ export default function ChatWidget() {
   const [hydrated, setHydrated] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const lastLocaleRef = useRef(locale);
 
   // Hydrate history from localStorage once on mount
   useEffect(() => {
@@ -74,6 +75,27 @@ export default function ChatWidget() {
     window.addEventListener("open-tess", handler);
     return () => window.removeEventListener("open-tess", handler);
   }, []);
+
+  // React to a UI language change. If the chat is still on the
+  // greeting (no user turns yet), swap the greeting for the new
+  // locale's version. If the conversation is already going, drop in
+  // a one-line "switching to <lang>" note from Tess so the next
+  // streamed reply visibly continues in the new language.
+  useEffect(() => {
+    if (!hydrated) return;
+    if (lastLocaleRef.current === locale) return;
+    lastLocaleRef.current = locale;
+    setMessages((prev) => {
+      const hasUserTurn = prev.some((m) => m.role === "user");
+      if (!hasUserTurn) {
+        return [{ role: "assistant", content: t.chatGreeting }];
+      }
+      return [
+        ...prev,
+        { role: "assistant", content: t.chatLanguageSwitched },
+      ];
+    });
+  }, [locale, hydrated, t.chatGreeting, t.chatLanguageSwitched]);
 
   useEffect(() => {
     if (open) inputRef.current?.focus();
@@ -115,6 +137,7 @@ export default function ChatWidget() {
         body: JSON.stringify({
           messages: next,
           sessionId: getSessionId(),
+          locale,
         }),
       });
 
@@ -176,7 +199,7 @@ export default function ChatWidget() {
 
     setLoading(false);
     inputRef.current?.focus();
-  }, [input, loading, messages, t.chatError, t.chatFallback]);
+  }, [input, loading, messages, locale, t.chatError, t.chatFallback]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {

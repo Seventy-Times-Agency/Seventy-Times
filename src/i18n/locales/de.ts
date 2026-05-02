@@ -512,6 +512,8 @@ const strings = {
     // Chat widget
     chatGreeting:
       "Hallo 👋 Mein Name ist Tess, ich bin die KI-Beraterin bei Seventy Times.\n\nErzählen Sie mir ein wenig über Ihr Unternehmen — ich schlage die passende Lösung für Ihre Ziele vor.",
+    chatLanguageSwitched:
+      "🌐 Wechsel auf Deutsch — ich antworte ab jetzt auf Deutsch.",
     chatName: "Tess · KI-Beraterin",
     chatStatus: "Online",
     chatPh: "Nachricht eingeben...",
