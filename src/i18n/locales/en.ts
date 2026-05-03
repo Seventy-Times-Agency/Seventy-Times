@@ -512,6 +512,8 @@ const strings = {
     // Chat widget
     chatGreeting:
       "Hi 👋 My name is Tess, I'm the AI consultant at Seventy Times.\n\nTell me a bit about your business — I'll suggest the right solution for your goals.",
+    chatLanguageSwitched:
+      "🌐 Switched to English — I'll continue in English from here.",
     chatName: "Tess · AI consultant",
     chatStatus: "Online",
     chatPh: "Type a message...",
