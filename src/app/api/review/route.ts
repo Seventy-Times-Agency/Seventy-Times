@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import {
   checkOrigin,
   enforceBodyLimit,
@@ -172,14 +172,26 @@ export async function POST(req: Request) {
     );
   }
 
-  await Promise.allSettled([
-    notifyTelegram({ name, role, location, content }, code),
-    sendReviewToNotion({ name, role, location, content, code }),
-    sendEmail({
-      subject: `Review: ${name}`,
-      text: buildEmailText({ name, role, location, content }, code),
-    }),
-  ]);
+  after(async () => {
+    const results = await Promise.allSettled([
+      notifyTelegram({ name, role, location, content }, code),
+      sendReviewToNotion({ name, role, location, content, code }),
+      sendEmail({
+        subject: `Review: ${name}`,
+        text: buildEmailText({ name, role, location, content }, code),
+      }),
+    ]);
+    const channels = ["telegram", "notion", "email"] as const;
+    results.forEach((r, i) => {
+      if (r.status === "rejected") {
+        console.error(`[REVIEW] channel ${channels[i]} threw`, {
+          reason: r.reason instanceof Error ? r.reason.message : "unknown",
+        });
+      } else if (r.value === false) {
+        console.warn(`[REVIEW] channel ${channels[i]} reported failure`);
+      }
+    });
+  });
 
   return NextResponse.json({ ok: true });
 }
