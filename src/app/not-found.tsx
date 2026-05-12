@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { headers } from "next/headers";
+import { headers, type UnsafeUnwrappedHeaders } from "next/headers";
 import { getDictionary } from "@/i18n/dictionary";
 import { DEFAULT_LOCALE, isLocale } from "@/i18n/config";
 import styles from "./not-found.module.css";
 
 export default function NotFound() {
-  const fromHeader = headers().get("x-locale");
+  const fromHeader = (headers() as unknown as UnsafeUnwrappedHeaders).get("x-locale");
   const locale = isLocale(fromHeader) ? fromHeader : DEFAULT_LOCALE;
   const t = getDictionary(locale);
 
