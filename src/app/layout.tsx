@@ -41,7 +41,7 @@ const organizationJsonLd = {
       "@type": "ContactPoint",
       contactType: "customer support",
       email: siteConfig.contacts.email.address,
-      availableLanguage: ["en", "ru", "de"],
+      availableLanguage: ["en", "ru", "de", "uk"],
     },
   ],
 };
