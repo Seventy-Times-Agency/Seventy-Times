@@ -139,12 +139,25 @@ export default function ReviewForm() {
       });
 
       if (!res.ok) {
+        let code = "";
+        try {
+          const data = (await res.json()) as { error?: string };
+          code = typeof data.error === "string" ? data.error : "";
+        } catch {
+          // body wasn't JSON
+        }
         const msg =
           res.status === 429
             ? t.reviewTooMany
             : res.status === 401
               ? t.reviewInvalidCode
-              : t.reviewError;
+              : code === "TOO_LONG"
+                ? t.reviewTooLong
+                : code === "NOT_CONFIGURED"
+                  ? t.reviewNotConfigured
+                  : code === "MISSING_FIELDS"
+                    ? t.reviewFillAll
+                    : t.reviewError;
         throw new Error(msg);
       }
 
