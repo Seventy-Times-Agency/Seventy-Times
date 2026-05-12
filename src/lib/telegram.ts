@@ -1,3 +1,5 @@
+import { fetchWithTimeout } from "@/lib/fetchWithTimeout";
+
 /**
  * Escape Telegram MarkdownV2 special chars so user input can't break
  * message formatting or inject markup. Use on every untrusted string
@@ -24,7 +26,7 @@ export async function sendTelegramMessage(text: string): Promise<boolean> {
   if (!token || !chatId) return false;
 
   try {
-    const res = await fetch(
+    const res = await fetchWithTimeout(
       `https://api.telegram.org/bot${token}/sendMessage`,
       {
         method: "POST",

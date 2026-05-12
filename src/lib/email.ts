@@ -8,6 +8,8 @@
  * the submission was forwarded by some other channel.
  */
 
+import { fetchWithTimeout } from "@/lib/fetchWithTimeout";
+
 type SendArgs = {
   subject: string;
   text: string;
@@ -34,7 +36,7 @@ export async function sendEmail({
     "Seventy Times <onboarding@resend.dev>";
 
   try {
-    const res = await fetch("https://api.resend.com/emails", {
+    const res = await fetchWithTimeout("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
