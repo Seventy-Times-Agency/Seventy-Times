@@ -59,6 +59,24 @@ const META: Record<Locale, LocaleMeta> = {
     ],
     ogLocale: "de_DE",
   },
+  uk: {
+    description:
+      "Seventy Times перетворює AI та digital-маркетинг на передбачуваний потік кваліфікованих клієнтів: реклама, автоматизація та розумні боти — все працює на одну метрику: ваше зростання.",
+    keywords: [
+      "Seventy Times",
+      "AI агентство",
+      "маркетингове агентство",
+      "таргетована реклама",
+      "автоматизація бізнесу",
+      "AI-бот",
+      "чат-бот",
+      "performance маркетинг",
+      "Meta реклама",
+      "Google реклама",
+      "Claude",
+    ],
+    ogLocale: "uk_UA",
+  },
 };
 
 export function getLocaleMeta(locale: Locale): LocaleMeta {
@@ -86,6 +104,11 @@ const PRIVACY: Record<Locale, LegalMeta> = {
     description:
       "Wie Seventy Times Ihre Daten erhebt, verwendet und schützt. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
   },
+  uk: {
+    title: "Політика конфіденційності",
+    description:
+      "Як Seventy Times збирає, використовує та захищає ваші дані. Чесний мінімум для ранньої стадії — буде переглянутий з юристом у міру зростання.",
+  },
 };
 
 const TERMS: Record<Locale, LegalMeta> = {
@@ -103,6 +126,11 @@ const TERMS: Record<Locale, LegalMeta> = {
     title: "Nutzungsbedingungen",
     description:
       "Nutzungsbedingungen für seventy-times.com. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
+  },
+  uk: {
+    title: "Умови використання",
+    description:
+      "Умови використання сайту seventy-times.com. Чесний мінімум для ранньої стадії — буде переглянутий з юристом у міру зростання.",
   },
 };
 
@@ -129,6 +157,11 @@ const ABOUT: Record<Locale, LegalMeta> = {
     title: "Über uns — Seventy Times",
     description:
       "Wer hinter Seventy Times steht — das Team, die Prinzipien und wie wir die Agentur aufgebaut haben.",
+  },
+  uk: {
+    title: "Про нас — Seventy Times",
+    description:
+      "Хто стоїть за Seventy Times — команда, принципи і як ми вибудовували агентство.",
   },
 };
 
