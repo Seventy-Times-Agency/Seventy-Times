@@ -9,7 +9,6 @@ export default function PrivacyClient() {
     <LegalPage
       title={t.privacyTitle}
       updated={t.privacyUpdated}
-      draftNote={t.privacyDraftNote}
       body={t.privacyBody}
     />
   );

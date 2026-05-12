@@ -18,8 +18,6 @@ export default function AboutClient() {
         <h1 className={styles.title}>{t.aboutTitle}</h1>
         <p className={styles.updated}>{t.aboutLead}</p>
 
-        <div className={styles.draft}>{t.aboutDraftNote}</div>
-
         <Link href={home} className={styles.back}>
           {t.legalBack}
         </Link>

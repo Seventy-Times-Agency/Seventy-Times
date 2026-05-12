@@ -9,7 +9,6 @@ export default function TermsClient() {
     <LegalPage
       title={t.termsTitle}
       updated={t.termsUpdated}
-      draftNote={t.termsDraftNote}
       body={t.termsBody}
     />
   );
