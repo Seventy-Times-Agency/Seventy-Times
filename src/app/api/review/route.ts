@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   checkOrigin,
+  enforceBodyLimit,
   forbiddenOriginResponse,
   getClientIp,
   isHoneypotTripped,
@@ -93,6 +94,9 @@ function buildEmailText(review: Omit<ReviewPayload, "code">, code: string) {
 
 export async function POST(req: Request) {
   if (!checkOrigin(req)) return forbiddenOriginResponse();
+
+  const tooBig = enforceBodyLimit(req, 16 * 1024);
+  if (tooBig) return tooBig;
 
   const ip = getClientIp(req);
   const rl = rateLimit(`review:${ip}`, 3, 60 * 60_000);

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createHash } from "node:crypto";
 import {
   checkOrigin,
+  enforceBodyLimit,
   forbiddenOriginResponse,
   getClientIp,
   isFirstSeen,
@@ -67,6 +68,9 @@ async function notifyTelegram(p: ErrorPayload, sig: string) {
  */
 export async function POST(req: Request) {
   if (!checkOrigin(req)) return forbiddenOriginResponse();
+
+  const tooBig = enforceBodyLimit(req, 8 * 1024);
+  if (tooBig) return tooBig;
 
   const ip = getClientIp(req);
   const rl = rateLimit(`error:${ip}`, 30, 60_000);

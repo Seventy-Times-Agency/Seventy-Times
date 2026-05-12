@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   checkOrigin,
+  enforceBodyLimit,
   forbiddenOriginResponse,
   getClientIp,
   isFirstSeen,
@@ -131,6 +132,9 @@ function buildEmailText(lead: LeadPayload, duplicate: boolean) {
 
 export async function POST(req: Request) {
   if (!checkOrigin(req)) return forbiddenOriginResponse();
+
+  const tooBig = enforceBodyLimit(req, 16 * 1024);
+  if (tooBig) return tooBig;
 
   const ip = getClientIp(req);
   const rl = rateLimit(`lead:${ip}`, 5, 60 * 60_000);
