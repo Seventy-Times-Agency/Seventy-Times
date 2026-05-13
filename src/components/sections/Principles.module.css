@@ -49,7 +49,10 @@
   opacity: 0;
 }
 
-/* Short bright dash that loops along the path forever. */
+/* Short bright dash that loops along the path forever. The glow used
+ * to come from a CSS `drop-shadow` which forces an offscreen paint on
+ * every keyframe — moved into a static SVG filter (#principles-glow)
+ * so the cost is paid once per layout, not per frame. */
 .spineTraveller {
   stroke: var(--accent);
   stroke-width: 2.4;
@@ -57,7 +60,7 @@
   stroke-dasharray: 0.05 0.95;
   stroke-dashoffset: 1;
   opacity: 0;
-  filter: drop-shadow(0 0 4px var(--accent));
+  filter: url(#principles-glow);
 }
 
 /* Once the section enters the viewport, kick all the spine animations
@@ -103,7 +106,7 @@
 
 .nodeDot {
   fill: var(--accent);
-  filter: drop-shadow(0 0 3px var(--accent));
+  filter: url(#principles-glow);
 }
 
 .nodeHalo {
@@ -283,14 +286,23 @@
 }
 
 /* Mobile: collapse the zigzag into a single stacked column. Numbers
- * sit above each card instead of beside them, so nothing overflows. */
+ * sit above each card instead of beside them, so nothing overflows.
+ * The serpentine spine becomes a slim vertical track running along
+ * the left edge so the section still feels alive on phones — same
+ * traveller animation, same node pulses, just a different path. */
 @media (max-width: 900px) {
-  .wrap { padding: 0 24px 16px; }
+  .wrap {
+    padding: 0 24px 16px 36px;
+  }
   .row {
     grid-template-columns: 1fr;
     min-height: 0;
     gap: 10px;
     padding-bottom: 6px;
+  }
+  .rowLeft,
+  .rowRight {
+    grid-template-columns: 1fr;
   }
   .row .card,
   .row .nodeWrap {
@@ -299,11 +311,99 @@
   }
   .row .nodeWrap { order: -1; }
   .node { font-size: 64px; }
-  .spine { display: none; }
+
+  /* Re-style the spine as a slim left rail. The same SVG paths are
+   * used; we override their `d` via a CSS variable on the wrap that
+   * the JS will read on mobile breakpoints. To avoid extra JS, we
+   * simply hide the curved path and overlay a CSS-drawn pseudo-rail
+   * that picks up the existing traveller / node animations. */
+  .spine {
+    left: 12px;
+    right: auto;
+    width: 14px;
+  }
+  .spine path,
+  .spine circle { display: none; }
+
+  .wrap::before,
+  .wrap::after,
+  .wrap .mobileRail,
+  .wrap .mobileRailDot {
+    /* placeholders kept so the rule cascades — actual rail is in
+       .mobileRail below */
+  }
+
+  .mobileRail {
+    position: absolute;
+    left: 16px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--line-strong) 8%,
+      var(--line-strong) 92%,
+      transparent 100%
+    );
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .wrapLive .mobileRail { opacity: 1; transition: opacity 0.4s ease; }
+
+  .mobileRail::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    width: 4px;
+    height: 56px;
+    border-radius: 4px;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      var(--accent) 35%,
+      var(--accent) 65%,
+      transparent
+    );
+    top: -56px;
+    animation: principles-rail-flow 4.2s linear infinite;
+  }
+
+  .mobileRailDot {
+    position: absolute;
+    left: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+    opacity: 0.65;
+    z-index: 1;
+    pointer-events: none;
+    transform: translateY(-50%);
+    animation: principles-rail-dot 2.4s ease-in-out infinite;
+  }
+
+  @keyframes principles-rail-flow {
+    from { top: -56px; }
+    to   { top: 100%; }
+  }
+  @keyframes principles-rail-dot {
+    0%, 100% { transform: translateY(-50%) scale(0.7); opacity: 0.5; }
+    50%      { transform: translateY(-50%) scale(1.15); opacity: 0.9; }
+  }
+}
+
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  .mobileRail::before { animation: none; }
+  .mobileRailDot { animation: none; }
 }
 
 @media (max-width: 640px) {
-  .wrap { padding: 0 20px 12px; }
+  .wrap { padding: 0 20px 12px 32px; }
   .card { padding: 22px 20px 20px; }
   .node { font-size: 56px; }
 }

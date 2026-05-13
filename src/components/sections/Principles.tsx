@@ -120,18 +120,19 @@ export default function Principles() {
             <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.9" />
             <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.35" />
           </linearGradient>
+          {/* Static glow filter — applied once at SVG-paint time instead
+              of a per-frame CSS `drop-shadow`. The animated traveller
+              and pulse nodes reference this filter so they don't keep
+              re-rasterising glow on every animation tick. */}
           <filter
             id="principles-glow"
-            x="-30%"
-            y="-30%"
-            width="160%"
-            height="160%"
+            x="-60%"
+            y="-60%"
+            width="220%"
+            height="220%"
+            filterUnits="objectBoundingBox"
           >
-            <feGaussianBlur stdDeviation="1.4" result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
+            <feGaussianBlur stdDeviation="0.9" />
           </filter>
         </defs>
 
@@ -147,7 +148,6 @@ export default function Principles() {
           d={spineD}
           className={styles.spinePath}
           pathLength={1}
-          filter="url(#principles-glow)"
         />
 
         {/* The traveller: a short bright dash that loops along the path
@@ -178,6 +178,23 @@ export default function Principles() {
           </g>
         ))}
       </svg>
+
+      {/* Mobile-only rail. The serpentine SVG doesn't make sense once
+          the cards stack into a single column, so on phones we show
+          a slim vertical track running along the left edge with the
+          same traveller-flow + pulse-dot vocabulary. CSS-only. */}
+      <div className={styles.mobileRail} aria-hidden="true">
+        {items.map((_, i) => (
+          <span
+            key={i}
+            className={styles.mobileRailDot}
+            style={{
+              top: `${((i + 0.5) / items.length) * 100}%`,
+              animationDelay: `${i * 0.5}s`,
+            }}
+          />
+        ))}
+      </div>
 
       <ol className={styles.list}>
         {items.map((p, i) => {
