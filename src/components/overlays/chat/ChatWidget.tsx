@@ -62,18 +62,26 @@ export default function ChatWidget() {
   // Persist on change (after hydration, to avoid overwriting with greeting).
   // Streamed assistant replies push state on every token — without a
   // debounce we'd hit localStorage ~50–200 times per reply, which is
-  // synchronous and blocks the main thread on slower devices.
+  // synchronous and blocks the main thread on slower devices. We also
+  // flush the latest state on unmount so a fast-close-after-streaming
+  // doesn't drop the last few tokens of context.
   useEffect(() => {
     if (!hydrated) return;
-    const handle = window.setTimeout(() => {
+    const writeNow = () => {
       try {
         const tail = messages.slice(-MAX_STORED);
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(tail));
       } catch {
         // ignore quota errors
       }
-    }, 400);
-    return () => window.clearTimeout(handle);
+    };
+    const handle = window.setTimeout(writeNow, 400);
+    return () => {
+      window.clearTimeout(handle);
+      // If the component unmounts while the timer is still pending,
+      // make one last synchronous write so nothing is lost.
+      writeNow();
+    };
   }, [messages, hydrated]);
 
   useEffect(() => {

@@ -157,6 +157,11 @@ export default function LeadForm() {
   const progressPct = (filledCount / totalFields) * 100;
 
   const submit = useCallback(async () => {
+    // Guard against a triple-tap on slow networks — the disabled
+    // state on the button takes effect on the next render, by which
+    // point a fast finger has already double-tapped.
+    if (status === "loading") return;
+
     const name = fields.name.trim();
     const contact = fields.contact.trim();
     const business = fields.business.trim();
@@ -237,7 +242,7 @@ export default function LeadForm() {
       setStatus("error");
       setError(err instanceof Error ? err.message : t.chatError);
     }
-  }, [fields, consent, mode, t]);
+  }, [fields, consent, mode, status, t]);
 
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();

@@ -270,7 +270,13 @@
   margin-top: 4px;
 }
 
+/* Honeypot field. Off-screen positioning lets Chrome/Safari autofill
+ * still find and fill an input named "website", tripping our bot
+ * guard for legitimate users. `display: none` is the only reliable
+ * way to keep autofill out — bots that don't render CSS still see
+ * the field and fill it. */
 .honeypot {
+  display: none !important;
   position: absolute;
   left: -9999px;
   top: auto;
