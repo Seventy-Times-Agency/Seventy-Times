@@ -615,8 +615,6 @@ const strings = {
     // Privacy Policy page
     privacyTitle: "Privacy Policy",
     privacyUpdated: "Last updated: April 20, 2026",
-    privacyDraftNote:
-      "This is a working draft for the early stage of the business. It will be revised with legal counsel once the company is formally registered.",
     privacyBody: [
       {
         heading: "Who we are",
@@ -659,8 +657,6 @@ const strings = {
     // Terms of Use page
     termsTitle: "Terms of Use",
     termsUpdated: "Last updated: April 20, 2026",
-    termsDraftNote:
-      "This is a working draft for the early stage of the business. It will be revised with legal counsel once the company is formally registered.",
     termsBody: [
       {
         heading: "General",
@@ -714,8 +710,6 @@ const strings = {
     aboutTitle: "About",
     aboutLead:
       "Seventy Times is a small studio sitting at the intersection of marketing, AI and automation. The full team write-up is in the works — placeholder for now.",
-    aboutDraftNote:
-      "This page is in progress. A short story about the team, the way we work and how 70× came together as an agency format will land here soon.",
 
     // Team page
     teamTitle: "Team",
