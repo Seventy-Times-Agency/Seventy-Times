@@ -383,9 +383,9 @@ const strings = {
     gmRecommended: "Empfohlen",
     gmTerm: "Mindestlaufzeit",
     gmIncludes: "Was drin ist",
-    gmPriceLabel: "Preis individuell",
+    gmPriceLabel: "Ab",
     gmPriceHint:
-      "Wir kalkulieren passend zu Ihrem Fall. Die detaillierte Preisliste kommt per E-Mail — klicken Sie „Angebot anfordern\".",
+      "Richtwert nach unten. Der finale Preis hängt vom konkreten Fall ab und liegt meist höher — wir kalkulieren passend zu Ihrer Aufgabe und senden eine detaillierte Aufstellung per E-Mail. Klicken Sie „Angebot anfordern\".",
     gmCta: "Angebot anfordern",
     gmGuaranteeTitle: "Launch-Garantie",
     gmGuaranteeBody:
@@ -402,6 +402,7 @@ const strings = {
       "Lead Flow Mini (1 Schlüsselautomatisierung)",
     ],
     gm1Term: "Mind. 4 Monate",
+    gm1Price: "ab $1.000+",
     gm2Tier: "GROWTH",
     gm2Title: "Wachsendes Geschäft",
     gm2Sub: "Laufendes Geschäft mit Bestandsumsatz",
@@ -412,6 +413,7 @@ const strings = {
       "Business-Website — optional mit Rabatt",
     ],
     gm2Term: "Mind. 4 Monate",
+    gm2Price: "ab $2.000+",
     gm3Tier: "SCALE",
     gm3Title: "Skalierung",
     gm3Sub: "Reifes Geschäft, bereit für ernsthaftes Wachstum",
@@ -422,6 +424,7 @@ const strings = {
       "E-Commerce-Website — optional mit Rabatt",
     ],
     gm3Term: "Mind. 6 Monate",
+    gm3Price: "ab $3.500+",
 
     // Cases section
     casesEyebrow: "— Projekte / 2026",

@@ -383,9 +383,9 @@ const strings = {
     gmRecommended: "Recommended",
     gmTerm: "Minimum term",
     gmIncludes: "What's inside",
-    gmPriceLabel: "Pricing on request",
+    gmPriceLabel: "Starting at",
     gmPriceHint:
-      "We tailor the quote to your case. A detailed pricelist arrives by email — hit \"Get a quote\".",
+      "Indicative floor. Final quote is tailored to your case — usually higher once we map the actual scope. Hit \"Get a quote\" for the detailed breakdown.",
     gmCta: "Get a quote",
     gmGuaranteeTitle: "Launch guarantee",
     gmGuaranteeBody:
@@ -402,6 +402,7 @@ const strings = {
       "Lead Flow Mini (1 key automation)",
     ],
     gm1Term: "4-month minimum",
+    gm1Price: "from $1,000+",
     gm2Tier: "GROWTH",
     gm2Title: "Growing business",
     gm2Sub: "Working business with existing sales",
@@ -412,6 +413,7 @@ const strings = {
       "Business site — optional with discount",
     ],
     gm2Term: "4-month minimum",
+    gm2Price: "from $2,000+",
     gm3Tier: "SCALE",
     gm3Title: "Scaling up",
     gm3Sub: "Mature business ready for serious growth",
@@ -422,6 +424,7 @@ const strings = {
       "E-commerce site — optional with discount",
     ],
     gm3Term: "6-month minimum",
+    gm3Price: "from $3,500+",
 
     // Cases section
     casesEyebrow: "— Work / 2026",

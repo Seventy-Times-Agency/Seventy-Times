@@ -16,6 +16,7 @@ type Pkg = {
   sub: string;
   includes: readonly string[];
   term: string;
+  price: string;
   recommended?: boolean;
 };
 
@@ -31,6 +32,7 @@ export default function GrowthMachine() {
       sub: t.gm1Sub,
       includes: t.gm1Inc,
       term: t.gm1Term,
+      price: t.gm1Price,
     },
     {
       id: "growth",
@@ -40,6 +42,7 @@ export default function GrowthMachine() {
       sub: t.gm2Sub,
       includes: t.gm2Inc,
       term: t.gm2Term,
+      price: t.gm2Price,
       recommended: true,
     },
     {
@@ -50,6 +53,7 @@ export default function GrowthMachine() {
       sub: t.gm3Sub,
       includes: t.gm3Inc,
       term: t.gm3Term,
+      price: t.gm3Price,
     },
   ];
 
@@ -182,6 +186,7 @@ function PackageCard({
 
         <div className={styles.priceBlock}>
           <span className={styles.priceLabel}>{priceLabel}</span>
+          <span className={styles.priceValue}>{pkg.price}</span>
           <span className={styles.priceHint}>{priceHint}</span>
         </div>
 
