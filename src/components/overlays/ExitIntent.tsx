@@ -6,12 +6,19 @@ import { useT } from "@/i18n/context";
 import styles from "./ExitIntent.module.css";
 
 const SHOWN_KEY = "st-exit-intent-shown-v1";
-const ARM_DELAY_MS = 8000; // give the visitor at least 8s before arming
+const ARM_DELAY_MS = 45000; // wait ~45s before the prompt is even eligible
+const SCROLL_THRESHOLD_PX = 600; // user must scroll past the hero first
 
 /**
  * Desktop-only exit-intent prompt. Fires once per session when the
  * cursor leaves through the top of the viewport (the canonical
  * "I'm closing this tab / typing in the address bar" signal).
+ *
+ * Arming requires BOTH a delay (so we don't pop up on a fresh visit)
+ * AND that the user has scrolled past the hero — otherwise the prompt
+ * is more annoying than useful. After a successful fire we both
+ * persist the flag and detach the listener so re-entries don't
+ * re-trigger it within the same session.
  *
  * The CTA opens the regular lead modal via the #lead hash, so all
  * the existing form, validation, draft persistence and CRM fan-out
@@ -24,7 +31,7 @@ export default function ExitIntent() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Already shown this session — don't bother the user again.
+    // Already shown (or dismissed) this session — don't bother the user again.
     try {
       if (sessionStorage.getItem(SHOWN_KEY)) return;
     } catch {
@@ -38,13 +45,31 @@ export default function ExitIntent() {
     if (!isFinePointer) return;
 
     let armed = false;
-    const arm = () => {
-      armed = true;
+    let scrolled = window.scrollY > SCROLL_THRESHOLD_PX;
+    let fired = false;
+
+    const onScroll = () => {
+      if (window.scrollY > SCROLL_THRESHOLD_PX) {
+        scrolled = true;
+        window.removeEventListener("scroll", onScroll);
+      }
     };
-    const armTimer = window.setTimeout(arm, ARM_DELAY_MS);
+    if (!scrolled) {
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
+
+    const armTimer = window.setTimeout(() => {
+      armed = true;
+    }, ARM_DELAY_MS);
+
+    const cleanup = () => {
+      window.clearTimeout(armTimer);
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("mouseout", onMouseOut);
+    };
 
     const onMouseOut = (e: MouseEvent) => {
-      if (!armed) return;
+      if (fired || !armed || !scrolled) return;
       // Only fire when the mouse leaves through the TOP edge — that's
       // the unambiguous "I'm aiming at the address bar / close button"
       // signal. Side or bottom exits are noise.
@@ -53,22 +78,31 @@ export default function ExitIntent() {
       // require the related target to be null (left the document).
       if (e.relatedTarget) return;
 
+      fired = true;
       try {
         sessionStorage.setItem(SHOWN_KEY, "1");
       } catch {
         // ignore
       }
       setOpen(true);
+      cleanup();
     };
 
     document.addEventListener("mouseout", onMouseOut);
-    return () => {
-      window.clearTimeout(armTimer);
-      document.removeEventListener("mouseout", onMouseOut);
-    };
+    return cleanup;
   }, []);
 
-  const close = () => setOpen(false);
+  const close = () => {
+    // Re-affirm the dismissal flag. The mouseout handler already wrote
+    // it on fire, but if anything cleared it (browser flush, etc.) we
+    // make sure the prompt stays gone for the rest of the session.
+    try {
+      sessionStorage.setItem(SHOWN_KEY, "1");
+    } catch {
+      // ignore
+    }
+    setOpen(false);
+  };
 
   return (
     <AnimatePresence>
