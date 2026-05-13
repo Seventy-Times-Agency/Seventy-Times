@@ -82,21 +82,26 @@ export default function Principles() {
   // Serpentine path expressed in a 100×100 viewBox (preserveAspectRatio
   // is set to none on the SVG, so the curve stretches with the section).
   // Anchors line up with the alternating row centers (≈12.5%, 37.5%,
-  // 62.5%, 87.5% of height).
+  // 62.5%, 87.5% of height). X is the side OPPOSITE the card on each
+  // row — i.e. the side where the outlined ordinal lives — so the spine
+  // never crosses the card body.
+  // Row 0 (01): card right, digit/spine left  → x=15
+  // Row 1 (02): card left,  digit/spine right → x=85
+  // Row 2 (03): card right, digit/spine left  → x=15
+  // Row 3 (04): card left,  digit/spine right → x=85
   const spineD =
-    "M 85 12.5 " +
-    "C 60 12.5, 40 12.5, 15 37.5 " +
-    "S 60 62.5, 85 62.5 " +
-    "S 40 87.5, 15 87.5";
+    "M 15 12.5 " +
+    "C 40 12.5, 60 12.5, 85 37.5 " +
+    "S 40 62.5, 15 62.5 " +
+    "S 60 87.5, 85 87.5";
 
-  // Pulse nodes sit where the spine crosses each row's centre. Their
-  // X coordinate matches the side of the row that the spine snakes
-  // through (opposite to the card).
+  // Pulse nodes sit on the same digit-side as the spine, anchored at
+  // each row's vertical centre.
   const nodes = [
-    { cx: 85, cy: 12.5 },
-    { cx: 15, cy: 37.5 },
-    { cx: 85, cy: 62.5 },
-    { cx: 15, cy: 87.5 },
+    { cx: 15, cy: 12.5 },
+    { cx: 85, cy: 37.5 },
+    { cx: 15, cy: 62.5 },
+    { cx: 85, cy: 87.5 },
   ];
 
   return (
