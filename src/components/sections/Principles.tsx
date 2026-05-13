@@ -22,11 +22,31 @@ export default function Principles() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const rowRefs = useRef<Array<HTMLLIElement | null>>([]);
   const [inView, setInView] = useState<boolean[]>(() => items.map(() => false));
-  const [drawProgress, setDrawProgress] = useState(0);
+  const [spineLive, setSpineLive] = useState(false);
 
-  // Reveal each row as it scrolls into view.
+  // Reveal each row when it scrolls into view. As soon as the first
+  // row arrives we mark the spine as "live" so the SVG animation
+  // (draw-in + flowing pulse) starts on its own timeline — independent
+  // of scroll position, so it can't jitter with the page scroll.
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const wrap = wrapRef.current;
+    if (wrap) {
+      const wrapObserver = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              setSpineLive(true);
+              wrapObserver.disconnect();
+              break;
+            }
+          }
+        },
+        { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
+      );
+      wrapObserver.observe(wrap);
+    }
+
+    const rowObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
@@ -43,34 +63,8 @@ export default function Principles() {
       },
       { rootMargin: "0px 0px -15% 0px", threshold: 0.25 },
     );
-    rowRefs.current.forEach((row) => row && observer.observe(row));
-    return () => observer.disconnect();
-  }, []);
-
-  // Draw the spine SVG path proportionally to how far the section has
-  // scrolled past the top of the viewport. 0 → invisible, 1 → fully drawn.
-  useEffect(() => {
-    const update = () => {
-      const el = wrapRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // Start drawing when the section enters the bottom 80% of the
-      // viewport and finish once its bottom passes the centre line.
-      const start = vh * 0.85;
-      const end = vh * 0.15;
-      const span = start - end || 1;
-      const traveled = start - rect.top;
-      const p = Math.max(0, Math.min(1, traveled / (rect.height * 0.7 + span)));
-      setDrawProgress(p);
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
+    rowRefs.current.forEach((row) => row && rowObserver.observe(row));
+    return () => rowObserver.disconnect();
   }, []);
 
   const handleMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -95,8 +89,21 @@ export default function Principles() {
     "S 60 62.5, 85 62.5 " +
     "S 40 87.5, 15 87.5";
 
+  // Pulse nodes sit where the spine crosses each row's centre. Their
+  // X coordinate matches the side of the row that the spine snakes
+  // through (opposite to the card).
+  const nodes = [
+    { cx: 85, cy: 12.5 },
+    { cx: 15, cy: 37.5 },
+    { cx: 85, cy: 62.5 },
+    { cx: 15, cy: 87.5 },
+  ];
+
   return (
-    <div ref={wrapRef} className={styles.wrap}>
+    <div
+      ref={wrapRef}
+      className={`${styles.wrap} ${spineLive ? styles.wrapLive : ""}`}
+    >
       <svg
         className={styles.spine}
         viewBox="0 0 100 100"
@@ -105,16 +112,66 @@ export default function Principles() {
       >
         <defs>
           <linearGradient id="principles-gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.85" />
-            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.25" />
+            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.35" />
           </linearGradient>
+          <filter
+            id="principles-glow"
+            x="-30%"
+            y="-30%"
+            width="160%"
+            height="160%"
+          >
+            <feGaussianBlur stdDeviation="1.4" result="b" />
+            <feMerge>
+              <feMergeNode in="b" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
+
+        {/* Soft outer glow — wide, low-opacity, pure decoration. */}
         <path
           d={spineD}
-          className={`${styles.spinePath} ${drawProgress > 0.02 ? styles.spinePathLive : ""}`}
-          style={{ strokeDashoffset: 1 - drawProgress }}
+          className={styles.spineHalo}
           pathLength={1}
         />
+
+        {/* Main spine — drawn in once via stroke-dashoffset keyframes. */}
+        <path
+          d={spineD}
+          className={styles.spinePath}
+          pathLength={1}
+          filter="url(#principles-glow)"
+        />
+
+        {/* The traveller: a short bright dash that loops along the path
+            forever, giving the spine a sense of flow without depending
+            on scrollY. */}
+        <path
+          d={spineD}
+          className={styles.spineTraveller}
+          pathLength={1}
+        />
+
+        {/* Pulse nodes at each row centre. */}
+        {nodes.map((n, i) => (
+          <g key={i} className={styles.nodeGroup}>
+            <circle
+              cx={n.cx}
+              cy={n.cy}
+              r={2.2}
+              className={styles.nodeHalo}
+              style={{ animationDelay: `${i * 0.4}s` }}
+            />
+            <circle
+              cx={n.cx}
+              cy={n.cy}
+              r={0.85}
+              className={styles.nodeDot}
+            />
+          </g>
+        ))}
       </svg>
 
       <ol className={styles.list}>
