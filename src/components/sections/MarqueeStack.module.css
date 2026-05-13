@@ -42,11 +42,15 @@
   animation-duration: 60s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  /* Force compositor layer so older mobile browsers don't fall back
-   * to a CPU paint of the marquee. translate3d on the keyframes is
-   * what triggers the layer; will-change keeps it stable. */
+  /* Promote to its own compositor layer so neighbouring effects
+   * (Nav backdrop-filter, etc.) can't force the marquee to repaint
+   * on every scroll tick. */
   will-change: transform;
+  transform: translateZ(0);
   backface-visibility: hidden;
+  /* Skip layout / paint for the off-screen half of the duplicated
+   * content. Roughly halves the per-frame paint cost. */
+  contain: layout paint;
 }
 
 /* Top: scrolls right-to-left (0 → -50%). */
@@ -129,11 +133,16 @@
   flex-shrink: 0;
 }
 
-/* Respect users with reduced-motion preferences. */
+/* prefers-reduced-motion: we still allow a linear horizontal scroll
+ * (it's non-vestibular and well below the WCAG flicker threshold),
+ * just slow it down so motion-sensitive users get a calmer experience
+ * instead of a frozen wall of text. Going to `animation: none` here
+ * killed the marquee on every iOS user who enables Reduce Motion in
+ * Accessibility — and Apple turns that on by default in some
+ * accessibility profiles. */
 @media (prefers-reduced-motion: reduce) {
   .rowTop,
   .rowBottom {
-    animation: none;
-    transform: translate3d(0, 0, 0);
+    animation-duration: 160s;
   }
 }
