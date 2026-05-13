@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { getSystemPrompt } from "@/lib/systemPrompt";
 import {
   checkOrigin,
+  enforceBodyLimit,
   forbiddenOriginResponse,
   getClientIp,
   rateLimit,
@@ -35,6 +36,9 @@ function isValidMessage(m: unknown): m is IncomingMessage {
 
 export async function POST(req: Request) {
   if (!checkOrigin(req)) return forbiddenOriginResponse();
+
+  const tooBig = enforceBodyLimit(req, 64 * 1024);
+  if (tooBig) return tooBig;
 
   const ip = getClientIp(req);
   const rl = rateLimit(`chat:${ip}`, 20, 60_000);

@@ -537,6 +537,8 @@ const strings = {
     // Lead form extras
     leadInvalidContact: "That doesn't look like an email or @username — please check",
     leadTooMany: "Too many requests. Please try again in an hour.",
+    leadTooLong: "Your request is too long — please try a shorter version.",
+    leadNotConfigured: "Submissions are temporarily unavailable. Please write to us on Telegram or WhatsApp.",
     leadCloseAria: "Close form",
 
     // Review form
@@ -568,6 +570,8 @@ const strings = {
     reviewError: "Connection error. Please try again later.",
     reviewCloseAria: "Close form",
     reviewTooMany: "Too many attempts. Please try again later.",
+    reviewTooLong: "Your review is too long — please try a shorter version.",
+    reviewNotConfigured: "Reviews are temporarily unavailable. Please write to us on Telegram.",
     reviewInvalidCode:
       "That code doesn't match. If you're a real client, message us on Telegram and we'll send your personal code.",
 

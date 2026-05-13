@@ -204,8 +204,27 @@ export default function LeadForm() {
       });
 
       if (!res.ok) {
+        // Map the stable server-side code (English, e.g. "TOO_LONG")
+        // to the active locale's user-facing string. Falls back to a
+        // generic message for unknown codes so we never display the
+        // raw code to the user.
+        let code = "";
+        try {
+          const data = (await res.json()) as { error?: string };
+          code = typeof data.error === "string" ? data.error : "";
+        } catch {
+          // body wasn't JSON
+        }
         const msg =
-          res.status === 429 ? t.leadTooMany : t.chatFallback;
+          res.status === 429
+            ? t.leadTooMany
+            : code === "TOO_LONG"
+              ? t.leadTooLong
+              : code === "NOT_CONFIGURED"
+                ? t.leadNotConfigured
+                : code === "MISSING_FIELDS"
+                  ? t.leadFillAll
+                  : t.chatFallback;
         throw new Error(msg);
       }
 

@@ -67,8 +67,8 @@ export default function GlobalError({
             Something broke on our side.
           </h2>
           <p style={{ color: "#9aa4b1", lineHeight: 1.55 }}>
-            We've been notified and are looking into it. Refresh, or come back
-            in a moment.
+            We&apos;ve been notified and are looking into it. Refresh, or come
+            back in a moment.
           </p>
           <button
             type="button"

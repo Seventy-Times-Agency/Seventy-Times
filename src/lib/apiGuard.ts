@@ -130,6 +130,23 @@ export function rateLimitResponse(result: Extract<RateLimitResult, { ok: false }
   );
 }
 
+/**
+ * Reject obviously oversized payloads before allocating buffers for
+ * req.json(). Reads the declared Content-Length only — a request that
+ * omits the header still goes through, but the runtime body parser
+ * has its own hard cap as the second line of defence.
+ */
+export function enforceBodyLimit(
+  req: Request,
+  maxBytes: number,
+): NextResponse | null {
+  const declared = req.headers.get("content-length");
+  if (!declared) return null;
+  const size = Number(declared);
+  if (!Number.isFinite(size) || size <= maxBytes) return null;
+  return NextResponse.json({ error: "TOO_LONG" }, { status: 413 });
+}
+
 export function forbiddenOriginResponse() {
   return NextResponse.json({ error: "FORBIDDEN" }, { status: 403 });
 }

@@ -9,11 +9,10 @@ type Section = { heading: string; text: string };
 type Props = {
   title: string;
   updated: string;
-  draftNote: string;
   body: ReadonlyArray<Section>;
 };
 
-export default function LegalPage({ title, updated, draftNote, body }: Props) {
+export default function LegalPage({ title, updated, body }: Props) {
   const { t, localePath } = useT();
   const home = localePath("/");
 
@@ -26,8 +25,6 @@ export default function LegalPage({ title, updated, draftNote, body }: Props) {
 
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.updated}>{updated}</p>
-
-        <div className={styles.draft}>{draftNote}</div>
 
         <div className={styles.body}>
           {body.map((section) => (

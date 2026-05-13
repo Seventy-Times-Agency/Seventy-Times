@@ -539,6 +539,8 @@ const strings = {
     leadInvalidContact:
       "Das sieht nicht wie eine E-Mail oder ein @Benutzername aus — bitte prüfen",
     leadTooMany: "Zu viele Anfragen. Bitte versuchen Sie es in einer Stunde erneut.",
+    leadTooLong: "Ihre Anfrage ist zu lang — bitte kürzen Sie sie.",
+    leadNotConfigured: "Anfragen sind vorübergehend nicht verfügbar. Bitte schreiben Sie uns auf Telegram oder WhatsApp.",
     leadCloseAria: "Formular schließen",
 
     // Review form
@@ -571,6 +573,8 @@ const strings = {
     reviewCloseAria: "Formular schließen",
     reviewTooMany:
       "Zu viele Versuche. Bitte versuchen Sie es später erneut.",
+    reviewTooLong: "Ihre Bewertung ist zu lang — bitte kürzen Sie sie.",
+    reviewNotConfigured: "Bewertungen sind vorübergehend nicht verfügbar. Bitte schreiben Sie uns auf Telegram.",
     reviewInvalidCode:
       "Dieser Code ist ungültig. Wenn Sie ein echter Kunde sind — schreiben Sie uns auf Telegram, wir senden Ihnen einen persönlichen Code.",
 

@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import {
   checkOrigin,
+  enforceBodyLimit,
   forbiddenOriginResponse,
   getClientIp,
   isFirstSeen,
@@ -132,6 +133,9 @@ function buildEmailText(lead: LeadPayload, duplicate: boolean) {
 export async function POST(req: Request) {
   if (!checkOrigin(req)) return forbiddenOriginResponse();
 
+  const tooBig = enforceBodyLimit(req, 16 * 1024);
+  if (tooBig) return tooBig;
+
   const ip = getClientIp(req);
   const rl = rateLimit(`lead:${ip}`, 5, 60 * 60_000);
   if (!rl.ok) return rateLimitResponse(rl);
@@ -231,27 +235,43 @@ export async function POST(req: Request) {
     kind,
   };
 
-  await Promise.allSettled([
-    notifyTelegram({ lead, duplicate: isDuplicate, kind }),
-    isDuplicate
-      ? Promise.resolve(false)
-      : sendLeadToNotion({
-          name,
-          contact,
-          business,
-          request,
-          locale,
-          package: leadPackage,
-          phone,
-        }),
-    sendEmail({
-      subject: isDuplicate
-        ? `[duplicate] ${kind === "callback" ? "Callback" : "Lead"}: ${name}`
-        : `${kind === "callback" ? "Callback" : "Lead"}: ${name}`,
-      text: buildEmailText(lead, isDuplicate),
-      replyTo: contact.includes("@") ? contact : undefined,
-    }),
-  ]);
+  // Fan out to side channels after the response is sent. Without this,
+  // a slow Telegram/Notion/Email upstream made the user wait for the
+  // slowest one — even though `fetchWithTimeout` caps each at 5s, that
+  // is still up to 5s of perceived form latency per channel.
+  after(async () => {
+    const results = await Promise.allSettled([
+      notifyTelegram({ lead, duplicate: isDuplicate, kind }),
+      isDuplicate
+        ? Promise.resolve(false)
+        : sendLeadToNotion({
+            name,
+            contact,
+            business,
+            request,
+            locale,
+            package: leadPackage,
+            phone,
+          }),
+      sendEmail({
+        subject: isDuplicate
+          ? `[duplicate] ${kind === "callback" ? "Callback" : "Lead"}: ${name}`
+          : `${kind === "callback" ? "Callback" : "Lead"}: ${name}`,
+        text: buildEmailText(lead, isDuplicate),
+        replyTo: contact.includes("@") ? contact : undefined,
+      }),
+    ]);
+    const channels = ["telegram", "notion", "email"] as const;
+    results.forEach((r, i) => {
+      if (r.status === "rejected") {
+        console.error(`[LEAD] channel ${channels[i]} threw`, {
+          reason: r.reason instanceof Error ? r.reason.message : "unknown",
+        });
+      } else if (r.value === false) {
+        console.warn(`[LEAD] channel ${channels[i]} reported failure`);
+      }
+    });
+  });
 
   return NextResponse.json({ ok: true });
 }

@@ -537,6 +537,8 @@ const strings = {
     // Lead form extras
     leadInvalidContact: "Похоже, контакт не похож на email или @username — проверьте",
     leadTooMany: "Слишком много заявок. Попробуйте через час.",
+    leadTooLong: "Заявка слишком длинная — попробуйте короче.",
+    leadNotConfigured: "Приём заявок временно недоступен. Напишите нам в Telegram или WhatsApp.",
     leadCloseAria: "Закрыть форму",
 
     // Review form
@@ -568,6 +570,8 @@ const strings = {
     reviewError: "Ошибка соединения. Попробуй позже.",
     reviewCloseAria: "Закрыть форму",
     reviewTooMany: "Слишком много попыток. Попробуйте позже.",
+    reviewTooLong: "Отзыв слишком длинный — попробуйте короче.",
+    reviewNotConfigured: "Приём отзывов временно недоступен. Напишите нам в Telegram.",
     reviewInvalidCode:
       "Код не подходит. Если вы реальный клиент — напишите нам в Telegram, мы выдадим персональный код.",
 

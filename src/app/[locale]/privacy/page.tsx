@@ -3,11 +3,12 @@ import { getPrivacyMeta } from "@/lib/localizedMeta";
 import { isLocale, DEFAULT_LOCALE } from "@/i18n/config";
 import PrivacyClient from "./PrivacyClient";
 
-export function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
-}): Metadata {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ locale: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
   const meta = getPrivacyMeta(locale);
   return {

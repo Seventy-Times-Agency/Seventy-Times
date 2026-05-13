@@ -8,6 +8,8 @@
  * Notion is down — Telegram remains the primary notification channel.
  */
 
+import { fetchWithTimeout } from "@/lib/fetchWithTimeout";
+
 const NOTION_VERSION = "2022-06-28";
 const NOTION_ENDPOINT = "https://api.notion.com/v1/pages";
 const NOTION_QUERY_ENDPOINT = (databaseId: string) =>
@@ -93,7 +95,7 @@ async function createPage(
   label: string,
 ): Promise<void> {
   try {
-    const res = await fetch(NOTION_ENDPOINT, {
+    const res = await fetchWithTimeout(NOTION_ENDPOINT, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -230,7 +232,7 @@ export async function fetchApprovedReviews(
   if (!token || !databaseId) return [];
 
   try {
-    const res = await fetch(NOTION_QUERY_ENDPOINT(databaseId), {
+    const res = await fetchWithTimeout(NOTION_QUERY_ENDPOINT(databaseId), {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -249,6 +251,7 @@ export async function fetchApprovedReviews(
       // this revalidates on the page tick anyway. Keeps repeat hits
       // from the same render cheap.
       next: { revalidate: 300 },
+      timeoutMs: 7000,
     });
 
     if (!res.ok) {

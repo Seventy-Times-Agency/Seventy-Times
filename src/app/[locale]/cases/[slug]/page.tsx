@@ -12,11 +12,12 @@ export function generateStaticParams() {
   );
 }
 
-export function generateMetadata({
-  params,
-}: {
-  params: { locale: string; slug: string };
-}): Metadata {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ locale: string; slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
   const item = CASES.find((c) => c.id === params.slug);
   if (!item) return {};
@@ -35,11 +36,12 @@ export function generateMetadata({
   };
 }
 
-export default function CasePage({
-  params,
-}: {
-  params: { locale: string; slug: string };
-}) {
+export default async function CasePage(
+  props: {
+    params: Promise<{ locale: string; slug: string }>;
+  }
+) {
+  const params = await props.params;
   const item = CASES.find((c) => c.id === params.slug);
   if (!item) notFound();
 
