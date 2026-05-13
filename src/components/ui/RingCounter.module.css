@@ -42,7 +42,15 @@
   stroke: url(#ringGradient);
   stroke-width: 4;
   stroke-linecap: round;
+  /* drop-shadow forces an offscreen pass on every paint — and the
+   * rings repaint constantly while the counter runs. Keep the glow
+   * only on real desktop pointers; coarse-pointer devices (phones,
+   * tablets) get the flat stroke and stay smooth. */
   filter: drop-shadow(0 0 10px rgba(200, 212, 222, 0.45));
+}
+
+@media (pointer: coarse) {
+  .ringFill { filter: none; }
 }
 
 /* Tiny radial ticks around the ring */

@@ -42,6 +42,11 @@
   animation-duration: 60s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+  /* Force compositor layer so older mobile browsers don't fall back
+   * to a CPU paint of the marquee. translate3d on the keyframes is
+   * what triggers the layer; will-change keeps it stable. */
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* Top: scrolls right-to-left (0 → -50%). */
