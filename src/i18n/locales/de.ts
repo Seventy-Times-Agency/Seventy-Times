@@ -350,6 +350,7 @@ const strings = {
     ftContacts: "Kontakt",
     ftCompany: "Unternehmen",
     ftAbout: "Über uns",
+    ftTeam: "Team",
     ftCollab: "Partnerschaften",
     ftAccepting: "Projekte willkommen",
     ftLocation: "USA → Weltweit",
@@ -718,6 +719,13 @@ const strings = {
       "Seventy Times ist ein kleines Studio an der Schnittstelle von Marketing, KI und Automatisierung. Der ausführliche Team-Text ist in Arbeit — vorerst ein Platzhalter.",
     aboutDraftNote:
       "Diese Seite ist in Arbeit. Eine kurze Geschichte über das Team, unsere Arbeitsweise und wie 70× als Agenturformat entstanden ist, kommt bald hierher.",
+
+    // Team page
+    teamTitle: "Team",
+    teamLead:
+      "Seventy Times ist ein verteiltes Team zwischen den USA und Osteuropa — Performance-Marketer, Automatisierungs-Engineers und ein paar sture Produktköpfe.",
+    teamPlaceholder:
+      "Vollständige Profile, Fotos und was jeder tatsächlich Tag für Tag macht — bald hier. Wenn Sie die Kurzfassung vor der Veröffentlichung wollen, schreiben Sie Vanessa im Chat oder uns direkt.",
 
     // Cookie consent banner
     cookieTitle: "Cookies",

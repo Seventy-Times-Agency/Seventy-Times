@@ -168,3 +168,30 @@ const ABOUT: Record<Locale, LegalMeta> = {
 export function getAboutMeta(locale: Locale): LegalMeta {
   return ABOUT[locale] ?? ABOUT.en;
 }
+
+const TEAM: Record<Locale, LegalMeta> = {
+  en: {
+    title: "Team — Seventy Times",
+    description:
+      "The people behind Seventy Times — full team bios coming soon.",
+  },
+  ru: {
+    title: "Команда — Seventy Times",
+    description:
+      "Люди, которые стоят за Seventy Times — полные био команды появятся скоро.",
+  },
+  de: {
+    title: "Team — Seventy Times",
+    description:
+      "Die Menschen hinter Seventy Times — vollständige Team-Profile folgen in Kürze.",
+  },
+  uk: {
+    title: "Команда — Seventy Times",
+    description:
+      "Люди, які стоять за Seventy Times — повні біо команди з'являться скоро.",
+  },
+};
+
+export function getTeamMeta(locale: Locale): LegalMeta {
+  return TEAM[locale] ?? TEAM.en;
+}

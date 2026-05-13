@@ -58,6 +58,7 @@ export default function Footer() {
         <div className={styles.col}>
           <span className={styles.colTitle}>{t.ftCompany}</span>
           <Link href={localePath("/about")}>{t.ftAbout}</Link>
+          <Link href={localePath("/team")}>{t.ftTeam}</Link>
           <a href={anchor("contact")}>{t.ftCollab}</a>
           <span>{t.ftAccepting}</span>
         </div>
