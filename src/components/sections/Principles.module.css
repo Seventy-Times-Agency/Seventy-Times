@@ -144,7 +144,7 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+  gap: 36px;
   z-index: 1;
   list-style: none;
   margin: 0;
@@ -153,21 +153,37 @@
 
 .row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 28px;
-  min-height: 180px;
+  /* Card column takes more width than the ordinal column — the digit
+   * is a graphic accent, the card is the content. */
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 36px;
 }
 
-.rowRight .card { grid-column: 2; }
-.rowLeft .card  { grid-column: 1; }
+.rowRight {
+  /* Digit on the left, card on the right. Order matches the natural
+   * grid-column order so we don't have to override per side. */
+}
 
-.rowRight .nodeWrap { grid-column: 1; justify-self: end; }
-.rowLeft .nodeWrap  { grid-column: 2; justify-self: start; }
+.rowLeft {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+}
 
-/* Big outlined ordinal "01..04" living on the empty side of the row. */
+.rowRight .nodeWrap { grid-column: 1; justify-self: start; }
+.rowRight .card     { grid-column: 2; }
+.rowLeft  .card     { grid-column: 1; }
+.rowLeft  .nodeWrap { grid-column: 2; justify-self: end; }
+
+/* Big outlined ordinal "01..04" sits next to its card, baseline-
+ * aligned with the bottom of the card so the pair reads as a unit. */
+.nodeWrap {
+  display: flex;
+  align-items: flex-end;
+  line-height: 0.85;
+}
+
 .node {
-  font-size: clamp(72px, 9vw, 132px);
+  font-size: clamp(60px, 7vw, 104px);
   font-weight: 800;
   line-height: 0.85;
   letter-spacing: -0.05em;
