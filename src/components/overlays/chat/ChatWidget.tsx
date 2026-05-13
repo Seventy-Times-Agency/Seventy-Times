@@ -59,15 +59,21 @@ export default function ChatWidget() {
     setHydrated(true);
   }, []);
 
-  // Persist on change (after hydration, to avoid overwriting with greeting)
+  // Persist on change (after hydration, to avoid overwriting with greeting).
+  // Streamed assistant replies push state on every token — without a
+  // debounce we'd hit localStorage ~50–200 times per reply, which is
+  // synchronous and blocks the main thread on slower devices.
   useEffect(() => {
     if (!hydrated) return;
-    try {
-      const tail = messages.slice(-MAX_STORED);
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(tail));
-    } catch {
-      // ignore quota errors
-    }
+    const handle = window.setTimeout(() => {
+      try {
+        const tail = messages.slice(-MAX_STORED);
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(tail));
+      } catch {
+        // ignore quota errors
+      }
+    }, 400);
+    return () => window.clearTimeout(handle);
   }, [messages, hydrated]);
 
   useEffect(() => {
