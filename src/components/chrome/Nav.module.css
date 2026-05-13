@@ -9,9 +9,13 @@
   /* Real horizontal gap between the three columns so the FAQ link
      and the "Accepting projects" status pill never sit flush. */
   column-gap: 36px;
-  background: rgba(10, 10, 10, 0.7);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  /* Backdrop blur is one of the heaviest scroll-jank sources on iOS
+   * and mid-range Android. Use a slightly more opaque background so we
+   * can drop the saturate() filter and tone the blur down without the
+   * nav looking flat. Mobile breakpoint below shrinks it further. */
+  background: rgba(10, 10, 10, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
 
@@ -234,15 +238,21 @@
   .nav {
     padding: 16px 20px;
     grid-template-columns: 1fr auto;
-    /* Heavy blur on a sticky bar is the #1 scroll-jank source on
-       iOS. Keep the frosted look but at a fraction of the cost. */
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    /* Backdrop-filter on a sticky element is the #1 scroll-jank
+     * source on mid-range Android and on iOS with Reduce Motion off.
+     * Each pixel of overlapping content (the moving marquee under
+     * the nav, the AnimatedBackground glows) forces the entire nav
+     * to recomposite. Use a fully opaque background instead — the
+     * frosted look is purely cosmetic and not worth the FPS cost
+     * on phones. */
+    background: rgb(10, 10, 10);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   .mobileMenu {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgb(12, 14, 20);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   .links {
     display: none;

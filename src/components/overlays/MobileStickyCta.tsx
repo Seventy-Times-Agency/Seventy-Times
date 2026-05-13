@@ -17,7 +17,9 @@ export default function MobileStickyCta() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
       // Show after the user is clearly below the hero. 600px is a
       // safe threshold across phone screen sizes.
       const past = window.scrollY > 600;
@@ -32,12 +34,20 @@ export default function MobileStickyCta() {
       setVisible(past && !modalOpen && !nearBottom);
     };
 
-    onScroll();
+    // rAF-throttle: at most one measurement per animation frame so
+    // a fast finger swipe can't fire 100+ setState calls per second.
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(measure);
+    };
+
+    measure();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("hashchange", onScroll);
+    window.addEventListener("hashchange", measure);
     return () => {
+      if (frame) window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("hashchange", onScroll);
+      window.removeEventListener("hashchange", measure);
     };
   }, []);
 

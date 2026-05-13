@@ -21,13 +21,15 @@
   -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 80%);
 }
 
-/* Two soft Casper glows that drift via cheap CSS keyframes */
+/* Two soft Casper glows that drift via cheap CSS keyframes. Blur
+ * paint cost scales roughly quadratically with the radius, so we
+ * keep it modest on desktop and shrink further on mobile. */
 .glow {
   position: absolute;
   border-radius: 50%;
-  /* Smaller blur radius — much cheaper to repaint */
-  filter: blur(90px);
+  filter: blur(60px);
   will-change: transform;
+  transform: translateZ(0);
 }
 
 .glowA {
