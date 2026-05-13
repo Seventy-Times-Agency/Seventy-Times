@@ -34,7 +34,7 @@ export default function Footer() {
           <button
             type="button"
             className={styles.linkBtn}
-            onClick={() => window.dispatchEvent(new Event("open-tess"))}
+            onClick={() => window.dispatchEvent(new Event("open-chat"))}
           >
             {t.ftTess}
           </button>

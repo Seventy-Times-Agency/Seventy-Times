@@ -86,14 +86,14 @@ export default function ChatWidget() {
 
   useEffect(() => {
     const handler = () => setOpen(true);
-    window.addEventListener("open-tess", handler);
-    return () => window.removeEventListener("open-tess", handler);
+    window.addEventListener("open-chat", handler);
+    return () => window.removeEventListener("open-chat", handler);
   }, []);
 
   // React to a UI language change. If the chat is still on the
   // greeting (no user turns yet), swap the greeting for the new
   // locale's version. If the conversation is already going, drop in
-  // a one-line "switching to <lang>" note from Tess so the next
+  // a one-line "switching to <lang>" note from Vanessa so the next
   // streamed reply visibly continues in the new language.
   useEffect(() => {
     if (!hydrated) return;
@@ -251,7 +251,7 @@ export default function ChatWidget() {
             <div className={styles.header}>
               <div className={styles.avatar}>
                 <Image
-                  src="/tess.jpg"
+                  src="/vanessa.jpg"
                   alt={t.chatAlt}
                   className={styles.avatarImg}
                   width={48}
@@ -360,7 +360,7 @@ export default function ChatWidget() {
         type="button"
       >
         <Image
-          src="/tess.jpg"
+          src="/vanessa.jpg"
           alt=""
           className={styles.toggleImg}
           width={56}

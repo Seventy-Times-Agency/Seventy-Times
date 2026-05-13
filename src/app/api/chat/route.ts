@@ -95,13 +95,13 @@ export async function POST(req: Request) {
       ? rawSessionId.slice(0, 64)
       : "anon";
 
-  // Most recent user turn — what we'll log alongside Tess's response.
+  // Most recent user turn — what we'll log alongside Vanessa's response.
   const lastUserMessage =
     [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
   const turnIndex = messages.filter((m) => m.role === "user").length;
 
   // Body wins over cookie — the chat widget sends the active locale
-  // explicitly so a mid-session language switch is reflected in Tess's
+  // explicitly so a mid-session language switch is reflected in Vanessa's
   // very next reply, even if the cookie hasn't been refreshed yet.
   const rawLocale =
     body && typeof body === "object" && "locale" in body
@@ -166,13 +166,13 @@ export async function POST(req: Request) {
 
         // Log the turn fire-and-forget so the response time the user
         // sees doesn't include a Notion roundtrip. Skip on errors so we
-        // don't fill the database with empty Tess columns.
+        // don't fill the database with empty Vanessa columns.
         if (success && lastUserMessage) {
           logChatTurn({
             sessionId,
             turnIndex,
             user: lastUserMessage,
-            tess: fullReply,
+            assistant: fullReply,
             locale,
           }).catch((err) => {
             console.error("[CHAT] log error", {
