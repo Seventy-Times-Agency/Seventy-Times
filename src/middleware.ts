@@ -88,12 +88,21 @@ export function middleware(req: NextRequest) {
 
   // No locale prefix → always redirect to the default locale (English).
   // Browser Accept-Language is intentionally ignored: the agency operates
-  // in English first, RU and DE are opt-in via the language switcher or
-  // a direct /ru / /de URL. This keeps marketing analytics, ad-link
+  // in English first, RU/DE/UK are opt-in via the language switcher or
+  // a direct /ru / /de / /uk URL. This keeps marketing analytics, ad-link
   // landings and shared screenshots predictable.
+  // Set the cookie on the redirect itself so the very next request
+  // already carries it — without this every fresh visitor pays for
+  // the redirect on every page load.
   const url = req.nextUrl.clone();
   url.pathname = `/${DEFAULT_LOCALE}${url.pathname === "/" ? "" : url.pathname}`;
-  return NextResponse.redirect(url, 307);
+  const res = NextResponse.redirect(url, 307);
+  res.cookies.set("lang", DEFAULT_LOCALE, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+  });
+  return res;
 }
 
 export const config = {

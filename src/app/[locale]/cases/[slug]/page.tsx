@@ -24,14 +24,25 @@ export async function generateMetadata(
   const t = getDictionary(locale);
   const title = t[item.titleKey];
   const summary = t[item.summaryKey];
+  // Per-locale alternates so Google knows the other versions of this
+  // exact case study, and x-default points at the English one.
+  const languages: Record<string, string> = {};
+  for (const l of LOCALES) {
+    languages[l] = `${siteConfig.url}/${l}/cases/${item.id}`;
+  }
+  languages["x-default"] = `${siteConfig.url}/${DEFAULT_LOCALE}/cases/${item.id}`;
+
   return {
     title: `${title} — ${siteConfig.name}`,
     description: summary,
-    alternates: { canonical: `/${locale}/cases/${item.id}` },
+    alternates: {
+      canonical: `${siteConfig.url}/${locale}/cases/${item.id}`,
+      languages,
+    },
     openGraph: {
       title: `${title} — ${siteConfig.name}`,
       description: summary,
-      url: `/${locale}/cases/${item.id}`,
+      url: `${siteConfig.url}/${locale}/cases/${item.id}`,
     },
   };
 }

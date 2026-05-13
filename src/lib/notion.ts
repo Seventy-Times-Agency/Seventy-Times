@@ -54,7 +54,7 @@ type ChatRecord = {
   sessionId: string;
   turnIndex: number;
   user: string;
-  tess: string;
+  assistant: string;
   locale: Locale | string;
 };
 
@@ -210,7 +210,7 @@ export async function logChatTurn(turn: ChatRecord): Promise<void> {
     {
       Session: { title: title(turn.sessionId) },
       User: { rich_text: richText(turn.user) },
-      Tess: { rich_text: richText(turn.tess) },
+      Vanessa: { rich_text: richText(turn.assistant) },
       Turn: { number: turn.turnIndex },
       Locale: { select: { name: localeOption } },
       Submitted: { date: { start: new Date().toISOString() } },

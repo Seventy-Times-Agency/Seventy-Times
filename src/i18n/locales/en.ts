@@ -20,7 +20,7 @@ const strings = {
     heroTitle1: "Ads ×",
     heroTitle2: "AI ×",
     heroTitle3: "automation",
-    heroTitle4: "one growth machine.",
+    heroTitle4: "= one growth machine.",
     heroSub:
       "Launched in 30 days, optimised in 90. Ads bring leads, AI catches them in chat, automation walks them through the funnel. Not three services bundled — one working system.",
     heroCta1: "Get a quote",
@@ -180,22 +180,22 @@ const strings = {
       "We review numbers weekly. Cut what doesn't work, scale what does. Monday reports, dashboard access — always.",
     proc4t: "Ongoing",
 
-    // Tess promo
-    venEyebrow: "— Meet Tess",
+    // Vanessa promo
+    venEyebrow: "— Meet Vanessa",
     venTitle1: "Your",
     venTitle2: "AI consultant",
-    venTitle3: "Tess.",
+    venTitle3: "Vanessa.",
     venLead:
-      "Tess is a Claude-powered AI assistant trained for your business. She talks to clients on your website, Telegram and Instagram, qualifies leads and passes hot ones directly to you. We build the same bot for every project.",
+      "Vanessa is a Claude-powered AI assistant trained for your business. She talks to clients on your website, Telegram and Instagram, qualifies leads and passes hot ones directly to you. We build the same bot for every project.",
     venBullets: [
       "Knows your business inside out — trained on your materials and tone",
       "Responds in any language, works 24/7 without breaks",
       "Qualifies leads and drops them straight into your CRM or Telegram",
       "Frees up ~10–15 hours a week your team spends on first-touch chats",
     ],
-    venCta: "Talk to Tess",
+    venCta: "Talk to Vanessa",
     venBadgeLabel: "AI Agent",
-    venBadgeName: "Tess",
+    venBadgeName: "Vanessa",
     venBadgeRole: "AI consultant · Online",
 
     // Principles — how we work (no "promises" / "guarantees" wording)
@@ -304,11 +304,11 @@ const strings = {
     simAutoLvl3Desc: "Complete system: leads, CRM, invoicing, analytics",
     simAiTag: "03 / AI",
     simAiName: "AI consultant",
-    simAiDesc: "Where Tess works",
+    simAiDesc: "Where Vanessa works",
     simAiLvl0: "None",
     simAiLvl0Desc: "No AI consultant — human-only communication",
     simAiLvl1: "Website",
-    simAiLvl1Desc: "Tess on your site — qualifies visitors",
+    simAiLvl1Desc: "Vanessa on your site — qualifies visitors",
     simAiLvl2: "Multi-channel",
     simAiLvl2Desc: "+ Telegram/Instagram — one AI across all channels",
     simAiLvl3: "Full",
@@ -323,7 +323,7 @@ const strings = {
     simFormulaDesc: "Each pillar adds its own growth %. They multiply together — that's how compounding works. The baseline 100 leads/mo is an illustrative anchor; your actual number is yours.",
     simDisclaimer:
       "A projection based on real digital marketing benchmarks, not a guarantee. Your results depend on niche, market, budget, and execution. We give honest numbers, not miracle promises.",
-    simCta: "Discuss my stack with Tess",
+    simCta: "Discuss my stack with Vanessa",
 
     // CTA
     ctaEyebrow: "— Get in touch",
@@ -344,12 +344,13 @@ const strings = {
     ftAds: "Ads / Targeting",
     ftAutomation: "Automation",
     ftBots: "AI bots",
-    ftTess: "Tess",
+    ftVanessa: "Vanessa",
     ftProcess: "Process",
     ftFaq: "FAQ",
     ftContacts: "Contacts",
     ftCompany: "Company",
     ftAbout: "About us",
+    ftTeam: "Team",
     ftCollab: "Partnerships",
     ftAccepting: "Accepting projects",
     ftLocation: "USA → Worldwide",
@@ -360,7 +361,7 @@ const strings = {
 
     // Dividers
     divNext: "— next",
-    divMeet: "— meet tess",
+    divMeet: "— meet vanessa",
     divProof: "— testimonials",
     divQuestions: "— questions",
     divTalk: "— get in touch",
@@ -383,9 +384,9 @@ const strings = {
     gmRecommended: "Recommended",
     gmTerm: "Minimum term",
     gmIncludes: "What's inside",
-    gmPriceLabel: "Pricing on request",
+    gmPriceLabel: "Starting at",
     gmPriceHint:
-      "We tailor the quote to your case. A detailed pricelist arrives by email — hit \"Get a quote\".",
+      "Indicative floor. Final quote is tailored to your case — usually higher once we map the actual scope. Hit \"Get a quote\" for the detailed breakdown.",
     gmCta: "Get a quote",
     gmGuaranteeTitle: "Launch guarantee",
     gmGuaranteeBody:
@@ -402,6 +403,7 @@ const strings = {
       "Lead Flow Mini (1 key automation)",
     ],
     gm1Term: "4-month minimum",
+    gm1Price: "from $1,000+",
     gm2Tier: "GROWTH",
     gm2Title: "Growing business",
     gm2Sub: "Working business with existing sales",
@@ -412,6 +414,7 @@ const strings = {
       "Business site — optional with discount",
     ],
     gm2Term: "4-month minimum",
+    gm2Price: "from $2,000+",
     gm3Tier: "SCALE",
     gm3Title: "Scaling up",
     gm3Sub: "Mature business ready for serious growth",
@@ -422,6 +425,7 @@ const strings = {
       "E-commerce site — optional with discount",
     ],
     gm3Term: "6-month minimum",
+    gm3Price: "from $3,500+",
 
     // Cases section
     casesEyebrow: "— Work / 2026",
@@ -511,20 +515,20 @@ const strings = {
 
     // Chat widget
     chatGreeting:
-      "Hi 👋 My name is Tess, I'm the AI consultant at Seventy Times.\n\nTell me a bit about your business — I'll suggest the right solution for your goals.",
+      "Hi 👋 My name is Vanessa, I'm the AI consultant at Seventy Times.\n\nTell me a bit about your business — I'll suggest the right solution for your goals.",
     chatLanguageSwitched:
       "🌐 Switched to English — I'll continue in English from here.",
-    chatName: "Tess · AI consultant",
+    chatName: "Vanessa · AI consultant",
     chatStatus: "Online",
     chatPh: "Type a message...",
-    chatLabel: "Tess",
+    chatLabel: "Vanessa",
     chatError: "Connection error. Please try again later.",
     chatFallback: "Something went wrong. Please try again.",
-    chatOpen: "Talk to Tess",
+    chatOpen: "Talk to Vanessa",
     chatClose: "Close chat",
     chatSend: "Send",
     chatMessage: "Message",
-    chatAlt: "Tess — AI consultant at Seventy Times",
+    chatAlt: "Vanessa — AI consultant at Seventy Times",
 
     // Consent (shared between forms)
     consentPrefix: "I agree to the ",
@@ -620,7 +624,7 @@ const strings = {
       },
       {
         heading: "What data we collect",
-        text: 'Through the request form: your name, contact (email or Telegram), business name, and a description of your task. Through the review form: name, role, location, review text, and a personal client code. Through the chat with Tess: the text of messages you send us. We do not collect payment information and do not use tracking cookies.',
+        text: 'Through the request form: your name, contact (email or Telegram), business name, and a description of your task. Through the review form: name, role, location, review text, and a personal client code. Through the chat with Vanessa: the text of messages you send us. We do not collect payment information and do not use tracking cookies.',
       },
       {
         heading: "Why we collect it",
@@ -628,7 +632,7 @@ const strings = {
       },
       {
         heading: "Where it is stored",
-        text: 'Requests and reviews are forwarded to our internal Telegram chat. Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Tess is processed via the Anthropic API to generate responses.',
+        text: 'Requests and reviews are forwarded to our internal Telegram chat. Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Vanessa is processed via the Anthropic API to generate responses.',
       },
       {
         heading: "How long we keep it",
@@ -664,7 +668,7 @@ const strings = {
       },
       {
         heading: "What we promise",
-        text: 'We describe our services honestly, discuss prices individually, and agree on specific KPIs before we start. The chat with Tess is a helper tool, not a legal offer.',
+        text: 'We describe our services honestly, discuss prices individually, and agree on specific KPIs before we start. The chat with Vanessa is a helper tool, not a legal offer.',
       },
       {
         heading: "What we do not promise",
@@ -712,6 +716,13 @@ const strings = {
       "Seventy Times is a small studio sitting at the intersection of marketing, AI and automation. The full team write-up is in the works — placeholder for now.",
     aboutDraftNote:
       "This page is in progress. A short story about the team, the way we work and how 70× came together as an agency format will land here soon.",
+
+    // Team page
+    teamTitle: "Team",
+    teamLead:
+      "Seventy Times is a remote-first team across the US and Eastern Europe — performance marketers, automation engineers and a few stubborn product people.",
+    teamPlaceholder:
+      "Full bios, photos and what each of us actually does day-to-day are coming. If you want the short version before it's published, hit Vanessa in the chat or drop us a line directly.",
 
     // Cookie consent banner
     cookieTitle: "Cookies",

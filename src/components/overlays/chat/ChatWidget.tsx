@@ -62,30 +62,38 @@ export default function ChatWidget() {
   // Persist on change (after hydration, to avoid overwriting with greeting).
   // Streamed assistant replies push state on every token — without a
   // debounce we'd hit localStorage ~50–200 times per reply, which is
-  // synchronous and blocks the main thread on slower devices.
+  // synchronous and blocks the main thread on slower devices. We also
+  // flush the latest state on unmount so a fast-close-after-streaming
+  // doesn't drop the last few tokens of context.
   useEffect(() => {
     if (!hydrated) return;
-    const handle = window.setTimeout(() => {
+    const writeNow = () => {
       try {
         const tail = messages.slice(-MAX_STORED);
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(tail));
       } catch {
         // ignore quota errors
       }
-    }, 400);
-    return () => window.clearTimeout(handle);
+    };
+    const handle = window.setTimeout(writeNow, 400);
+    return () => {
+      window.clearTimeout(handle);
+      // If the component unmounts while the timer is still pending,
+      // make one last synchronous write so nothing is lost.
+      writeNow();
+    };
   }, [messages, hydrated]);
 
   useEffect(() => {
     const handler = () => setOpen(true);
-    window.addEventListener("open-tess", handler);
-    return () => window.removeEventListener("open-tess", handler);
+    window.addEventListener("open-chat", handler);
+    return () => window.removeEventListener("open-chat", handler);
   }, []);
 
   // React to a UI language change. If the chat is still on the
   // greeting (no user turns yet), swap the greeting for the new
   // locale's version. If the conversation is already going, drop in
-  // a one-line "switching to <lang>" note from Tess so the next
+  // a one-line "switching to <lang>" note from Vanessa so the next
   // streamed reply visibly continues in the new language.
   useEffect(() => {
     if (!hydrated) return;
@@ -205,7 +213,11 @@ export default function ChatWidget() {
 
     setLoading(false);
     inputRef.current?.focus();
-  }, [input, loading, messages, locale, t.chatError, t.chatFallback]);
+    // Depend on the full `t` object instead of cherry-picked fields:
+    // the dictionary returned by `useT()` is a stable reference per
+    // locale, but cherry-picking creates dependency holes if the
+    // strings used inside `send` ever expand.
+  }, [input, loading, messages, locale, t]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -239,7 +251,7 @@ export default function ChatWidget() {
             <div className={styles.header}>
               <div className={styles.avatar}>
                 <Image
-                  src="/tess.jpg"
+                  src="/vanessa.jpg"
                   alt={t.chatAlt}
                   className={styles.avatarImg}
                   width={48}
@@ -348,7 +360,7 @@ export default function ChatWidget() {
         type="button"
       >
         <Image
-          src="/tess.jpg"
+          src="/vanessa.jpg"
           alt=""
           className={styles.toggleImg}
           width={56}

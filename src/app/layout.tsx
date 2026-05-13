@@ -21,27 +21,52 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+// Schema.org graph. Declaring ourselves as Organization + the more
+// specific ProfessionalService surface gives Google extra hooks for
+// service-type rich results without contradicting the broader entity.
+// Both share an @id so search engines see them as one node, with a
+// WebSite node tied to the same publisher.
+const ORG_ID = `${siteConfig.url}/#organization`;
+
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: siteConfig.name,
-  alternateName: siteConfig.shortName,
-  url: siteConfig.url,
-  logo: `${siteConfig.url}/favicon.svg`,
-  description: siteConfig.description,
-  email: siteConfig.contacts.email.address,
-  sameAs: [
-    siteConfig.contacts.telegram.url,
-    siteConfig.contacts.instagram.url,
-    siteConfig.contacts.facebook.url,
-    siteConfig.contacts.whatsapp.url,
-  ],
-  contactPoint: [
+  "@graph": [
     {
-      "@type": "ContactPoint",
-      contactType: "customer support",
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": ORG_ID,
+      name: siteConfig.name,
+      alternateName: siteConfig.shortName,
+      url: siteConfig.url,
+      logo: `${siteConfig.url}/favicon.svg`,
+      image: `${siteConfig.url}/opengraph-image`,
+      description: siteConfig.description,
       email: siteConfig.contacts.email.address,
-      availableLanguage: ["en", "ru", "de", "uk"],
+      telephone: siteConfig.contacts.phone.raw,
+      priceRange: "$$",
+      areaServed: ["United States", "Worldwide"],
+      sameAs: [
+        siteConfig.contacts.telegram.url,
+        siteConfig.contacts.instagram.url,
+        siteConfig.contacts.facebook.url,
+        siteConfig.contacts.whatsapp.url,
+      ],
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          email: siteConfig.contacts.email.address,
+          telephone: siteConfig.contacts.phone.raw,
+          availableLanguage: ["en", "ru", "de", "uk"],
+        },
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      url: siteConfig.url,
+      name: siteConfig.name,
+      publisher: { "@id": ORG_ID },
+      inLanguage: ["en", "ru", "de", "uk"],
     },
   ],
 };

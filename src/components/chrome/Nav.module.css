@@ -187,6 +187,12 @@
   transition: color 0.2s ease;
 }
 
+.mobileLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
 .mobileLink:hover {
   color: var(--text);
 }

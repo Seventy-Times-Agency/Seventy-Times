@@ -24,14 +24,23 @@ export async function generateMetadata(
   const t = getDictionary(locale);
   const title = t[item.i18n.title];
   const tag = t[item.i18n.tag];
+  const languages: Record<string, string> = {};
+  for (const l of LOCALES) {
+    languages[l] = `${siteConfig.url}/${l}/services/${item.slug}`;
+  }
+  languages["x-default"] = `${siteConfig.url}/${DEFAULT_LOCALE}/services/${item.slug}`;
+
   return {
     title: `${title} — ${siteConfig.name}`,
     description: tag,
-    alternates: { canonical: `/${locale}/services/${item.slug}` },
+    alternates: {
+      canonical: `${siteConfig.url}/${locale}/services/${item.slug}`,
+      languages,
+    },
     openGraph: {
       title: `${title} — ${siteConfig.name}`,
       description: tag,
-      url: `/${locale}/services/${item.slug}`,
+      url: `${siteConfig.url}/${locale}/services/${item.slug}`,
     },
   };
 }

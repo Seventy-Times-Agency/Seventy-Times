@@ -7,6 +7,7 @@ import { SERVICES } from "@/data/services";
 const PAGES = [
   { path: "", priority: 1, changeFrequency: "weekly" as const },
   { path: "/about", priority: 0.5, changeFrequency: "monthly" as const },
+  { path: "/team", priority: 0.5, changeFrequency: "monthly" as const },
   { path: "/privacy", priority: 0.3, changeFrequency: "yearly" as const },
   { path: "/terms", priority: 0.3, changeFrequency: "yearly" as const },
 ];

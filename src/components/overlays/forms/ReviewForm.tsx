@@ -102,6 +102,10 @@ export default function ReviewForm() {
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
+    // Guard against a triple-tap on slow mobile networks — without
+    // this the same review could be POST'd two or three times before
+    // the disabled state on the button takes effect.
+    if (status === "loading") return;
 
     const payload = {
       code: fields.code.trim(),
