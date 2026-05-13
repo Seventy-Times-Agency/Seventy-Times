@@ -16,7 +16,10 @@
   --text: #e8eef4;
   --text-muted: #a8b4c0;
   --text-dim: #6c7480; /* cool dove grey */
-  --text-faint: rgba(232, 238, 244, 0.45);
+  /* 0.62 alpha against --black clears the WCAG AA contrast bar
+   * (~4.7:1). The previous 0.45 value rendered at ~3.8:1 and failed
+   * accessibility scanners on every placeholder. */
+  --text-faint: rgba(232, 238, 244, 0.62);
 
   /* Casper accent — used for buttons, badges, glows, key highlights */
   --accent: #c8d4de;

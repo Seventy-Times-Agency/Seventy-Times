@@ -20,7 +20,7 @@ const strings = {
     heroTitle1: "Werbung ×",
     heroTitle2: "KI ×",
     heroTitle3: "Automatisierung",
-    heroTitle4: "eine Wachstumsmaschine.",
+    heroTitle4: "= eine Wachstumsmaschine.",
     heroSub:
       "Start in 30 Tagen, optimiert in 90. Werbung bringt Leads, KI fängt sie im Chat auf, Automatisierung führt sie durch den Funnel. Keine drei Leistungen im Paket — ein funktionierendes System.",
     heroCta1: "Angebot anfordern",

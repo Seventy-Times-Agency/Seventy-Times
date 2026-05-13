@@ -20,7 +20,7 @@ const strings = {
     heroTitle1: "Ads ×",
     heroTitle2: "AI ×",
     heroTitle3: "automation",
-    heroTitle4: "one growth machine.",
+    heroTitle4: "= one growth machine.",
     heroSub:
       "Launched in 30 days, optimised in 90. Ads bring leads, AI catches them in chat, automation walks them through the funnel. Not three services bundled — one working system.",
     heroCta1: "Get a quote",
