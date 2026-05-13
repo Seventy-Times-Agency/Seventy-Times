@@ -15,7 +15,7 @@ const strings = {
 
     // Hero meta
     heroMeta1: "Маркетинг · AI · Автоматизація",
-    heroMeta2: "Приймаємо проєкти · 2026",
+    heroMeta2: "Система росту · видання 2026",
     heroMeta3: "США → Увесь світ",
     heroTitle1: "Реклама ×",
     heroTitle2: "AI ×",

@@ -15,7 +15,7 @@ const strings = {
 
     // Hero meta
     heroMeta1: "Marketing · AI · Automation",
-    heroMeta2: "Accepting projects · 2026",
+    heroMeta2: "Growth system · edition 2026",
     heroMeta3: "USA → Worldwide",
     heroTitle1: "Ads ×",
     heroTitle2: "AI ×",
