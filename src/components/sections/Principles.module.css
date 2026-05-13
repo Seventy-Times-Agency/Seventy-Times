@@ -1,0 +1,309 @@
+.wrap {
+  position: relative;
+  padding: 0 48px 24px;
+  isolation: isolate;
+}
+
+/* The serpentine spine — three stacked paths (halo / main / traveller)
+ * plus pulsing nodes. All animations run on their own timelines and do
+ * NOT respond to scroll position, so the spine reads as a living
+ * organism instead of a thing that jitters with the page scroll. */
+.spine {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.spinePath,
+.spineHalo,
+.spineTraveller {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Wide, low-opacity blur sitting behind the main line — gives the
+ * spine depth without making it busy. */
+.spineHalo {
+  stroke: var(--accent);
+  stroke-opacity: 0.12;
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* The main visible line. Drawn in once when the section enters view
+ * (CSS keyframe — not a per-frame React state). */
+.spinePath {
+  stroke: url(#principles-gradient);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+
+/* Short bright dash that loops along the path forever. */
+.spineTraveller {
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-dasharray: 0.05 0.95;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  filter: drop-shadow(0 0 4px var(--accent));
+}
+
+/* Once the section enters the viewport, kick all the spine animations
+ * off. We toggle this with a single class on the wrapper so the
+ * timings line up cleanly. */
+.wrapLive .spineHalo {
+  opacity: 1;
+  animation: principles-draw 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.05s forwards;
+}
+
+.wrapLive .spinePath {
+  opacity: 1;
+  animation: principles-draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+}
+
+.wrapLive .spineTraveller {
+  /* Wait for the draw-in to finish, then loop forever. */
+  animation:
+    principles-traveller-fade 0.5s ease 1.6s forwards,
+    principles-traveller-flow 4.2s linear 1.6s infinite;
+}
+
+@keyframes principles-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes principles-traveller-fade {
+  to { opacity: 1; }
+}
+
+@keyframes principles-traveller-flow {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* Pulse nodes at the four row centres ─────────────────────────── */
+.nodeGroup {
+  opacity: 0;
+}
+.wrapLive .nodeGroup {
+  animation: principles-node-in 0.7s ease 1.4s forwards;
+}
+
+.nodeDot {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 3px var(--accent));
+}
+
+.nodeHalo {
+  fill: var(--accent);
+  fill-opacity: 0.18;
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: principles-node-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes principles-node-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes principles-node-pulse {
+  0%, 100% { transform: scale(0.85); fill-opacity: 0.16; }
+  50%      { transform: scale(1.65); fill-opacity: 0.04; }
+}
+
+/* Respect reduced-motion users: kill the traveller + node pulses but
+ * still draw the spine in once so the layout reads correctly. */
+@media (prefers-reduced-motion: reduce) {
+  .wrapLive .spineHalo,
+  .wrapLive .spinePath {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .spineTraveller,
+  .nodeHalo {
+    animation: none !important;
+  }
+  .spineTraveller { opacity: 0; }
+}
+
+/* The list of cards — left/right alternating to form the snake.     */
+.list {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: grid;
+  /* Card column takes more width than the ordinal column — the digit
+   * is a graphic accent, the card is the content. */
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 36px;
+}
+
+.rowRight {
+  /* Digit on the left, card on the right. Order matches the natural
+   * grid-column order so we don't have to override per side. */
+}
+
+.rowLeft {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+}
+
+.rowRight .nodeWrap { grid-column: 1; justify-self: start; }
+.rowRight .card     { grid-column: 2; }
+.rowLeft  .card     { grid-column: 1; }
+.rowLeft  .nodeWrap { grid-column: 2; justify-self: end; }
+
+/* Big outlined ordinal "01..04" sits next to its card, baseline-
+ * aligned with the bottom of the card so the pair reads as a unit. */
+.nodeWrap {
+  display: flex;
+  align-items: flex-end;
+  line-height: 0.85;
+}
+
+.node {
+  font-size: clamp(60px, 7vw, 104px);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--line-hi);
+  user-select: none;
+  display: inline-block;
+  transform: translateY(0);
+  transition: transform 0.6s var(--ease), -webkit-text-stroke-color 0.6s ease;
+}
+
+.row.inView .node {
+  -webkit-text-stroke-color: var(--accent);
+}
+
+.card {
+  position: relative;
+  padding: 26px 26px 24px;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 12, 18, 0.78),
+      rgba(10, 12, 18, 0.62)
+    );
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease),
+    border-color 0.4s ease;
+}
+
+.row.inView .card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    320px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(94, 234, 212, 0.07),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card:hover {
+  border-color: var(--line-hi);
+}
+.card:hover::after { opacity: 1; }
+
+.cardKicker {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardKicker::before {
+  content: "";
+  width: 18px;
+  height: 1.5px;
+  background: var(--accent);
+  display: inline-block;
+}
+
+.cardTitle {
+  font-size: clamp(18px, 1.8vw, 24px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.cardBody {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Mobile: collapse the zigzag into a single stacked column. Numbers
+ * sit above each card instead of beside them, so nothing overflows. */
+@media (max-width: 900px) {
+  .wrap { padding: 0 24px 16px; }
+  .row {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 10px;
+    padding-bottom: 6px;
+  }
+  .row .card,
+  .row .nodeWrap {
+    grid-column: 1;
+    justify-self: start;
+  }
+  .row .nodeWrap { order: -1; }
+  .node { font-size: 64px; }
+  .spine { display: none; }
+}
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 20px 12px; }
+  .card { padding: 22px 20px 20px; }
+  .node { font-size: 56px; }
+}
