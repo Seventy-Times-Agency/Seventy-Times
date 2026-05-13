@@ -205,7 +205,11 @@ export default function ChatWidget() {
 
     setLoading(false);
     inputRef.current?.focus();
-  }, [input, loading, messages, locale, t.chatError, t.chatFallback]);
+    // Depend on the full `t` object instead of cherry-picked fields:
+    // the dictionary returned by `useT()` is a stable reference per
+    // locale, but cherry-picking creates dependency holes if the
+    // strings used inside `send` ever expand.
+  }, [input, loading, messages, locale, t]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {

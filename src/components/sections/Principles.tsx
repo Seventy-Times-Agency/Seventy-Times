@@ -30,13 +30,15 @@ export default function Principles() {
   // of scroll position, so it can't jitter with the page scroll.
   useEffect(() => {
     const wrap = wrapRef.current;
+    let wrapObserver: IntersectionObserver | null = null;
     if (wrap) {
-      const wrapObserver = new IntersectionObserver(
+      wrapObserver = new IntersectionObserver(
         (entries) => {
           for (const e of entries) {
             if (e.isIntersecting) {
               setSpineLive(true);
-              wrapObserver.disconnect();
+              wrapObserver?.disconnect();
+              wrapObserver = null;
               break;
             }
           }
@@ -64,7 +66,10 @@ export default function Principles() {
       { rootMargin: "0px 0px -15% 0px", threshold: 0.25 },
     );
     rowRefs.current.forEach((row) => row && rowObserver.observe(row));
-    return () => rowObserver.disconnect();
+    return () => {
+      wrapObserver?.disconnect();
+      rowObserver.disconnect();
+    };
   }, []);
 
   const handleMove = (e: MouseEvent<HTMLDivElement>) => {

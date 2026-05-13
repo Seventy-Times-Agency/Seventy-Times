@@ -48,9 +48,13 @@
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
-  /* Skip layout / paint for the off-screen half of the duplicated
-   * content. Roughly halves the per-frame paint cost. */
-  contain: layout paint;
+  /* Skip paint for the off-screen half of the duplicated content.
+   * `contain: layout` was tried as well but conflicts with the
+   * `width: max-content` sizing on Safari/Firefox (the container
+   * stops expanding to its actual children's width and the marquee
+   * clips). `paint` alone is enough to isolate the row's repaints
+   * from neighbouring composite layers. */
+  contain: paint;
 }
 
 /* Top: scrolls right-to-left (0 → -50%). */
