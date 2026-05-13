@@ -1,0 +1,175 @@
+.wrap {
+  position: relative;
+  padding: 0 48px 32px;
+  isolation: isolate;
+}
+
+/* The serpentine spine — an SVG path drawn on scroll. Sits behind the
+ * cards (z-index 0) and draws itself in via stroke-dashoffset. */
+.spine {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.spinePath {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.25;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  vector-effect: non-scaling-stroke;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.spinePathLive {
+  stroke: url(#principles-gradient);
+  filter: drop-shadow(0 0 6px rgba(94, 234, 212, 0.18));
+}
+
+/* The list of cards — left/right alternating to form the snake.       */
+.list {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  z-index: 1;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 32px;
+  min-height: 220px;
+}
+
+.rowRight .card { grid-column: 2; }
+.rowLeft .card  { grid-column: 1; }
+
+.rowRight .nodeWrap { grid-column: 1; justify-self: end; }
+.rowLeft .nodeWrap  { grid-column: 2; justify-self: start; }
+
+/* Big outlined ordinal "01..04" living on the empty side of the row. */
+.node {
+  font-size: clamp(96px, 12vw, 184px);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1.4px var(--line-hi);
+  user-select: none;
+  display: inline-block;
+  transform: translateY(0);
+  transition: transform 0.6s var(--ease), -webkit-text-stroke-color 0.6s ease;
+}
+
+.row.inView .node {
+  -webkit-text-stroke-color: var(--accent);
+}
+
+.card {
+  position: relative;
+  padding: 32px 28px 30px;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(180deg, rgba(200, 212, 222, 0.04), rgba(200, 212, 222, 0.015));
+  border: 1px solid var(--line);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease),
+    border-color 0.4s ease;
+}
+
+.row.inView .card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    320px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(94, 234, 212, 0.07),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card:hover {
+  border-color: var(--line-hi);
+}
+.card:hover::after { opacity: 1; }
+
+.cardKicker {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardKicker::before {
+  content: "";
+  width: 18px;
+  height: 1.5px;
+  background: var(--accent);
+  display: inline-block;
+}
+
+.cardTitle {
+  font-size: clamp(20px, 2.1vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.cardBody {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Mobile: collapse the zigzag into a single stacked column. Numbers
+ * sit above each card instead of beside them, so nothing overflows. */
+@media (max-width: 900px) {
+  .wrap { padding: 0 24px 24px; }
+  .row {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 14px;
+    padding-bottom: 8px;
+  }
+  .row .card,
+  .row .nodeWrap {
+    grid-column: 1;
+    justify-self: start;
+  }
+  .row .nodeWrap { order: -1; }
+  .node { font-size: 84px; }
+  .spine { display: none; }
+}
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 20px 16px; }
+  .card { padding: 24px 22px 22px; }
+  .node { font-size: 72px; }
+}
