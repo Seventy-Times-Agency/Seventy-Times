@@ -512,6 +512,12 @@ const strings = {
     leadPackageLaunch: "LAUNCH — Start bei null",
     leadPackageGrowth: "GROWTH ⭐ — wachsendes Geschäft",
     leadPackageScale: "SCALE — ernsthafte Skalierung",
+    leadBudget: "Monatsbudget (Richtwert)",
+    leadBudgetNotSure: "Noch unklar",
+    leadBudgetUnder1k: "Bis $1.000 / Monat",
+    leadBudget1k3k: "$1.000–3.000 / Monat",
+    leadBudget3k10k: "$3.000–10.000 / Monat",
+    leadBudget10kPlus: "$10.000+ / Monat",
 
     // Chat widget
     chatGreeting:

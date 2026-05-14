@@ -24,12 +24,27 @@ type LeadPackage =
   | "growth"
   | "scale";
 
+type LeadBudget =
+  | "not_sure"
+  | "under_1k"
+  | "1k_3k"
+  | "3k_10k"
+  | "10k_plus";
+
 const PACKAGE_NOTION_LABEL: Record<LeadPackage, string> = {
   not_sure: "Not sure",
   standalone: "Standalone",
   launch: "Launch",
   growth: "Growth",
   scale: "Scale",
+};
+
+const BUDGET_NOTION_LABEL: Record<LeadBudget, string> = {
+  not_sure: "Not sure",
+  under_1k: "<$1k/mo",
+  "1k_3k": "$1k–3k/mo",
+  "3k_10k": "$3k–10k/mo",
+  "10k_plus": "$10k+/mo",
 };
 
 type LeadRecord = {
@@ -39,6 +54,7 @@ type LeadRecord = {
   request: string;
   locale?: Locale | string;
   package?: LeadPackage;
+  budget?: LeadBudget;
   phone?: string;
 };
 
@@ -162,6 +178,11 @@ export async function sendLeadToNotion(
   if (lead.package) {
     properties.Package = {
       select: { name: PACKAGE_NOTION_LABEL[lead.package] },
+    };
+  }
+  if (lead.budget) {
+    properties.Budget = {
+      select: { name: BUDGET_NOTION_LABEL[lead.budget] },
     };
   }
   if (lead.phone) {

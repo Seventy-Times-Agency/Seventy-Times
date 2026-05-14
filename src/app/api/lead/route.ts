@@ -29,6 +29,13 @@ type LeadPackage =
   | "growth"
   | "scale";
 
+type LeadBudget =
+  | "not_sure"
+  | "under_1k"
+  | "1k_3k"
+  | "3k_10k"
+  | "10k_plus";
+
 type LeadKind = "lead" | "callback";
 
 type LeadPayload = {
@@ -37,6 +44,7 @@ type LeadPayload = {
   business: string;
   request: string;
   package?: LeadPackage;
+  budget?: LeadBudget;
   phone?: string;
   kind?: LeadKind;
 };
@@ -49,10 +57,25 @@ const PACKAGE_LABEL: Record<LeadPackage, string> = {
   scale: "SCALE",
 };
 
+const BUDGET_LABEL: Record<LeadBudget, string> = {
+  not_sure: "Не уверен",
+  under_1k: "до $1 000 / мес",
+  "1k_3k": "$1 000–3 000 / мес",
+  "3k_10k": "$3 000–10 000 / мес",
+  "10k_plus": "$10 000+ / мес",
+};
+
 function isLeadPackage(v: unknown): v is LeadPackage {
   return (
     typeof v === "string" &&
     ["not_sure", "standalone", "launch", "growth", "scale"].includes(v)
+  );
+}
+
+function isLeadBudget(v: unknown): v is LeadBudget {
+  return (
+    typeof v === "string" &&
+    ["not_sure", "under_1k", "1k_3k", "3k_10k", "10k_plus"].includes(v)
   );
 }
 
@@ -95,6 +118,9 @@ async function notifyTelegram({ lead, duplicate, kind }: TelegramArgs) {
   const packageLine = lead.package
     ? `📦 *Пакет:* ${escapeMarkdown(PACKAGE_LABEL[lead.package])}`
     : null;
+  const budgetLine = lead.budget
+    ? `💰 *Бюджет:* ${escapeMarkdown(BUDGET_LABEL[lead.budget])}`
+    : null;
   const phoneLine = lead.phone
     ? `📱 *Телефон:* ${escapeMarkdown(lead.phone)}`
     : null;
@@ -107,6 +133,7 @@ async function notifyTelegram({ lead, duplicate, kind }: TelegramArgs) {
     ...(phoneLine ? [phoneLine] : []),
     `🏢 *Бизнес:* ${escapeMarkdown(lead.business)}`,
     ...(packageLine ? [packageLine] : []),
+    ...(budgetLine ? [budgetLine] : []),
     "",
     `💬 *Запрос:*`,
     escapeMarkdown(lead.request),
@@ -123,6 +150,7 @@ function buildEmailText(lead: LeadPayload, duplicate: boolean) {
     lead.phone ? `Phone: ${lead.phone}` : null,
     `Business: ${lead.business}`,
     lead.package ? `Package: ${PACKAGE_LABEL[lead.package]}` : null,
+    lead.budget ? `Budget: ${BUDGET_LABEL[lead.budget]}` : null,
     "",
     "Request:",
     lead.request,
@@ -169,6 +197,8 @@ export async function POST(req: Request) {
   const request = body.request.trim();
   const rawPackage = (body as Record<string, unknown>).package;
   const leadPackage = isLeadPackage(rawPackage) ? rawPackage : undefined;
+  const rawBudget = (body as Record<string, unknown>).budget;
+  const leadBudget = isLeadBudget(rawBudget) ? rawBudget : undefined;
   const rawPhone = (body as Record<string, unknown>).phone;
   const phone =
     typeof rawPhone === "string" && rawPhone.trim()
@@ -231,6 +261,7 @@ export async function POST(req: Request) {
     business,
     request,
     package: leadPackage,
+    budget: leadBudget,
     phone,
     kind,
   };
@@ -251,6 +282,7 @@ export async function POST(req: Request) {
             request,
             locale,
             package: leadPackage,
+            budget: leadBudget,
             phone,
           }),
       sendEmail({

@@ -512,6 +512,12 @@ const strings = {
     leadPackageLaunch: "LAUNCH — запуск з нуля",
     leadPackageGrowth: "GROWTH ⭐ — зростаючий бізнес",
     leadPackageScale: "SCALE — серйозний масштаб",
+    leadBudget: "Бюджет на місяць (орієнтовно)",
+    leadBudgetNotSure: "Поки не впевнений",
+    leadBudgetUnder1k: "До $1 000 / міс",
+    leadBudget1k3k: "$1 000–3 000 / міс",
+    leadBudget3k10k: "$3 000–10 000 / міс",
+    leadBudget10kPlus: "$10 000+ / міс",
 
     // Chat widget
     chatGreeting:
