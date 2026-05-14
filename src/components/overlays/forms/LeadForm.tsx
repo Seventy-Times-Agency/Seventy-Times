@@ -478,6 +478,7 @@ export default function LeadForm() {
                           checked={consent}
                           onChange={(e) => setConsent(e.target.checked)}
                           required
+                          aria-required="true"
                         />
                         <span>
                           {t.consentPrefix}
@@ -494,7 +495,11 @@ export default function LeadForm() {
                     </>
                   )}
 
-                  {error && <div className={styles.error}>{error}</div>}
+                  {error && (
+                    <div className={styles.error} role="alert" aria-live="polite">
+                      {error}
+                    </div>
+                  )}
 
                   <div className={styles.actions}>
                     {mode === "steps" && step > 0 && (

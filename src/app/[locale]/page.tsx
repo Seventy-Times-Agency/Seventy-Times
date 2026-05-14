@@ -37,7 +37,7 @@ export default async function HomePage() {
     <>
       <StructuredData />
       <Nav />
-      <main>
+      <main id="main-content">
         <Hero />
         <MarqueeStack />
         <SectionDivider labelKey="divMachine" />

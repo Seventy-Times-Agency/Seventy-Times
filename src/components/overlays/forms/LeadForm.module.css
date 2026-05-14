@@ -288,21 +288,27 @@
 }
 
 .consent {
+  /* The whole label is the click/tap target — wrapping the input
+   * with a label makes any tap inside the label area toggle the
+   * checkbox, lifting the effective tap target well past the WCAG
+   * 44×44 px floor while keeping the visual checkbox compact. */
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
   margin-top: 4px;
+  padding: 10px 4px;
   font-size: 12px;
   color: var(--text-muted);
   line-height: 1.5;
   cursor: pointer;
+  min-height: 44px;
 }
 
 .consent input[type="checkbox"] {
   flex-shrink: 0;
   margin-top: 2px;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   accent-color: var(--accent);
   cursor: pointer;
 }
