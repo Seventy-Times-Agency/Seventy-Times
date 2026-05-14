@@ -12,8 +12,14 @@ const PAGES = [
   { path: "/terms", priority: 0.3, changeFrequency: "yearly" as const },
 ];
 
+// Frozen at build time so the sitemap doesn't claim "everything was
+// updated this second" on every request — Google deprioritises feeds
+// where every URL has the same always-current lastmod, treating the
+// signal as noise.
+const BUILD_TIME = new Date();
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const now = BUILD_TIME;
   const entries: MetadataRoute.Sitemap = [];
 
   for (const page of PAGES) {

@@ -65,7 +65,7 @@ export async function generateMetadata(
           url: "/opengraph-image",
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+          alt: meta.ogImageAlt,
         },
       ],
     },
@@ -76,7 +76,7 @@ export async function generateMetadata(
       images: [
         {
           url: "/opengraph-image",
-          alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+          alt: meta.ogImageAlt,
         },
       ],
     },
