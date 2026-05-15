@@ -46,6 +46,8 @@ const strings = {
     svcDetailPrimaryCta: "Start a project",
     svcDetailSecondaryCta: "See cases",
     svcDetailRelatedTitle: "Other services",
+    svcTimelineLabel: "Timeline",
+    svcIdealLabel: "Ideal for",
 
     // Comparison section
     compEyebrow: "— Why us / 2026",
@@ -104,6 +106,9 @@ const strings = {
       "Landing page for ad campaigns",
       "Ad budget management",
     ],
+    svc1Timeline: "1–2 weeks setup, first leads 3–7 days after launch",
+    svc1Ideal:
+      "B2C and consumer services with a clear offer and $500+/mo ad budget — when you're ready to scale the channel, not test if marketing works at all.",
     svc2Title: "Automation",
     svc2Tag: "We eliminate the routine — your business runs itself",
     svc2Note: null as string | null,
@@ -120,6 +125,9 @@ const strings = {
       "CRM integration",
       "Post-launch support and updates",
     ],
+    svc2Timeline: "2–4 weeks per workflow, including the audit and live testing",
+    svc2Ideal:
+      "Teams losing hours to manual lead routing, follow-ups or copy-paste between tools — and ready to map at least one process end-to-end.",
     svc3Title: "AI Bot",
     svc3Tag: "A smart assistant that works for you 24/7",
     svc3Note: null as string | null,
@@ -138,6 +146,9 @@ const strings = {
       "Sales funnel",
       "Post-launch support and updates",
     ],
+    svc3Timeline: "2–3 weeks for the first version, iteration after launch",
+    svc3Ideal:
+      "Inbound-heavy businesses where leads arrive on Telegram, IG, Facebook or the website faster than the team can answer in person.",
     svc4Title: "Sites + SEO",
     svc4Tag: "A site that sells — not just looks pretty",
     svc4Note: "Hosting and domain stay on your account. Copy is on us; branding available as an add-on on request.",
@@ -155,6 +166,9 @@ const strings = {
       "Multi-currency / multi-region for e-commerce",
       "Maintenance retainer after launch",
     ],
+    svc4Timeline: "3–6 weeks depending on tier (landing → business → e-commerce)",
+    svc4Ideal:
+      "New product launches and rebuilds of underperforming sites where the offer is solid but the funnel leaks at the landing.",
 
     // Process
     procEyebrow: "— How we work",

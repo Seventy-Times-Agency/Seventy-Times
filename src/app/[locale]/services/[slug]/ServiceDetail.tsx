@@ -22,6 +22,8 @@ export default function ServiceDetail({ item, related }: Props) {
   const note = t[item.i18n.note];
   const includes = t[item.i18n.inc];
   const addons = t[item.i18n.add];
+  const timeline = t[item.i18n.timeline];
+  const ideal = t[item.i18n.ideal];
 
   return (
     <main className={styles.main}>
@@ -50,6 +52,17 @@ export default function ServiceDetail({ item, related }: Props) {
           <h1 className={styles.title}>{title}</h1>
           <p className={styles.tagline}>{tag}</p>
           {note && <span className={styles.note}>{note}</span>}
+
+          <dl className={styles.meta}>
+            <div className={styles.metaItem}>
+              <dt className={styles.metaLabel}>{t.svcTimelineLabel}</dt>
+              <dd className={styles.metaValue}>{timeline}</dd>
+            </div>
+            <div className={styles.metaItem}>
+              <dt className={styles.metaLabel}>{t.svcIdealLabel}</dt>
+              <dd className={styles.metaValue}>{ideal}</dd>
+            </div>
+          </dl>
         </div>
 
         <div className={styles.cols}>

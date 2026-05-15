@@ -46,6 +46,8 @@ const strings = {
     svcDetailPrimaryCta: "Projekt starten",
     svcDetailSecondaryCta: "Projekte ansehen",
     svcDetailRelatedTitle: "Weitere Leistungen",
+    svcTimelineLabel: "Zeitrahmen",
+    svcIdealLabel: "Passend, wenn",
 
     // Comparison section
     compEyebrow: "— Warum wir / 2026",
@@ -104,6 +106,9 @@ const strings = {
       "Landingpage für Werbekampagnen",
       "Verwaltung des Werbebudgets",
     ],
+    svc1Timeline: "1–2 Wochen Setup, erste Leads 3–7 Tage nach dem Start",
+    svc1Ideal:
+      "B2C- und Endkunden-Dienstleistungen mit klarem Angebot und mindestens $500/Monat Werbebudget — wenn Sie skalieren wollen, nicht testen, ob Marketing überhaupt funktioniert.",
     svc2Title: "Automatisierung",
     svc2Tag: "Wir eliminieren Routine — Ihr Geschäft läuft von selbst",
     svc2Note: null as string | null,
@@ -120,6 +125,9 @@ const strings = {
       "CRM-Integration",
       "Support und Updates nach dem Launch",
     ],
+    svc2Timeline: "2–4 Wochen pro Workflow, inklusive Audit und Live-Test",
+    svc2Ideal:
+      "Teams, die Stunden mit manueller Lead-Verteilung, Follow-ups oder Copy-Paste zwischen Tools verlieren — und bereit sind, mindestens einen Prozess end-to-end zu beschreiben.",
     svc3Title: "KI-Bot",
     svc3Tag: "Ein smarter Assistent, der 24/7 für Sie arbeitet",
     svc3Note: null as string | null,
@@ -138,6 +146,9 @@ const strings = {
       "Verkaufstrichter",
       "Support und Updates nach dem Launch",
     ],
+    svc3Timeline: "2–3 Wochen für die erste Version, danach Iteration",
+    svc3Ideal:
+      "Inbound-getriebenen Unternehmen, bei denen Leads schneller über Telegram, IG, Facebook oder die Website hereinkommen, als das Team persönlich antworten kann.",
     svc4Title: "Websites + SEO",
     svc4Tag: "Eine Website, die verkauft — nicht nur gut aussieht",
     svc4Note: "Hosting und Domain bleiben auf Ihrem Konto. Texte schreiben wir; Branding auf Anfrage als Add-on.",
@@ -155,6 +166,9 @@ const strings = {
       "Multi-Currency / Multi-Region für E-Commerce",
       "Maintenance-Retainer nach dem Launch",
     ],
+    svc4Timeline: "3–6 Wochen je nach Stufe (Landing → Business → E-Commerce)",
+    svc4Ideal:
+      "Neue Produktstarts oder Relaunches von Sites, deren Angebot solide ist, aber der Funnel auf der Landingpage Leads verliert.",
 
     // Process
     procEyebrow: "— So arbeiten wir",

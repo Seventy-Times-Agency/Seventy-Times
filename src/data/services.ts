@@ -39,6 +39,16 @@ export type ServiceItem = {
       | "svc2Add"
       | "svc3Add"
       | "svc4Add";
+    timeline:
+      | "svc1Timeline"
+      | "svc2Timeline"
+      | "svc3Timeline"
+      | "svc4Timeline";
+    ideal:
+      | "svc1Ideal"
+      | "svc2Ideal"
+      | "svc3Ideal"
+      | "svc4Ideal";
   };
 };
 
@@ -53,6 +63,8 @@ export const SERVICES: readonly ServiceItem[] = [
       note: "svc1Note",
       inc: "svc1Inc",
       add: "svc1Add",
+      timeline: "svc1Timeline",
+      ideal: "svc1Ideal",
     },
   },
   {
@@ -65,6 +77,8 @@ export const SERVICES: readonly ServiceItem[] = [
       note: "svc2Note",
       inc: "svc2Inc",
       add: "svc2Add",
+      timeline: "svc2Timeline",
+      ideal: "svc2Ideal",
     },
   },
   {
@@ -77,6 +91,8 @@ export const SERVICES: readonly ServiceItem[] = [
       note: "svc3Note",
       inc: "svc3Inc",
       add: "svc3Add",
+      timeline: "svc3Timeline",
+      ideal: "svc3Ideal",
     },
   },
   {
@@ -89,6 +105,8 @@ export const SERVICES: readonly ServiceItem[] = [
       note: "svc4Note",
       inc: "svc4Inc",
       add: "svc4Add",
+      timeline: "svc4Timeline",
+      ideal: "svc4Ideal",
     },
   },
 ] as const;
