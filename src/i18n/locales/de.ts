@@ -289,7 +289,7 @@ const strings = {
       "Die Preise sind in US-Dollar, gezahlt werden kann aber in Ihrer Landeswährung — Banküberweisung, Wise, Krypto und länderspezifische Optionen sind möglich. Den genauen Weg klären wir im Kickoff, je nachdem was auf Ihrer Seite am einfachsten ist.",
 
     // Growth Simulator (levels-based with concrete descriptions)
-    simEyebrow: "— 70× Wachstumssimulator",
+    simEyebrow: "— 70× ROI-Simulator",
     simTitle1: "Bauen",
     simTitle2: "Sie Ihren",
     simTitle3: "Stack.",
@@ -382,7 +382,7 @@ const strings = {
     divProof: "— Kundenstimmen",
     divQuestions: "— Fragen",
     divTalk: "— Kontakt",
-    divSimulator: "— modellieren Sie Ihr Wachstum",
+    divSimulator: "— ROI abschätzen",
     divCases: "— unsere Projekte",
     divMachine: "— flagship",
     divCompare: "— vs die Alternativen",
@@ -688,7 +688,7 @@ const strings = {
       },
       {
         heading: "Was wir nicht versprechen",
-        text: "Kein ‚garantiertes 100× in einer Woche‘. Die tatsächlichen Ergebnisse hängen von Nische, Budget, Markt und Umsetzungsqualität ab. Alle Zahlen auf der Website und im Growth Simulator sind illustrativ.",
+        text: "Kein ‚garantiertes 100× in einer Woche‘. Die tatsächlichen Ergebnisse hängen von Nische, Budget, Markt und Umsetzungsqualität ab. Alle Zahlen auf der Website und im ROI-Simulator sind illustrativ.",
       },
       {
         heading: "Geistiges Eigentum",

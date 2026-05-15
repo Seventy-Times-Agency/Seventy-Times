@@ -289,7 +289,7 @@ const strings = {
       "Pricing is in US dollars, but you can pay in your local currency — we accept bank transfer, Wise, crypto and other country-local options. The exact method is picked together on the kick-off call based on what's easiest on your end.",
 
     // Growth Simulator (levels-based with concrete descriptions)
-    simEyebrow: "— 70× Growth Simulator",
+    simEyebrow: "— 70× ROI Simulator",
     simTitle1: "Build",
     simTitle2: "your",
     simTitle3: "stack.",
@@ -382,7 +382,7 @@ const strings = {
     divProof: "— testimonials",
     divQuestions: "— questions",
     divTalk: "— get in touch",
-    divSimulator: "— model your growth",
+    divSimulator: "— estimate the ROI",
     divCases: "— our work",
     divMachine: "— flagship",
     divCompare: "— vs the rest",
@@ -685,7 +685,7 @@ const strings = {
       },
       {
         heading: "What we do not promise",
-        text: "No ‘guaranteed 100× in a week’. Actual results depend on niche, budget, market, and execution quality. All numbers on the site and in the Growth Simulator are illustrative.",
+        text: "No ‘guaranteed 100× in a week’. Actual results depend on niche, budget, market, and execution quality. All numbers on the site and in the ROI Simulator are illustrative.",
       },
       {
         heading: "Intellectual property",
