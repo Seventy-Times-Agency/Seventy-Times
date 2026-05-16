@@ -1,0 +1,15 @@
+{
+  "name": "hyperframes-full-test",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.6.9 preview",
+    "check": "npx --yes hyperframes@0.6.9 lint && npx --yes hyperframes@0.6.9 validate && npx --yes hyperframes@0.6.9 inspect",
+    "render": "npx --yes hyperframes@0.6.9 render",
+    "publish": "npx --yes hyperframes@0.6.9 publish"
+  },
+  "dependencies": {
+    "gsap": "^3.14.2",
+    "three": "^0.149.0"
+  }
+}

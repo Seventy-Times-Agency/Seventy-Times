@@ -1,0 +1,1173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>HyperFrames — HTML is the new video format</title>
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/three.min.js"></script>
+    <style>
+      :root {
+        --bg-deep: #070710;
+        --bg-panel: #0f1018;
+        --bg-rim: #1a1b26;
+        --fg-bright: #f2ede4;
+        --fg-body: #d8d2c8;       /* readable body copy (AA pass on deep bg) */
+        --fg-mid: #b8b2ac;        /* slightly de-emphasized labels */
+        --fg-dim: #5c5a56;        /* decoratives only — registration marks, code comments */
+        --ember: #ff6a1a;
+        --ember-hot: #ffb347;
+        --cyan: #93d0db;          /* slightly brighter cyan for legibility */
+        --green-ok: #9fc089;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #070710;
+        font-family: "JetBrains Mono", monospace;
+        color: #f2ede4;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ---------- Atmospherics (shared across all scenes) ---------- */
+      .atmo {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        will-change: transform, opacity;
+      }
+      .glow-ember {
+        width: 1100px; height: 1100px;
+        left: -200px; bottom: -300px;
+        background: rgba(255, 106, 26, 0.18);
+      }
+      .glow-cyan {
+        width: 900px; height: 900px;
+        right: -180px; top: -220px;
+        background: rgba(126, 196, 207, 0.10);
+      }
+      .grain {
+        position: absolute;
+        inset: 0;
+        opacity: 0.04;
+        mix-blend-mode: overlay;
+        z-index: 50;
+        background-image:
+          url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.3' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.9 0 0 0 0 0.9 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        pointer-events: none;
+      }
+      .reg {
+        position: absolute;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--fg-dim);
+        letter-spacing: 0.16em;
+        z-index: 20;
+      }
+      .reg.tl { top: 48px; left: 60px; }
+      .reg.tr { top: 48px; right: 60px; }
+      .reg.bl { bottom: 48px; left: 60px; }
+      .reg.br { bottom: 48px; right: 60px; }
+
+      /* ---------- Scene shell ---------- */
+      .scene {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        will-change: opacity, transform, filter;
+      }
+      #scene1 { opacity: 1; }
+      #scene2, #scene3, #scene4, #scene5 { opacity: 0; }
+
+      .scene-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 120px 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 36px;
+      }
+
+      /* ---------- Scene 1 — Kinetic typography ---------- */
+      #scene1 .label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ember);
+      }
+      #scene1 .label-row {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      #scene1 .label-row .bar {
+        width: 0; height: 2px;
+        background: var(--ember);
+        align-self: center;
+      }
+      #scene1 .hero {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 150px;
+        line-height: 0.94;
+        letter-spacing: -0.02em;
+        font-weight: 400;
+        color: var(--fg-bright);
+        max-width: 1500px;
+      }
+      #scene1 .hero .word {
+        display: inline-block;
+        margin-right: 16px;
+      }
+      #scene1 .hero .word.accent { color: var(--ember); }
+      #scene1 .sub {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 36px;
+        font-weight: 400;
+        color: var(--fg-mid);
+        line-height: 1.4;
+        max-width: 1100px;
+        margin-top: 28px;
+      }
+      #scene1 .sub .strike { color: var(--fg-dim); text-decoration: line-through; }
+      #scene1 .sub .keep { color: var(--fg-bright); }
+      #scene1 .meta {
+        position: absolute;
+        right: 160px; bottom: 160px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 18px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        text-align: right;
+        line-height: 1.7;
+      }
+      #scene1 .meta .v { color: var(--ember-hot); }
+
+      /* ---------- Scene 2 — HTML to video CSS-3D ---------- */
+      #scene2 .stage {
+        position: absolute;
+        inset: 0;
+        perspective: 1600px;
+        perspective-origin: 50% 45%;
+      }
+      #scene2 .slab {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 1100px;
+        height: 720px;
+        margin-top: -360px;
+        margin-left: -550px;
+        transform-style: preserve-3d;
+        will-change: transform;
+      }
+      #scene2 .face {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        background: var(--bg-panel);
+        padding: 56px 70px;
+      }
+      #scene2 .face.front {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 30px;
+        line-height: 1.7;
+        color: var(--fg-mid);
+        font-weight: 400;
+      }
+      #scene2 .face.front .tag { color: var(--cyan); }
+      #scene2 .face.front .attr { color: var(--ember-hot); }
+      #scene2 .face.front .val { color: var(--green-ok); }
+      #scene2 .face.front .comment { color: var(--fg-dim); }
+      #scene2 .face.back {
+        transform: rotateY(180deg);
+        background: linear-gradient(135deg, #1a1b26 0%, #0f1018 100%);
+        overflow: hidden;
+      }
+      #scene2 .timeline-strip {
+        position: absolute;
+        top: 50%; left: 0; right: 0;
+        margin-top: -180px;
+        height: 360px;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 4px;
+        padding: 0 56px;
+      }
+      #scene2 .frame {
+        background: var(--bg-rim);
+        position: relative;
+        border: 1px solid rgba(255, 106, 26, 0.25);
+        overflow: hidden;
+      }
+      #scene2 .frame::after {
+        content: "";
+        position: absolute;
+        inset: 30% 30%;
+        background: var(--ember);
+        filter: blur(20px);
+        opacity: 0.7;
+      }
+      #scene2 .frame:nth-child(even)::after { background: var(--ember-hot); }
+      #scene2 .arrow {
+        position: absolute;
+        left: 50%; top: 76px;
+        transform: translateX(-50%);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        font-weight: 500;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--ember);
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+      #scene2 .arrow .dash { width: 0; height: 2px; background: var(--ember); }
+      #scene2 .caption {
+        position: absolute;
+        left: 160px; bottom: 160px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 160px;
+        line-height: 0.92;
+        letter-spacing: -0.02em;
+        color: var(--fg-bright);
+      }
+      #scene2 .caption .em { color: var(--ember); }
+      #scene2 .stack {
+        position: absolute;
+        right: 160px;
+        top: 50%;
+        margin-top: -180px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--fg-mid);
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        text-align: right;
+      }
+      #scene2 .stack .item .k { color: var(--fg-mid); display: block; font-size: 16px; margin-bottom: 4px; }
+      #scene2 .stack .item .v { color: var(--cyan); font-size: 26px; font-weight: 500; }
+
+      /* ---------- Scene 3 — Three.js + orbiting tech chips ---------- */
+      #scene3 .three-wrap {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 760px; height: 760px;
+        margin-top: -380px; margin-left: -380px;
+        z-index: 2;
+      }
+      #scene3 #three-canvas {
+        width: 100%; height: 100%;
+        display: block;
+      }
+      #scene3 .chip {
+        position: absolute;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 26px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--fg-bright);
+        background: var(--bg-panel);
+        border: 1px solid var(--bg-rim);
+        padding: 16px 28px;
+        z-index: 3;
+        white-space: nowrap;
+      }
+      #scene3 .chip .dot {
+        display: inline-block;
+        width: 8px; height: 8px;
+        background: var(--ember);
+        margin-right: 14px;
+        vertical-align: middle;
+      }
+      #scene3 .chip.c0 { top: 240px; left: 220px; }
+      #scene3 .chip.c1 { top: 200px; right: 220px; }
+      #scene3 .chip.c2 { top: 50%; right: 140px; margin-top: -22px; }
+      #scene3 .chip.c3 { bottom: 240px; right: 280px; }
+      #scene3 .chip.c4 { bottom: 200px; left: 240px; }
+      #scene3 .chip.c5 { top: 50%; left: 140px; margin-top: -22px; }
+      #scene3 .hdr {
+        position: absolute;
+        top: 120px; left: 160px;
+        right: 160px;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        z-index: 4;
+      }
+      #scene3 .hdr .lhs {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 96px;
+        line-height: 0.92;
+        letter-spacing: -0.02em;
+        color: var(--fg-bright);
+      }
+      #scene3 .hdr .lhs .em { color: var(--ember); }
+      #scene3 .hdr .rhs {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 20px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        text-align: right;
+        line-height: 1.6;
+      }
+      #scene3 .footer-line {
+        position: absolute;
+        bottom: 160px; left: 160px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 30px;
+        font-weight: 500;
+        color: var(--fg-mid);
+        z-index: 4;
+      }
+      #scene3 .footer-line .em { color: var(--ember-hot); }
+      #scene3 .footer-line .cursor {
+        display: inline-block;
+        width: 14px; height: 28px;
+        background: var(--ember);
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+
+      /* ---------- Scene 4 — Animated counters ---------- */
+      #scene4 .grid {
+        position: absolute;
+        inset: 120px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 32px 48px;
+      }
+      #scene4 .stat-block {
+        position: relative;
+        border: 1px solid var(--bg-rim);
+        background: rgba(15, 16, 24, 0.6);
+        padding: 36px 48px 44px 48px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 18px;
+        overflow: hidden;
+      }
+      #scene4 .stat-block .label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--fg-mid);
+      }
+      #scene4 .stat-block .value {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 150px;
+        line-height: 0.88;
+        letter-spacing: -0.03em;
+        font-variant-numeric: tabular-nums;
+        color: var(--fg-bright);
+      }
+      #scene4 .stat-block .value .unit {
+        font-size: 42px;
+        margin-left: 10px;
+        color: var(--ember);
+        vertical-align: 24px;
+      }
+      #scene4 .stat-block .desc {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        color: var(--fg-body);
+        max-width: 460px;
+        line-height: 1.5;
+      }
+      #scene4 .stat-block .bar {
+        position: absolute;
+        left: 0; bottom: 0; height: 4px;
+        background: var(--ember);
+        width: 0%;
+      }
+      #scene4 .stat-block.s0 .value .num { color: var(--ember); }
+      #scene4 .stat-block.s1 .value .num { color: var(--fg-bright); }
+      #scene4 .stat-block.s2 .value .num { color: var(--cyan); }
+      #scene4 .stat-block.s3 .value .num { color: var(--ember-hot); }
+      #scene4 .header {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--bg-rim);
+      }
+      #scene4 .header .hl {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 68px;
+        line-height: 1.18;
+        letter-spacing: -0.02em;
+        color: var(--fg-bright);
+      }
+      #scene4 .header .hl .em { color: var(--ember); }
+      #scene4 .header .hr {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 20px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--fg-dim);
+      }
+
+      /* ---------- Scene 5 — Final CTA ---------- */
+      #scene5 .cta-stack {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 160px;
+        gap: 40px;
+      }
+      #scene5 .eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        font-weight: 500;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--ember);
+      }
+      #scene5 .terminal {
+        background: var(--bg-panel);
+        border: 1px solid var(--bg-rim);
+        border-left: 4px solid var(--ember);
+        padding: 36px 52px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 56px;
+        font-weight: 500;
+        color: var(--fg-bright);
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        min-width: 980px;
+      }
+      #scene5 .terminal .prompt { color: var(--ember); }
+      #scene5 .terminal .typed-wrap {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      #scene5 .terminal .typed { color: var(--fg-bright); }
+      #scene5 .terminal .cursor {
+        display: inline-block;
+        width: 22px; height: 56px;
+        background: var(--ember);
+        vertical-align: middle;
+      }
+      #scene5 .pair {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 240px;
+        line-height: 0.9;
+        letter-spacing: -0.02em;
+        color: var(--fg-bright);
+        margin-top: 8px;
+      }
+      #scene5 .pair .em { color: var(--ember); }
+      #scene5 .pair .small {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 60px;
+        margin: 0 26px;
+        color: var(--fg-dim);
+      }
+      #scene5 .signoff {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 34px;
+        color: var(--fg-mid);
+        margin-top: 24px;
+      }
+      #scene5 .logo-mark {
+        position: absolute;
+        right: 160px; bottom: 160px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 84px;
+        letter-spacing: 0.04em;
+        color: var(--ember);
+        line-height: 0.9;
+      }
+      #scene5 .logo-mark .v {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        color: var(--fg-dim);
+        letter-spacing: 0.22em;
+        display: block;
+        margin-top: 6px;
+      }
+
+      /* ---------- Captions track ---------- */
+      .caption-track {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: 110px;
+        height: 100px;
+        z-index: 40;
+        pointer-events: none;
+      }
+      .caption-group {
+        position: absolute;
+        left: 0; right: 0;
+        top: 0;
+        text-align: center;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        font-size: 56px;
+        letter-spacing: -0.01em;
+        color: var(--fg-bright);
+        opacity: 0;
+        visibility: visible;
+        will-change: opacity, transform;
+        line-height: 1.1;
+        padding: 8px 18px;
+        text-shadow: 0 2px 16px rgba(7, 7, 16, 0.85);
+      }
+      .caption-group .em { color: var(--ember); }
+      .caption-group .stat { color: var(--ember-hot); font-weight: 700; }
+    </style>
+  </head>
+
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="60"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Atmospherics + grain + registration marks persist across scene transitions. -->
+      <div class="atmo" data-layout-ignore>
+        <div class="glow glow-ember" id="g-ember"></div>
+        <div class="glow glow-cyan" id="g-cyan"></div>
+      </div>
+      <div class="grain" data-layout-ignore></div>
+
+      <div class="reg tl" data-layout-ignore>+ HF-001</div>
+      <div class="reg tr" data-layout-ignore>1920 × 1080 · 30FPS</div>
+      <div class="reg bl" data-layout-ignore>RENDER · DETERMINISTIC</div>
+      <div class="reg br" data-layout-ignore>HYPERFRAMES / 2026</div>
+      <!-- =================== SCENE 1 (0–8s) =================== -->
+      <div id="scene1" class="scene">
+        <div class="scene-content">
+          <div class="label-row">
+            <div class="bar"></div>
+            <div class="label">PROMO · 60s · ONE FILE</div>
+          </div>
+          <div class="hero" id="s1-hero">
+            <span class="word accent">HTML</span><br />
+            <span class="word">is</span>
+            <span class="word">the</span>
+            <span class="word">new</span><br />
+            <span class="word">video</span>
+            <span class="word accent">format.</span>
+          </div>
+          <div class="sub" id="s1-sub">
+            <span class="strike">Not a render queue.</span><br />
+            <span class="strike">Not a frame buffer.</span><br />
+            <span class="keep">Just markup. Just motion. Just time.</span>
+          </div>
+        </div>
+        <div class="meta" id="s1-meta">
+          source / index.html<br />
+          output / <span class="v">final.mp4</span><br />
+          frames / 1800
+        </div>
+      </div>
+
+      <!-- =================== SCENE 2 (8–18s) =================== -->
+      <div id="scene2" class="scene">
+        <div class="stage">
+          <div class="slab" id="s2-slab">
+            <div class="face front">
+              <div><span class="comment">&lt;!-- composition --&gt;</span></div>
+              <div>
+                <span class="tag">&lt;div</span>
+                <span class="attr">data-start</span>=<span class="val">"0"</span>
+                <span class="attr">data-duration</span>=<span class="val">"60"</span><span class="tag">&gt;</span>
+              </div>
+              <div style="padding-left: 32px">
+                <span class="tag">&lt;h1</span>
+                <span class="attr">class</span>=<span class="val">"hero"</span><span class="tag">&gt;</span>HyperFrames<span class="tag">&lt;/h1&gt;</span>
+              </div>
+              <div style="padding-left: 32px">
+                <span class="tag">&lt;video</span>
+                <span class="attr">src</span>=<span class="val">"clip.mp4"</span>
+                <span class="attr">data-track-index</span>=<span class="val">"1"</span> /<span class="tag">&gt;</span>
+              </div>
+              <div><span class="tag">&lt;/div&gt;</span></div>
+              <div></div>
+              <div><span class="comment">// G-sap timeline drives the frame.</span></div>
+              <div>tl<span class="comment">.</span>from(<span class="val">".hero"</span>, { y: <span class="val">48</span>, opacity: <span class="val">0</span> })</div>
+            </div>
+            <div class="face back">
+              <div class="timeline-strip">
+                <div class="frame"></div><div class="frame"></div>
+                <div class="frame"></div><div class="frame"></div>
+                <div class="frame"></div><div class="frame"></div>
+                <div class="frame"></div><div class="frame"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="arrow" id="s2-arrow">
+          <div class="dash"></div>
+          HTML&nbsp;&nbsp;&rarr;&nbsp;&nbsp;VIDEO
+          <div class="dash"></div>
+        </div>
+        <div class="caption" id="s2-caption">
+          A <span class="em">div</span><br />
+          is a <span class="em">scene</span>.
+        </div>
+        <div class="stack" id="s2-stack">
+          <div class="item"><span class="k">LAYOUT</span><span class="v">CSS</span></div>
+          <div class="item"><span class="k">MOTION</span><span class="v">GSAP</span></div>
+          <div class="item"><span class="k">TIMING</span><span class="v">DATA-*</span></div>
+        </div>
+      </div>
+
+      <!-- =================== SCENE 3 (18–32s) =================== -->
+      <div id="scene3" class="scene">
+        <div class="hdr">
+          <div class="lhs" id="s3-hdr-l">
+            Anything the browser<br />
+            <span class="em">can render.</span>
+          </div>
+          <div class="rhs" id="s3-hdr-r">
+            ENGINE / WEBGL · CSS · CANVAS<br />
+            SCENE · IDX 03 / 05
+          </div>
+        </div>
+        <div class="three-wrap">
+          <canvas id="three-canvas" width="760" height="760"></canvas>
+        </div>
+        <div class="chip c0" id="s3-chip-0"><span class="dot"></span>THREE.JS</div>
+        <div class="chip c1" id="s3-chip-1"><span class="dot"></span>LOTTIE</div>
+        <div class="chip c2" id="s3-chip-2"><span class="dot"></span>CSS</div>
+        <div class="chip c3" id="s3-chip-3"><span class="dot"></span>SHADERS</div>
+        <div class="chip c4" id="s3-chip-4"><span class="dot"></span>VIDEO</div>
+        <div class="chip c5" id="s3-chip-5"><span class="dot"></span>AUDIO</div>
+        <div class="footer-line" id="s3-footer">
+          ↳ they all compose together in a single <span class="em">HTML</span> file<span class="cursor"></span>
+        </div>
+      </div>
+
+      <!-- =================== SCENE 4 (32–42s) =================== -->
+      <div id="scene4" class="scene">
+        <div class="grid">
+          <div class="header">
+            <div class="hl" id="s4-hl">
+              Every frame. <span class="em">Deterministic.</span>
+            </div>
+            <div class="hr">DATA · PROOF · 04 / 05</div>
+          </div>
+
+          <div class="stat-block s0">
+            <div class="label">ONE FORMAT</div>
+            <div class="value"><span class="num" id="s4-v0">0</span><span class="unit">file</span></div>
+            <div class="desc">HTML source. The same one your agent already writes.</div>
+            <div class="bar" id="s4-b0"></div>
+          </div>
+
+          <div class="stat-block s1">
+            <div class="label">FRAMES RENDERED</div>
+            <div class="value"><span class="num" id="s4-v1">0</span></div>
+            <div class="desc">1800 frames at 30FPS — identical on every machine.</div>
+            <div class="bar" id="s4-b1"></div>
+          </div>
+
+          <div class="stat-block s2">
+            <div class="label">DETERMINISM</div>
+            <div class="value"><span class="num" id="s4-v2">0</span><span class="unit">%</span></div>
+            <div class="desc">Same input. Same seed. Byte-identical MP4 output.</div>
+            <div class="bar" id="s4-b2"></div>
+          </div>
+
+          <div class="stat-block s3">
+            <div class="label">FRAMEWORKS TO LEARN</div>
+            <div class="value"><span class="num" id="s4-v3">7</span></div>
+            <div class="desc">Just the platform. Just the markup your agent already speaks.</div>
+            <div class="bar" id="s4-b3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================== SCENE 5 (42–60s) =================== -->
+      <div id="scene5" class="scene">
+        <div class="cta-stack">
+          <div class="eyebrow" id="s5-eyebrow">SHIP · STEP 01 / 01</div>
+          <div class="terminal" id="s5-terminal">
+            <span class="prompt">❯</span>
+            <span class="typed-wrap" id="s5-typed-wrap">
+              <span class="typed" id="s5-typed">npx hyperframes init</span>
+            </span>
+            <span class="cursor" id="s5-cursor"></span>
+          </div>
+          <div class="pair" id="s5-pair">
+            <span>HTML in.</span>
+            <span class="small">→</span>
+            <span class="em">Video out.</span>
+          </div>
+          <div class="signoff" id="s5-signoff">Go make something.</div>
+        </div>
+        <div class="logo-mark" id="s5-logo">
+          HyperFrames
+          <span class="v">/ HTML &middot; THE NEW VIDEO FORMAT</span>
+        </div>
+      </div>
+
+      <!-- =================== Captions =================== -->
+      <div class="caption-track" id="caption-track"></div>
+
+      <!-- =================== Narration audio =================== -->
+      <audio
+        id="vo"
+        data-start="0"
+        data-duration="38.34"
+        data-track-index="9"
+        data-volume="1"
+        src="narration.wav"
+      ></audio>
+    </div>
+
+    <!-- =============== Three.js scene (sync init) =============== -->
+    <script>
+      (function () {
+      const canvas = document.getElementById("three-canvas");
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+      });
+      renderer.setSize(760, 760, false);
+      renderer.setPixelRatio(1);
+      renderer.setClearColor(0x000000, 0);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+      camera.position.set(0, 0, 5);
+
+      // Wireframe icosahedron — the "ember core".
+      const coreGeom = new THREE.IcosahedronGeometry(1.25, 1);
+      const coreEdges = new THREE.EdgesGeometry(coreGeom);
+      const core = new THREE.LineSegments(
+        coreEdges,
+        new THREE.LineBasicMaterial({ color: 0xff6a1a, transparent: true, opacity: 0.95 })
+      );
+      scene.add(core);
+
+      // Inner solid faint core.
+      const innerCore = new THREE.Mesh(
+        new THREE.IcosahedronGeometry(1.05, 1),
+        new THREE.MeshBasicMaterial({ color: 0xff6a1a, transparent: true, opacity: 0.06 })
+      );
+      scene.add(innerCore);
+
+      // Outer cyan ring of points.
+      const ringPts = [];
+      const seedRand = mulberry32(0x9e3779b9);
+      for (let i = 0; i < 260; i++) {
+        const r = 1.85 + seedRand() * 0.35;
+        const t = (i / 260) * Math.PI * 2;
+        const yJit = (seedRand() - 0.5) * 1.2;
+        ringPts.push(new THREE.Vector3(Math.cos(t) * r, yJit, Math.sin(t) * r));
+      }
+      const ringGeom = new THREE.BufferGeometry().setFromPoints(ringPts);
+      const ring = new THREE.Points(
+        ringGeom,
+        new THREE.PointsMaterial({ color: 0x7ec4cf, size: 0.04, transparent: true, opacity: 0.65 })
+      );
+      scene.add(ring);
+
+      function mulberry32(a) {
+        return function () {
+          a |= 0;
+          a = (a + 0x6d2b79f5) | 0;
+          let t = a;
+          t = Math.imul(t ^ (t >>> 15), t | 1);
+          t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+
+      function renderAt(time) {
+        // time is HyperFrames composition time (root-relative).
+        // Scene 3 lives at [18, 32]. Use clamped local time so the geom is
+        // ready to render the moment the scene fades in.
+        const local = Math.max(0, Math.min(14, time - 18));
+        core.rotation.y = local * 0.55;
+        core.rotation.x = Math.sin(local * 0.42) * 0.22;
+        innerCore.rotation.y = -local * 0.40;
+        ring.rotation.y = -local * 0.18;
+        ring.rotation.z = Math.sin(local * 0.30) * 0.12;
+        renderer.render(scene, camera);
+      }
+
+      window.addEventListener("hf-seek", (e) => renderAt(e.detail.time));
+      renderAt(window.__hfThreeTime || 0);
+      })();
+    </script>
+
+    <!-- =============== Timeline (sync construction) =============== -->
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // ------- 0. Ambient atmospherics (run across whole comp) -------
+      tl.to("#g-ember", {
+        scale: 1.06, x: 60, y: -40,
+        duration: 30, ease: "sine.inOut",
+        yoyo: true, repeat: 1
+      }, 0);
+      tl.to("#g-cyan", {
+        scale: 1.08, x: -40, y: 30,
+        duration: 24, ease: "sine.inOut",
+        yoyo: true, repeat: 1
+      }, 0);
+
+      // ============================================================
+      // SCENE 1 — Kinetic typography (0–8s)
+      // ============================================================
+      tl.fromTo("#scene1 .label",
+        { x: -40, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.2);
+      tl.fromTo("#scene1 .bar",
+        { width: 0 },
+        { width: 80, duration: 0.6, ease: "expo.out" }, 0.3);
+
+      // Words enter staggered, varied directions per word.
+      tl.fromTo("#scene1 .hero .word",
+        { yPercent: 110, opacity: 0 },
+        {
+          yPercent: 0, opacity: 1,
+          duration: 0.55, ease: "power3.out",
+          stagger: { each: 0.08, from: "start" }
+        }, 0.4);
+
+      // Sub-copy: each line slides in
+      tl.fromTo("#scene1 .sub .strike",
+        { x: -20, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.4, ease: "power2.out", stagger: 0.08 }, 2.5);
+      tl.fromTo("#scene1 .sub .keep",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.55, ease: "back.out(1.4)" }, 3.1);
+
+      tl.fromTo("#scene1 .meta",
+        { x: 30, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 1.0);
+
+      // Tiny ambient pulse on the ember bar
+      tl.to("#scene1 .bar", { scaleX: 1.15, duration: 1.4, yoyo: true, repeat: 2, ease: "sine.inOut", transformOrigin: "left center" }, 2.0);
+
+      // ----- Transition 1→2 — Blur crossfade at t=7.6 (0.6s) -----
+      const T12 = 7.6;
+      tl.to("#scene1", { filter: "blur(12px)", scale: 1.03, opacity: 0, duration: 0.6, ease: "power2.inOut" }, T12);
+      tl.fromTo("#scene2",
+        { filter: "blur(12px)", scale: 0.97, opacity: 0 },
+        { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.6, ease: "power2.inOut" }, T12 + 0.08);
+      tl.set("#scene1", { opacity: 0, visibility: "hidden" }, T12 + 0.7);
+
+      // ============================================================
+      // SCENE 2 — HTML to video CSS-3D (8–18s)
+      // ============================================================
+      // Slab enters spinning from -110deg to land at -20deg, then rotates to +20 over scene.
+      tl.fromTo("#s2-slab",
+        { rotationY: -110, rotationX: 18, opacity: 0, z: -300 },
+        { rotationY: -20, rotationX: 8, opacity: 1, z: 0, duration: 1.4, ease: "expo.out" }, 8.4);
+      tl.to("#s2-slab",
+        { rotationY: 20, rotationX: -4, duration: 7, ease: "sine.inOut" }, 9.8);
+
+      // Code lines reveal slightly after slab lands (use child selector).
+      tl.fromTo("#scene2 .face.front > div",
+        { y: 18, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: "power2.out", stagger: 0.07 }, 9.0);
+
+      // Arrow + dashes
+      tl.fromTo("#s2-arrow",
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 11.2);
+      tl.fromTo("#scene2 .arrow .dash",
+        { width: 0 },
+        { width: 120, duration: 0.6, ease: "expo.out", stagger: 0.1 }, 11.3);
+
+      // Caption "A div is a scene." — slam-style
+      tl.fromTo("#s2-caption",
+        { y: 60, opacity: 0, scale: 0.9 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.5)" }, 11.6);
+
+      // Stack on right slides in
+      tl.fromTo("#s2-stack .item",
+        { x: 40, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.12 }, 12.4);
+
+      // ----- Transition 2→3 — Zoom through (velocity-matched) at t=17.5 -----
+      const T23 = 17.4;
+      tl.to("#scene2",
+        { scale: 1.5, filter: "blur(10px)", opacity: 0, duration: 0.45, ease: "power3.in" }, T23);
+      tl.fromTo("#scene3",
+        { scale: 0.6, filter: "blur(14px)", opacity: 0 },
+        { scale: 1, filter: "blur(0px)", opacity: 1, duration: 0.6, ease: "expo.out" }, T23 + 0.15);
+      tl.set("#scene2", { opacity: 0, visibility: "hidden" }, T23 + 0.8);
+
+      // ============================================================
+      // SCENE 3 — Three.js + orbiting chips (18–32s)
+      // ============================================================
+      tl.fromTo("#s3-hdr-l",
+        { x: -40, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 18.2);
+      tl.fromTo("#s3-hdr-r",
+        { x: 40, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 18.4);
+
+      // Three-canvas wrap scale-up from 0.6
+      tl.fromTo("#scene3 .three-wrap",
+        { scale: 0.6, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1.0, ease: "back.out(1.2)" }, 18.5);
+
+      // Subtle breathing on the WebGL wrap
+      tl.to("#scene3 .three-wrap",
+        { scale: 1.03, duration: 6, ease: "sine.inOut", yoyo: true, repeat: 1 }, 19.6);
+
+      // Six chips enter from different directions, staggered to narration of tech-stack words.
+      const chipEntries = [
+        { sel: "#s3-chip-0", t: 21.4, from: { x: -80, y: -40 } },
+        { sel: "#s3-chip-1", t: 22.0, from: { x: 80, y: -40 } },
+        { sel: "#s3-chip-2", t: 22.6, from: { x: 80, y: 0 } },
+        { sel: "#s3-chip-3", t: 23.2, from: { x: 60, y: 60 } },
+        { sel: "#s3-chip-4", t: 23.8, from: { x: -60, y: 60 } },
+        { sel: "#s3-chip-5", t: 24.4, from: { x: -80, y: 0 } },
+      ];
+      chipEntries.forEach(({ sel, t, from }) => {
+        tl.fromTo(sel,
+          { x: from.x, y: from.y, opacity: 0, scale: 0.85 },
+          { x: 0, y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, t);
+      });
+
+      // Gentle chip drift (different per chip)
+      chipEntries.forEach(({ sel }, i) => {
+        const dur = 5 + (i % 3) * 0.6;
+        tl.to(sel,
+          { y: i % 2 === 0 ? -8 : 8, duration: dur, ease: "sine.inOut", yoyo: true, repeat: 1 }, 25 + i * 0.1);
+      });
+
+      // Footer line typing-style — reveal text width
+      tl.fromTo("#s3-footer",
+        { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+        { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 1.4, ease: "power2.out" }, 27.0);
+      tl.to("#s3-footer .cursor",
+        { opacity: 0, duration: 0.18, yoyo: true, repeat: 12, ease: "steps(1)" }, 27.2);
+
+      // ----- Transition 3→4 — Blur crossfade at t=31.5 -----
+      const T34 = 31.4;
+      tl.to("#scene3", { filter: "blur(14px)", scale: 1.04, opacity: 0, duration: 0.55, ease: "power2.inOut" }, T34);
+      tl.fromTo("#scene4",
+        { filter: "blur(14px)", scale: 0.97, opacity: 0 },
+        { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.55, ease: "power2.inOut" }, T34 + 0.1);
+      tl.set("#scene3", { opacity: 0, visibility: "hidden" }, T34 + 0.7);
+
+      // ============================================================
+      // SCENE 4 — Counters (32–42s)
+      // ============================================================
+      tl.fromTo("#s4-hl",
+        { x: -50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 32.0);
+      tl.fromTo("#scene4 .header .hr",
+        { x: 30, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 32.2);
+      tl.fromTo("#scene4 .header",
+        { borderBottomColor: "rgba(26,27,38,0)" },
+        { borderBottomColor: "rgba(26,27,38,1)", duration: 0.6, ease: "power2.out" }, 32.3);
+
+      // Stat blocks cascade in
+      tl.fromTo("#scene4 .stat-block",
+        { y: 40, opacity: 0, scale: 0.96 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.3)", stagger: 0.12 }, 32.6);
+
+      // Counter values count up using gsap proxy + onUpdate
+      function countUp(sel, from, to, t, dur, fmt = (v) => Math.round(v)) {
+        const el = document.querySelector(sel);
+        if (!el) return;
+        const proxy = { v: from };
+        tl.to(proxy, {
+          v: to, duration: dur, ease: "power2.out",
+          onUpdate: function () { el.textContent = fmt(proxy.v); }
+        }, t);
+      }
+      countUp("#s4-v0", 0, 1, 33.1, 1.4);
+      countUp("#s4-v1", 0, 1800, 33.4, 2.0);
+      countUp("#s4-v2", 0, 100, 33.7, 1.8);
+      countUp("#s4-v3", 7, 0, 34.0, 1.6);
+
+      // Bar fills under each stat (proportional to value)
+      tl.fromTo("#s4-b0", { width: "0%" }, { width: "100%", duration: 2.4, ease: "power2.out" }, 33.1);
+      tl.fromTo("#s4-b1", { width: "0%" }, { width: "100%", duration: 2.6, ease: "power2.out" }, 33.4);
+      tl.fromTo("#s4-b2", { width: "0%" }, { width: "100%", duration: 2.4, ease: "power2.out" }, 33.7);
+      tl.fromTo("#s4-b3", { width: "100%" }, { width: "0%", duration: 2.0, ease: "power2.out" }, 34.0);
+
+      // Subtle highlight pulse on the "frameworks to learn" 0 — the punchline
+      tl.to("#scene4 .stat-block.s3 .value .num",
+        { color: "#FFB347", duration: 0.4, yoyo: true, repeat: 1, ease: "sine.inOut" }, 37.0);
+
+      // Ambient breathing on the BARS (not the blocks — would stack with entrance transform).
+      tl.to("#scene4 .stat-block .bar",
+        { scaleY: 1.6, duration: 3.5, ease: "sine.inOut", yoyo: true, repeat: 1, transformOrigin: "left center" }, 36.5);
+
+      // ----- Transition 4→5 — Blur crossfade at t=41.5 -----
+      const T45 = 41.4;
+      tl.to("#scene4", { filter: "blur(12px)", scale: 1.02, opacity: 0, duration: 0.55, ease: "power2.inOut" }, T45);
+      tl.fromTo("#scene5",
+        { filter: "blur(12px)", scale: 0.97, opacity: 0 },
+        { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.55, ease: "power2.inOut" }, T45 + 0.1);
+      tl.set("#scene4", { opacity: 0, visibility: "hidden" }, T45 + 0.7);
+
+      // ============================================================
+      // SCENE 5 — CTA (42–60s)
+      // ============================================================
+      tl.fromTo("#s5-eyebrow",
+        { y: -20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 42.2);
+
+      tl.fromTo("#s5-terminal",
+        { x: -40, opacity: 0, scale: 0.97 },
+        { x: 0, opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.2)" }, 42.5);
+
+      // Terminal typing — clip-path reveal on the wrapper. The text is
+      // baked into the HTML so any seek position produces a deterministic
+      // partial reveal. Width-clipping mimics char-by-char appearance.
+      tl.fromTo("#s5-typed-wrap",
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 1.5, ease: "steps(20)" },
+        43.0);
+      // Cursor blink (finite, ~14 cycles)
+      tl.to("#s5-cursor",
+        { opacity: 0, duration: 0.22, yoyo: true, repeat: 28, ease: "steps(1)" }, 43.0);
+
+      // HTML in / Video out — split reveal
+      tl.fromTo("#s5-pair > span:nth-child(1)",
+        { x: -60, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 45.2);
+      tl.fromTo("#s5-pair > span.small",
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 45.7);
+      tl.fromTo("#s5-pair > span.em",
+        { x: 60, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 46.0);
+
+      tl.fromTo("#s5-signoff",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 46.8);
+
+      tl.fromTo("#s5-logo",
+        { scale: 0.8, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.7, ease: "back.out(1.4)" }, 47.4);
+
+      // Final-scene-only EXIT animations (allowed per the rules).
+      tl.to("#scene5 .eyebrow", { opacity: 0, duration: 1.0, ease: "power2.in" }, 56.5);
+      tl.to("#scene5 .terminal", { opacity: 0.4, duration: 1.5, ease: "power2.in" }, 56.5);
+      tl.to("#scene5 .signoff", { opacity: 0, duration: 1.0, ease: "power2.in" }, 56.8);
+      tl.to("#scene5 .pair", { scale: 0.98, opacity: 0.85, duration: 1.8, ease: "power2.in" }, 56.5);
+      tl.to("#s5-logo", { scale: 1.05, duration: 1.5, ease: "power2.in" }, 56.8);
+      tl.to(["#g-ember", "#g-cyan"], { opacity: 0.5, duration: 2.0, ease: "power2.in" }, 57.5);
+
+      // ============================================================
+      // Captions track — built from transcript.json
+      // ============================================================
+      // Groups built at runtime; for determinism we hard-code the group
+      // boundaries here so the timeline is built synchronously without fetch.
+      // Each group: { text, start, end } — text uses emphasis markers
+      // for brand/punch words. Times are in seconds (root composition).
+
+      const CAPTION_GROUPS = [
+        // Scene 1 (~0–8s)
+        { t: 0.05, e: 0.95, html: "<span class=\"em\">HTML</span>" },
+        { t: 0.95, e: 2.4, html: "is the new" },
+        { t: 2.4, e: 3.4, html: "<span class=\"em\">video format</span>" },
+        { t: 3.4, e: 4.5, html: "Not a render queue" },
+        { t: 4.5, e: 5.6, html: "Not a frame buffer" },
+        { t: 5.6, e: 6.5, html: "Just markup" },
+        { t: 6.5, e: 7.2, html: "Just motion" },
+        // Scene 2 (~8–18s) — transition kills caption at 7.6, resume after
+        { t: 8.4, e: 9.5, html: "This is <span class=\"em\">HyperFrames</span>" },
+        { t: 9.5, e: 10.6, html: "A div becomes a scene" },
+        { t: 10.6, e: 12.3, html: "Data attributes are your <span class=\"em\">timeline</span>" },
+        { t: 12.3, e: 13.5, html: "CSS is your look" },
+        { t: 13.5, e: 15.0, html: "<span class=\"em\">GSAP</span> is your motion engine" },
+        // Scene 3 (~18–32s)
+        { t: 18.6, e: 20.4, html: "Anything the browser can render" },
+        { t: 20.4, e: 21.5, html: "becomes a frame in your video" },
+        { t: 21.7, e: 22.8, html: "<span class=\"em\">Three.js</span>" },
+        { t: 22.9, e: 23.8, html: "<span class=\"em\">Lottie</span>" },
+        { t: 23.9, e: 24.8, html: "CSS animations" },
+        { t: 24.9, e: 25.7, html: "<span class=\"em\">Shaders</span>" },
+        { t: 25.8, e: 26.6, html: "Real footage" },
+        { t: 26.8, e: 28.8, html: "they all compose together" },
+        { t: 28.9, e: 31.0, html: "in a single <span class=\"em\">HTML</span> file" },
+        // Scene 4 (~32–42s)
+        { t: 32.0, e: 33.2, html: "Type a script" },
+        { t: 33.3, e: 34.4, html: "Generate narration" },
+        { t: 34.5, e: 36.0, html: "Word-perfect <span class=\"em\">captions</span>" },
+        { t: 36.1, e: 37.3, html: "Render to <span class=\"em\">MP4</span>" },
+        { t: 37.4, e: 39.4, html: "Every frame, <span class=\"stat\">deterministic</span>" },
+        { t: 39.5, e: 40.8, html: "Every output, <span class=\"stat\">identical</span>" },
+        // Scene 5 (~42–55s)
+        { t: 42.6, e: 43.8, html: "No new framework" },
+        { t: 43.9, e: 45.0, html: "Just the platform" },
+        { t: 45.1, e: 46.3, html: "your <span class=\"em\">agent</span> already speaks" },
+        { t: 46.4, e: 48.0, html: "<span class=\"em\">npx hyperframes init</span>" },
+        { t: 48.1, e: 49.6, html: "Tell it what to make" },
+        { t: 49.7, e: 51.0, html: "Watch it <span class=\"em\">ship</span>" },
+        { t: 51.1, e: 52.4, html: "<span class=\"em\">HTML</span> in." },
+        { t: 52.5, e: 53.6, html: "<span class=\"em\">Video</span> out." },
+        { t: 53.7, e: 55.6, html: "Go make something." },
+      ];
+
+      const track = document.getElementById("caption-track");
+      CAPTION_GROUPS.forEach((g, i) => {
+        const el = document.createElement("div");
+        el.className = "caption-group";
+        el.id = "cap-" + i;
+        el.innerHTML = g.html;
+        track.appendChild(el);
+
+        // Entry — scale-pop + opacity
+        tl.fromTo("#cap-" + i,
+          { opacity: 0, scale: 0.94, y: 18 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(1.4)" }, g.t);
+
+        // Subtle ambient breath on each group while visible (yoyo within window)
+        const dwell = g.e - g.t - 0.22;
+        if (dwell > 0.4) {
+          tl.to("#cap-" + i, { scale: 1.02, duration: dwell, ease: "sine.inOut" }, g.t + 0.22);
+        }
+
+        // Exit — fade out + hard kill
+        tl.to("#cap-" + i,
+          { opacity: 0, scale: 0.95, y: -8, duration: 0.18, ease: "power2.in" }, g.e - 0.18);
+        tl.set("#cap-" + i, { opacity: 0, visibility: "hidden" }, g.e);
+      });
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
