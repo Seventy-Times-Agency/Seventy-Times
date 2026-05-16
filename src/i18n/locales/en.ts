@@ -245,7 +245,7 @@ const strings = {
       "First leads from ads — 3–7 days after launch. The AI bot works from day one. Full system optimisation — by the end of 90 days.",
     faq5q: "What if I want to leave?",
     faq5a:
-      "The minimum term is in the contract (3–6 months depending on the package). Yes, you can leave earlier. But a refund of fees already paid is discussed individually — the final call stays with us and depends on how much time and money have already been put into the project and the reason for the early exit. The 90-day launch guarantee (50% setup back if we miss the launch) is a separate commitment and stands no matter what.",
+      "Each package has a minimum term in the contract (3–6 months depending on the tier), and after that it's month-to-month with 30-day notice. You can pause or stop earlier — refunds on fees already paid are handled case-by-case based on how far the work has progressed. Separately, the 90-day launch guarantee always stands: if we miss the launch deadline, 50% of the setup fee comes back, no questions.",
     faq6q: "How much time do I have to spend?",
     faq6a:
       "2–4 hours per week at the start: briefing, materials, approvals. After launch — 30 minutes per week for reports and decisions on edge cases.",
@@ -512,6 +512,12 @@ const strings = {
     leadPackageLaunch: "LAUNCH — starting from zero",
     leadPackageGrowth: "GROWTH ⭐ — growing business",
     leadPackageScale: "SCALE — serious scale",
+    leadBudget: "Monthly budget (rough)",
+    leadBudgetNotSure: "Not sure yet",
+    leadBudgetUnder1k: "Under $1,000 / mo",
+    leadBudget1k3k: "$1,000–3,000 / mo",
+    leadBudget3k10k: "$3,000–10,000 / mo",
+    leadBudget10kPlus: "$10,000+ / mo",
 
     // Chat widget
     chatGreeting:

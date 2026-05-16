@@ -16,6 +16,7 @@ import {
   LEAD_MODE_KEY,
   readLeadDraft,
   writeLeadDraft,
+  type LeadBudget,
   type LeadPackage,
 } from "@/lib/leadDraft";
 import styles from "@/components/overlays/forms/LeadForm.module.css";
@@ -28,6 +29,7 @@ const INITIAL = {
   business: "",
   request: "",
   package: "not_sure" as LeadPackage,
+  budget: "not_sure" as LeadBudget,
   // Honeypot: a field real users never see. Bots fill every input they find.
   website: "",
 };
@@ -81,8 +83,9 @@ export default function LeadForm() {
       business: fields.business,
       request: fields.request,
       package: fields.package,
+      budget: fields.budget,
     });
-  }, [hydrated, fields.name, fields.contact, fields.business, fields.request, fields.package]);
+  }, [hydrated, fields.name, fields.contact, fields.business, fields.request, fields.package, fields.budget]);
 
   // Persist the user's chosen form mode.
   useEffect(() => {
@@ -142,6 +145,9 @@ export default function LeadForm() {
 
   const setPackage = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setFields((prev) => ({ ...prev, package: e.target.value as LeadPackage }));
+
+  const setBudget = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setFields((prev) => ({ ...prev, budget: e.target.value as LeadBudget }));
 
   // Track how many of the four required fields are filled, for the
   // progress bar at the top of the modal.
@@ -204,6 +210,7 @@ export default function LeadForm() {
           business,
           request,
           package: fields.package,
+          budget: fields.budget,
           website: fields.website,
         }),
       });
@@ -453,6 +460,21 @@ export default function LeadForm() {
                           <option value="standalone">{t.leadPackageStandalone}</option>
                         </select>
                       </label>
+
+                      <label className={styles.field}>
+                        <span className={styles.label}>{t.leadBudget}</span>
+                        <select
+                          className={styles.input}
+                          value={fields.budget}
+                          onChange={setBudget}
+                        >
+                          <option value="not_sure">{t.leadBudgetNotSure}</option>
+                          <option value="under_1k">{t.leadBudgetUnder1k}</option>
+                          <option value="1k_3k">{t.leadBudget1k3k}</option>
+                          <option value="3k_10k">{t.leadBudget3k10k}</option>
+                          <option value="10k_plus">{t.leadBudget10kPlus}</option>
+                        </select>
+                      </label>
                     </>
                   )}
 
@@ -478,6 +500,7 @@ export default function LeadForm() {
                           checked={consent}
                           onChange={(e) => setConsent(e.target.checked)}
                           required
+                          aria-required="true"
                         />
                         <span>
                           {t.consentPrefix}
@@ -494,7 +517,11 @@ export default function LeadForm() {
                     </>
                   )}
 
-                  {error && <div className={styles.error}>{error}</div>}
+                  {error && (
+                    <div className={styles.error} role="alert" aria-live="polite">
+                      {error}
+                    </div>
+                  )}
 
                   <div className={styles.actions}>
                     {mode === "steps" && step > 0 && (

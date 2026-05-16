@@ -4,6 +4,7 @@ type LocaleMeta = {
   description: string;
   keywords: string[];
   ogLocale: string;
+  ogImageAlt: string;
 };
 
 const META: Record<Locale, LocaleMeta> = {
@@ -23,6 +24,8 @@ const META: Record<Locale, LocaleMeta> = {
       "Claude AI",
     ],
     ogLocale: "en_US",
+    ogImageAlt:
+      "Seventy Times — ads, automation and AI bots assembled into one growth machine.",
   },
   ru: {
     description:
@@ -41,6 +44,8 @@ const META: Record<Locale, LocaleMeta> = {
       "Claude",
     ],
     ogLocale: "ru_RU",
+    ogImageAlt:
+      "Seventy Times — реклама, автоматизация и AI-боты, собранные в одну машину роста.",
   },
   de: {
     description:
@@ -58,6 +63,8 @@ const META: Record<Locale, LocaleMeta> = {
       "Claude KI",
     ],
     ogLocale: "de_DE",
+    ogImageAlt:
+      "Seventy Times — Werbung, Automatisierung und KI-Bots als eine Wachstumsmaschine.",
   },
   uk: {
     description:
@@ -76,6 +83,8 @@ const META: Record<Locale, LocaleMeta> = {
       "Claude",
     ],
     ogLocale: "uk_UA",
+    ogImageAlt:
+      "Seventy Times — реклама, автоматизація та AI-боти, зібрані в одну машину росту.",
   },
 };
 
@@ -146,22 +155,22 @@ const ABOUT: Record<Locale, LegalMeta> = {
   en: {
     title: "About — Seventy Times",
     description:
-      "Who's behind Seventy Times — the team, the principles, and how we built the agency.",
+      "Who's behind Seventy Times: a remote-first AI + performance marketing studio that assembles ads, automation and AI bots into one growth machine for ambitious businesses.",
   },
   ru: {
     title: "О нас — Seventy Times",
     description:
-      "Кто стоит за Seventy Times — команда, принципы и как мы выстраивали агентство.",
+      "Кто стоит за Seventy Times: распределённая команда AI и performance-маркетинга, которая собирает рекламу, автоматизацию и AI-ботов в единую машину роста для амбициозного бизнеса.",
   },
   de: {
     title: "Über uns — Seventy Times",
     description:
-      "Wer hinter Seventy Times steht — das Team, die Prinzipien und wie wir die Agentur aufgebaut haben.",
+      "Wer hinter Seventy Times steht: ein verteiltes KI- und Performance-Marketing-Studio, das Werbung, Automatisierung und KI-Bots zu einer Wachstumsmaschine für ambitionierte Unternehmen verbindet.",
   },
   uk: {
     title: "Про нас — Seventy Times",
     description:
-      "Хто стоїть за Seventy Times — команда, принципи і як ми вибудовували агентство.",
+      "Хто стоїть за Seventy Times: розподілена команда AI та performance-маркетингу, що збирає рекламу, автоматизацію та AI-ботів у єдину машину росту для амбітного бізнесу.",
   },
 };
 

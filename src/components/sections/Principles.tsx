@@ -128,14 +128,17 @@ export default function Principles() {
           {/* Static glow filter — applied once at SVG-paint time instead
               of a per-frame CSS `drop-shadow`. The animated traveller
               and pulse nodes reference this filter so they don't keep
-              re-rasterising glow on every animation tick. */}
+              re-rasterising glow on every animation tick. userSpaceOnUse
+              with explicit pixel coords avoids a Safari quirk where
+              objectBoundingBox + non-scaling-stroke can clip the
+              filter region. */}
           <filter
             id="principles-glow"
-            x="-60%"
-            y="-60%"
-            width="220%"
-            height="220%"
-            filterUnits="objectBoundingBox"
+            filterUnits="userSpaceOnUse"
+            x="-10"
+            y="-10"
+            width="120"
+            height="120"
           >
             <feGaussianBlur stdDeviation="0.9" />
           </filter>

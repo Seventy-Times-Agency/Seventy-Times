@@ -15,18 +15,33 @@ export type LeadPackage =
   | "growth"
   | "scale";
 
+export type LeadBudget =
+  | "not_sure"
+  | "under_1k"
+  | "1k_3k"
+  | "3k_10k"
+  | "10k_plus";
+
 export type LeadDraft = {
   name: string;
   contact: string;
   business: string;
   request: string;
   package: LeadPackage;
+  budget: LeadBudget;
 };
 
 export function isLeadPackage(v: unknown): v is LeadPackage {
   return (
     typeof v === "string" &&
     ["not_sure", "standalone", "launch", "growth", "scale"].includes(v)
+  );
+}
+
+export function isLeadBudget(v: unknown): v is LeadBudget {
+  return (
+    typeof v === "string" &&
+    ["not_sure", "under_1k", "1k_3k", "3k_10k", "10k_plus"].includes(v)
   );
 }
 
@@ -42,6 +57,7 @@ export function readLeadDraft(): LeadDraft | null {
       business: typeof parsed.business === "string" ? parsed.business : "",
       request: typeof parsed.request === "string" ? parsed.request : "",
       package: isLeadPackage(parsed.package) ? parsed.package : "not_sure",
+      budget: isLeadBudget(parsed.budget) ? parsed.budget : "not_sure",
     };
   } catch {
     return null;
@@ -55,7 +71,8 @@ export function writeLeadDraft(draft: LeadDraft): void {
       !draft.contact &&
       !draft.business &&
       !draft.request &&
-      draft.package === "not_sure";
+      draft.package === "not_sure" &&
+      draft.budget === "not_sure";
     if (empty) {
       window.localStorage.removeItem(LEAD_DRAFT_KEY);
     } else {

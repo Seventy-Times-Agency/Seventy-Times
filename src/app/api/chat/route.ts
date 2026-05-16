@@ -126,7 +126,15 @@ export async function POST(req: Request) {
 
   const stream = new ReadableStream({
     async start(controller) {
+      // If the client disconnects mid-stream we tear the upstream
+      // request down too, so we don't keep paying Anthropic to
+      // generate tokens nobody will read.
+      const upstreamController = new AbortController();
+      const onClientAbort = () => upstreamController.abort();
+      req.signal.addEventListener("abort", onClientAbort);
+
       const send = (payload: unknown) => {
+        if (req.signal.aborted) return;
         controller.enqueue(
           encoder.encode(JSON.stringify(payload) + "\n"),
         );
@@ -136,15 +144,19 @@ export async function POST(req: Request) {
       let success = false;
 
       try {
-        const upstream = await client.messages.stream({
-          model,
-          max_tokens: 1500,
-          temperature: 0.7,
-          system: getSystemPrompt(locale),
-          messages,
-        });
+        const upstream = await client.messages.stream(
+          {
+            model,
+            max_tokens: 1500,
+            temperature: 0.7,
+            system: getSystemPrompt(locale),
+            messages,
+          },
+          { signal: upstreamController.signal },
+        );
 
         for await (const event of upstream) {
+          if (req.signal.aborted) break;
           if (
             event.type === "content_block_delta" &&
             event.delta.type === "text_delta"
@@ -154,15 +166,28 @@ export async function POST(req: Request) {
           }
         }
 
-        success = true;
-        send({ done: true });
+        if (!req.signal.aborted) {
+          success = true;
+          send({ done: true });
+        }
       } catch (error) {
-        const status =
-          error instanceof Anthropic.APIError ? error.status : "network";
-        console.error("[CHAT] upstream error", { status });
-        send({ error: "UPSTREAM_ERROR" });
+        // A client-disconnect abort surfaces here as well — that's
+        // expected, not an "upstream error", so don't log it noisily.
+        if (req.signal.aborted) {
+          // user closed the tab / left the page — silent
+        } else {
+          const status =
+            error instanceof Anthropic.APIError ? error.status : "network";
+          console.error("[CHAT] upstream error", { status });
+          send({ error: "UPSTREAM_ERROR" });
+        }
       } finally {
-        controller.close();
+        req.signal.removeEventListener("abort", onClientAbort);
+        try {
+          controller.close();
+        } catch {
+          // controller may already be closed if the client aborted
+        }
 
         // Log the turn fire-and-forget so the response time the user
         // sees doesn't include a Notion roundtrip. Skip on errors so we

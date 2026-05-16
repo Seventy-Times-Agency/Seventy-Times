@@ -93,7 +93,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <a href="#top" className="skipLink">
+        <a href="#main-content" className="skipLink">
           Skip to content
         </a>
         <SmoothScroll />
