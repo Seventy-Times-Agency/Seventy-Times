@@ -43,6 +43,9 @@ const strings = {
     svcExpand: "Детальніше",
     svcCollapse: "Згорнути",
     svcReadMore: "Детальніше про послугу",
+    svcCustomLabel: "Також під запит",
+    svcCustomBody:
+      "Нативні iOS / Android-додатки та інші нестандартні проєкти — обговорюємо індивідуально з нашими мобільними розробниками.",
     svcDetailPrimaryCta: "Запустити проєкт",
     svcDetailSecondaryCta: "Дивитися кейси",
     svcDetailRelatedTitle: "Інші послуги",

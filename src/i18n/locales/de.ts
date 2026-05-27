@@ -43,6 +43,9 @@ const strings = {
     svcExpand: "Details",
     svcCollapse: "Einklappen",
     svcReadMore: "Mehr zu dieser Leistung",
+    svcCustomLabel: "Auch auf Anfrage",
+    svcCustomBody:
+      "Native iOS- / Android-Apps und weitere Sonderprojekte — pro Projekt geplant zusammen mit unseren Mobile-Entwicklern.",
     svcDetailPrimaryCta: "Projekt starten",
     svcDetailSecondaryCta: "Projekte ansehen",
     svcDetailRelatedTitle: "Weitere Leistungen",

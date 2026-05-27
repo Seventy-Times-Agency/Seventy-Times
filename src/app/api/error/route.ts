@@ -29,6 +29,11 @@ type ErrorPayload = {
 };
 
 const MAX_FIELD = 2000;
+// Chunk-load failures are an artefact of stale deploys (the user's
+// browser holds HTML that references chunk hashes the new build replaced).
+// The client auto-reloads to recover; we drop them here so they don't
+// page anyone via Telegram. Still logged so trends remain visible in Vercel.
+const CHUNK_ERROR_RE = /ChunkLoadError|Loading chunk [^ ]+ failed/i;
 
 function clean(value: unknown): string | undefined {
   if (typeof value !== "string") return undefined;
@@ -98,16 +103,19 @@ export async function POST(req: Request) {
   };
 
   const sig = signature(payload);
+  const isChunkError = CHUNK_ERROR_RE.test(payload.message);
   console.error("[CLIENT_ERROR]", {
     at: new Date().toISOString(),
     ip,
     sig,
+    chunk: isChunkError || undefined,
     ...payload,
   });
 
   // One Telegram ping per signature per hour. Suppresses storms when
-  // a single visitor reloads a broken page.
-  if (isFirstSeen(`error-sig:${sig}`, 60 * 60_000)) {
+  // a single visitor reloads a broken page. Chunk-load failures are
+  // skipped entirely — they're recoverable and not actionable.
+  if (!isChunkError && isFirstSeen(`error-sig:${sig}`, 60 * 60_000)) {
     await notifyTelegram(payload, sig);
   }
 

@@ -86,6 +86,13 @@ export default function Services() {
         ))}
       </div>
 
+      <Reveal delay={0.1}>
+        <p className={styles.customNote}>
+          <span className={styles.customNoteLabel}>{t.svcCustomLabel}</span>
+          <span className={styles.customNoteBody}>{t.svcCustomBody}</span>
+        </p>
+      </Reveal>
+
       <AnimatePresence initial={false}>
         {activeService && (
           <motion.div
