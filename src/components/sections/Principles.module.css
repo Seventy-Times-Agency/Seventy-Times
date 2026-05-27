@@ -403,7 +403,7 @@
 }
 
 @media (max-width: 640px) {
-  .wrap { padding: 0 20px 12px 32px; }
-  .card { padding: 22px 20px 20px; }
-  .node { font-size: 56px; }
+  .wrap { padding: 0 18px 10px 26px; }
+  .card { padding: 18px 16px 16px; }
+  .node { font-size: 48px; }
 }

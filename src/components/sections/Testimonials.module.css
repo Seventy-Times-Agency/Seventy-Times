@@ -296,32 +296,32 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 56px 0 48px;
+    padding: 40px 0 32px;
   }
   .header {
-    padding: 0 20px 28px;
+    padding: 0 18px 22px;
   }
   .title {
-    font-size: clamp(28px, 8vw, 44px);
+    font-size: clamp(26px, 7.5vw, 38px);
   }
   .track {
-    padding: 4px 20px 24px;
-    gap: 14px;
+    padding: 4px 18px 20px;
+    gap: 12px;
   }
   .card {
-    flex: 0 0 calc(100vw - 56px);
-    padding: 30px 24px 26px;
+    flex: 0 0 calc(100vw - 52px);
+    padding: 24px 20px 22px;
   }
   .quote {
-    font-size: 15px;
+    font-size: 14.5px;
   }
   .controls {
-    padding: 0 20px;
-    gap: 16px;
+    padding: 0 18px;
+    gap: 14px;
   }
   .navBtn {
-    width: 42px;
-    height: 42px;
-    font-size: 16px;
+    width: 38px;
+    height: 38px;
+    font-size: 15px;
   }
 }

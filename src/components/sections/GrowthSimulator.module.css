@@ -426,17 +426,17 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 56px 20px 48px;
+    padding: 40px 18px 36px;
   }
   .pillar {
-    padding: 22px 20px 20px;
+    padding: 18px 16px 16px;
   }
   .result {
-    padding: 26px 22px;
+    padding: 22px 18px;
   }
   .compareLine {
-    grid-template-columns: 80px 1fr auto;
-    gap: 10px;
+    grid-template-columns: 76px 1fr auto;
+    gap: 8px;
   }
   .step {
     font-size: 10px;

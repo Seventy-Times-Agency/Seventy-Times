@@ -456,14 +456,14 @@
 
 @media (max-width: 900px) {
   .section {
-    padding: 56px 20px 48px;
+    padding: 44px 18px 36px;
   }
   .header {
     grid-template-columns: 1fr;
-    gap: 22px;
+    gap: 16px;
     align-items: start;
-    margin-bottom: 36px;
-    padding-bottom: 24px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
   }
   .headerRight {
     align-items: flex-start;
@@ -471,13 +471,31 @@
   }
   .lead {
     max-width: none;
+    font-size: 14.5px;
   }
   .title {
-    font-size: clamp(32px, 8vw, 56px);
+    font-size: clamp(28px, 8vw, 44px);
   }
   .guarantee {
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
+    padding: 16px 18px;
+    margin-top: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 36px 14px 32px;
+  }
+  .grid {
+    gap: 14px;
+  }
+  .card {
+    padding: 22px 20px 20px;
+  }
+  .cardTitle {
+    font-size: 20px;
   }
 }

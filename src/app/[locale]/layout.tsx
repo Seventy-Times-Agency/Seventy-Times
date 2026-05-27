@@ -10,7 +10,6 @@ import {
 } from "@/i18n/config";
 import { I18nProvider } from "@/i18n/context";
 import HtmlLangSync from "@/i18n/HtmlLangSync";
-import PageIntro from "@/components/overlays/PageIntro";
 import ClientOverlays from "@/components/overlays/ClientOverlays";
 
 // Statically pre-render every supported locale at build time.
@@ -103,7 +102,6 @@ export default async function LocaleLayout(
   return (
     <I18nProvider locale={locale}>
       <HtmlLangSync />
-      <PageIntro />
       {children}
       <ClientOverlays />
     </I18nProvider>
