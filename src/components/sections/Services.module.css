@@ -481,13 +481,51 @@
     align-items: flex-start;
     text-align: left;
   }
+  /* 2x2 on phones — denser than a single tall column and reads as a
+     grid of "what we do" tiles rather than a vertical list. */
   .grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
   .card {
-    min-height: auto;
-    padding: 20px 18px 16px;
+    min-height: 168px;
+    padding: 16px 14px 14px;
+  }
+  /* Strip the descriptive tagline + "also" pill on mobile — the icon
+     + title carry the meaning, the rest is decorative noise that
+     pushes the toggle row off-screen. */
+  .tagline,
+  .note {
+    display: none;
+  }
+  .cardTitle {
+    font-size: 16px;
+    line-height: 1.15;
+  }
+  .cardHead {
+    margin-bottom: 10px;
+  }
+  .cardNum {
+    font-size: 9.5px;
+  }
+  .iconBox {
+    width: 32px;
+    height: 32px;
+  }
+  .iconSvg {
+    width: 18px;
+    height: 18px;
+  }
+  .toggleRow {
+    padding-top: 12px;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    gap: 6px;
+  }
+  .toggleArrow {
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
   }
   .detailsInner {
     padding: 24px 22px;

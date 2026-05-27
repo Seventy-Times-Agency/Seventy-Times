@@ -167,23 +167,38 @@
     text-align: left;
     font-size: 14.5px;
   }
+  /* 2x2 numbered tiles. Drop the long description — number + duration
+     + title carry the meaning, and the rest is editorial flourish that
+     only works at desktop reading widths. */
   .grid {
-    grid-template-columns: 1fr;
-    gap: 26px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
   }
   .step {
-    padding: 0;
-    gap: 12px;
+    padding: 18px 14px 16px;
+    gap: 10px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.015);
+  }
+  .step:hover {
+    transform: none;
   }
   .numberWrap {
-    width: 56px;
-    height: 56px;
-    font-size: 18px;
+    width: 44px;
+    height: 44px;
+    font-size: 15px;
+    border-width: 1px;
+  }
+  .duration {
+    font-size: 9px;
+    letter-spacing: 0.16em;
   }
   .stepTitle {
-    font-size: 19px;
+    font-size: 15px;
+    line-height: 1.2;
   }
   .stepDesc {
-    font-size: 13.5px;
+    display: none;
   }
 }

@@ -485,6 +485,22 @@
   }
 }
 
+@media (max-width: 900px) {
+  /* Drop the descriptive sub-line and the small "INCLUDES" label —
+     the title + the checklist already say what's in the package. */
+  .cardSub,
+  .cardListLabel {
+    display: none;
+  }
+  .cardListItem {
+    font-size: 13px;
+    gap: 8px;
+  }
+  .cardList {
+    gap: 7px;
+  }
+}
+
 @media (max-width: 480px) {
   .section {
     padding: 36px 14px 32px;
@@ -493,7 +509,7 @@
     gap: 14px;
   }
   .card {
-    padding: 22px 20px 20px;
+    padding: 20px 18px 18px;
   }
   .cardTitle {
     font-size: 20px;
