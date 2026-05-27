@@ -12,6 +12,7 @@ import {
   WhatsAppIcon,
   InstagramIcon,
   FacebookIcon,
+  LinkedInIcon,
 } from "@/components/ui/ContactIcons";
 import styles from "@/components/sections/CTA.module.css";
 
@@ -48,6 +49,12 @@ export default function CTA() {
       icon: FacebookIcon,
       handle: siteConfig.contacts.facebook.handle,
       url: siteConfig.contacts.facebook.url,
+    },
+    {
+      name: "LinkedIn",
+      icon: LinkedInIcon,
+      handle: siteConfig.contacts.linkedin.handle,
+      url: siteConfig.contacts.linkedin.url,
     },
   ];
 

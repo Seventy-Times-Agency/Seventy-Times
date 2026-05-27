@@ -428,19 +428,92 @@
   .section {
     padding: 40px 18px 36px;
   }
-  .pillar {
-    padding: 18px 16px 16px;
+
+  /* ── Pillar tile — denser, less ceremony ─────────────── */
+  .pillars {
+    gap: 12px;
+    margin-bottom: 22px;
   }
+  .pillar {
+    padding: 16px 14px 14px;
+    gap: 12px;
+  }
+  .pillarHead {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .pillarTag {
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+  }
+  .pillarName {
+    font-size: 17px;
+  }
+  /* The "HOW MANY PAID CHANNELS WE RUN" sub-line restates the
+     pillar name in caps — pure noise on a phone. */
+  .pillarDesc {
+    display: none;
+  }
+
+  /* Segmented control: short labels, more touch height. */
+  .steps {
+    gap: 2px;
+    padding: 3px;
+  }
+  .step {
+    font-size: 9.5px;
+    padding: 9px 0;
+    letter-spacing: 0.04em;
+  }
+
+  /* Selected block: drop the "WHAT'S INCLUDED" / "GROWTH
+     CONTRIBUTION" labels, keep the description + percentage in one
+     compact row. */
+  .selectedBlock {
+    padding: 12px 14px;
+    min-height: 0;
+    gap: 6px;
+  }
+  .selectedLabel,
+  .contributionLabel {
+    display: none;
+  }
+  .selectedDesc {
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+  .selectedContribution {
+    padding-top: 8px;
+    margin-top: 2px;
+  }
+  .contributionValue {
+    font-size: 18px;
+  }
+
+  /* ── Formula strip — keep the "× × ×" desc, drop the label ── */
+  .formula {
+    padding: 12px 14px;
+    gap: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+  .formulaLabel {
+    display: none;
+  }
+  .formulaDesc {
+    font-size: 12px;
+  }
+
+  /* ── Result panel — tighter ───────────────────────────── */
   .result {
     padding: 22px 18px;
+    gap: 22px;
   }
   .compareLine {
     grid-template-columns: 76px 1fr auto;
     gap: 8px;
-  }
-  .step {
-    font-size: 10px;
-    padding: 9px 2px;
-    letter-spacing: 0.04em;
   }
 }

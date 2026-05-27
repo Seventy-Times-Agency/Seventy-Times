@@ -48,6 +48,7 @@ const organizationJsonLd = {
         siteConfig.contacts.telegram.url,
         siteConfig.contacts.instagram.url,
         siteConfig.contacts.facebook.url,
+        siteConfig.contacts.linkedin.url,
         siteConfig.contacts.whatsapp.url,
       ],
       contactPoint: [
