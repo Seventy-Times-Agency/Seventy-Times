@@ -12,6 +12,9 @@ import { useEffect } from "react";
  */
 const SEND_INTERVAL_MS = 5000;
 const MAX_PER_SESSION = 20;
+// Stale-deploy chunk failures are recoverable by reload and not actionable
+// from server logs — drop them before they reach the wire.
+const CHUNK_ERROR_RE = /ChunkLoadError|Loading chunk [^ ]+ failed/i;
 
 export default function ErrorReporter() {
   useEffect(() => {
@@ -43,6 +46,7 @@ export default function ErrorReporter() {
     };
 
     const onError = (e: ErrorEvent) => {
+      if (CHUNK_ERROR_RE.test(e.message ?? "")) return;
       send({
         message: e.message,
         source: e.filename,
@@ -54,13 +58,15 @@ export default function ErrorReporter() {
 
     const onRejection = (e: PromiseRejectionEvent) => {
       const reason = e.reason;
+      const message =
+        reason instanceof Error
+          ? reason.message
+          : typeof reason === "string"
+            ? reason
+            : "Unhandled promise rejection";
+      if (CHUNK_ERROR_RE.test(message)) return;
       send({
-        message:
-          reason instanceof Error
-            ? reason.message
-            : typeof reason === "string"
-              ? reason
-              : "Unhandled promise rejection",
+        message,
         stack: reason instanceof Error ? reason.stack : undefined,
       });
     };

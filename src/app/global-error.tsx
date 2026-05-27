@@ -2,6 +2,15 @@
 
 import { useEffect } from "react";
 
+// A stale Vercel deploy leaves the previous HTML referencing chunk URLs
+// whose hashed filenames no longer exist on the new build. The user
+// can't fix this — but a single hard reload pulls the fresh entry HTML
+// and resolves it transparently. Match webpack's ChunkLoadError and the
+// generic "Loading chunk N failed" string Next.js surfaces.
+const CHUNK_ERROR_RE = /ChunkLoadError|Loading chunk [^ ]+ failed/i;
+const RELOAD_GUARD_KEY = "st-chunk-reload-at";
+const RELOAD_COOLDOWN_MS = 30_000;
+
 /**
  * Last-resort error boundary for catastrophic render failures.
  * Replaces the entire page (so it must define its own <html> /
@@ -16,6 +25,32 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
+    const isChunkError = CHUNK_ERROR_RE.test(error.message ?? "");
+
+    if (isChunkError && typeof window !== "undefined") {
+      // Guard against an infinite reload loop if the chunk is genuinely
+      // gone (e.g. CDN problem rather than a redeploy).
+      let last = 0;
+      try {
+        last = Number(sessionStorage.getItem(RELOAD_GUARD_KEY) ?? "0");
+      } catch {
+        // sessionStorage can throw in privacy modes — fall through.
+      }
+      if (Date.now() - last > RELOAD_COOLDOWN_MS) {
+        try {
+          sessionStorage.setItem(RELOAD_GUARD_KEY, String(Date.now()));
+        } catch {
+          // ignore
+        }
+        window.location.reload();
+        return;
+      }
+      // Already reloaded once in the last 30s and it still failed —
+      // skip the alert (it's not actionable from our side) and show
+      // the static error UI so the user has a way out.
+      return;
+    }
+
     try {
       fetch("/api/error", {
         method: "POST",

@@ -1,12 +1,12 @@
-export type Locale = "ru" | "en" | "de" | "uk";
+export type Locale = "ru" | "en" | "de" | "ua";
 
-export const LOCALES: Locale[] = ["en", "ru", "de", "uk"];
+export const LOCALES: Locale[] = ["en", "ru", "de", "ua"];
 
 export const LOCALE_LABELS: Record<Locale, string> = {
   en: "EN",
   ru: "RU",
   de: "DE",
-  uk: "UA",
+  ua: "UA",
 };
 
 export const DEFAULT_LOCALE: Locale = "en";

@@ -2,7 +2,7 @@ import type { Locale } from "./config";
 import ru from "./locales/ru";
 import en from "./locales/en";
 import de from "./locales/de";
-import uk from "./locales/uk";
+import ua from "./locales/ua";
 
 /**
  * Full UI dictionary. Each locale file lives in `./locales/<code>.ts`
@@ -12,7 +12,7 @@ import uk from "./locales/uk";
  * locales must keep the same shape, otherwise TypeScript will surface
  * the mismatch at build time.
  */
-const dict = { ru, en, de, uk } as const;
+const dict = { ru, en, de, ua } as const;
 
 export type Dictionary = typeof ru;
 

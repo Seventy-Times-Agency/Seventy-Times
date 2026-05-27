@@ -109,9 +109,9 @@ export async function POST(req: Request) {
       : null;
   const cookieMatch = req.headers
     .get("cookie")
-    ?.match(/(?:^|;\s*)lang=(en|ru|de)/);
+    ?.match(/(?:^|;\s*)lang=(en|ru|de|ua)/);
   const locale =
-    typeof rawLocale === "string" && /^(en|ru|de)$/.test(rawLocale)
+    typeof rawLocale === "string" && /^(en|ru|de|ua)$/.test(rawLocale)
       ? rawLocale
       : (cookieMatch?.[1] ?? "en");
 

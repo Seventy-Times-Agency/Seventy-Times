@@ -1,4 +1,4 @@
-// Ukrainian (uk) UI strings for Seventy Times
+// Ukrainian (ua) UI strings for Seventy Times
 // Auto-split from a single dictionary; edit this file to change strings
 // for the corresponding language. See src/i18n/dictionary.ts for the
 // shape and language-switch logic.
@@ -43,6 +43,9 @@ const strings = {
     svcExpand: "Детальніше",
     svcCollapse: "Згорнути",
     svcReadMore: "Детальніше про послугу",
+    svcCustomLabel: "Також під запит",
+    svcCustomBody:
+      "Нативні iOS / Android-додатки та інші нестандартні проєкти — обговорюємо індивідуально з нашими мобільними розробниками.",
     svcDetailPrimaryCta: "Запустити проєкт",
     svcDetailSecondaryCta: "Дивитися кейси",
     svcDetailRelatedTitle: "Інші послуги",

@@ -56,7 +56,7 @@ const organizationJsonLd = {
           contactType: "customer support",
           email: siteConfig.contacts.email.address,
           telephone: siteConfig.contacts.phone.raw,
-          availableLanguage: ["en", "ru", "de", "uk"],
+          availableLanguage: ["en", "ru", "de", "ua"],
         },
       ],
     },
@@ -66,7 +66,7 @@ const organizationJsonLd = {
       url: siteConfig.url,
       name: siteConfig.name,
       publisher: { "@id": ORG_ID },
-      inLanguage: ["en", "ru", "de", "uk"],
+      inLanguage: ["en", "ru", "de", "ua"],
     },
   ],
 };

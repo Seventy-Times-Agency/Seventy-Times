@@ -43,6 +43,9 @@ const strings = {
     svcExpand: "Подробнее",
     svcCollapse: "Свернуть",
     svcReadMore: "Подробнее об услуге",
+    svcCustomLabel: "Также под запрос",
+    svcCustomBody:
+      "Нативные iOS / Android приложения и другие нестандартные проекты — обсуждаем индивидуально с нашими мобильными разработчиками.",
     svcDetailPrimaryCta: "Запустить проект",
     svcDetailSecondaryCta: "Смотреть кейсы",
     svcDetailRelatedTitle: "Другие услуги",

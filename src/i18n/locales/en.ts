@@ -43,6 +43,9 @@ const strings = {
     svcExpand: "Details",
     svcCollapse: "Collapse",
     svcReadMore: "Read more about this service",
+    svcCustomLabel: "Also on request",
+    svcCustomBody:
+      "Native iOS / Android apps and other custom builds — scoped per project with our mobile devs.",
     svcDetailPrimaryCta: "Start a project",
     svcDetailSecondaryCta: "See cases",
     svcDetailRelatedTitle: "Other services",
