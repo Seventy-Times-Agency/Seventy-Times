@@ -66,7 +66,7 @@ const META: Record<Locale, LocaleMeta> = {
     ogImageAlt:
       "Seventy Times — Werbung, Automatisierung und KI-Bots als eine Wachstumsmaschine.",
   },
-  uk: {
+  ua: {
     description:
       "Seventy Times перетворює AI та digital-маркетинг на передбачуваний потік кваліфікованих клієнтів: реклама, автоматизація та розумні боти — все працює на одну метрику: ваше зростання.",
     keywords: [
@@ -113,7 +113,7 @@ const PRIVACY: Record<Locale, LegalMeta> = {
     description:
       "Wie Seventy Times Ihre Daten erhebt, verwendet und schützt. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
   },
-  uk: {
+  ua: {
     title: "Політика конфіденційності",
     description:
       "Як Seventy Times збирає, використовує та захищає ваші дані. Чесний мінімум для ранньої стадії — буде переглянутий з юристом у міру зростання.",
@@ -136,7 +136,7 @@ const TERMS: Record<Locale, LegalMeta> = {
     description:
       "Nutzungsbedingungen für seventy-times.com. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
   },
-  uk: {
+  ua: {
     title: "Умови використання",
     description:
       "Умови використання сайту seventy-times.com. Чесний мінімум для ранньої стадії — буде переглянутий з юристом у міру зростання.",
@@ -167,7 +167,7 @@ const ABOUT: Record<Locale, LegalMeta> = {
     description:
       "Wer hinter Seventy Times steht: ein verteiltes KI- und Performance-Marketing-Studio, das Werbung, Automatisierung und KI-Bots zu einer Wachstumsmaschine für ambitionierte Unternehmen verbindet.",
   },
-  uk: {
+  ua: {
     title: "Про нас — Seventy Times",
     description:
       "Хто стоїть за Seventy Times: розподілена команда AI та performance-маркетингу, що збирає рекламу, автоматизацію та AI-ботів у єдину машину росту для амбітного бізнесу.",
@@ -194,7 +194,7 @@ const TEAM: Record<Locale, LegalMeta> = {
     description:
       "Die Menschen hinter Seventy Times — vollständige Team-Profile folgen in Kürze.",
   },
-  uk: {
+  ua: {
     title: "Команда — Seventy Times",
     description:
       "Люди, які стоять за Seventy Times — повні біо команди з'являться скоро.",

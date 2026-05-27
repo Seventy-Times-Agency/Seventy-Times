@@ -15,7 +15,7 @@ const NOTION_ENDPOINT = "https://api.notion.com/v1/pages";
 const NOTION_QUERY_ENDPOINT = (databaseId: string) =>
   `https://api.notion.com/v1/databases/${databaseId}/query`;
 
-type Locale = "en" | "ru" | "de" | "uk";
+type Locale = "en" | "ru" | "de" | "ua";
 
 type LeadPackage =
   | "not_sure"
@@ -162,7 +162,7 @@ export async function sendLeadToNotion(
   if (!token || !databaseId) return false;
 
   const locale = (lead.locale ?? "en").toString();
-  const localeOption = ["en", "ru", "de", "uk"].includes(locale) ? locale : "en";
+  const localeOption = ["en", "ru", "de", "ua"].includes(locale) ? locale : "en";
 
   const properties: Record<string, unknown> = {
     Name: { title: title(lead.name) },
@@ -223,7 +223,7 @@ export async function logChatTurn(turn: ChatRecord): Promise<void> {
   if (!token || !databaseId) return;
 
   const locale = (turn.locale ?? "en").toString();
-  const localeOption = ["en", "ru", "de", "uk"].includes(locale) ? locale : "en";
+  const localeOption = ["en", "ru", "de", "ua"].includes(locale) ? locale : "en";
 
   await createPage(
     token,

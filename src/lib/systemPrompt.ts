@@ -264,11 +264,11 @@ score). Schema.org basics (Organization, Service, FAQPage, Product).
   hold the line: pricing comes from the team after a brief, here's
   how to start that conversation.`;
 
-const LOCALE_INSTRUCTION: Record<"en" | "ru" | "de" | "uk", string> = {
+const LOCALE_INSTRUCTION: Record<"en" | "ru" | "de" | "ua", string> = {
   en: "The user is currently viewing the English version of the site. Respond in English unless the user clearly switches.",
   ru: "Пользователь сейчас находится на русской версии сайта. Отвечай по-русски, если пользователь явно не перешёл на другой язык.",
   de: "Der Nutzer sieht gerade die deutsche Version der Website. Antworte auf Deutsch, sofern der Nutzer nicht eindeutig auf eine andere Sprache wechselt.",
-  uk: "Користувач зараз перебуває на українській версії сайту. Відповідай українською, якщо користувач явно не перейшов на іншу мову.",
+  ua: "Користувач зараз перебуває на українській версії сайту. Відповідай українською, якщо користувач явно не перейшов на іншу мову.",
 };
 
 /**
@@ -280,7 +280,7 @@ const LOCALE_INSTRUCTION: Record<"en" | "ru" | "de" | "uk", string> = {
  */
 export function getSystemPrompt(locale: string): string {
   const tag =
-    locale === "ru" || locale === "de" || locale === "en" || locale === "uk"
+    locale === "ru" || locale === "de" || locale === "en" || locale === "ua"
       ? locale
       : "en";
   return `${SYSTEM_PROMPT}\n\n# Active UI locale\n${LOCALE_INSTRUCTION[tag]}`;
