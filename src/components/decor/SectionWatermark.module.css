@@ -60,8 +60,10 @@
 }
 
 @media (max-width: 640px) {
-  .text {
-    font-size: clamp(120px, 32vw, 260px);
-    -webkit-text-stroke-width: 1px;
+  /* On a phone the giant editorial watermark fights for attention
+     with the actual content. Hide it — the section title + number do
+     the labelling job by themselves. */
+  .wrap {
+    display: none;
   }
 }

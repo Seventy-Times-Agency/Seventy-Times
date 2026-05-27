@@ -37,6 +37,11 @@ export const siteConfig = {
       handle: "Seventy Times Agency",
       url: "https://facebook.com/seventytimesagency",
     },
+    linkedin: {
+      handle: "Seventy Times",
+      // Placeholder — replace with the real LinkedIn company page URL.
+      url: "https://www.linkedin.com/company/seventy-times",
+    },
   },
 
   // Hero ring values in display order. Labels live in i18n

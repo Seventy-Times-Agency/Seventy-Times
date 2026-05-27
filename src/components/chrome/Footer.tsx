@@ -52,6 +52,7 @@ export default function Footer() {
           <a href={siteConfig.contacts.whatsapp.url} target="_blank" rel="noopener noreferrer">WhatsApp</a>
           <a href={siteConfig.contacts.instagram.url} target="_blank" rel="noopener noreferrer">Instagram</a>
           <a href={siteConfig.contacts.facebook.url} target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href={siteConfig.contacts.linkedin.url} target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href={siteConfig.contacts.email.url}>{siteConfig.contacts.email.address}</a>
         </div>
 

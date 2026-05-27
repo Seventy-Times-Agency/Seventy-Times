@@ -175,30 +175,30 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 56px 20px 48px;
+    padding: 40px 18px 36px;
   }
   .title {
-    font-size: clamp(32px, 8vw, 56px);
+    font-size: clamp(28px, 7.5vw, 44px);
   }
   .question {
-    padding: 22px 0;
-    font-size: 16px;
-    gap: 16px;
+    padding: 18px 0;
+    font-size: 15px;
+    gap: 14px;
   }
   .qIndex {
     display: none;
   }
   .answerInner {
-    padding: 0 0 22px 0;
-    font-size: 14px;
+    padding: 0 0 18px 0;
+    font-size: 13.5px;
   }
   .itemOpen .answerInner {
     padding-left: 0;
   }
   .toggle {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
   }
 }
 

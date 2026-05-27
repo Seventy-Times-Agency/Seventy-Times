@@ -495,14 +495,6 @@ const strings = {
     casesBreadcrumbs: "Breadcrumbs",
     casesRelatedTitle: "Other projects",
 
-    // Intro
-    introTag1: "Ads",
-    introTag2: "Automation",
-    introTag3: "AI",
-    introLocation: "USA → Worldwide",
-    introLoading: "Loading…",
-    introSkip: "Skip",
-
     // Lead form
     leadEyebrow: "— Get a quote",
     leadTitle: "Tell us about",

@@ -220,25 +220,78 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 56px 20px;
+    padding: 40px 18px 36px;
   }
-  .title {
-    font-size: clamp(28px, 8vw, 44px);
+
+  /* Side-by-side: portrait on the right, intro text on the left.
+     Cuts the section height roughly in half vs the stacked variant. */
+  .layout {
+    grid-template-columns: 1.1fr 130px;
+    gap: 16px;
+    align-items: start;
+  }
+  .intro {
+    gap: 12px;
+    min-width: 0;
+  }
+  .portrait {
+    order: 0;
   }
   .portraitFrame {
-    width: 240px;
+    width: 130px;
+    margin: 0;
   }
-  .ringA { width: 300px; height: 300px; }
-  .ringB { width: 360px; height: 360px; }
+  /* The big concentric rings break the side-by-side layout on a
+     phone — let them go, the framed portrait reads cleanly on its own. */
+  .ring {
+    display: none;
+  }
+  .title {
+    font-size: 22px;
+    line-height: 1.05;
+  }
+  .lead {
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  /* The lead paragraph already says what Vanessa does — drop the
+     four-bullet checklist on mobile to keep the section short. */
+  .bullets {
+    display: none;
+  }
+  .cta {
+    padding: 13px 22px;
+    font-size: 13.5px;
+    margin-top: 4px;
+  }
+
+  /* Shrink the on-portrait label/badge so they fit the smaller frame. */
   .portraitBadge {
-    padding: 12px 16px;
-    bottom: 14px;
-    left: 14px;
-    right: 14px;
+    padding: 6px 8px;
+    bottom: 6px;
+    left: 6px;
+    right: 6px;
+    gap: 6px;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
+  .badgeDot {
+    width: 7px;
+    height: 7px;
+  }
+  .badgeName {
+    font-size: 11px;
+  }
+  .badgeRole {
+    font-size: 8.5px;
+    letter-spacing: 0.12em;
+  }
   .portraitLabel {
+    top: 6px;
+    right: 6px;
+    padding: 3px 8px;
+    font-size: 8px;
+    letter-spacing: 0.16em;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
   }

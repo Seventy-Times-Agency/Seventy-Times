@@ -160,59 +160,90 @@
 
 @media (max-width: 900px) {
   .section {
-    padding: 80px 24px;
+    padding: 40px 18px 36px;
   }
 
   .header {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .title {
+    font-size: clamp(28px, 7.5vw, 44px);
+  }
+  .lead {
+    font-size: 14px;
   }
 
-  /* On narrow screens the table flips to a stacked card layout —
-     each row becomes a labelled block with the three values inside. */
+  /* Mobile redesign: each row is a compact card.
+     Layout per row:
+       CRITERION (small accent caps)
+       ✓ Seventy Times — value (prominent)
+       vs Agency / Freelancer — values (small, one row, very muted)
+     Cuts the section length roughly in half vs the desktop stacked
+     layout while keeping the comparison intact. */
   .colHeaders {
     display: none;
   }
 
+  .tableWrap {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    gap: 10px;
+  }
+
+  .rows {
+    gap: 10px;
+  }
+
   .row {
     grid-template-columns: 1fr;
-    padding: 14px 18px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: rgba(200, 212, 222, 0.02);
+    border-top: 1px solid var(--line);
+    gap: 8px;
   }
 
   .rowLabel {
-    padding: 4px 0 8px;
+    padding: 0;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
   }
 
   .cell {
-    padding: 8px 0;
+    padding: 0;
     border-left: 0;
-    border-top: 1px dashed var(--line);
+    border-top: 0;
     font-size: 14px;
-  }
-
-  .cell::before {
-    content: attr(data-label);
+    line-height: 1.4;
+    gap: 8px;
+    align-items: baseline;
   }
 
   .cellUs {
     background: transparent;
     color: var(--text);
-  }
-}
-
-/* Stacked-mode pseudo headers */
-@media (max-width: 900px) {
-  .cell:nth-child(2)::before {
-    content: "Seventy Times — ";
-    color: var(--accent);
     font-weight: 700;
-    letter-spacing: 0.04em;
-    margin-right: 4px;
+    font-size: 15px;
+  }
+
+  /* The 3rd + 4th cells (Agency / Freelancer) compress into a single
+     muted line. Add their labels via pseudo-content. */
+  .cell:nth-child(3),
+  .cell:nth-child(4) {
+    font-size: 12px;
+    color: var(--text-dim);
+    padding-top: 2px;
   }
 
   .cell:nth-child(3)::before {
     content: "Agency — ";
     color: var(--text-dim);
+    opacity: 0.7;
     font-weight: 700;
     letter-spacing: 0.04em;
     margin-right: 4px;
@@ -221,6 +252,7 @@
   .cell:nth-child(4)::before {
     content: "Freelancer — ";
     color: var(--text-dim);
+    opacity: 0.7;
     font-weight: 700;
     letter-spacing: 0.04em;
     margin-right: 4px;

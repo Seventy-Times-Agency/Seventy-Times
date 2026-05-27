@@ -495,14 +495,6 @@ const strings = {
     casesBreadcrumbs: "Navigation",
     casesRelatedTitle: "Weitere Projekte",
 
-    // Intro
-    introTag1: "Werbung",
-    introTag2: "Automatisierung",
-    introTag3: "KI",
-    introLocation: "USA → Weltweit",
-    introLoading: "Laden…",
-    introSkip: "Überspringen",
-
     // Lead form
     leadEyebrow: "— Anfrage senden",
     leadTitle: "Erzählen Sie uns von",

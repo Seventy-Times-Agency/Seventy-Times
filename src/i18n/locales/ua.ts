@@ -495,14 +495,6 @@ const strings = {
     casesBreadcrumbs: "Навігація",
     casesRelatedTitle: "Інші проєкти",
 
-    // Intro
-    introTag1: "Реклама",
-    introTag2: "Автоматизація",
-    introTag3: "AI",
-    introLocation: "США → Увесь світ",
-    introLoading: "Завантажуємо…",
-    introSkip: "Пропустити",
-
     // Lead form
     leadEyebrow: "— Залишити заявку",
     leadTitle: "Розкажіть про",
