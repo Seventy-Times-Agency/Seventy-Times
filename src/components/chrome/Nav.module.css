@@ -1,21 +1,23 @@
+/* Nav — mobile-first.
+ * Base = phone nav (sticky bar with logo + CTA + hamburger). Desktop
+ * adds the inline links, language switcher, and "Accepting projects"
+ * status pill. See CLAUDE.md → mobile-first convention. */
+
 .nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 22px 48px;
+  padding: 16px 20px;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  /* Real horizontal gap between the three columns so the FAQ link
-     and the "Accepting projects" status pill never sit flush. */
-  column-gap: 36px;
-  /* Backdrop blur is one of the heaviest scroll-jank sources on iOS
-   * and mid-range Android. Use a slightly more opaque background so we
-   * can drop the saturate() filter and tone the blur down without the
-   * nav looking flat. Mobile breakpoint below shrinks it further. */
-  background: rgba(10, 10, 10, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  column-gap: 16px;
+  /* Backdrop-filter on a sticky element is the #1 scroll-jank source
+   * on mid-range Android and on iOS with Reduce Motion off — every
+   * pixel of overlapping content (marquee, AnimatedBackground glows)
+   * forces a full recomposite. Use a fully opaque background on
+   * phones and only enable the frosted look at desktop sizes. */
+  background: rgb(10, 10, 10);
   border-bottom: 1px solid var(--line);
 }
 
@@ -27,8 +29,9 @@
   --compact-size: 22px;
 }
 
+/* Inline link list — desktop only. */
 .links {
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 40px;
 }
@@ -75,7 +78,7 @@
   justify-self: end;
   display: inline-flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
 }
 
 .status {
@@ -106,10 +109,10 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 22px;
+  padding: 10px 16px;
   border-radius: var(--radius-pill);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.02em;
   background: var(--accent);
   color: var(--black);
@@ -130,19 +133,36 @@
   transform: translateX(3px);
 }
 
-.langSwitcher { display: flex; gap: 2px; background: rgba(200,212,222,0.06); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 2px; }
-.langBtn { padding: 4px 10px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 800; letter-spacing: 0.08em; color: var(--text-dim); transition: all 0.2s ease; text-transform: uppercase; }
-.langBtnActive { background: var(--accent); color: var(--black); }
-
-@media (min-width: 900px) {
-  .status {
-    display: inline-flex;
-  }
+/* Inline language switcher — desktop only. */
+.langSwitcher {
+  display: none;
+  gap: 2px;
+  background: rgba(200, 212, 222, 0.06);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 2px;
 }
 
-/* Hamburger — hidden on desktop, shown on mobile */
+.langBtn {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.langBtnActive {
+  background: var(--accent);
+  color: var(--black);
+}
+
+/* Hamburger — visible on phones, hidden when the inline link list
+   takes over at desktop sizes. */
 .hamburger {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 5px;
   padding: 6px;
@@ -162,15 +182,13 @@
 .barX2 { opacity: 0; }
 .barX3 { transform: translateY(-6.5px) rotate(-45deg); }
 
-/* Mobile menu panel */
+/* Mobile menu panel — slides under the nav when hamburger is open. */
 .mobileMenu {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background: rgba(10, 11, 16, 0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgb(12, 14, 20);
   border-bottom: 1px solid var(--line);
   padding: 28px 24px 32px;
   display: flex;
@@ -240,40 +258,40 @@
   text-align: center;
 }
 
-@media (max-width: 820px) {
+/* ── Tablet and up: switch to the inline desktop layout ─── */
+@media (min-width: 768px) {
   .nav {
-    padding: 16px 20px;
-    grid-template-columns: 1fr auto;
-    /* Backdrop-filter on a sticky element is the #1 scroll-jank
-     * source on mid-range Android and on iOS with Reduce Motion off.
-     * Each pixel of overlapping content (the moving marquee under
-     * the nav, the AnimatedBackground glows) forces the entire nav
-     * to recomposite. Use a fully opaque background instead — the
-     * frosted look is purely cosmetic and not worth the FPS cost
-     * on phones. */
-    background: rgb(10, 10, 10);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-  .mobileMenu {
-    background: rgb(12, 14, 20);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    padding: 22px 48px;
+    grid-template-columns: 1fr auto 1fr;
+    column-gap: 36px;
+    /* Now safe to layer the frosted look — the marquee + glows that
+     * caused scroll-jank on phones are less aggressive at desktop
+     * widths and the device GPU has more headroom. */
+    background: rgba(10, 10, 10, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
   .links {
-    display: none;
-  }
-  .status {
-    display: none !important;
+    display: inline-flex;
   }
   .langSwitcher {
-    display: none;
+    display: flex;
+  }
+  .right {
+    gap: 20px;
   }
   .cta {
-    font-size: 12px;
-    padding: 10px 16px;
+    padding: 12px 22px;
+    font-size: 13px;
   }
   .hamburger {
-    display: flex;
+    display: none;
+  }
+}
+
+/* ── Full desktop: bring in the "accepting projects" status pill ── */
+@media (min-width: 1024px) {
+  .status {
+    display: inline-flex;
   }
 }
