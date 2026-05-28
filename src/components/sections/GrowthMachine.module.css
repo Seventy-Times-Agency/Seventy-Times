@@ -1,7 +1,12 @@
+/* GrowthMachine — mobile-first. Base = single-column package stack on
+ * phones. Tablet keeps single column with more breathing room. Desktop
+ * fans into the 3-up grid with the editorial "INCLUDES" label and the
+ * descriptive sub-line restored. */
+
 .section {
   position: relative;
   isolation: isolate;
-  padding: 80px 48px 64px;
+  padding: 36px 14px 32px;
   max-width: var(--container);
   margin: 0 auto;
 }
@@ -9,11 +14,11 @@
 /* ── Header ─────────────────────────────────────────────── */
 .header {
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: 48px;
-  align-items: end;
-  margin-bottom: 56px;
-  padding-bottom: 36px;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -24,7 +29,7 @@
 }
 
 .title {
-  font-size: var(--fs-h1);
+  font-size: clamp(28px, 8vw, 44px);
   font-weight: 800;
   line-height: 0.94;
   letter-spacing: -0.04em;
@@ -41,15 +46,15 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  align-items: flex-end;
-  text-align: right;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .lead {
-  font-size: var(--fs-body-lg);
+  font-size: 14.5px;
   color: var(--text-muted);
   line-height: 1.6;
-  max-width: 460px;
+  max-width: none;
 }
 
 .discountTag {
@@ -81,9 +86,11 @@
 /* ── Grid ───────────────────────────────────────────────── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: 1fr;
+  gap: 14px;
   align-items: stretch;
+  max-width: 560px;
+  margin: 0 auto;
   /* Top padding leaves a clean gutter above the Recommended badge
      so it never collides with the divider above. */
   padding-top: 18px;
@@ -94,7 +101,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 30px 28px 28px;
+  padding: 20px 18px 18px;
   border-radius: var(--radius-lg);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.005)),
@@ -228,14 +235,18 @@
 }
 
 .cardTitle {
-  font-size: clamp(24px, 2.2vw, 30px);
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.05;
   color: var(--white);
 }
 
+/* The descriptive sub-line + small "INCLUDES" label are decorative on
+   a phone — the title plus the checklist already convey what's in the
+   package. Desktop brings them back below. */
 .cardSub {
+  display: none;
   font-size: 13px;
   color: var(--text-muted);
   line-height: 1.5;
@@ -243,6 +254,7 @@
 }
 
 .cardListLabel {
+  display: none;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -255,14 +267,14 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 7px;
 }
 
 .cardListItem {
   display: flex;
   align-items: baseline;
-  gap: 10px;
-  font-size: 13.5px;
+  gap: 8px;
+  font-size: 13px;
   color: var(--text-muted);
   line-height: 1.55;
 }
@@ -395,11 +407,13 @@
 
 /* ── Guarantee block ────────────────────────────────────── */
 .guarantee {
-  margin-top: 36px;
-  padding: 22px 26px;
+  margin-top: 22px;
+  padding: 16px 18px;
   display: flex;
-  align-items: center;
-  gap: 18px;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 12px;
   border-radius: var(--radius-md);
   border: 1px solid var(--line);
   background:
@@ -445,73 +459,79 @@
   line-height: 1.55;
 }
 
-/* ── Responsive ─────────────────────────────────────────── */
-@media (max-width: 1100px) {
-  .grid {
-    grid-template-columns: 1fr;
-    max-width: 560px;
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 900px) {
+/* ── Tablet — more breathing room, still single column ── */
+@media (min-width: 768px) {
   .section {
     padding: 44px 18px 36px;
   }
   .header {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    align-items: start;
-    margin-bottom: 24px;
-    padding-bottom: 18px;
-  }
-  .headerRight {
-    align-items: flex-start;
-    text-align: left;
-  }
-  .lead {
-    max-width: none;
-    font-size: 14.5px;
-  }
-  .title {
-    font-size: clamp(28px, 8vw, 44px);
-  }
-  .guarantee {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    padding: 16px 18px;
-    margin-top: 22px;
-  }
-}
-
-@media (max-width: 900px) {
-  /* Drop the descriptive sub-line and the small "INCLUDES" label —
-     the title + the checklist already say what's in the package. */
-  .cardSub,
-  .cardListLabel {
-    display: none;
-  }
-  .cardListItem {
-    font-size: 13px;
-    gap: 8px;
-  }
-  .cardList {
-    gap: 7px;
-  }
-}
-
-@media (max-width: 480px) {
-  .section {
-    padding: 36px 14px 32px;
-  }
-  .grid {
-    gap: 14px;
+    margin-bottom: 32px;
+    padding-bottom: 22px;
   }
   .card {
-    padding: 20px 18px 18px;
+    padding: 26px 22px 22px;
   }
   .cardTitle {
-    font-size: 20px;
+    font-size: 24px;
+  }
+  .cardListItem {
+    font-size: 13.5px;
+    gap: 10px;
+  }
+  .cardList {
+    gap: 9px;
+  }
+  .guarantee {
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 22px;
+    gap: 18px;
+  }
+}
+
+/* ── Desktop — full 3-up grid with restored editorial copy ── */
+@media (min-width: 1024px) {
+  .section {
+    padding: 80px 48px 64px;
+  }
+  .header {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 56px;
+    padding-bottom: 36px;
+  }
+  .headerRight {
+    align-items: flex-end;
+    text-align: right;
+  }
+  .lead {
+    font-size: var(--fs-body-lg);
+    max-width: 460px;
+  }
+  .title {
+    font-size: var(--fs-h1);
+  }
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    max-width: none;
+  }
+  .card {
+    padding: 30px 28px 28px;
+  }
+  .cardTitle {
+    font-size: clamp(24px, 2.2vw, 30px);
+  }
+  /* Bring back the descriptive copy that was hidden on phone — there's
+     room for the editorial sub-line and the small list-label now. */
+  .cardSub,
+  .cardListLabel {
+    display: block;
+  }
+  .guarantee {
+    margin-top: 36px;
+    padding: 22px 26px;
+    gap: 18px;
   }
 }

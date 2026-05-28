@@ -1,15 +1,22 @@
+/* Comparison — mobile-first.
+ *
+ * Base = compact card per criterion (criterion label in accent caps,
+ * Seventy Times answer prominent, Agency + Freelancer as small muted
+ * "vs ..." lines). Desktop switches to the full editorial 4-column
+ * grid with the bordered table + header row. */
+
 .section {
   position: relative;
   max-width: var(--container);
   margin: 0 auto;
-  padding: 96px 48px;
+  padding: 40px 18px 36px;
 }
 
 .header {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 32px;
-  margin-bottom: 56px;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
   align-items: end;
 }
 
@@ -20,7 +27,7 @@
 }
 
 .title {
-  font-size: clamp(40px, 6vw, 76px);
+  font-size: clamp(28px, 7.5vw, 44px);
   font-weight: 800;
   line-height: 1.02;
   letter-spacing: -0.025em;
@@ -33,23 +40,26 @@
 }
 
 .lead {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--text-muted);
   max-width: 480px;
 }
 
+/* Phone "card per criterion" mode — no shared table border. */
 .tableWrap {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md, 14px);
-  overflow: hidden;
-  background: rgba(200, 212, 222, 0.02);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  gap: 10px;
+  overflow: visible;
 }
 
+/* The column-header row only makes sense in the desktop table layout. */
 .colHeaders {
-  display: grid;
+  display: none;
   grid-template-columns: 1.4fr 1.3fr 1fr 1fr;
   gap: 0;
   border-bottom: 1px solid var(--line);
@@ -104,50 +114,80 @@
 .rows {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
+/* Phone row = a bordered card stacking the criterion label and its
+   three values. Desktop turns this back into a 4-column table row. */
 .row {
   display: grid;
-  grid-template-columns: 1.4fr 1.3fr 1fr 1fr;
-  border-top: 1px solid var(--line);
-}
-
-.row:first-child {
-  border-top: 0;
+  grid-template-columns: 1fr;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(200, 212, 222, 0.02);
+  gap: 8px;
 }
 
 .rowLabel {
-  padding: 18px 20px;
-  font-size: 13px;
+  padding: 0;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--accent);
   display: flex;
   align-items: center;
 }
 
 .cell {
-  padding: 18px 18px;
+  padding: 0;
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: baseline;
+  gap: 8px;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.4;
   color: var(--text-muted);
-  border-left: 1px solid var(--line);
 }
 
 .cellUs {
   color: var(--text);
-  background: rgba(200, 212, 222, 0.03);
-  font-weight: 600;
+  background: transparent;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 .checkUs {
   color: var(--accent);
   font-weight: 700;
   flex-shrink: 0;
+}
+
+/* Agency / Freelancer cells (3rd + 4th) — small muted line with a
+   pseudo-label prefix. */
+.cell:nth-child(3),
+.cell:nth-child(4) {
+  font-size: 12px;
+  color: var(--text-dim);
+  padding-top: 2px;
+}
+
+.cell:nth-child(3)::before {
+  content: "Agency — ";
+  color: var(--text-dim);
+  opacity: 0.7;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-right: 4px;
+}
+
+.cell:nth-child(4)::before {
+  content: "Freelancer — ";
+  color: var(--text-dim);
+  opacity: 0.7;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-right: 4px;
 }
 
 .disclaimer {
@@ -158,103 +198,96 @@
   max-width: 720px;
 }
 
-@media (max-width: 900px) {
+/* ── Tablet — more headroom, still per-criterion cards ─── */
+@media (min-width: 768px) {
   .section {
-    padding: 40px 18px 36px;
+    padding: 56px 24px 48px;
   }
-
   .header {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 22px;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
   }
-  .title {
-    font-size: clamp(28px, 7.5vw, 44px);
+  .row {
+    padding: 16px 20px;
+    gap: 10px;
   }
   .lead {
-    font-size: 14px;
-  }
-
-  /* Mobile redesign: each row is a compact card.
-     Layout per row:
-       CRITERION (small accent caps)
-       ✓ Seventy Times — value (prominent)
-       vs Agency / Freelancer — values (small, one row, very muted)
-     Cuts the section length roughly in half vs the desktop stacked
-     layout while keeping the comparison intact. */
-  .colHeaders {
-    display: none;
-  }
-
-  .tableWrap {
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    gap: 10px;
-  }
-
-  .rows {
-    gap: 10px;
-  }
-
-  .row {
-    grid-template-columns: 1fr;
-    padding: 14px 16px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
-    background: rgba(200, 212, 222, 0.02);
-    border-top: 1px solid var(--line);
-    gap: 8px;
-  }
-
-  .rowLabel {
-    padding: 0;
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    color: var(--accent);
-  }
-
-  .cell {
-    padding: 0;
-    border-left: 0;
-    border-top: 0;
-    font-size: 14px;
-    line-height: 1.4;
-    gap: 8px;
-    align-items: baseline;
-  }
-
-  .cellUs {
-    background: transparent;
-    color: var(--text);
-    font-weight: 700;
     font-size: 15px;
   }
+}
 
-  /* The 3rd + 4th cells (Agency / Freelancer) compress into a single
-     muted line. Add their labels via pseudo-content. */
+/* ── Desktop — full bordered comparison table ────────── */
+@media (min-width: 1024px) {
+  .section {
+    padding: 96px 48px;
+  }
+  .header {
+    margin-bottom: 56px;
+  }
+  .title {
+    font-size: clamp(40px, 6vw, 76px);
+  }
+  .lead {
+    font-size: 16px;
+  }
+
+  /* Wrap the whole grid in a bordered, single-radius container so the
+     rows read as a unified table. */
+  .tableWrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md, 14px);
+    overflow: hidden;
+    background: rgba(200, 212, 222, 0.02);
+    gap: 0;
+  }
+  .colHeaders {
+    display: grid;
+  }
+  .rows {
+    gap: 0;
+  }
+  .row {
+    grid-template-columns: 1.4fr 1.3fr 1fr 1fr;
+    padding: 0;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    gap: 0;
+  }
+  .row:first-child {
+    border-top: 0;
+  }
+  .rowLabel {
+    padding: 18px 20px;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+  }
+  .cell {
+    padding: 18px 18px;
+    border-left: 1px solid var(--line);
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .cellUs {
+    background: rgba(200, 212, 222, 0.03);
+    font-weight: 600;
+    font-size: 14px;
+  }
+  /* Drop the "Agency — " / "Freelancer — " prefixes on desktop — the
+     column header carries that information now. */
   .cell:nth-child(3),
   .cell:nth-child(4) {
-    font-size: 12px;
-    color: var(--text-dim);
-    padding-top: 2px;
+    font-size: 14px;
+    color: var(--text-muted);
+    padding-top: 18px;
   }
-
-  .cell:nth-child(3)::before {
-    content: "Agency — ";
-    color: var(--text-dim);
-    opacity: 0.7;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    margin-right: 4px;
-  }
-
+  .cell:nth-child(3)::before,
   .cell:nth-child(4)::before {
-    content: "Freelancer — ";
-    color: var(--text-dim);
-    opacity: 0.7;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    margin-right: 4px;
+    content: none;
   }
 }
