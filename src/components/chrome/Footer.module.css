@@ -1,15 +1,18 @@
+/* Footer — mobile-first. Base = single-column stack on phones; columns
+ * fan out at tablet, full 4-column layout at desktop. */
+
 .footer {
   border-top: 1px solid var(--line);
-  padding: 72px 48px 36px;
+  padding: 32px 18px 22px;
   max-width: var(--container);
   margin: 0 auto;
 }
 
 .top {
   display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr 1fr;
-  gap: 48px;
-  margin-bottom: 56px;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  margin-bottom: 32px;
 }
 
 .brand {
@@ -37,7 +40,7 @@
   text-transform: uppercase;
   letter-spacing: 0.22em;
   color: var(--text-dim);
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .col {
@@ -69,14 +72,15 @@
   cursor: pointer;
 }
 
-/* Huge wordmark */
+/* Huge editorial wordmark. Scales with the viewport — `clamp()`
+   already handles the phone-vs-desktop range without a media query. */
 .wordmark {
-  font-size: clamp(64px, 18vw, 240px);
+  font-size: clamp(48px, 16vw, 240px);
   font-weight: 800;
   line-height: 0.85;
   letter-spacing: -0.06em;
   text-align: left;
-  margin: 48px 0 36px;
+  margin: 36px 0 24px;
   user-select: none;
   text-transform: lowercase;
   color: rgba(200, 212, 222, 0.07);
@@ -109,10 +113,9 @@
 
 .bottom {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
   padding-top: 24px;
   border-top: 1px solid var(--line);
   font-size: var(--fs-mini);
@@ -135,31 +138,39 @@
   color: var(--white);
 }
 
-@media (max-width: 900px) {
+/* ── Tablet: 2-column link block ───────────────────────── */
+@media (min-width: 768px) {
   .footer {
     padding: 40px 20px 24px;
   }
   .top {
     grid-template-columns: 1fr 1fr;
     gap: 24px;
+    margin-bottom: 48px;
+  }
+  .colTitle {
+    margin-bottom: 20px;
+  }
+  .bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
   }
 }
 
-@media (max-width: 560px) {
+/* ── Desktop: 4-column layout + bigger top padding ────── */
+@media (min-width: 1024px) {
   .footer {
-    padding: 32px 18px 22px;
+    padding: 72px 48px 36px;
   }
   .top {
-    grid-template-columns: 1fr;
-    gap: 22px;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 56px;
   }
   .wordmark {
-    font-size: clamp(48px, 16vw, 160px);
-    margin: 36px 0 24px;
-  }
-  .bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
+    margin: 48px 0 36px;
   }
 }
