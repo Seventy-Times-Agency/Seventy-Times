@@ -318,12 +318,34 @@ switch to Upstash Redis if you need global counters.
 
 ---
 
+## Styling — mobile-first convention
+
+CSS modules are written **mobile-first**. The rules outside of any
+`@media` query describe the layout at the smallest supported viewport
+(~375 px). Larger layouts are layered on with `@media (min-width: ...)`
+queries.
+
+```css
+/* Base — mobile (no media query). */
+.grid { grid-template-columns: 1fr; gap: 12px; }
+
+/* Tablet and up. */
+@media (min-width: 768px) { .grid { gap: 18px; } }
+
+/* Desktop and up. */
+@media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+```
+
+Breakpoint constants live in `globals.css` as `--bp-tablet (768)`,
+`--bp-desktop (1024)`, `--bp-wide (1280)` — copy the px value into the
+query directly (CSS custom properties can't be used inside `@media`).
+Older components still use `@media (max-width: ...)` overrides; they
+get converted phase-by-phase, not all at once.
+
+---
+
 ## Gotchas
 
-- **PageIntro only plays once per session**. Writes `st-intro-seen` to
-  sessionStorage. Clear sessionStorage (or open incognito) to see it
-  again. Dispatches `st-intro-gone` on dismissal — hero rings subscribe
-  and wait for that before animating.
 - **Chat history persists** to `localStorage` under `st-chat-history-v1`,
   last 50 messages. Clear that key to wipe Tess's session memory.
 - **GrowthSimulator** saves slider levels in `st-simulator-levels-v1`.
