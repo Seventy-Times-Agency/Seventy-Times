@@ -1,3 +1,7 @@
+/* MarqueeStack — mobile-first. Animation speed scales up at desktop
+ * widths because the same pixel/sec rate looks too fast on a phone
+ * (less screen width = items fly past). */
+
 .wrap {
   position: relative;
   padding: 28px 0 24px;
@@ -38,8 +42,9 @@
   display: flex;
   white-space: nowrap;
   width: max-content;
-  /* Same speed for both rows — only the direction differs. */
-  animation-duration: 60s;
+  /* Phone speed — faster than desktop because the row is much
+     shorter relative to the viewport. */
+  animation-duration: 36s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   /* Promote to its own compositor layer so neighbouring effects
@@ -82,13 +87,6 @@
   }
   to {
     transform: translate3d(0, 0, 0);
-  }
-}
-
-@media (max-width: 640px) {
-  .rowTop,
-  .rowBottom {
-    animation-duration: 36s;
   }
 }
 
@@ -137,13 +135,24 @@
   flex-shrink: 0;
 }
 
+/* ── Tablet/desktop: slower scroll. Same pixels/sec would feel
+   frantic at narrower viewports because the items pass through
+   the visible window more quickly per cycle. */
+@media (min-width: 768px) {
+  .rowTop,
+  .rowBottom {
+    animation-duration: 60s;
+  }
+}
+
 /* prefers-reduced-motion: we still allow a linear horizontal scroll
  * (it's non-vestibular and well below the WCAG flicker threshold),
  * just slow it down so motion-sensitive users get a calmer experience
  * instead of a frozen wall of text. Going to `animation: none` here
  * killed the marquee on every iOS user who enables Reduce Motion in
  * Accessibility — and Apple turns that on by default in some
- * accessibility profiles. */
+ * accessibility profiles. The globals.css reduce-motion rule was
+ * softened in Phase 0, so we no longer need `!important` here. */
 @media (prefers-reduced-motion: reduce) {
   .rowTop,
   .rowBottom {
