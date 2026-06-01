@@ -143,10 +143,16 @@
  * instead of a frozen wall of text. Going to `animation: none` here
  * killed the marquee on every iOS user who enables Reduce Motion in
  * Accessibility — and Apple turns that on by default in some
- * accessibility profiles. */
+ * accessibility profiles.
+ *
+ * The `!important`s are required: globals.css applies a nuclear
+ * `* { animation-duration: 0.01ms !important }` under reduce-motion
+ * which would otherwise freeze the marquee instantly. Re-asserting
+ * with `!important` here is the only way our slower override wins. */
 @media (prefers-reduced-motion: reduce) {
   .rowTop,
   .rowBottom {
-    animation-duration: 160s;
+    animation-duration: 90s !important;
+    animation-iteration-count: infinite !important;
   }
 }
