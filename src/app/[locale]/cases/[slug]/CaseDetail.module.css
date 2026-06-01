@@ -1,6 +1,8 @@
+/* CaseDetail — mobile-first. Per-case page rendered at /<locale>/cases/<slug>. */
+
 .main {
   min-height: 100vh;
-  padding: 120px 24px 96px;
+  padding: 72px 18px 56px;
 }
 
 .inner {
@@ -8,13 +10,13 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 22px;
 }
 
 .back {
   display: inline-flex;
   align-self: flex-start;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -30,7 +32,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 11.5px;
   letter-spacing: 0.06em;
   color: var(--text-dim);
 }
@@ -46,18 +48,18 @@
 }
 
 .relatedSection {
-  margin-top: 36px;
-  padding-top: 32px;
+  margin-top: 28px;
+  padding-top: 24px;
   border-top: 1px solid var(--line);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .relatedGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 
 .relatedCard {
@@ -65,7 +67,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 18px 20px;
+  padding: 16px 18px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md, 14px);
   background: rgba(200, 212, 222, 0.018);
@@ -91,7 +93,7 @@
 }
 
 .relatedTitle {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text);
   line-height: 1.25;
@@ -114,7 +116,7 @@
 .head {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   align-items: flex-start;
 }
 
@@ -127,7 +129,7 @@
 }
 
 .title {
-  font-size: clamp(40px, 7vw, 72px);
+  font-size: clamp(32px, 9vw, 72px);
   font-weight: 800;
   line-height: 1.02;
   letter-spacing: -0.025em;
@@ -167,7 +169,7 @@
 }
 
 .summary {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.65;
   color: var(--text);
   margin: 0;
@@ -176,8 +178,8 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding-top: 8px;
+  gap: 12px;
+  padding-top: 6px;
 }
 
 .sectionTitle {
@@ -198,7 +200,7 @@
 }
 
 .metricItem {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-muted);
   display: flex;
   align-items: baseline;
@@ -206,7 +208,7 @@
 }
 
 .statusBody {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--text-muted);
   margin: 0;
@@ -214,20 +216,21 @@
 
 .ctaRow {
   display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-top: 20px;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
 }
 
 .primaryCta,
 .secondaryCta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  padding: 14px 26px;
+  padding: 13px 22px;
   border-radius: var(--radius-pill);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13.5px;
   letter-spacing: 0.04em;
   transition: transform 0.18s var(--ease), background 0.18s ease;
 }
@@ -248,4 +251,65 @@
 .secondaryCta:hover {
   border-color: var(--text-muted);
   transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding: 96px 22px 72px;
+  }
+  .inner {
+    gap: 28px;
+  }
+  .back {
+    font-size: 13px;
+  }
+  .breadcrumbs {
+    font-size: 12px;
+  }
+  .relatedSection {
+    margin-top: 36px;
+    padding-top: 32px;
+    gap: 16px;
+  }
+  .relatedGrid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .relatedCard {
+    padding: 18px 20px;
+  }
+  .relatedTitle {
+    font-size: 18px;
+  }
+  .head {
+    gap: 16px;
+  }
+  .summary {
+    font-size: 18px;
+  }
+  .section {
+    gap: 14px;
+    padding-top: 8px;
+  }
+  .metricItem,
+  .statusBody {
+    font-size: 15px;
+  }
+  .ctaRow {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .primaryCta,
+  .secondaryCta {
+    padding: 14px 26px;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main {
+    padding: 120px 24px 96px;
+  }
 }
