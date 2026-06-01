@@ -1,3 +1,7 @@
+/* SectionWatermark — mobile-first. Hidden on phones (the giant
+ * editorial italic word fights for attention with the actual content
+ * at small widths); revealed at tablet/desktop where there's room. */
+
 .wrap {
   position: absolute;
   inset: 0;
@@ -8,7 +12,7 @@
   overflow: hidden;
   pointer-events: none;
   z-index: -1;
-  display: flex;
+  display: none;
   align-items: center;
   user-select: none;
 }
@@ -59,11 +63,8 @@
   50% { transform: translateX(-30px); }
 }
 
-@media (max-width: 640px) {
-  /* On a phone the giant editorial watermark fights for attention
-     with the actual content. Hide it — the section title + number do
-     the labelling job by themselves. */
+@media (min-width: 768px) {
   .wrap {
-    display: none;
+    display: flex;
   }
 }

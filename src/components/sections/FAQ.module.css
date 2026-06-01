@@ -1,28 +1,31 @@
+/* FAQ — mobile-first. Base = single-column accordion with the intro
+ * + list stacked. Desktop fans out into a side-by-side layout with
+ * a sticky intro column on the left. */
+
 .section {
   position: relative;
   isolation: isolate;
-  padding: 72px 48px 56px;
+  padding: 40px 18px 36px;
   max-width: var(--container);
   margin: 0 auto;
 }
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 64px;
+  grid-template-columns: 1fr;
+  gap: 28px;
   align-items: start;
 }
 
 .intro {
-  position: sticky;
-  top: 120px;
+  position: static;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
 }
 
 .title {
-  font-size: var(--fs-h1);
+  font-size: clamp(28px, 7.5vw, 44px);
   font-weight: 800;
   line-height: 0.95;
   letter-spacing: -0.04em;
@@ -35,15 +38,15 @@
 }
 
 .lead {
-  font-size: var(--fs-body-lg);
+  font-size: 14.5px;
   color: var(--text-muted);
   line-height: 1.6;
   max-width: 360px;
 }
 
 .note {
-  margin-top: 14px;
-  padding-top: 24px;
+  margin-top: 10px;
+  padding-top: 18px;
   border-top: 1px solid var(--line);
   font-size: 13px;
   color: var(--text-dim);
@@ -88,10 +91,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding: 32px 8px;
+  gap: 14px;
+  padding: 18px 0;
   text-align: left;
-  font-size: clamp(18px, 1.8vw, 22px);
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.015em;
   color: var(--white);
@@ -99,15 +102,15 @@
   transition: padding-left 0.3s var(--ease);
 }
 
-.item:hover .question {
-  padding-left: 20px;
-}
-
+.item:hover .question,
 .itemOpen .question {
-  padding-left: 20px;
+  padding-left: 12px;
 }
 
+/* The "01 / 02 …" question index is desktop-only — wastes horizontal
+   space at phone widths. */
 .qIndex {
+  display: none;
   font-size: var(--fs-mini);
   font-weight: 800;
   letter-spacing: 0.2em;
@@ -122,13 +125,13 @@
 
 .toggle {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 1px solid var(--line-strong);
   display: grid;
   place-items: center;
-  font-size: 18px;
+  font-size: 14px;
   transition:
     background 0.25s ease,
     color 0.25s ease,
@@ -152,54 +155,15 @@
 }
 
 .answerInner {
-  padding: 0 8px 32px calc(32px + 28px + 8px);
+  padding: 0 0 18px 0;
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: 13.5px;
   line-height: 1.75;
   max-width: 62ch;
 }
 
 .itemOpen .answerInner {
-  padding-left: calc(32px + 28px + 8px + 20px);
-}
-
-@media (max-width: 1024px) {
-  .layout {
-    grid-template-columns: 1fr;
-    gap: 56px;
-  }
-  .intro {
-    position: static;
-  }
-}
-
-@media (max-width: 640px) {
-  .section {
-    padding: 40px 18px 36px;
-  }
-  .title {
-    font-size: clamp(28px, 7.5vw, 44px);
-  }
-  .question {
-    padding: 18px 0;
-    font-size: 15px;
-    gap: 14px;
-  }
-  .qIndex {
-    display: none;
-  }
-  .answerInner {
-    padding: 0 0 18px 0;
-    font-size: 13.5px;
-  }
-  .itemOpen .answerInner {
-    padding-left: 0;
-  }
-  .toggle {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
-  }
+  padding-left: 0;
 }
 
 .listWrap {
@@ -208,13 +172,12 @@
 }
 
 .still {
-  margin-top: 28px;
-  padding: 20px 24px;
+  margin-top: 24px;
+  padding: 16px 18px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-md);
   background: rgba(160, 190, 220, 0.04);
@@ -238,3 +201,90 @@
   color: var(--accent);
 }
 
+/* ── Tablet — more headroom, still stacked ──────────── */
+@media (min-width: 768px) {
+  .section {
+    padding: 56px 24px 48px;
+  }
+  .layout {
+    gap: 40px;
+  }
+  .intro {
+    gap: 24px;
+  }
+  .lead {
+    font-size: 15px;
+  }
+  .question {
+    padding: 24px 4px;
+    font-size: 17px;
+    gap: 18px;
+  }
+  .toggle {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+  .answerInner {
+    padding: 0 4px 24px 4px;
+    font-size: 14px;
+  }
+  .still {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 20px 24px;
+  }
+}
+
+/* ── Desktop — sticky intro on the left, full accordion ── */
+@media (min-width: 1024px) {
+  .section {
+    padding: 72px 48px 56px;
+  }
+  .layout {
+    grid-template-columns: 1fr 1.5fr;
+    gap: 64px;
+  }
+  .intro {
+    position: sticky;
+    top: 120px;
+  }
+  .title {
+    font-size: var(--fs-h1);
+  }
+  .lead {
+    font-size: var(--fs-body-lg);
+  }
+  .note {
+    margin-top: 14px;
+    padding-top: 24px;
+  }
+  .question {
+    padding: 32px 8px;
+    font-size: clamp(18px, 1.8vw, 22px);
+    gap: 24px;
+  }
+  .item:hover .question,
+  .itemOpen .question {
+    padding-left: 20px;
+  }
+  /* Bring back the numbered index column. */
+  .qIndex {
+    display: inline;
+  }
+  .toggle {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+  .answerInner {
+    padding: 0 8px 32px calc(32px + 28px + 8px);
+    font-size: 15px;
+  }
+  .itemOpen .answerInner {
+    padding-left: calc(32px + 28px + 8px + 20px);
+  }
+}

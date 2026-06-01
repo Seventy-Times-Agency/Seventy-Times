@@ -1,14 +1,19 @@
+/* CTA — mobile-first. Base = compact contact panel: stacked CTA
+ * buttons, 2-column channel grid (or 3 at tablet), centered title.
+ * Desktop fans into the full editorial format with the 5-channel
+ * grid and side-by-side eyebrow/meta rows. */
+
 .section {
   position: relative;
   isolation: isolate;
-  padding: 64px 48px;
+  padding: 36px 18px 44px;
   max-width: var(--container);
   margin: 0 auto;
 }
 
 .inner {
   position: relative;
-  padding: 88px 72px;
+  padding: 28px 18px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
   background:
@@ -35,9 +40,11 @@
 
 .eyebrowRow {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
   align-items: center;
-  margin-bottom: 56px;
+  margin-bottom: 28px;
 }
 
 .eyebrowEnd {
@@ -49,11 +56,11 @@
 }
 
 .title {
-  font-size: var(--fs-display);
+  font-size: clamp(28px, 8vw, 52px);
   font-weight: 800;
   line-height: 0.9;
   letter-spacing: -0.045em;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   text-align: center;
 }
 
@@ -65,16 +72,18 @@
 
 .sub {
   color: var(--text-muted);
-  font-size: var(--fs-body-lg);
+  font-size: 14.5px;
   line-height: 1.6;
   max-width: 640px;
-  margin: 0 auto 56px;
+  margin: 0 auto 28px;
   text-align: center;
 }
 
 .buttons {
   display: flex;
-  gap: 14px;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -82,13 +91,14 @@
 .primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  padding: 20px 36px;
+  padding: 15px 22px;
   border-radius: var(--radius-pill);
   background: var(--accent);
   color: var(--black);
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   box-shadow: 0 30px 80px -20px var(--accent-glow);
   transition: transform 0.2s var(--ease), box-shadow 0.3s ease, background 0.2s ease;
 }
@@ -102,14 +112,15 @@
 .secondary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  padding: 20px 32px;
+  padding: 15px 22px;
   border-radius: var(--radius-pill);
   background: transparent;
   border: 1px solid var(--line-strong);
   color: var(--white);
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
@@ -124,12 +135,12 @@
 }
 
 .emailRow {
-  margin-top: 20px;
+  margin-top: 18px;
   display: flex;
   justify-content: center;
 }
 
-/* Contact channels grid ─────────────────────────── */
+/* Contact channels grid — 2-up on phone, 3-up at tablet, 5-up desk. */
 .channelsLabel {
   text-align: center;
   font-size: 11px;
@@ -143,8 +154,8 @@
 
 .channels {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 }
 
 .channel {
@@ -203,13 +214,15 @@
   color: var(--accent-strong);
 }
 
-/* Bottom editorial meta */
+/* Bottom editorial meta — stacked on phone, side-by-side on desktop. */
 .metaBottom {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
   align-items: center;
-  margin-top: 72px;
-  padding-top: 32px;
+  margin-top: 32px;
+  padding-top: 24px;
   border-top: 1px solid var(--line);
   font-size: var(--fs-mini);
   font-weight: 700;
@@ -218,50 +231,89 @@
   color: var(--text-dim);
 }
 
-@media (max-width: 900px) {
-  .section {
-    padding: 36px 18px 44px;
-  }
-  .inner {
-    padding: 36px 20px;
-  }
-  .title {
-    font-size: clamp(28px, 8vw, 52px);
-  }
-  .sub {
-    font-size: 14.5px;
-  }
-  .eyebrowRow,
-  .metaBottom {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-  }
-  .buttons {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-  .primary,
-  .secondary {
-    justify-content: center;
-    padding: 15px 22px;
-    font-size: 14px;
-  }
-  .emailRow {
-    margin-top: 18px;
-  }
+/* ── Phablet — 3-up channels ───────────────────────── */
+@media (min-width: 480px) {
   .channels {
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
   }
 }
 
-@media (max-width: 480px) {
-  .channels {
-    grid-template-columns: repeat(2, 1fr);
+/* ── Tablet — bigger panel + horizontal eyebrow row ── */
+@media (min-width: 768px) {
+  .section {
+    padding: 48px 24px;
   }
   .inner {
-    padding: 28px 18px;
+    padding: 56px 36px;
+  }
+  .eyebrowRow,
+  .metaBottom {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    align-items: center;
+  }
+  .eyebrowRow {
+    margin-bottom: 40px;
+  }
+  .metaBottom {
+    margin-top: 48px;
+    padding-top: 28px;
+    text-align: center;
+  }
+  .title {
+    font-size: clamp(40px, 7vw, 68px);
+    margin-bottom: 32px;
+  }
+  .sub {
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+  .buttons {
+    flex-direction: row;
+    gap: 14px;
+    align-items: center;
+  }
+  .primary,
+  .secondary {
+    padding: 18px 30px;
+    font-size: 14.5px;
+  }
+}
+
+/* ── Desktop — full editorial 5-up channels + big display title ── */
+@media (min-width: 1024px) {
+  .section {
+    padding: 64px 48px;
+  }
+  .inner {
+    padding: 88px 72px;
+  }
+  .eyebrowRow {
+    margin-bottom: 56px;
+  }
+  .title {
+    font-size: var(--fs-display);
+    margin-bottom: 40px;
+  }
+  .sub {
+    font-size: var(--fs-body-lg);
+    margin-bottom: 56px;
+  }
+  .primary,
+  .secondary {
+    padding: 20px 36px;
+    font-size: 15px;
+  }
+  .secondary {
+    padding: 20px 32px;
+  }
+  .channels {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .metaBottom {
+    margin-top: 72px;
+    padding-top: 32px;
   }
 }

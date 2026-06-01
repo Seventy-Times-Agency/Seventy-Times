@@ -1,18 +1,24 @@
+/* GrowthSimulator — mobile-first. Base = single-column pillar tiles
+ * (denser, no decorative sub-labels), compact result panel. Tablet
+ * keeps single column with more room. Desktop fans the three pillars
+ * into a row and turns the result panel into a side-by-side multi/
+ * comparison view. */
+
 .section {
   position: relative;
   isolation: isolate;
-  padding: 72px 48px 56px;
+  padding: 40px 18px 36px;
   max-width: var(--container);
   margin: 0 auto;
 }
 
 .header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: end;
-  margin-bottom: 56px;
-  padding-bottom: 36px;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -23,7 +29,7 @@
 }
 
 .title {
-  font-size: var(--fs-h1);
+  font-size: clamp(28px, 7.5vw, 44px);
   font-weight: 800;
   line-height: 0.95;
   letter-spacing: -0.04em;
@@ -36,31 +42,31 @@
 }
 
 .lead {
-  font-size: var(--fs-body-lg);
+  font-size: 14.5px;
   color: var(--text-muted);
   line-height: 1.6;
   max-width: 480px;
-  justify-self: end;
-  text-align: right;
+  justify-self: start;
+  text-align: left;
 }
 
-/* Pillar cards with level step buttons ─────────────────── */
+/* ── Pillar tiles (3 stacked on phone, row on desktop) ── */
 .pillars {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-bottom: 32px;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
 }
 
 .pillar {
   position: relative;
-  padding: 28px 26px 24px;
+  padding: 16px 14px 14px;
   border-radius: var(--radius-lg);
   background: rgba(200, 212, 222, 0.025);
   border: 1px solid var(--line);
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
   transition: border-color 0.3s ease;
 }
 
@@ -70,26 +76,31 @@
 
 .pillarHead {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .pillarTag {
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 800;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
 }
 
 .pillarName {
-  font-size: 22px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--text);
 }
 
+/* The "HOW MANY PAID CHANNELS WE RUN" sub-line restates the pillar
+   name in caps — pure noise on phone. Desktop brings it back. */
 .pillarDesc {
+  display: none;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -97,22 +108,22 @@
   color: var(--text-dim);
 }
 
-/* 4-step button row */
+/* 4-step segmented control */
 .steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
+  gap: 2px;
   background: rgba(200, 212, 222, 0.06);
   border-radius: 100px;
-  padding: 4px;
+  padding: 3px;
 }
 
 .step {
-  padding: 9px 4px;
+  padding: 9px 0;
   border-radius: 100px;
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-dim);
   border: none;
@@ -133,19 +144,21 @@
   box-shadow: 0 4px 14px -4px var(--accent-glow);
 }
 
-/* Current selection description */
+/* Selected block — compact on phone, the editorial "WHAT'S INCLUDED"
+   + "GROWTH CONTRIBUTION" labels come back on desktop. */
 .selectedBlock {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 14px 16px;
+  gap: 6px;
+  padding: 12px 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: rgba(10, 11, 16, 0.35);
-  min-height: 92px;
+  min-height: 0;
 }
 
 .selectedLabel {
+  display: none;
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.22em;
@@ -154,9 +167,9 @@
 }
 
 .selectedDesc {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.45;
   flex: 1;
 }
 
@@ -164,13 +177,13 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
-  padding-top: 10px;
+  padding-top: 8px;
   border-top: 1px solid var(--line);
-  margin-top: 6px;
+  margin-top: 2px;
 }
 
 .contributionValue {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--accent);
@@ -179,6 +192,7 @@
 }
 
 .contributionLabel {
+  display: none;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -186,19 +200,21 @@
   color: var(--text-dim);
 }
 
-/* Formula strip ─────────────────────────────────── */
+/* Formula strip — single line of muted text on phone. */
 .formula {
   display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 18px 22px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding: 12px 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: rgba(200, 212, 222, 0.02);
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
 .formulaLabel {
+  display: none;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.22em;
@@ -208,22 +224,23 @@
 }
 
 .formulaDesc {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-muted);
   line-height: 1.55;
 }
 
-/* Combined result panel ──────────────────────────────── */
+/* Combined result panel — single column on phone, side-by-side on
+   desktop with bigger numeric + bar chart. */
 .result {
   background:
     radial-gradient(ellipse 70% 80% at 50% 0%, rgba(200, 212, 222, 0.08), transparent 60%),
     rgba(200, 212, 222, 0.02);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
-  padding: 40px;
+  padding: 22px 18px;
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 48px;
+  grid-template-columns: 1fr;
+  gap: 22px;
   align-items: center;
   position: relative;
   overflow: hidden;
@@ -266,7 +283,7 @@
 }
 
 .resultMultiValue {
-  font-size: clamp(64px, 8vw, 120px);
+  font-size: clamp(56px, 14vw, 120px);
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 1;
@@ -278,7 +295,7 @@
 }
 
 .resultMultiSign {
-  font-size: clamp(36px, 4vw, 56px);
+  font-size: clamp(32px, 8vw, 56px);
   font-weight: 800;
   color: var(--accent);
   letter-spacing: -0.05em;
@@ -323,9 +340,9 @@
 
 .compareLine {
   display: grid;
-  grid-template-columns: 110px 1fr auto;
+  grid-template-columns: 76px 1fr auto;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
 }
 
 .compareLabel {
@@ -403,117 +420,140 @@
   font-style: italic;
 }
 
-@media (max-width: 1024px) {
+/* ── Tablet — more breathing room, still single-column pillars ── */
+@media (min-width: 768px) {
+  .section {
+    padding: 56px 24px 48px;
+  }
   .header {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    align-items: start;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
   }
   .lead {
-    text-align: left;
-    justify-self: start;
+    font-size: 15px;
   }
-  .pillars {
-    grid-template-columns: 1fr;
+  .pillar {
+    padding: 22px 20px 20px;
+    gap: 16px;
+  }
+  .pillarName {
+    font-size: 20px;
+  }
+  .selectedBlock {
+    padding: 14px 16px;
+  }
+  .selectedDesc {
+    font-size: 13.5px;
   }
   .result {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    padding: 32px;
+    padding: 32px 28px;
+  }
+  .compareLine {
+    grid-template-columns: 100px 1fr auto;
+    gap: 12px;
   }
 }
 
-@media (max-width: 640px) {
+/* ── Desktop — pillars row, side-by-side result ────────── */
+@media (min-width: 1024px) {
   .section {
-    padding: 40px 18px 36px;
+    padding: 72px 48px 56px;
   }
-
-  /* ── Pillar tile — denser, less ceremony ─────────────── */
+  .header {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 56px;
+    padding-bottom: 36px;
+  }
+  .title {
+    font-size: var(--fs-h1);
+  }
+  .lead {
+    font-size: var(--fs-body-lg);
+    text-align: right;
+    justify-self: end;
+  }
   .pillars {
-    gap: 12px;
-    margin-bottom: 22px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 32px;
   }
   .pillar {
-    padding: 16px 14px 14px;
-    gap: 12px;
+    padding: 28px 26px 24px;
+    gap: 18px;
   }
   .pillarHead {
-    flex-direction: row;
-    align-items: baseline;
-    gap: 10px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    flex-wrap: nowrap;
   }
   .pillarTag {
-    font-size: 9.5px;
-    letter-spacing: 0.18em;
+    font-size: 10px;
+    letter-spacing: 0.22em;
   }
   .pillarName {
-    font-size: 17px;
+    font-size: 22px;
   }
-  /* The "HOW MANY PAID CHANNELS WE RUN" sub-line restates the
-     pillar name in caps — pure noise on a phone. */
   .pillarDesc {
-    display: none;
+    display: block;
   }
-
-  /* Segmented control: short labels, more touch height. */
   .steps {
-    gap: 2px;
-    padding: 3px;
+    gap: 4px;
+    padding: 4px;
   }
   .step {
-    font-size: 9.5px;
-    padding: 9px 0;
-    letter-spacing: 0.04em;
+    padding: 9px 4px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
   }
-
-  /* Selected block: drop the "WHAT'S INCLUDED" / "GROWTH
-     CONTRIBUTION" labels, keep the description + percentage in one
-     compact row. */
   .selectedBlock {
-    padding: 12px 14px;
-    min-height: 0;
-    gap: 6px;
+    min-height: 92px;
+    gap: 8px;
+    padding: 14px 16px;
   }
   .selectedLabel,
   .contributionLabel {
-    display: none;
+    display: block;
   }
   .selectedDesc {
-    font-size: 12.5px;
-    line-height: 1.45;
+    font-size: 13px;
+    line-height: 1.5;
   }
   .selectedContribution {
-    padding-top: 8px;
-    margin-top: 2px;
+    padding-top: 10px;
+    margin-top: 6px;
   }
   .contributionValue {
-    font-size: 18px;
+    font-size: 22px;
   }
-
-  /* ── Formula strip — keep the "× × ×" desc, drop the label ── */
   .formula {
-    padding: 12px 14px;
-    gap: 0;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 18px;
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 22px;
+    margin-bottom: 22px;
   }
   .formulaLabel {
-    display: none;
+    display: inline-flex;
   }
   .formulaDesc {
-    font-size: 12px;
+    font-size: 13px;
   }
-
-  /* ── Result panel — tighter ───────────────────────────── */
   .result {
-    padding: 22px 18px;
-    gap: 22px;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 48px;
+    padding: 40px;
+  }
+  .resultMultiValue {
+    font-size: clamp(64px, 8vw, 120px);
+  }
+  .resultMultiSign {
+    font-size: clamp(36px, 4vw, 56px);
   }
   .compareLine {
-    grid-template-columns: 76px 1fr auto;
-    gap: 8px;
+    grid-template-columns: 110px 1fr auto;
+    gap: 14px;
   }
 }
