@@ -1,13 +1,25 @@
+/* Principles — mobile-first.
+ *
+ * Base = single-column stack with a slim CSS-drawn vertical rail
+ * running down the left edge (cheaper than the desktop's serpentine
+ * SVG path, easier to fit at 375 px). Desktop fans out into the
+ * zigzag layout with the big outlined ordinal next to each card and
+ * the animated serpentine SVG spine threaded behind them.
+ *
+ * Breakpoint exception: the zigzag needs a real desktop column width
+ * to read correctly — it gets enabled at `min-width: 900px` rather
+ * than the standard 1024 px (otherwise iPad portrait would render a
+ * cramped, half-broken serpentine). */
+
 .wrap {
   position: relative;
-  padding: 0 48px 24px;
+  padding: 0 18px 10px 26px;
   isolation: isolate;
 }
 
 /* The serpentine spine — three stacked paths (halo / main / traveller)
- * plus pulsing nodes. All animations run on their own timelines and do
- * NOT respond to scroll position, so the spine reads as a living
- * organism instead of a thing that jitters with the page scroll. */
+ * plus pulsing nodes. Hidden on phones (replaced by the slim mobile
+ * rail below); revealed at desktop sizes. */
 .spine {
   position: absolute;
   inset: 0;
@@ -16,6 +28,16 @@
   pointer-events: none;
   z-index: 0;
   overflow: visible;
+  /* Phone replaces the spine with the mobileRail below — hide its
+     internals so only the rail shows. */
+  left: 12px;
+  right: auto;
+  width: 14px;
+}
+
+.spine path,
+.spine circle {
+  display: none;
 }
 
 .spinePath,
@@ -25,8 +47,6 @@
   vector-effect: non-scaling-stroke;
 }
 
-/* Wide, low-opacity blur sitting behind the main line — gives the
- * spine depth without making it busy. */
 .spineHalo {
   stroke: var(--accent);
   stroke-opacity: 0.12;
@@ -38,8 +58,6 @@
   transition: opacity 0.6s ease;
 }
 
-/* The main visible line. Drawn in once when the section enters view
- * (CSS keyframe — not a per-frame React state). */
 .spinePath {
   stroke: url(#principles-gradient);
   stroke-width: 1.5;
@@ -49,10 +67,6 @@
   opacity: 0;
 }
 
-/* Short bright dash that loops along the path forever. The glow used
- * to come from a CSS `drop-shadow` which forces an offscreen paint on
- * every keyframe — moved into a static SVG filter (#principles-glow)
- * so the cost is paid once per layout, not per frame. */
 .spineTraveller {
   stroke: var(--accent);
   stroke-width: 2.4;
@@ -63,9 +77,6 @@
   filter: url(#principles-glow);
 }
 
-/* Once the section enters the viewport, kick all the spine animations
- * off. We toggle this with a single class on the wrapper so the
- * timings line up cleanly. */
 .wrapLive .spineHalo {
   opacity: 1;
   animation: principles-draw 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.05s forwards;
@@ -77,7 +88,6 @@
 }
 
 .wrapLive .spineTraveller {
-  /* Wait for the draw-in to finish, then loop forever. */
   animation:
     principles-traveller-fade 0.5s ease 1.6s forwards,
     principles-traveller-flow 4.2s linear 1.6s infinite;
@@ -127,8 +137,76 @@
   50%      { transform: scale(1.65); fill-opacity: 0.04; }
 }
 
-/* Respect reduced-motion users: kill the traveller + node pulses but
- * still draw the spine in once so the layout reads correctly. */
+/* ── Mobile slim left rail (replaces the serpentine SVG) ───── */
+.mobileRail {
+  position: absolute;
+  left: 16px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--line-strong) 8%,
+    var(--line-strong) 92%,
+    transparent 100%
+  );
+  border-radius: 2px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.wrapLive .mobileRail {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.mobileRail::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  width: 4px;
+  height: 56px;
+  border-radius: 4px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--accent) 35%,
+    var(--accent) 65%,
+    transparent
+  );
+  top: -56px;
+  animation: principles-rail-flow 4.2s linear infinite;
+}
+
+.mobileRailDot {
+  position: absolute;
+  left: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  opacity: 0.65;
+  z-index: 1;
+  pointer-events: none;
+  transform: translateY(-50%);
+  animation: principles-rail-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes principles-rail-flow {
+  from { top: -56px; }
+  to   { top: 100%; }
+}
+@keyframes principles-rail-dot {
+  0%, 100% { transform: translateY(-50%) scale(0.7); opacity: 0.5; }
+  50%      { transform: translateY(-50%) scale(1.15); opacity: 0.9; }
+}
+
+/* Respect reduced-motion users: kill the traveller + node pulses + the
+ * mobile-rail flow but still draw the spine in once so the layout
+ * reads correctly. */
 @media (prefers-reduced-motion: reduce) {
   .wrapLive .spineHalo,
   .wrapLive .spinePath {
@@ -137,12 +215,14 @@
   }
   .spineTraveller,
   .nodeHalo {
-    animation: none !important;
+    animation: none;
   }
   .spineTraveller { opacity: 0; }
+  .mobileRail::before { animation: none; }
+  .mobileRailDot { animation: none; }
 }
 
-/* The list of cards — left/right alternating to form the snake.     */
+/* ── List of cards ─────────────────────────────────────── */
 .list {
   position: relative;
   display: grid;
@@ -154,31 +234,35 @@
   padding: 0;
 }
 
+/* Phone row = single stacked column. The big ordinal sits above its
+   card (order: -1). Desktop alternates left/right around the spine. */
 .row {
   display: grid;
-  /* Card column takes more width than the ordinal column — the digit
-   * is a graphic accent, the card is the content. */
-  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+  grid-template-columns: 1fr;
   align-items: end;
-  gap: 36px;
+  gap: 10px;
+  min-height: 0;
+  padding-bottom: 6px;
 }
 
 .rowRight {
-  /* Digit on the left, card on the right. Order matches the natural
-   * grid-column order so we don't have to override per side. */
+  /* No alternation on phone — desktop overrides. */
 }
 
 .rowLeft {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+  grid-template-columns: 1fr;
 }
 
-.rowRight .nodeWrap { grid-column: 1; justify-self: start; }
-.rowRight .card     { grid-column: 2; }
-.rowLeft  .card     { grid-column: 1; }
-.rowLeft  .nodeWrap { grid-column: 2; justify-self: end; }
+.row .nodeWrap {
+  grid-column: 1;
+  justify-self: start;
+  order: -1;
+}
 
-/* Big outlined ordinal "01..04" sits next to its card, baseline-
- * aligned with the bottom of the card so the pair reads as a unit. */
+.row .card {
+  grid-column: 1;
+}
+
 .nodeWrap {
   display: flex;
   align-items: flex-end;
@@ -186,7 +270,7 @@
 }
 
 .node {
-  font-size: clamp(60px, 7vw, 104px);
+  font-size: 48px;
   font-weight: 800;
   line-height: 0.85;
   letter-spacing: -0.05em;
@@ -204,7 +288,7 @@
 
 .card {
   position: relative;
-  padding: 26px 26px 24px;
+  padding: 18px 16px 16px;
   border-radius: var(--radius-lg);
   background:
     linear-gradient(
@@ -285,125 +369,69 @@
   margin: 0;
 }
 
-/* Mobile: collapse the zigzag into a single stacked column. Numbers
- * sit above each card instead of beside them, so nothing overflows.
- * The serpentine spine becomes a slim vertical track running along
- * the left edge so the section still feels alive on phones — same
- * traveller animation, same node pulses, just a different path. */
-@media (max-width: 900px) {
+/* ── Tablet — same single-column stack, a bit more room ─── */
+@media (min-width: 768px) {
   .wrap {
     padding: 0 24px 16px 36px;
   }
-  .row {
-    grid-template-columns: 1fr;
-    min-height: 0;
-    gap: 10px;
-    padding-bottom: 6px;
+  .card {
+    padding: 22px 20px 20px;
   }
-  .rowLeft,
-  .rowRight {
-    grid-template-columns: 1fr;
+  .node {
+    font-size: 64px;
   }
-  .row .card,
-  .row .nodeWrap {
-    grid-column: 1;
-    justify-self: start;
-  }
-  .row .nodeWrap { order: -1; }
-  .node { font-size: 64px; }
+}
 
-  /* Re-style the spine as a slim left rail. The same SVG paths are
-   * used; we override their `d` via a CSS variable on the wrap that
-   * the JS will read on mobile breakpoints. To avoid extra JS, we
-   * simply hide the curved path and overlay a CSS-drawn pseudo-rail
-   * that picks up the existing traveller / node animations. */
+/* ── Desktop (900+) — zigzag with the serpentine SVG spine ── */
+@media (min-width: 900px) {
+  .wrap {
+    padding: 0 48px 24px;
+  }
   .spine {
-    left: 12px;
-    right: auto;
-    width: 14px;
+    left: 0;
+    right: 0;
+    width: 100%;
   }
   .spine path,
-  .spine circle { display: none; }
-
-  .wrap::before,
-  .wrap::after,
-  .wrap .mobileRail,
-  .wrap .mobileRailDot {
-    /* placeholders kept so the rule cascades — actual rail is in
-       .mobileRail below */
+  .spine circle {
+    display: block;
   }
-
-  .mobileRail {
-    position: absolute;
-    left: 16px;
-    top: 12px;
-    bottom: 12px;
-    width: 2px;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      var(--line-strong) 8%,
-      var(--line-strong) 92%,
-      transparent 100%
-    );
-    border-radius: 2px;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
-  }
-  .wrapLive .mobileRail { opacity: 1; transition: opacity 0.4s ease; }
-
-  .mobileRail::before {
-    content: "";
-    position: absolute;
-    left: -1px;
-    width: 4px;
-    height: 56px;
-    border-radius: 4px;
-    background: linear-gradient(
-      180deg,
-      transparent,
-      var(--accent) 35%,
-      var(--accent) 65%,
-      transparent
-    );
-    top: -56px;
-    animation: principles-rail-flow 4.2s linear infinite;
-  }
-
+  /* Mobile rail off; SVG spine takes over. */
+  .mobileRail,
   .mobileRailDot {
-    position: absolute;
-    left: -4px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 6px var(--accent);
-    opacity: 0.65;
-    z-index: 1;
-    pointer-events: none;
-    transform: translateY(-50%);
-    animation: principles-rail-dot 2.4s ease-in-out infinite;
+    display: none;
   }
-
-  @keyframes principles-rail-flow {
-    from { top: -56px; }
-    to   { top: 100%; }
+  .list {
+    gap: 36px;
   }
-  @keyframes principles-rail-dot {
-    0%, 100% { transform: translateY(-50%) scale(0.7); opacity: 0.5; }
-    50%      { transform: translateY(-50%) scale(1.15); opacity: 0.9; }
+  /* Zigzag: card column wider than the digit column. */
+  .row {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+    gap: 36px;
   }
-}
-
-@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
-  .mobileRail::before { animation: none; }
-  .mobileRailDot { animation: none; }
-}
-
-@media (max-width: 640px) {
-  .wrap { padding: 0 18px 10px 26px; }
-  .card { padding: 18px 16px 16px; }
-  .node { font-size: 48px; }
+  .rowLeft {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+  }
+  .rowRight .nodeWrap {
+    grid-column: 1;
+    justify-self: start;
+    order: 0;
+  }
+  .rowRight .card {
+    grid-column: 2;
+  }
+  .rowLeft .card {
+    grid-column: 1;
+  }
+  .rowLeft .nodeWrap {
+    grid-column: 2;
+    justify-self: end;
+    order: 0;
+  }
+  .node {
+    font-size: clamp(60px, 7vw, 104px);
+  }
+  .card {
+    padding: 26px 26px 24px;
+  }
 }

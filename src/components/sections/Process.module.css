@@ -1,18 +1,23 @@
+/* Process — mobile-first. Base = 2x2 grid of flat-numeral tiles (no
+ * description text, no big ringed number). Tablet keeps 2x2 with more
+ * room. Desktop switches to the 4-up horizontal timeline with the
+ * big ringed numbers + connector line + descriptive copy. */
+
 .section {
   position: relative;
   isolation: isolate;
-  padding: 72px 48px 56px;
+  padding: 40px 18px 36px;
   max-width: var(--container);
   margin: 0 auto;
 }
 
 .header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: end;
-  margin-bottom: 80px;
-  padding-bottom: 40px;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -23,7 +28,7 @@
 }
 
 .title {
-  font-size: var(--fs-h1);
+  font-size: clamp(28px, 7.5vw, 44px);
   font-weight: 800;
   line-height: 0.95;
   letter-spacing: -0.04em;
@@ -37,29 +42,30 @@
 
 .headerRight {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .lead {
-  font-size: var(--fs-body-lg);
+  font-size: 14.5px;
   color: var(--text-muted);
   line-height: 1.6;
   max-width: 440px;
-  text-align: right;
+  text-align: left;
 }
 
-/* Timeline line + steps ───────────────────────────────── */
+/* ── 2x2 tile grid ─────────────────────────────────────── */
 .grid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
-/* Horizontal connector line behind step numbers */
+/* Horizontal connector line — desktop timeline only. */
 .grid::before {
   content: "";
   position: absolute;
+  display: none;
   top: 44px;
   left: 48px;
   right: 48px;
@@ -76,149 +82,173 @@
 
 .step {
   position: relative;
-  padding: 0 28px;
+  padding: 16px 14px 14px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  transition: transform 0.4s var(--ease);
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(200, 212, 222, 0.06), transparent 60%),
+    rgba(255, 255, 255, 0.012);
+  overflow: hidden;
+  min-height: 124px;
+  transition: transform 0.4s var(--ease), border-color 0.3s ease;
 }
 
 .step:hover {
-  transform: translateY(-6px);
+  border-color: var(--accent);
 }
 
+/* Phone numeral: flat accent number. The bordered ring + glow only
+   come back on desktop where there's room for the timeline. */
 .numberWrap {
   position: relative;
   z-index: 1;
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  background: var(--black);
-  border: 1px solid var(--line-strong);
-  display: grid;
-  place-items: center;
-  font-size: 26px;
+  width: auto;
+  height: auto;
+  background: transparent;
+  border: 0;
+  display: block;
+  font-size: 32px;
   font-weight: 800;
   letter-spacing: -0.04em;
-  color: var(--white);
+  line-height: 1;
+  color: var(--accent);
   transition:
     background 0.3s ease,
     border-color 0.3s ease,
-    box-shadow 0.4s ease;
+    box-shadow 0.4s ease,
+    color 0.3s ease;
 }
 
 .step:hover .numberWrap {
-  background: var(--accent);
-  color: var(--black);
-  border-color: var(--accent);
-  box-shadow: 0 20px 50px -18px var(--accent-glow);
+  color: var(--accent-strong);
 }
 
 .duration {
-  font-size: var(--fs-mini);
+  font-size: 9px;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   color: var(--text-dim);
 }
 
 .stepTitle {
-  font-size: 26px;
+  font-size: 16px;
   font-weight: 800;
   letter-spacing: -0.025em;
-  line-height: 1.1;
+  line-height: 1.15;
+  margin-top: auto;
 }
 
+/* Description is decorative on a phone — the number + duration +
+   title carry the meaning. Desktop brings it back. */
 .stepDesc {
+  display: none;
   color: var(--text-muted);
   font-size: 14px;
   line-height: 1.65;
   max-width: 28ch;
 }
 
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 56px 24px;
+/* ── Tablet — same 2x2 but more breathing room ──────── */
+@media (min-width: 768px) {
+  .section {
+    padding: 56px 24px 48px;
   }
-  .grid::before {
-    display: none;
+  .header {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: end;
+    margin-bottom: 44px;
+    padding-bottom: 28px;
+  }
+  .headerRight {
+    justify-content: flex-end;
+  }
+  .lead {
+    text-align: right;
+    font-size: 15px;
+  }
+  .grid {
+    gap: 18px;
+  }
+  .step {
+    padding: 22px 18px 18px;
+    min-height: 148px;
+  }
+  .stepTitle {
+    font-size: 18px;
   }
 }
 
-@media (max-width: 640px) {
+/* ── Desktop — full 4-up horizontal timeline ─────────── */
+@media (min-width: 1024px) {
   .section {
-    padding: 40px 18px 36px;
+    padding: 72px 48px 56px;
   }
   .header {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    align-items: start;
-    margin-bottom: 28px;
-    padding-bottom: 20px;
+    margin-bottom: 80px;
+    padding-bottom: 40px;
   }
   .title {
-    font-size: clamp(28px, 7.5vw, 44px);
-  }
-  .headerRight {
-    justify-content: flex-start;
+    font-size: var(--fs-h1);
   }
   .lead {
-    text-align: left;
-    font-size: 14.5px;
+    font-size: var(--fs-body-lg);
   }
-  /* 2x2 numbered tiles. Drop the long description — number + duration
-     + title carry the meaning, and the rest is editorial flourish that
-     only works at desktop reading widths. */
   .grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
   }
+  /* Show the timeline connector line behind the ringed numbers. */
+  .grid::before {
+    display: block;
+  }
+  /* Switch back from "bordered tile" to "transparent column on the
+     timeline" — the ring number + line carry the visual structure. */
   .step {
-    position: relative;
-    padding: 16px 14px 14px;
-    gap: 10px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    background:
-      radial-gradient(circle at 100% 0%, rgba(200, 212, 222, 0.06), transparent 60%),
-      rgba(255, 255, 255, 0.012);
-    overflow: hidden;
-    min-height: 124px;
+    padding: 0 28px;
+    gap: 18px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    overflow: visible;
+    min-height: 0;
   }
   .step:hover {
-    transform: none;
-    border-color: var(--accent);
+    transform: translateY(-6px);
+    border-color: transparent;
   }
-  /* Replace the bordered ring number with a flat accent numeral. */
+  /* Bring back the bordered ring numeral + glow. */
   .numberWrap {
-    width: auto;
-    height: auto;
-    background: transparent;
-    border: 0;
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--accent);
-    display: block;
-    line-height: 1;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: var(--black);
+    border: 1px solid var(--line-strong);
+    display: grid;
+    place-items: center;
+    font-size: 26px;
+    color: var(--white);
   }
   .step:hover .numberWrap {
-    background: transparent;
-    color: var(--accent-strong);
-    box-shadow: none;
+    background: var(--accent);
+    color: var(--black);
+    border-color: var(--accent);
+    box-shadow: 0 20px 50px -18px var(--accent-glow);
   }
   .duration {
-    font-size: 9px;
-    letter-spacing: 0.16em;
-    color: var(--text-dim);
+    font-size: var(--fs-mini);
+    letter-spacing: 0.2em;
   }
   .stepTitle {
-    font-size: 16px;
-    line-height: 1.15;
-    margin-top: auto;
+    font-size: 26px;
+    line-height: 1.1;
+    margin-top: 0;
   }
   .stepDesc {
-    display: none;
+    display: block;
   }
 }
