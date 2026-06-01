@@ -1,9 +1,11 @@
+/* 404 — mobile-first. */
+
 .main {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 96px 24px;
+  padding: 56px 18px;
 }
 
 .inner {
@@ -24,7 +26,7 @@
 }
 
 .title {
-  font-size: clamp(96px, 18vw, 200px);
+  font-size: clamp(80px, 22vw, 200px);
   font-weight: 800;
   line-height: 0.85;
   letter-spacing: -0.05em;
@@ -38,14 +40,14 @@
 }
 
 .subtitle {
-  font-size: clamp(22px, 3vw, 30px);
+  font-size: clamp(20px, 5vw, 30px);
   font-weight: 700;
   margin: 8px 0 0;
 }
 
 .lead {
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: 14.5px;
   line-height: 1.6;
   margin: 0;
 }
@@ -65,4 +67,13 @@
 
 .cta:hover {
   transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding: 96px 24px;
+  }
+  .lead {
+    font-size: 15px;
+  }
 }

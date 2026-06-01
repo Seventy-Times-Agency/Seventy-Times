@@ -1,6 +1,8 @@
+/* ServiceDetail — mobile-first. Per-service page at /<locale>/services/<slug>. */
+
 .main {
   min-height: 100vh;
-  padding: 120px 24px 96px;
+  padding: 72px 18px 56px;
 }
 
 .inner {
@@ -8,7 +10,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 28px;
 }
 
 .breadcrumbs {
@@ -16,7 +18,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 11.5px;
   letter-spacing: 0.06em;
   color: var(--text-dim);
 }
@@ -41,7 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 16px;
 }
 
 .kicker {
@@ -56,21 +58,21 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   border-radius: var(--radius-md, 14px);
   border: 1px solid var(--line);
   background: rgba(200, 212, 222, 0.025);
 }
 
 .iconSvg {
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   color: var(--text);
 }
 
 .title {
-  font-size: clamp(38px, 7vw, 68px);
+  font-size: clamp(30px, 9vw, 68px);
   font-weight: 800;
   letter-spacing: -0.025em;
   line-height: 1.02;
@@ -78,7 +80,7 @@
 }
 
 .tagline {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.55;
   color: var(--text-muted);
   margin: 0;
@@ -86,7 +88,7 @@
 
 .note {
   align-self: flex-start;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -96,14 +98,13 @@
   border-radius: var(--radius-pill);
 }
 
-/* Timeline + "ideal for" meta block — small qualifier card that helps
- * the visitor self-select before they read the deliverables list. */
+/* Timeline + "ideal for" qualifier card. */
 .meta {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  margin: 24px 0 0;
-  padding: 20px;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 20px 0 0;
+  padding: 18px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: rgba(200, 212, 222, 0.025);
@@ -125,30 +126,22 @@
 }
 
 .metaValue {
-  font-size: 14.5px;
+  font-size: 14px;
   color: var(--text-muted);
   line-height: 1.55;
   margin: 0;
 }
 
-@media (max-width: 720px) {
-  .meta {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 18px;
-  }
-}
-
 .cols {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 36px;
+  grid-template-columns: 1fr;
+  gap: 24px;
 }
 
 .col {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .colLabel {
@@ -173,7 +166,7 @@
   display: flex;
   gap: 10px;
   align-items: baseline;
-  font-size: 15px;
+  font-size: 14.5px;
   line-height: 1.5;
   color: var(--text);
 }
@@ -194,8 +187,8 @@
 
 .ctaRow {
   display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 10px;
   margin-top: 6px;
 }
 
@@ -203,11 +196,12 @@
 .secondaryCta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  padding: 14px 26px;
+  padding: 13px 22px;
   border-radius: var(--radius-pill);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13.5px;
   letter-spacing: 0.04em;
   transition: transform 0.18s var(--ease), background 0.18s ease;
 }
@@ -231,18 +225,18 @@
 }
 
 .relatedSection {
-  margin-top: 24px;
-  padding-top: 28px;
+  margin-top: 20px;
+  padding-top: 24px;
   border-top: 1px solid var(--line);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .relatedGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 
 .relatedCard {
@@ -250,7 +244,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 18px 20px 22px;
+  padding: 16px 18px 20px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md, 14px);
   background: rgba(200, 212, 222, 0.018);
@@ -276,7 +270,7 @@
 }
 
 .relatedTitle {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text);
   line-height: 1.25;
@@ -302,12 +296,78 @@
   color: var(--accent);
 }
 
-@media (max-width: 720px) {
+@media (min-width: 720px) {
   .main {
     padding: 96px 20px 72px;
   }
+  .inner {
+    gap: 36px;
+  }
+  .breadcrumbs {
+    font-size: 12px;
+  }
+  .iconBox {
+    width: 64px;
+    height: 64px;
+  }
+  .iconSvg {
+    width: 28px;
+    height: 28px;
+  }
+  .tagline {
+    font-size: 18px;
+  }
+  .note {
+    font-size: 12px;
+  }
+  .meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin: 24px 0 0;
+    padding: 20px;
+  }
+  .metaValue {
+    font-size: 14.5px;
+  }
   .cols {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+  .col {
+    gap: 16px;
+  }
+  .item {
+    font-size: 15px;
+  }
+  .ctaRow {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .primaryCta,
+  .secondaryCta {
+    padding: 14px 26px;
+    font-size: 14px;
+  }
+  .relatedSection {
+    margin-top: 24px;
+    padding-top: 28px;
+    gap: 16px;
+  }
+  .relatedGrid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .relatedCard {
+    padding: 18px 20px 22px;
+  }
+  .relatedTitle {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main {
+    padding: 120px 24px 96px;
   }
 }
