@@ -1,3 +1,6 @@
+/* RingCounter — mobile-first.
+ * Base ring size 96 px, grows to 110 px at phablet and 132 px at desktop. */
+
 .wrap {
   position: relative;
   width: 100%;
@@ -9,8 +12,8 @@
 
 .ringWrap {
   position: relative;
-  width: 132px;
-  height: 132px;
+  width: 96px;
+  height: 96px;
   display: grid;
   place-items: center;
 }
@@ -61,7 +64,7 @@
 
 .value {
   position: absolute;
-  font-size: clamp(20px, 2.2vw, 28px);
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -78,19 +81,22 @@
   text-align: center;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 420px) {
   .ringWrap {
     width: 110px;
     height: 110px;
   }
+  .value {
+    font-size: clamp(20px, 2.2vw, 24px);
+  }
 }
 
-@media (max-width: 420px) {
+@media (min-width: 900px) {
   .ringWrap {
-    width: 96px;
-    height: 96px;
+    width: 132px;
+    height: 132px;
   }
   .value {
-    font-size: 20px;
+    font-size: clamp(20px, 2.2vw, 28px);
   }
 }
