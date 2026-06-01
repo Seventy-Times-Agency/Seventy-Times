@@ -339,8 +339,14 @@ queries.
 Breakpoint constants live in `globals.css` as `--bp-tablet (768)`,
 `--bp-desktop (1024)`, `--bp-wide (1280)` — copy the px value into the
 query directly (CSS custom properties can't be used inside `@media`).
-Older components still use `@media (max-width: ...)` overrides; they
-get converted phase-by-phase, not all at once.
+A few modules deviate when the editorial layout demands it
+(`Principles` uses `min-width: 900px` to fit the zigzag spine; the
+chat FAB and a few overlays switch at `640px`); the convention is
+"mobile-first", not "one breakpoint per file".
+
+**No `@media (max-width: ...)` rules.** The whole CSS layer was
+converted in 2026-Q2; if you're tempted to add one, you almost
+certainly want a `min-width` rule above it instead.
 
 ---
 

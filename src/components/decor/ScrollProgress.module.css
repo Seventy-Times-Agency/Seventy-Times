@@ -1,3 +1,7 @@
+/* ScrollProgress — mobile-first. Hidden on phones (the vertical 1 px
+   track on the right edge competes with native scrollbars + reduces
+   horizontal room on small viewports); shown at desktop sizes only. */
+
 .track {
   position: fixed;
   top: 0;
@@ -7,6 +11,7 @@
   background: var(--line);
   z-index: 90;
   pointer-events: none;
+  display: none;
 }
 
 .bar {
@@ -36,11 +41,12 @@
   color: var(--text-dim);
   writing-mode: vertical-rl;
   transform: rotate(180deg);
+  display: none;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 900px) {
   .track,
   .label {
-    display: none;
+    display: block;
   }
 }

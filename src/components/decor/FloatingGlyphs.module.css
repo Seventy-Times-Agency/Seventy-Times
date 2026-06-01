@@ -1,9 +1,12 @@
+/* Decorative floating glyphs — phone hides them entirely (visual
+   noise that fights for attention at small widths); tablet+ shows. */
 .layer {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+  display: none;
 }
 
 .glyph {
@@ -83,8 +86,8 @@
   50% { transform: translate(-25px, 35px) rotate(15deg); }
 }
 
-@media (max-width: 820px) {
+@media (min-width: 820px) {
   .layer {
-    display: none;
+    display: block;
   }
 }
