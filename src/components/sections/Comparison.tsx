@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
@@ -62,9 +63,19 @@ const ROWS: readonly RowKeys[] = [
 
 export default function Comparison() {
   const { t } = useT();
+  // Mobile: show only the Seventy Times column by default; the
+  // "Agency" and "Freelancer" lines under each criterion are hidden
+  // behind one global toggle. Desktop renders the full 4-column
+  // table regardless (the toggle button is display:none at 1024+).
+  const [showAlternatives, setShowAlternatives] = useState(false);
 
   return (
-    <section id="comparison" className={styles.section}>
+    <section
+      id="comparison"
+      className={`${styles.section}${
+        showAlternatives ? ` ${styles.sectionShowAlts}` : ""
+      }`}
+    >
       <SectionWatermark text="vs" number="/ 03" position="left" />
 
       <div className={styles.header}>
@@ -86,6 +97,18 @@ export default function Comparison() {
           <p className={styles.lead}>{t.compLead}</p>
         </Reveal>
       </div>
+
+      <button
+        type="button"
+        className={styles.altsToggle}
+        onClick={() => setShowAlternatives((v) => !v)}
+        aria-expanded={showAlternatives}
+      >
+        {showAlternatives ? t.compHideAlts : t.compShowAlts}
+        <span className={styles.altsToggleArrow} aria-hidden="true">
+          {showAlternatives ? "−" : "+"}
+        </span>
+      </button>
 
       <Reveal delay={0.1}>
         <div className={styles.tableWrap}>

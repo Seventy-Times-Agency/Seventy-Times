@@ -62,6 +62,8 @@ const strings = {
     compBadgeUs: "Empfohlen",
     compHeadAgency: "Klassische Agentur",
     compHeadFreelancer: "Einzelner Freelancer",
+    compShowAlts: "Vergleich anzeigen",
+    compHideAlts: "Vergleich ausblenden",
     compRowSpeedLabel: "Time-to-Launch",
     compRowSpeedUs: "Erste Leads in 30 Tagen",
     compRowSpeedAgency: "60–90 Tage Onboarding",

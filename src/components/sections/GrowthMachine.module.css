@@ -286,6 +286,53 @@
   background: rgba(200, 212, 222, 0.08);
 }
 
+/* "What's included" toggle button — only renders on mobile (the
+   collapsible panel is always visible at desktop sizes). */
+.includesToggle {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: rgba(200, 212, 222, 0.03);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.includesToggle:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.includesToggleArrow {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  color: var(--accent);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.includesPanel {
+  /* Desktop: always visible (no collapse). */
+  display: block;
+}
+
+.includesPanelOpen {
+  display: block;
+}
+
 /* ── Card footer ────────────────────────────────────────── */
 .cardFooter {
   display: flex;
@@ -498,6 +545,18 @@
   }
   .cardList {
     gap: 7px;
+  }
+
+  /* Mobile: collapse the includes checklist behind the toggle button. */
+  .includesToggle {
+    display: inline-flex;
+  }
+  .includesPanel {
+    display: none;
+  }
+  .includesPanelOpen {
+    display: block;
+    margin-top: 12px;
   }
 }
 

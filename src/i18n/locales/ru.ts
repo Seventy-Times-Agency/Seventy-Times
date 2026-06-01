@@ -62,6 +62,8 @@ const strings = {
     compBadgeUs: "Рекомендуем",
     compHeadAgency: "Классическое агентство",
     compHeadFreelancer: "Один фрилансер",
+    compShowAlts: "Показать сравнение",
+    compHideAlts: "Скрыть сравнение",
     compRowSpeedLabel: "Срок запуска",
     compRowSpeedUs: "Первые лиды за 30 дней",
     compRowSpeedAgency: "60–90 дней онбординга",
