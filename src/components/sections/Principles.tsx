@@ -219,17 +219,46 @@ export default function Principles() {
               <span className={styles.nodeWrap} aria-hidden="true">
                 <span className={styles.node}>{p.badge}</span>
               </span>
-              <article className={styles.card} onMouseMove={handleMove}>
-                <span className={styles.cardKicker}>
-                  / {p.badge}
-                </span>
-                <h3 className={styles.cardTitle}>{p.title}</h3>
-                <p className={styles.cardBody}>{p.body}</p>
-              </article>
+              <PrincipleCard principle={p} onMouseMove={handleMove} />
             </li>
           );
         })}
       </ol>
     </div>
+  );
+}
+
+type PrincipleCardProps = {
+  principle: Principle;
+  onMouseMove: (e: MouseEvent<HTMLDivElement>) => void;
+};
+
+/**
+ * Principle card — kicker + title always visible; body collapses
+ * behind a tap on mobile. Desktop renders the body inline as before
+ * (the CSS hides the toggle and forces the body open at 900+ px). */
+function PrincipleCard({ principle, onMouseMove }: PrincipleCardProps) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <article className={styles.card} onMouseMove={onMouseMove}>
+      <span className={styles.cardKicker}>/ {principle.badge}</span>
+      <h3 className={styles.cardTitle}>{principle.title}</h3>
+      <p
+        className={`${styles.cardBody}${
+          expanded ? ` ${styles.cardBodyOpen}` : ""
+        }`}
+      >
+        {principle.body}
+      </p>
+      <button
+        type="button"
+        className={styles.cardToggle}
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+      >
+        {expanded ? "−" : "+"}
+      </button>
+    </article>
   );
 }

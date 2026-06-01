@@ -285,6 +285,36 @@
   margin: 0;
 }
 
+/* Per-card collapse toggle — hidden on desktop, shown on mobile.
+   Tap reveals the cardBody (which is collapsed by default at narrow
+   widths). */
+.cardToggle {
+  display: none;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: rgba(200, 212, 222, 0.04);
+  color: var(--accent);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.cardToggle:hover {
+  border-color: var(--accent);
+  background: rgba(200, 212, 222, 0.1);
+}
+
+.cardBodyOpen {
+  display: block;
+}
+
 /* Mobile: collapse the zigzag into a single stacked column. Numbers
  * sit above each card instead of beside them, so nothing overflows.
  * The serpentine spine becomes a slim vertical track running along
@@ -404,6 +434,23 @@
 
 @media (max-width: 640px) {
   .wrap { padding: 0 18px 10px 26px; }
-  .card { padding: 18px 16px 16px; }
+  .card {
+    padding: 16px 16px 14px;
+    position: relative;
+  }
   .node { font-size: 48px; }
+
+  /* Collapse body text by default on phone; tap the + button to
+     expand. Cuts ~600 px aggregate across the four principle cards. */
+  .cardBody {
+    display: none;
+    margin-top: 4px;
+  }
+  .cardBodyOpen {
+    display: block;
+  }
+  .cardToggle {
+    display: grid;
+    place-items: center;
+  }
 }

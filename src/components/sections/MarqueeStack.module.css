@@ -11,6 +11,15 @@
   gap: 14px;
 }
 
+/* Pure decoration: brand keywords scrolling — no actionable info.
+   Hide entirely on phones to cut ~130 px of dead scroll. Desktop
+   keeps it as editorial flourish. */
+@media (max-width: 767px) {
+  .wrap {
+    display: none;
+  }
+}
+
 /* Edge fades via pseudo-elements — much cheaper than mask-image. */
 .wrap::before,
 .wrap::after {
