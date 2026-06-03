@@ -1,4 +1,19 @@
 :root {
+  /* ── Mobile-first convention ─────────────────────────────
+   * Component CSS rules outside a media query describe the mobile
+   * layout. Desktop styles are layered on with `@media (min-width: ...)`
+   * using the breakpoint values below. CSS custom properties can't be
+   * referenced inside an `@media` query, so these constants are
+   * documentation — copy the pixel value into the query directly.
+   *
+   *   --bp-tablet:  768px — phablets, small tablets, landscape phones
+   *   --bp-desktop: 1024px — full desktop layouts, side-by-side panels
+   *   --bp-wide:    1280px — wide-screen editorial typography
+   * ───────────────────────────────────────────────────────── */
+  --bp-tablet: 768px;
+  --bp-desktop: 1024px;
+  --bp-wide: 1280px;
+
   /* ── IAA palette: cool graphite + Casper accents ────────── */
   --black: #0a0b10;
   --black-pure: #000000;
@@ -45,9 +60,11 @@
   --container-sm: 880px;
   --container-xs: 660px;
 
-  /* Typography scale (desktop-first).
-     Upper bounds trimmed ~10 % so the page reads as composed
-     instead of overwhelming on large monitors. */
+  /* Typography scale (fluid, mobile-first).
+     `clamp(min, fluid, max)` — the minimum is the mobile size, the
+     maximum is the wide-screen size, and the fluid middle scales with
+     viewport width. Designed so the same token works without a media
+     query override in 95% of cases. */
   --fs-display: clamp(48px, 7.6vw, 128px);
   --fs-h1: clamp(38px, 5.6vw, 84px);
   --fs-h2: clamp(32px, 4.2vw, 64px);
@@ -228,11 +245,15 @@ html:lang(de) h3 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Snap UI transitions to instant so motion-sensitive users get
+     immediate feedback. `animation-*` is deliberately NOT nuked here
+     — individual components decide for themselves whether to stop,
+     slow, or keep their animation (see MarqueeStack and the hero
+     shimmer for two different policies). Killing animation globally
+     here was overriding those tuned per-component fallbacks. */
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
