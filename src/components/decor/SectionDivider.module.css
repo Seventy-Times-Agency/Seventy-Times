@@ -31,14 +31,12 @@
   white-space: nowrap;
 }
 
+/* 8 decorative section labels between landing blocks. On a phone
+   each one is just inflating the scroll without communicating
+   anything the next section's title doesn't already say. Hide them
+   entirely below 640 px — saves ~200 px aggregate. */
 @media (max-width: 640px) {
   .wrap {
-    padding: 0 18px;
-    margin: 8px auto;
-    gap: 16px;
-  }
-  .label {
-    font-size: 9.5px;
-    letter-spacing: 0.18em;
+    display: none;
   }
 }

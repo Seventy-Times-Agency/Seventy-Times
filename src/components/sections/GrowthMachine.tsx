@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
@@ -161,22 +162,10 @@ function PackageCard({
         <span className={styles.cardTier}>{pkg.tier}</span>
       </header>
 
-      <div className={styles.cardBody}>
-        <h3 className={styles.cardTitle}>{pkg.title}</h3>
-        <p className={styles.cardSub}>{pkg.sub}</p>
-
-        <span className={styles.cardListLabel}>{includesLabel}</span>
-        <ul className={styles.cardList}>
-          {pkg.includes.map((item) => (
-            <li key={item} className={styles.cardListItem}>
-              <span className={styles.cardListBullet} aria-hidden="true">
-                ✓
-              </span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <CardBody
+        pkg={pkg}
+        includesLabel={includesLabel}
+      />
 
       <footer className={styles.cardFooter}>
         <div className={styles.cardTerm}>
@@ -200,5 +189,60 @@ function PackageCard({
         </Magnetic>
       </footer>
     </article>
+  );
+}
+
+type CardBodyProps = {
+  pkg: Pkg;
+  includesLabel: Dictionary["gmIncludes"];
+};
+
+/**
+ * Card body — title + sub + collapsible includes checklist.
+ *
+ * On desktop the checklist is always visible. On phones it collapses
+ * behind a "What's included" toggle: the visitor sees title + sub +
+ * price + CTA above the fold of one card, can tap to expand the
+ * value-prop checklist when they're interested. Cuts the rendered
+ * height of each of the three packages by roughly half on mobile.
+ */
+function CardBody({ pkg, includesLabel }: CardBodyProps) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div className={styles.cardBody}>
+      <h3 className={styles.cardTitle}>{pkg.title}</h3>
+      <p className={styles.cardSub}>{pkg.sub}</p>
+
+      <button
+        type="button"
+        className={styles.includesToggle}
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+      >
+        {includesLabel}
+        <span className={styles.includesToggleArrow} aria-hidden="true">
+          {expanded ? "−" : "+"}
+        </span>
+      </button>
+
+      <div
+        className={`${styles.includesPanel}${
+          expanded ? ` ${styles.includesPanelOpen}` : ""
+        }`}
+      >
+        <span className={styles.cardListLabel}>{includesLabel}</span>
+        <ul className={styles.cardList}>
+          {pkg.includes.map((item) => (
+            <li key={item} className={styles.cardListItem}>
+              <span className={styles.cardListBullet} aria-hidden="true">
+                ✓
+              </span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

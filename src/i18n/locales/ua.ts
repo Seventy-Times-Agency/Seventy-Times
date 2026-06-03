@@ -62,6 +62,8 @@ const strings = {
     compBadgeUs: "Рекомендуємо",
     compHeadAgency: "Класичне агентство",
     compHeadFreelancer: "Один фрілансер",
+    compShowAlts: "Показати порівняння",
+    compHideAlts: "Сховати порівняння",
     compRowSpeedLabel: "Термін запуску",
     compRowSpeedUs: "Перші ліди за 30 днів",
     compRowSpeedAgency: "60–90 днів онбордингу",
