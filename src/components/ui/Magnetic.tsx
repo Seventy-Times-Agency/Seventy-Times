@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 type Props = {
@@ -13,6 +13,10 @@ type Props = {
 /**
  * Magnetic wrapper — translates its child toward the cursor while it
  * hovers, snapping back when the cursor leaves. Spring-smoothed.
+ *
+ * Becomes a passthrough on coarse-pointer / small-viewport devices —
+ * the magnetic pull only makes sense with a hovering mouse, and the
+ * spring loop ran needlessly on phones where no `mousemove` fires.
  */
 export default function Magnetic({
   children,
@@ -24,6 +28,21 @@ export default function Magnetic({
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 220, damping: 18, mass: 0.5 });
   const springY = useSpring(y, { stiffness: 220, damping: 18, mass: 0.5 });
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(
+      "(min-width: 768px) and (hover: hover) and (pointer: fine)",
+    );
+    setEnabled(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setEnabled(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  if (!enabled) {
+    return <span className={className} style={{ display: "inline-flex" }}>{children}</span>;
+  }
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = ref.current;

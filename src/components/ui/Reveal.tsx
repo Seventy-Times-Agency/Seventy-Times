@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
+import { motion, type Variants, useReducedMotion } from "framer-motion";
+import { useEffect, useState, type ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
@@ -29,6 +29,27 @@ export default function Reveal({
   y = 24,
   className,
 }: Props) {
+  const reduceMotion = useReducedMotion();
+  // On phones the IntersectionObserver fires late relative to scroll
+  // velocity — `whileInView` lets the element render at `opacity: 0`
+  // for a frame before the animation catches up, which reads as the
+  // "black flicker" / "winking" on fast scrolls. Desktop has enough
+  // CPU headroom for the animation to land before the user perceives
+  // the off state, so the scroll-reveal stays there.
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    setAnimate(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setAnimate(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  if (!animate || reduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}
