@@ -169,6 +169,22 @@ export default function CaseStudyDetail({ item, related }: Props) {
                 </section>
               )}
 
+              {s.sections?.map((sec) => (
+                <section key={sec.heading[locale]} className={styles.panel}>
+                  <h2 className={styles.panelTitle}>{sec.heading[locale]}</h2>
+                  <ul className={styles.checkList}>
+                    {sec.items.map((it) => (
+                      <li key={it[locale]} className={styles.checkItem}>
+                        <span className={styles.check} aria-hidden="true">
+                          ✓
+                        </span>
+                        {it[locale]}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+
               {s.features && (
                 <section className={styles.panel}>
                   <ul className={styles.featureList}>

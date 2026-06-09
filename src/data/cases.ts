@@ -64,6 +64,9 @@ export type CaseStudy = {
     roasNote: Loc;
   };
   deliverables?: { heading: Loc; items: Loc[] };
+  /** Extra grouped checklists — used when a build has many features
+   *  worth spelling out across several categories. */
+  sections?: { heading: Loc; items: Loc[] }[];
   clients?: {
     heading: Loc;
     items: { label: Loc; rows: Row[] }[];
@@ -1007,6 +1010,7 @@ export const CASES: readonly CaseItem[] = [
     id: "elitecarmats",
     status: "progress",
     region: "usa",
+    url: "https://elitecarmats.us",
     study: {
       accent: "#D4A54A",
       title: u("Elite Car Mats"),
@@ -1097,92 +1101,162 @@ export const CASES: readonly CaseItem[] = [
         {
           icon: "🚗",
           text: {
-            en: "Vehicle configurator — year, set type, mat & edge colour, optional brand badge",
-            ru: "Конфигуратор под авто — год, тип комплекта, цвет коврика и окантовки, опц. шильдик бренда",
-            de: "Fahrzeug-Konfigurator — Jahr, Set-Typ, Matten- und Kantenfarbe, optionales Marken-Badge",
-            ua: "Конфігуратор під авто — рік, тип комплекта, колір килимка й окантовки, опц. шильдик бренда",
+            en: "Vehicle configurator — year, set type (profile-aware), mat & edge colour, optional metal brand badge",
+            ru: "Конфигуратор под авто — год, тип комплекта (по профилю кузова), цвет коврика и окантовки, опц. металлический шильдик бренда",
+            de: "Fahrzeug-Konfigurator — Jahr, Set-Typ (profilabhängig), Matten- und Kantenfarbe, optionales Marken-Badge aus Metall",
+            ua: "Конфігуратор під авто — рік, тип комплекта (за профілем кузова), колір килимка й окантовки, опц. металевий шильдик бренда",
           },
         },
         {
           icon: "🔎",
           text: {
-            en: "Catalog of ~60 brands / ~700 models with body-type filters and ⌘K search",
-            ru: "Каталог ~60 брендов / ~700 моделей с фильтрами по кузову и поиском ⌘K",
-            de: "Katalog mit ~60 Marken / ~700 Modellen, Karosserie-Filtern und ⌘K-Suche",
-            ua: "Каталог ~60 брендів / ~700 моделей з фільтрами за кузовом і пошуком ⌘K",
+            en: "Catalog of ~60 brands / ~700 models — body-type filters and ⌘K search with autocomplete",
+            ru: "Каталог ~60 брендов / ~700 моделей — фильтры по типу кузова и поиск ⌘K с автокомплитом",
+            de: "Katalog mit ~60 Marken / ~700 Modellen — Karosserie-Filter und ⌘K-Suche mit Autovervollständigung",
+            ua: "Каталог ~60 брендів / ~700 моделей — фільтри за типом кузова і пошук ⌘K з автокомплітом",
           },
         },
         {
           icon: "💳",
           text: {
-            en: "Cart with promo codes and Stripe Checkout",
-            ru: "Корзина с промокодами и оплатой через Stripe Checkout",
-            de: "Warenkorb mit Promo-Codes und Stripe Checkout",
-            ua: "Кошик з промокодами та оплатою через Stripe Checkout",
+            en: "Cart with promo codes and Stripe Checkout (with manual-confirm fallback)",
+            ru: "Корзина с промокодами и оплатой через Stripe Checkout (с резервным ручным подтверждением)",
+            de: "Warenkorb mit Promo-Codes und Stripe Checkout (mit manueller Bestätigung als Fallback)",
+            ua: "Кошик з промокодами та оплатою через Stripe Checkout (із резервним ручним підтвердженням)",
           },
         },
         {
           icon: "📦",
           text: {
-            en: "Order tracking, wishlist, and a custom-order form for vehicles not in the catalog",
-            ru: "Отслеживание заказа, вишлист и форма кастом-заказа для авто не из каталога",
-            de: "Bestellverfolgung, Wunschliste und Sonderbestellformular für Fahrzeuge außerhalb des Katalogs",
-            ua: "Відстеження замовлення, список бажань і форма кастом-замовлення для авто не з каталогу",
+            en: "Order tracking via HMAC links, ShipStation fulfillment, and Resend transactional emails",
+            ru: "Отслеживание заказа по HMAC-ссылкам, фулфилмент через ShipStation и транзакционные письма на Resend",
+            de: "Bestellverfolgung über HMAC-Links, Fulfillment via ShipStation und transaktionale E-Mails mit Resend",
+            ua: "Відстеження замовлення за HMAC-посиланнями, фулфілмент через ShipStation і транзакційні листи на Resend",
           },
         },
         {
-          icon: "📰",
+          icon: "❤️",
           text: {
-            en: "Markdown blog and 3 languages (EN / RU / UK), WCAG-accessible",
-            ru: "Блог на Markdown и 3 языка (EN / RU / UK), доступность по WCAG",
-            de: "Markdown-Blog und 3 Sprachen (EN / RU / UK), WCAG-konform",
-            ua: "Блог на Markdown і 3 мови (EN / RU / UK), доступність за WCAG",
+            en: "Wishlist and a custom-order form for vehicles outside the catalog",
+            ru: "Вишлист и форма кастом-заказа для авто не из каталога",
+            de: "Wunschliste und Sonderbestellformular für Fahrzeuge außerhalb des Katalogs",
+            ua: "Список бажань і форма кастом-замовлення для авто не з каталогу",
           },
         },
         {
-          icon: "🔒",
+          icon: "🌐",
           text: {
-            en: "Full SEO — Schema.org, sitemap, and a Google Merchant Center product feed",
-            ru: "Полное SEO — Schema.org, sitemap и продуктовый фид Google Merchant Center",
-            de: "Vollständiges SEO — Schema.org, Sitemap und Google-Merchant-Center-Produktfeed",
-            ua: "Повне SEO — Schema.org, sitemap і продуктовий фід Google Merchant Center",
+            en: "Three languages (EN / RU / UK), a Markdown blog, and WCAG accessibility",
+            ru: "Три языка (EN / RU / UK), блог на Markdown и доступность по WCAG",
+            de: "Drei Sprachen (EN / RU / UK), ein Markdown-Blog und WCAG-Barrierefreiheit",
+            ua: "Три мови (EN / RU / UK), блог на Markdown і доступність за WCAG",
           },
         },
       ],
-      deliverables: {
-        heading: {
-          en: "Operator dashboard",
-          ru: "Операторская панель",
-          de: "Betreiber-Dashboard",
-          ua: "Операторська панель",
+      sections: [
+        {
+          heading: {
+            en: "Operator dashboard",
+            ru: "Операторская панель",
+            de: "Betreiber-Dashboard",
+            ua: "Операторська панель",
+          },
+          items: [
+            {
+              en: "Revenue dashboard — daily / weekly / monthly, AOV, top models",
+              ru: "Дашборд выручки — день / неделя / месяц, средний чек, топ-модели",
+              de: "Umsatz-Dashboard — täglich / wöchentlich / monatlich, AOV, Top-Modelle",
+              ua: "Дашборд виручки — день / тиждень / місяць, середній чек, топ-моделі",
+            },
+            {
+              en: "Order management — status timeline, tracking numbers, email re-send",
+              ru: "Управление заказами — статус-таймлайн, трек-номера, повторная отправка письма",
+              de: "Bestellverwaltung — Status-Timeline, Sendungsnummern, E-Mail erneut senden",
+              ua: "Керування замовленнями — статус-таймлайн, трек-номери, повторне надсилання листа",
+            },
+            {
+              en: "Live price editor with per-vehicle overrides + Google Shopping feed",
+              ru: "Живой редактор цен с переопределениями по типам авто + фид Google Shopping",
+              de: "Live-Preiseditor mit Überschreibungen je Fahrzeug + Google-Shopping-Feed",
+              ua: "Живий редактор цін з перевизначеннями за типами авто + фід Google Shopping",
+            },
+            {
+              en: "Catalog CRUD, blog editor, promo codes, review moderation, newsletter (CSV)",
+              ru: "CRUD каталога, редактор блога, промокоды, модерация отзывов, рассылка (CSV)",
+              de: "Katalog-CRUD, Blog-Editor, Promo-Codes, Bewertungs-Moderation, Newsletter (CSV)",
+              ua: "CRUD каталогу, редактор блога, промокоди, модерація відгуків, розсилка (CSV)",
+            },
+          ],
         },
-        items: [
-          {
-            en: "Revenue dashboard — daily / weekly / monthly, AOV, top models",
-            ru: "Дашборд выручки — день / неделя / месяц, средний чек, топ-модели",
-            de: "Umsatz-Dashboard — täglich / wöchentlich / monatlich, AOV, Top-Modelle",
-            ua: "Дашборд виручки — день / тиждень / місяць, середній чек, топ-моделі",
+        {
+          heading: {
+            en: "SEO & marketing",
+            ru: "SEO и маркетинг",
+            de: "SEO & Marketing",
+            ua: "SEO та маркетинг",
           },
-          {
-            en: "Order management with status timeline and tracking numbers",
-            ru: "Управление заказами со статус-таймлайном и трек-номерами",
-            de: "Bestellverwaltung mit Status-Timeline und Sendungsnummern",
-            ua: "Керування замовленнями зі статус-таймлайном і трек-номерами",
+          items: [
+            {
+              en: "Sitemap across brand, model, custom and blog URLs",
+              ru: "Sitemap по URL брендов, моделей, кастом-страниц и блога",
+              de: "Sitemap über Marken-, Modell-, Custom- und Blog-URLs",
+              ua: "Sitemap за URL брендів, моделей, кастом-сторінок і блога",
+            },
+            {
+              en: "Schema.org — Product (+rating), Offer, Organization, Breadcrumb, FAQ, Article",
+              ru: "Schema.org — Product (+рейтинг), Offer, Organization, Breadcrumb, FAQ, Article",
+              de: "Schema.org — Product (+Bewertung), Offer, Organization, Breadcrumb, FAQ, Article",
+              ua: "Schema.org — Product (+рейтинг), Offer, Organization, Breadcrumb, FAQ, Article",
+            },
+            {
+              en: "OpenGraph images per page",
+              ru: "OpenGraph-картинки для каждой страницы",
+              de: "OpenGraph-Bilder pro Seite",
+              ua: "OpenGraph-зображення для кожної сторінки",
+            },
+            {
+              en: "Google Merchant Center product feed that auto-updates with admin prices",
+              ru: "Продуктовый фид Google Merchant Center, авто-обновляемый по ценам из админки",
+              de: "Google-Merchant-Center-Produktfeed, der sich automatisch an die Admin-Preise anpasst",
+              ua: "Продуктовий фід Google Merchant Center, що авто-оновлюється за цінами з адмінки",
+            },
+          ],
+        },
+        {
+          heading: {
+            en: "Security & reliability",
+            ru: "Безопасность и надёжность",
+            de: "Sicherheit & Zuverlässigkeit",
+            ua: "Безпека та надійність",
           },
-          {
-            en: "Live price editor with per-vehicle overrides",
-            ru: "Живой редактор цен с переопределениями по типам авто",
-            de: "Live-Preiseditor mit Überschreibungen je Fahrzeug",
-            ua: "Живий редактор цін з перевизначеннями за типами авто",
-          },
-          {
-            en: "Catalog CRUD, blog editor, promo codes, review moderation, newsletter",
-            ru: "CRUD каталога, редактор блога, промокоды, модерация отзывов, рассылка",
-            de: "Katalog-CRUD, Blog-Editor, Promo-Codes, Bewertungs-Moderation, Newsletter",
-            ua: "CRUD каталогу, редактор блога, промокоди, модерація відгуків, розсилка",
-          },
-        ],
-      },
+          items: [
+            {
+              en: "HMAC admin sessions, scrypt hashing, CSRF protection",
+              ru: "HMAC-сессии админа, хеширование scrypt, защита от CSRF",
+              de: "HMAC-Admin-Sessions, scrypt-Hashing, CSRF-Schutz",
+              ua: "HMAC-сесії адміна, хешування scrypt, захист від CSRF",
+            },
+            {
+              en: "Per-IP rate limiting (Upstash Redis)",
+              ru: "Лимит запросов по IP (Upstash Redis)",
+              de: "Rate-Limiting pro IP (Upstash Redis)",
+              ua: "Ліміт запитів за IP (Upstash Redis)",
+            },
+            {
+              en: "Stripe webhook idempotency ledger",
+              ru: "Журнал идемпотентности Stripe-вебхуков",
+              de: "Idempotenz-Ledger für Stripe-Webhooks",
+              ua: "Журнал ідемпотентності Stripe-вебхуків",
+            },
+            {
+              en: "Hardened security headers and CCPA / CPRA compliance",
+              ru: "Усиленные security-заголовки и соответствие CCPA / CPRA",
+              de: "Gehärtete Security-Header und CCPA-/CPRA-Konformität",
+              ua: "Посилені security-заголовки та відповідність CCPA / CPRA",
+            },
+          ],
+        },
+      ],
       insight: {
         en: "Scope here was the storefront — design, build, catalog, payments and the admin panel. Paid acquisition is a separate, later phase, so this case is about what we shipped rather than campaign numbers.",
         ru: "Скоуп здесь — сама витрина: дизайн, разработка, каталог, оплата и админ-панель. Платное продвижение — отдельный, более поздний этап, поэтому кейс про то, что мы построили, а не про рекламные метрики.",
@@ -1196,6 +1270,7 @@ export const CASES: readonly CaseItem[] = [
         "Tailwind",
         "Prisma + Neon",
         "Stripe",
+        "ShipStation",
         "Resend",
         "Vercel",
       ],
