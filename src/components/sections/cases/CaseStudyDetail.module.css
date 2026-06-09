@@ -139,6 +139,29 @@
   color: var(--text-dim);
 }
 
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px 4px 9px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: rgba(200, 212, 222, 0.02);
+}
+
+.locationPin {
+  width: 7px;
+  height: 7px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  border: 1.5px solid var(--case-accent, var(--accent-deep));
+}
+
 .niche {
   font-size: 10px;
   letter-spacing: 0.22em;

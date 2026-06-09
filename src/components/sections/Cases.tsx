@@ -73,6 +73,7 @@ export default function Cases() {
                 metrics={card.metrics}
                 status={item.status}
                 statusLabel={statusLabel[item.status]}
+                location={card.regionLabel}
                 ctaLabel={t.casesCta}
                 href={localePath(`/cases/${item.id}`)}
               />

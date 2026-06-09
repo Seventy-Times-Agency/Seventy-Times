@@ -4,7 +4,12 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useT } from "@/i18n/context";
 import { siteConfig } from "@/data/siteConfig";
-import { caseCardContent, type CaseItem, type CaseStatus } from "@/data/cases";
+import {
+  caseCardContent,
+  REGION_LABELS,
+  type CaseItem,
+  type CaseStatus,
+} from "@/data/cases";
 import styles from "./CaseStudyDetail.module.css";
 
 type Props = {
@@ -59,6 +64,10 @@ export default function CaseStudyDetail({ item, related }: Props) {
                 >
                   <span className={styles.statusDot} />
                   {statusLabel[item.status]}
+                </span>
+                <span className={styles.location}>
+                  <span className={styles.locationPin} aria-hidden="true" />
+                  {REGION_LABELS[item.region][locale]}
                 </span>
               </div>
               <span className={styles.niche}>{s.niche[locale]}</span>

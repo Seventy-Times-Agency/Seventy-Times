@@ -26,6 +26,15 @@ type Loc = Record<Locale, string>;
 /** Same text in every locale — for numbers, symbols and brand tokens. */
 const u = (s: string): Loc => ({ en: s, ru: s, de: s, ua: s });
 
+/** Where the work was delivered. Shown as a location badge — we keep
+ *  it to the region level (no city) on purpose. */
+export type Region = "usa" | "europe";
+
+export const REGION_LABELS: Record<Region, Loc> = {
+  usa: { en: "USA", ru: "США", de: "USA", ua: "США" },
+  europe: { en: "Europe", ru: "Европа", de: "Europa", ua: "Європа" },
+};
+
 type Stat = { value: string; label: Loc };
 type Row = { label: Loc; value: Loc };
 
@@ -71,6 +80,7 @@ export type CaseStudy = {
 export type CaseItem = {
   id: string;
   status: CaseStatus;
+  region: Region;
   url?: string;
   // Legacy dictionary-keyed content.
   titleKey?: "case1Title" | "case2Title";
@@ -86,6 +96,8 @@ export type CaseCardContent = {
   tag: string;
   summary: string;
   metrics?: readonly string[];
+  region: Region;
+  regionLabel: string;
 };
 
 /**
@@ -97,6 +109,8 @@ export function caseCardContent(
   locale: Locale,
   t: Dictionary,
 ): CaseCardContent {
+  const region = item.region;
+  const regionLabel = REGION_LABELS[region][locale];
   if (item.study) {
     const s = item.study;
     return {
@@ -104,6 +118,8 @@ export function caseCardContent(
       tag: s.tag[locale],
       summary: s.summary[locale],
       metrics: s.metrics?.map((m) => m[locale]),
+      region,
+      regionLabel,
     };
   }
   return {
@@ -111,6 +127,8 @@ export function caseCardContent(
     tag: t[item.tagKey!],
     summary: t[item.summaryKey!],
     metrics: item.metricsKey ? t[item.metricsKey] : undefined,
+    region,
+    regionLabel,
   };
 }
 
@@ -119,6 +137,7 @@ export const CASES: readonly CaseItem[] = [
   {
     id: "passenger-transport",
     status: "live",
+    region: "europe",
     study: {
       accent: "#FF6B35",
       title: {
@@ -359,6 +378,7 @@ export const CASES: readonly CaseItem[] = [
   {
     id: "kids-fashion",
     status: "live",
+    region: "europe",
     study: {
       accent: "#A855F7",
       title: {
@@ -593,6 +613,7 @@ export const CASES: readonly CaseItem[] = [
   {
     id: "bukovel",
     status: "live",
+    region: "europe",
     study: {
       accent: "#60A5FA",
       title: {
@@ -641,10 +662,10 @@ export const CASES: readonly CaseItem[] = [
         ua: "2 клієнти-курорти · бюджет $2 000 · 1,5 місяця",
       },
       niche: {
-        en: "Hospitality · Ukraine · Winter",
-        ru: "Гостеприимство · Украина · Зима",
-        de: "Hospitality · Ukraine · Winter",
-        ua: "Гостинність · Україна · Зима",
+        en: "Hospitality · Europe · Winter",
+        ru: "Гостеприимство · Европа · Зима",
+        de: "Hospitality · Europa · Winter",
+        ua: "Гостинність · Європа · Зима",
       },
       stats: [
         {
@@ -846,6 +867,7 @@ export const CASES: readonly CaseItem[] = [
   {
     id: "seventy-times",
     status: "live",
+    region: "usa",
     study: {
       accent: "#818cf8",
       title: u("Seventy Times"),
@@ -988,6 +1010,7 @@ export const CASES: readonly CaseItem[] = [
     summaryKey: "case1Summary",
     metricsKey: "case1Metrics",
     status: "progress",
+    region: "usa",
   },
   {
     id: "elitecarmats",
@@ -996,5 +1019,6 @@ export const CASES: readonly CaseItem[] = [
     summaryKey: "case2Summary",
     metricsKey: "case2Metrics",
     status: "progress",
+    region: "usa",
   },
 ];

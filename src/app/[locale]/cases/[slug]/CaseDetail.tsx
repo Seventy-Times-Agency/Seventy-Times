@@ -21,7 +21,11 @@ export default function CaseDetail({ item, related }: Props) {
     soon: t.casesStatusSoon,
   };
 
-  const { title, tag, summary, metrics } = caseCardContent(item, locale, t);
+  const { title, tag, summary, metrics, regionLabel } = caseCardContent(
+    item,
+    locale,
+    t,
+  );
 
   return (
     <main className={styles.main}>
@@ -41,12 +45,18 @@ export default function CaseDetail({ item, related }: Props) {
         <div className={styles.head}>
           <span className={styles.tag}>{tag}</span>
           <h1 className={styles.title}>{title}</h1>
-          <span
-            className={`${styles.status} ${styles[`status_${item.status}`]}`}
-          >
-            <span className={styles.statusDot} />
-            {statusLabel[item.status]}
-          </span>
+          <div className={styles.headMeta}>
+            <span
+              className={`${styles.status} ${styles[`status_${item.status}`]}`}
+            >
+              <span className={styles.statusDot} />
+              {statusLabel[item.status]}
+            </span>
+            <span className={styles.location}>
+              <span className={styles.locationPin} aria-hidden="true" />
+              {regionLabel}
+            </span>
+          </div>
         </div>
 
         <p className={styles.summary}>{summary}</p>
