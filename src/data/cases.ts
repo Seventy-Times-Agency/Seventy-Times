@@ -1002,6 +1002,206 @@ export const CASES: readonly CaseItem[] = [
     },
   },
 
+  // ── Elite Car Mats · custom e-commerce, USA ───────────────
+  {
+    id: "elitecarmats",
+    status: "progress",
+    region: "usa",
+    study: {
+      accent: "#D4A54A",
+      title: u("Elite Car Mats"),
+      tag: u("CUSTOM E-COMMERCE · USA"),
+      summary: {
+        en: "A custom-built e-commerce store for a car-mat manufacturer entering the U.S. market. A Next.js storefront with a full vehicle configurator across ~60 brands and ~700 models, Stripe checkout, and an operator dashboard. Paid ads are a separate later phase — this case is the build.",
+        ru: "Кастомный интернет-магазин для производителя автоковриков, выходящего на рынок США. Витрина на Next.js с полным конфигуратором под авто — ~60 брендов и ~700 моделей, оплата через Stripe и операторская панель. Платная реклама — отдельный поздний этап, этот кейс про саму разработку.",
+        de: "Ein maßgeschneiderter Onlineshop für einen Fußmatten-Hersteller beim Markteintritt in den USA. Ein Next.js-Storefront mit vollem Fahrzeug-Konfigurator über ~60 Marken und ~700 Modelle, Stripe-Checkout und Betreiber-Dashboard. Bezahlte Werbung ist eine separate, spätere Phase — dieser Case ist der Build.",
+        ua: "Кастомний інтернет-магазин для виробника автомобільних килимків, що виходить на ринок США. Вітрина на Next.js з повним конфігуратором під авто — ~60 брендів і ~700 моделей, оплата через Stripe та операторська панель. Платна реклама — окремий пізніший етап, цей кейс про саму розробку.",
+      },
+      metrics: [
+        {
+          en: "~700 vehicle models, ~60 brands",
+          ru: "~700 моделей авто, ~60 брендов",
+          de: "~700 Fahrzeugmodelle, ~60 Marken",
+          ua: "~700 моделей авто, ~60 брендів",
+        },
+        {
+          en: "Full vehicle configurator + Stripe",
+          ru: "Полный конфигуратор под авто + Stripe",
+          de: "Voller Fahrzeug-Konfigurator + Stripe",
+          ua: "Повний конфігуратор під авто + Stripe",
+        },
+        {
+          en: "Custom Next.js build, 3 languages",
+          ru: "Кастомная разработка на Next.js, 3 языка",
+          de: "Individueller Next.js-Build, 3 Sprachen",
+          ua: "Кастомна розробка на Next.js, 3 мови",
+        },
+      ],
+      headline: {
+        en: "Custom car-mat store, built end-to-end",
+        ru: "Магазин автоковриков под ключ",
+        de: "Automatten-Shop, komplett gebaut",
+        ua: "Магазин автокилимків під ключ",
+      },
+      meta: {
+        en: "Next.js · ~60 brands / ~700 models · Stripe · 3 languages",
+        ru: "Next.js · ~60 брендов / ~700 моделей · Stripe · 3 языка",
+        de: "Next.js · ~60 Marken / ~700 Modelle · Stripe · 3 Sprachen",
+        ua: "Next.js · ~60 брендів / ~700 моделей · Stripe · 3 мови",
+      },
+      niche: {
+        en: "Auto · E-commerce · USA",
+        ru: "Авто · E-commerce · США",
+        de: "Auto · E-Commerce · USA",
+        ua: "Авто · E-commerce · США",
+      },
+      stats: [
+        {
+          value: "~700",
+          label: {
+            en: "Vehicle models",
+            ru: "Моделей авто",
+            de: "Fahrzeugmodelle",
+            ua: "Моделей авто",
+          },
+        },
+        {
+          value: "~60",
+          label: {
+            en: "Car brands",
+            ru: "Брендов авто",
+            de: "Automarken",
+            ua: "Брендів авто",
+          },
+        },
+        {
+          value: "3",
+          label: {
+            en: "Languages",
+            ru: "Языка",
+            de: "Sprachen",
+            ua: "Мови",
+          },
+        },
+        {
+          value: "100%",
+          label: {
+            en: "Custom build",
+            ru: "Кастомная",
+            de: "Custom-Build",
+            ua: "Кастомна",
+          },
+        },
+      ],
+      features: [
+        {
+          icon: "🚗",
+          text: {
+            en: "Vehicle configurator — year, set type, mat & edge colour, optional brand badge",
+            ru: "Конфигуратор под авто — год, тип комплекта, цвет коврика и окантовки, опц. шильдик бренда",
+            de: "Fahrzeug-Konfigurator — Jahr, Set-Typ, Matten- und Kantenfarbe, optionales Marken-Badge",
+            ua: "Конфігуратор під авто — рік, тип комплекта, колір килимка й окантовки, опц. шильдик бренда",
+          },
+        },
+        {
+          icon: "🔎",
+          text: {
+            en: "Catalog of ~60 brands / ~700 models with body-type filters and ⌘K search",
+            ru: "Каталог ~60 брендов / ~700 моделей с фильтрами по кузову и поиском ⌘K",
+            de: "Katalog mit ~60 Marken / ~700 Modellen, Karosserie-Filtern und ⌘K-Suche",
+            ua: "Каталог ~60 брендів / ~700 моделей з фільтрами за кузовом і пошуком ⌘K",
+          },
+        },
+        {
+          icon: "💳",
+          text: {
+            en: "Cart with promo codes and Stripe Checkout",
+            ru: "Корзина с промокодами и оплатой через Stripe Checkout",
+            de: "Warenkorb mit Promo-Codes und Stripe Checkout",
+            ua: "Кошик з промокодами та оплатою через Stripe Checkout",
+          },
+        },
+        {
+          icon: "📦",
+          text: {
+            en: "Order tracking, wishlist, and a custom-order form for vehicles not in the catalog",
+            ru: "Отслеживание заказа, вишлист и форма кастом-заказа для авто не из каталога",
+            de: "Bestellverfolgung, Wunschliste und Sonderbestellformular für Fahrzeuge außerhalb des Katalogs",
+            ua: "Відстеження замовлення, список бажань і форма кастом-замовлення для авто не з каталогу",
+          },
+        },
+        {
+          icon: "📰",
+          text: {
+            en: "Markdown blog and 3 languages (EN / RU / UK), WCAG-accessible",
+            ru: "Блог на Markdown и 3 языка (EN / RU / UK), доступность по WCAG",
+            de: "Markdown-Blog und 3 Sprachen (EN / RU / UK), WCAG-konform",
+            ua: "Блог на Markdown і 3 мови (EN / RU / UK), доступність за WCAG",
+          },
+        },
+        {
+          icon: "🔒",
+          text: {
+            en: "Full SEO — Schema.org, sitemap, and a Google Merchant Center product feed",
+            ru: "Полное SEO — Schema.org, sitemap и продуктовый фид Google Merchant Center",
+            de: "Vollständiges SEO — Schema.org, Sitemap und Google-Merchant-Center-Produktfeed",
+            ua: "Повне SEO — Schema.org, sitemap і продуктовий фід Google Merchant Center",
+          },
+        },
+      ],
+      deliverables: {
+        heading: {
+          en: "Operator dashboard",
+          ru: "Операторская панель",
+          de: "Betreiber-Dashboard",
+          ua: "Операторська панель",
+        },
+        items: [
+          {
+            en: "Revenue dashboard — daily / weekly / monthly, AOV, top models",
+            ru: "Дашборд выручки — день / неделя / месяц, средний чек, топ-модели",
+            de: "Umsatz-Dashboard — täglich / wöchentlich / monatlich, AOV, Top-Modelle",
+            ua: "Дашборд виручки — день / тиждень / місяць, середній чек, топ-моделі",
+          },
+          {
+            en: "Order management with status timeline and tracking numbers",
+            ru: "Управление заказами со статус-таймлайном и трек-номерами",
+            de: "Bestellverwaltung mit Status-Timeline und Sendungsnummern",
+            ua: "Керування замовленнями зі статус-таймлайном і трек-номерами",
+          },
+          {
+            en: "Live price editor with per-vehicle overrides",
+            ru: "Живой редактор цен с переопределениями по типам авто",
+            de: "Live-Preiseditor mit Überschreibungen je Fahrzeug",
+            ua: "Живий редактор цін з перевизначеннями за типами авто",
+          },
+          {
+            en: "Catalog CRUD, blog editor, promo codes, review moderation, newsletter",
+            ru: "CRUD каталога, редактор блога, промокоды, модерация отзывов, рассылка",
+            de: "Katalog-CRUD, Blog-Editor, Promo-Codes, Bewertungs-Moderation, Newsletter",
+            ua: "CRUD каталогу, редактор блога, промокоди, модерація відгуків, розсилка",
+          },
+        ],
+      },
+      insight: {
+        en: "Scope here was the storefront — design, build, catalog, payments and the admin panel. Paid acquisition is a separate, later phase, so this case is about what we shipped rather than campaign numbers.",
+        ru: "Скоуп здесь — сама витрина: дизайн, разработка, каталог, оплата и админ-панель. Платное продвижение — отдельный, более поздний этап, поэтому кейс про то, что мы построили, а не про рекламные метрики.",
+        de: "Der Umfang hier war der Shop selbst — Design, Build, Katalog, Zahlungen und das Admin-Panel. Bezahlte Akquise ist eine separate, spätere Phase, deshalb geht es in diesem Case um das Gelieferte und nicht um Kampagnenzahlen.",
+        ua: "Скоуп тут — сама вітрина: дизайн, розробка, каталог, оплата та адмін-панель. Платне просування — окремий, пізніший етап, тому кейс про те, що ми побудували, а не про рекламні метрики.",
+      },
+      stack: [
+        "Next.js 16",
+        "React 19",
+        "TypeScript",
+        "Tailwind",
+        "Prisma + Neon",
+        "Stripe",
+        "Resend",
+        "Vercel",
+      ],
+    },
+  },
+
   // ── Reworking separately — left untouched for now ─────────
   {
     id: "convioo",
@@ -1009,15 +1209,6 @@ export const CASES: readonly CaseItem[] = [
     tagKey: "case1Tag",
     summaryKey: "case1Summary",
     metricsKey: "case1Metrics",
-    status: "progress",
-    region: "usa",
-  },
-  {
-    id: "elitecarmats",
-    titleKey: "case2Title",
-    tagKey: "case2Tag",
-    summaryKey: "case2Summary",
-    metricsKey: "case2Metrics",
     status: "progress",
     region: "usa",
   },
