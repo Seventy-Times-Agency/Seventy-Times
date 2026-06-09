@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useT } from "@/i18n/context";
 import { siteConfig } from "@/data/siteConfig";
-import type { CaseItem, CaseStatus } from "@/data/cases";
+import { caseCardContent, type CaseItem, type CaseStatus } from "@/data/cases";
 import styles from "./CaseDetail.module.css";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function CaseDetail({ item, related }: Props) {
-  const { t, localePath } = useT();
+  const { t, locale, localePath } = useT();
   const home = localePath("/");
 
   const statusLabel: Record<CaseStatus, string> = {
@@ -21,10 +21,7 @@ export default function CaseDetail({ item, related }: Props) {
     soon: t.casesStatusSoon,
   };
 
-  const title = t[item.titleKey];
-  const tag = t[item.tagKey];
-  const summary = t[item.summaryKey];
-  const metrics = item.metricsKey ? t[item.metricsKey] : undefined;
+  const { title, tag, summary, metrics } = caseCardContent(item, locale, t);
 
   return (
     <main className={styles.main}>
@@ -98,19 +95,22 @@ export default function CaseDetail({ item, related }: Props) {
           <section className={styles.relatedSection}>
             <h2 className={styles.sectionTitle}>{t.casesRelatedTitle}</h2>
             <div className={styles.relatedGrid}>
-              {related.map((r) => (
-                <Link
-                  key={r.id}
-                  href={localePath(`/cases/${r.id}`)}
-                  className={styles.relatedCard}
-                >
-                  <span className={styles.relatedTag}>{t[r.tagKey]}</span>
-                  <span className={styles.relatedTitle}>{t[r.titleKey]}</span>
-                  <span className={styles.relatedArrow} aria-hidden="true">
-                    →
-                  </span>
-                </Link>
-              ))}
+              {related.map((r) => {
+                const rc = caseCardContent(r, locale, t);
+                return (
+                  <Link
+                    key={r.id}
+                    href={localePath(`/cases/${r.id}`)}
+                    className={styles.relatedCard}
+                  >
+                    <span className={styles.relatedTag}>{rc.tag}</span>
+                    <span className={styles.relatedTitle}>{rc.title}</span>
+                    <span className={styles.relatedArrow} aria-hidden="true">
+                      →
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           </section>
         )}
