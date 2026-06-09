@@ -18,6 +18,18 @@ export default function Cases() {
     soon: t.casesStatusSoon,
   };
 
+  // In-progress work leads the grid, "soon" follows, and finished
+  // (live) cases settle at the end. Array.sort is stable, so the
+  // authored order is preserved within each status group.
+  const statusWeight: Record<CaseStatus, number> = {
+    progress: 0,
+    soon: 1,
+    live: 2,
+  };
+  const orderedCases = [...CASES].sort(
+    (a, b) => statusWeight[a.status] - statusWeight[b.status],
+  );
+
   return (
     <section id="cases" className={styles.section}>
       <SectionWatermark
@@ -49,7 +61,7 @@ export default function Cases() {
       </div>
 
       <div className={styles.grid}>
-        {CASES.map((item, i) => {
+        {orderedCases.map((item, i) => {
           const card = caseCardContent(item, locale, t);
           return (
             <Reveal key={item.id} delay={i * 0.08}>
