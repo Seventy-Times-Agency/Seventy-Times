@@ -4,6 +4,7 @@ import { SERVICES } from "@/data/services";
 import { LOCALES, isLocale, DEFAULT_LOCALE } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionary";
 import { siteConfig } from "@/data/siteConfig";
+import { languageAlternates } from "@/lib/localizedMeta";
 import ServiceDetail from "./ServiceDetail";
 
 export function generateStaticParams() {
@@ -24,18 +25,13 @@ export async function generateMetadata(
   const t = getDictionary(locale);
   const title = t[item.i18n.title];
   const tag = t[item.i18n.tag];
-  const languages: Record<string, string> = {};
-  for (const l of LOCALES) {
-    languages[l] = `${siteConfig.url}/${l}/services/${item.slug}`;
-  }
-  languages["x-default"] = `${siteConfig.url}/${DEFAULT_LOCALE}/services/${item.slug}`;
 
   return {
     title: `${title} — ${siteConfig.name}`,
     description: tag,
     alternates: {
       canonical: `${siteConfig.url}/${locale}/services/${item.slug}`,
-      languages,
+      languages: languageAlternates(`/services/${item.slug}`),
     },
     openGraph: {
       title: `${title} — ${siteConfig.name}`,

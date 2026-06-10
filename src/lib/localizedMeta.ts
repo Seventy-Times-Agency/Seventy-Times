@@ -1,4 +1,25 @@
-import type { Locale } from "@/i18n/config";
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  LOCALE_LANG,
+  type Locale,
+} from "@/i18n/config";
+import { siteConfig } from "@/data/siteConfig";
+
+/**
+ * hreflang alternates for a page, keyed by ISO 639-1 language code
+ * (the "ua" slug maps to "uk" — see LOCALE_LANG), with x-default
+ * pointing at the English version. `path` is the locale-less suffix,
+ * e.g. "" for the landing or "/cases/convioo".
+ */
+export function languageAlternates(path: string): Record<string, string> {
+  const languages: Record<string, string> = {};
+  for (const l of LOCALES) {
+    languages[LOCALE_LANG[l]] = `${siteConfig.url}/${l}${path}`;
+  }
+  languages["x-default"] = `${siteConfig.url}/${DEFAULT_LOCALE}${path}`;
+  return languages;
+}
 
 type LocaleMeta = {
   description: string;

@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useRef,
   useState,
   type FormEvent,
 } from "react";
@@ -55,6 +56,10 @@ export default function ReviewForm() {
     });
   }, [hydrated, fields.code, fields.name, fields.role, fields.location, fields.content]);
 
+  // Pending post-close reset — cancelled if the modal reopens within
+  // the exit animation so a fresh open doesn't get wiped mid-flight.
+  const resetTimer = useRef<number | undefined>(undefined);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     const check = () => setOpen(window.location.hash === "#review");
@@ -81,11 +86,15 @@ export default function ReviewForm() {
       );
     }
     setOpen(false);
-    window.setTimeout(() => {
+    resetTimer.current = window.setTimeout(() => {
       setStatus("idle");
       setError("");
     }, 400);
   }, []);
+
+  useEffect(() => {
+    if (open) window.clearTimeout(resetTimer.current);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;

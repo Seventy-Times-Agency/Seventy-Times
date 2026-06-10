@@ -1,8 +1,9 @@
 # Seventy Times — developer & AI guide
 
 Marketing landing for **Seventy Times**, a US-based AI + performance-marketing
-agency. Single page with a lead form, a review form, and a live Claude-powered
-chat assistant named Tess. Trilingual (en / ru / de).
+agency. Single page with a lead form, a callback form, a review form, and a
+live Claude-powered chat assistant named Vanessa. Four languages
+(en / ru / de / ua).
 
 This file is the short orientation map. Read it first when opening the repo.
 
@@ -12,12 +13,12 @@ This file is the short orientation map. Read it first when opening the repo.
 
 | | |
 |---|---|
-| Framework | Next.js 14 (App Router) |
+| Framework | Next.js 15 (App Router) |
 | Language | TypeScript (strict) |
 | Styling | CSS Modules + `src/app/globals.css` design tokens |
 | Animation | Framer Motion + Lenis smooth scroll |
 | AI chat | `@anthropic-ai/sdk` (server-side only, streaming) |
-| CRM fan-out | Telegram Bot API + Notion REST API |
+| CRM fan-out | Telegram Bot API + Notion REST API + Resend email |
 | Hosting | Vercel |
 
 ---
@@ -28,42 +29,49 @@ This file is the short orientation map. Read it first when opening the repo.
 src/
 ├── app/                          Next.js App Router
 │   ├── api/
-│   │   ├── chat/route.ts         /api/chat — streaming Anthropic proxy for Tess
-│   │   ├── lead/route.ts         /api/lead — lead form → Telegram + Notion
+│   │   ├── chat/route.ts         /api/chat — streaming Anthropic proxy for Vanessa
+│   │   ├── lead/route.ts         /api/lead — lead + callback form → Telegram
+│   │   │                         + Notion + email
 │   │   ├── review/route.ts       /api/review — review form → Telegram + Notion
 │   │   └── error/route.ts        /api/error — sink for client-side errors
 │   ├── [locale]/                 Every public URL is locale-prefixed
-│   │   │                         (/en, /ru, /de + their subpages)
-│   │   ├── layout.tsx            Validates the :locale segment, no-op wrapper
+│   │   │                         (/en, /ru, /de, /ua + their subpages)
+│   │   ├── layout.tsx            THE root layout (there is no app/layout.tsx):
+│   │   │                         <html lang>, fonts, JSON-LD, metadata,
+│   │   │                         I18nProvider + decor + overlays
 │   │   ├── page.tsx              Landing — composes all sections
+│   │   ├── [...rest]/            Catch-all → notFound() for unknown URLs
+│   │   ├── not-found.tsx         Branded localized 404
 │   │   ├── about/                /<locale>/about
+│   │   ├── team/                 /<locale>/team
 │   │   ├── cases/[slug]/         /<locale>/cases/<id> — per-case page
 │   │   │                         (CaseDetail uses CaseCard from sections/cases)
 │   │   ├── services/[slug]/      /<locale>/services/<id> — per-service page
 │   │   ├── privacy/              /<locale>/privacy
 │   │   └── terms/                /<locale>/terms
-│   ├── layout.tsx                Root: <html lang>, fonts, JSON-LD, metadata,
-│   │                             mounts I18nProvider + decor + overlays
 │   ├── globals.css               Design tokens + reset + skip-link
-│   ├── not-found.tsx             Branded localized 404
 │   ├── global-error.tsx          Last-resort React error boundary
+│   │                             (renders its own <html>)
 │   ├── feed.xml/route.ts         RSS feed (cases now, blog later)
 │   ├── manifest.ts               PWA web-app manifest
 │   ├── opengraph-image.tsx       Dynamic OG card at /opengraph-image
 │   ├── robots.ts                 /robots.txt
-│   └── sitemap.ts                /sitemap.xml — every locale × page × case × service
+│   ├── sitemap.ts                /sitemap.xml — every locale × page × case × service
+│   └── sw.js/route.ts            Serves the service worker with a per-deploy
+│                                 cache version (VERCEL_GIT_COMMIT_SHA)
 │
 ├── components/
 │   ├── chrome/                   Always-visible page chrome
 │   │   ├── Nav.tsx               Top bar, language switcher, CTA, mobile menu
 │   │   └── Footer.tsx            Footer columns, contact links, disclaimer
 │   ├── overlays/                 Anything that pops up over the page
-│   │   ├── PageIntro.tsx         Once-per-session cinematic intro
 │   │   ├── ClientOverlays.tsx    next/dynamic({ ssr: false }) wrapper for
 │   │   │                         all the overlays below — keeps them out of
 │   │   │                         the SSR'd HTML
-│   │   ├── chat/ChatWidget.tsx   Floating Tess chat (token streaming)
+│   │   ├── chat/ChatWidget.tsx   Floating Vanessa chat (token streaming)
 │   │   ├── forms/LeadForm.tsx    3-step lead modal (#lead hash trigger)
+│   │   ├── forms/CallbackForm.tsx Compact "request a call" modal (#callback),
+│   │   │                         posts to /api/lead with kind="callback"
 │   │   ├── forms/ReviewForm.tsx  Review modal with code gate (#review hash)
 │   │   ├── CookieConsent.tsx     Cookie banner (gates analytics)
 │   │   ├── MobileStickyCta.tsx   Sticky "Get a quote" pill on phones
@@ -73,8 +81,9 @@ src/
 │   │   └── ErrorReporter         window.error / unhandledrejection → /api/error
 │   ├── sections/                 Landing sections in scroll order:
 │   │   │                         Hero, MarqueeStack, GrowthMachine, Services,
-│   │   │                         Comparison, Process, ChatDemo, Testimonials,
-│   │   │                         Cases, GrowthSimulator, FAQ, CTA
+│   │   │                         Comparison, Process, ChatDemo, Testimonials
+│   │   │                         (falls back to Principles when no approved
+│   │   │                         reviews), Cases, GrowthSimulator, FAQ, CTA
 │   │   ├── cases/                Sub-components used by Cases + case pages
 │   │   │   ├── CaseCard.tsx
 │   │   │   └── PlaceholderCard.tsx
@@ -84,7 +93,7 @@ src/
 │   │                             FloatingGlyphs, ScrollProgress, SmoothScroll,
 │   │                             SectionDivider, SectionWatermark
 │   ├── ui/                       Reusable primitives: Reveal, Magnetic,
-│   │                             AnimatedText, RingCounter, Counter,
+│   │                             AnimatedText, RingCounter,
 │   │                             ContactIcons, ServiceIcons, Logo
 │   ├── legal/                    Shared shell for /privacy + /terms
 │   └── seo/StructuredData.tsx    Client-rendered FAQPage + Service JSON-LD
@@ -95,31 +104,38 @@ src/
 │   └── services.ts               Service catalogue (key + slug + i18n keys)
 │
 ├── i18n/
-│   ├── config.ts                 Locale list + isLocale + localizedPath()
+│   ├── config.ts                 Locale list + isLocale + localizedPath() +
+│   │                             LOCALE_LANG (URL slug → ISO 639-1 code)
 │   ├── context.tsx               I18nProvider + useT() (locale, t, setLocale,
 │   │                             localePath)
-│   ├── dictionary.ts             Aggregates the three locale files,
+│   ├── dictionary.ts             Aggregates the four locale files,
 │   │                             infers the Dictionary type from ru.ts
-│   └── locales/{en,ru,de}.ts     Translation tables (must stay in sync — TS
+│   └── locales/{en,ru,de,ua}.ts  Translation tables (must stay in sync — TS
 │                                 will complain if a key is missing)
 │
 ├── lib/                          Server-side / pure utilities
-│   ├── apiGuard.ts               Origin check, rate limit, honeypot
-│   ├── telegram.ts               Telegram MarkdownV2 escape
-│   ├── notion.ts                 Notion REST helpers (lead + review create)
-│   ├── localizedMeta.ts          Per-locale metadata getters
-│   ├── systemPrompt.ts           Tess's Claude system prompt
+│   ├── apiGuard.ts               Origin check, rate limit, honeypot, dedup
+│   ├── fetchWithTimeout.ts       fetch() with an enforced timeout
+│   ├── telegram.ts               Telegram MarkdownV2 escape + sendMessage
+│   ├── notion.ts                 Notion REST helpers (lead/review/chat create,
+│   │                             approved-reviews query)
+│   ├── email.ts                  Resend email fallback for leads/reviews
+│   ├── localizedMeta.ts          Per-locale metadata getters +
+│   │                             languageAlternates() hreflang helper
+│   ├── systemPrompt.ts           Vanessa's Claude system prompt
 │   ├── contactValidation.ts      isPlausibleContact() shared by forms
-│   ├── leadDraft.ts              localStorage helpers for the lead form
+│   ├── leadDraft.ts              localStorage helpers + LeadPackage/LeadBudget
+│   │                             types & validators (also used by /api/lead
+│   │                             and notion.ts)
 │   └── reviewDraft.ts            Same, for the review form
 │
 └── middleware.ts                 Locale-prefix detection + redirect of /
                                   always to /en, ?lang= → 308 to /<locale>,
-                                  sets x-locale header, refreshes cookie,
-                                  blocks scanner UAs.
+                                  sets x-locale header (read by not-found),
+                                  refreshes cookie, blocks scanner UAs.
 public/
-├── tess.jpg                      Tess portrait (next/image, fixed size)
-├── sw.js                         Stale-while-revalidate service worker
+├── vanessa.jpg                   Vanessa portrait (next/image, fixed size)
+├── sw.js                         Static fallback service worker
 └── favicon.svg
 ```
 
@@ -132,31 +148,44 @@ nothing else.
 ## Key concepts
 
 ### Routing & i18n
-- Three locales: `en` (default), `ru`, `de`. Defined in `src/i18n/config.ts`.
+- Four locales: `en` (default), `ru`, `de`, `ua`. Defined in
+  `src/i18n/config.ts`.
+- **URL slug vs language code**: the Ukrainian slug is `/ua` (brand
+  choice), but its ISO 639-1 language code is `uk`. `LOCALE_LANG` in
+  `i18n/config.ts` maps slugs to codes — `<html lang>`, hreflang
+  alternates and JSON-LD all go through it. Never emit `ua` as a
+  language code; search engines ignore it.
 - **Every public URL is locale-prefixed**: `/en`, `/ru/about`, `/de/cases/X`.
   Each `(locale × page)` is statically pre-rendered at build time via
   `generateStaticParams`.
 - Bare `/` always 307s to `/en`. Browser `Accept-Language` is intentionally
-  ignored — the agency operates in English first; RU and DE are opt-in.
-- `?lang=ru|de|en` 308-redirects to `/<locale>` and sets the cookie. Lets
+  ignored — the agency operates in English first; RU / DE / UA are opt-in.
+- `?lang=ru|de|en|ua` 308-redirects to `/<locale>` and sets the cookie. Lets
   shared / hreflang links land on the right language without a query string.
-- Middleware sets an `x-locale` header on every request based on the URL
-  prefix (or the default). `app/layout.tsx` reads it via `headers()` and
-  renders `<html lang>`, metadata, and the I18nProvider with that locale.
+- **`app/[locale]/layout.tsx` is the root layout** (there is no
+  `app/layout.tsx`). It renders `<html lang>` from the URL's locale
+  param, so every statically generated page ships the right `lang`
+  without client-side patching. Unknown paths fall through middleware's
+  redirect into `app/[locale]/[...rest]` → the branded 404.
 - Client components call `useT()` → `{ locale, t, setLocale, localePath }`.
   Use `localePath("/about")` to build any internal URL — never hard-code
   `/about` because it'll lose the locale prefix.
 
 ### Dictionary shape
 - `Dictionary` type is inferred from `locales/ru.ts`.
-- Adding a new key or renaming an existing one **must be done in all three
-  files** — TypeScript errors out otherwise.
+- `dictionary.ts` types the locale map as `Record<Locale, Dictionary>`
+  **without casts** — that annotation is the safety net. Adding a new key
+  or renaming an existing one **must be done in all four files**;
+  TypeScript errors out otherwise. Don't reintroduce `as Dictionary`,
+  it silences exactly the mismatch this is meant to catch.
 
 ### API routes
 All four routes (`/api/chat`, `/api/lead`, `/api/review`, `/api/error`)
 share a guard stack from `lib/apiGuard.ts`, applied in this order:
-1. `checkOrigin(req)` — must come from an allowed host (env `ALLOWED_ORIGINS`
-   plus automatic `*.vercel.app` and www/non-www tolerance).
+1. `checkOrigin(req)` — must come from an allowed host (env `ALLOWED_ORIGINS`,
+   this project's own Vercel deployment URLs via `VERCEL_URL` /
+   `VERCEL_BRANCH_URL` / `VERCEL_PROJECT_PRODUCTION_URL`, and www/non-www
+   tolerance). Arbitrary `*.vercel.app` hosts are NOT trusted.
 2. `rateLimit(key, limit, windowMs)` — in-memory sliding window.
 3. Body parse + validation.
 4. Honeypot check (`isHoneypotTripped`) for form routes — if tripped,
@@ -172,17 +201,20 @@ localized strings via the dictionary (e.g. `401 → t.reviewInvalidCode`,
 `429 → t.leadTooMany`). Server text is never displayed directly to the user.
 
 ### Lead / review fan-out
-`POST /api/lead` and `POST /api/review` send to **both** Telegram and Notion
-in parallel via `Promise.allSettled`. Either channel failing does not block
-the user's success response. See `lib/notion.ts` and the `notifyTelegram`
-function inside each route.
+`POST /api/lead` and `POST /api/review` fan out to Telegram, Notion and
+email (Resend) in parallel via `Promise.allSettled`, **after** the
+response is sent (`after()` from `next/server`). A failing channel never
+blocks the user's success response; each helper returns a boolean and
+the route logs per-channel failures plus a loud
+`ALL channels failed` error when nothing got through. All upstream
+calls go through `fetchWithTimeout` with a 7s ceiling.
 
 ### Streaming chat
 `POST /api/chat` returns `application/x-ndjson`: one JSON object per
 newline (`{"text":"..."}` per token, `{"done":true}` at the end, or
 `{"error":"UPSTREAM_ERROR"}` on failure). The widget reads the body via a
 `ReadableStream` reader and appends each text delta to the live assistant
-bubble.
+bubble. Turns are logged to the Notion chats database when configured.
 
 ### Form draft persistence
 `LeadForm` autosaves every keystroke (everything except the honeypot) to
@@ -194,8 +226,7 @@ live in `lib/leadDraft.ts` and `lib/reviewDraft.ts`.
 `components/ui/RingCounter.tsx` drives the four hero stats. It writes to
 the SVG circle's `stroke-dashoffset` and the number's `textContent`
 **directly via refs** — React state is not used in the animation loop, so
-every rAF tick paints a frame. The rings wait for a `st-intro-gone` event
-dispatched by `PageIntro` before starting.
+every rAF tick paints a frame.
 
 ### Security headers
 `next.config.mjs → headers()` returns CSP, HSTS, X-Frame-Options,
@@ -216,14 +247,24 @@ concept on the site.
 |---|---|---|
 | Landing | `/<locale>` | Brand + all four service tags + FAQ |
 | About | `/<locale>/about` | Team / mission |
+| Team | `/<locale>/team` | Team bios |
 | Case study | `/<locale>/cases/<slug>` | Each portfolio project |
 | Service | `/<locale>/services/<slug>` | Each service offering |
 | Legal | `/<locale>/{privacy,terms}` | Trust signals |
 
+**Canonical + hreflang rules:**
+- Canonical always carries the locale prefix (`https://…/en`, never the
+  bare domain — that's a redirect).
+- hreflang maps come from `languageAlternates()` in `lib/localizedMeta.ts`
+  so every surface (layout metadata, per-page metadata, sitemap) emits
+  the same set, keyed by ISO codes (`en`, `ru`, `de`, `uk`) with
+  `x-default` → the English URL.
+
 **JSON-LD already wired:**
-- `Organization` (root layout, server-rendered)
-- `FAQPage` with all 13 questions (`StructuredData.tsx`, client-rendered)
-- `Service` × 3 on the landing + per-page `Service` on each `/services/<slug>`
+- `Organization` + `ProfessionalService` + `WebSite` graph
+  (`[locale]/layout.tsx`, server-rendered)
+- `FAQPage` (`StructuredData.tsx`, client-rendered)
+- `Service` on the landing + per-page `Service` on each `/services/<slug>`
 - `BreadcrumbList` on every case + service page
 
 **Sitemap (`app/sitemap.ts`):** every (locale × page) and (locale × case)
@@ -233,10 +274,9 @@ pointing to the English version.
 **Robots (`app/robots.ts`):** allow everything, point to the sitemap,
 disallow `/api/*` (no value to crawlers).
 
-**Open Graph + Twitter cards:** `app/layout.tsx` declares `og:image` /
-`twitter:image` pointing at `/opengraph-image` (dynamic, locale-aware
-via cookie/header). Width/height/alt are explicit so Slack and Telegram
-preview renderers don't have to guess.
+**Open Graph + Twitter cards:** `[locale]/layout.tsx` declares `og:image` /
+`twitter:image` pointing at `/opengraph-image`. Width/height/alt are
+explicit so Slack and Telegram preview renderers don't have to guess.
 
 **RSS:** `/feed.xml` ships the cases as items so feed aggregators have
 something today; once we add a blog, prepend posts.
@@ -248,9 +288,9 @@ the URL prefix.
 **When you add a new page or section**, update three places:
 1. The page itself (under `app/[locale]/...`).
 2. `app/sitemap.ts` so search engines discover it.
-3. If it has a CTA into `#lead` or `#chat`, the anchor pattern still
-   works — `LeadForm`/`ChatWidget` listen to hash + the
-   `open-tess` event globally.
+3. If it has a CTA into `#lead`, `#callback`, `#review` or the chat,
+   the anchor pattern still works — the overlays listen to hash changes
+   + the `open-chat` event globally.
 
 ---
 
@@ -260,7 +300,7 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 
 | Variable | Purpose |
 |---|---|
-| `ANTHROPIC_API_KEY` | Claude Sonnet 4.6 for Tess (required) |
+| `ANTHROPIC_API_KEY` | Claude Sonnet 4.6 for Vanessa (required) |
 | `ANTHROPIC_MODEL` | Override model id (default: `claude-sonnet-4-6`) |
 | `ALLOWED_ORIGINS` | Comma-separated origins allowed to call /api/* |
 | `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` | Forward leads/reviews to Telegram |
@@ -268,13 +308,17 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 | `NOTION_TOKEN` | Internal integration secret for the Notion CRM |
 | `NOTION_DATABASE_LEADS_ID` | Target Notion database for leads |
 | `NOTION_DATABASE_REVIEWS_ID` | Target Notion database for reviews |
+| `NOTION_DATABASE_CHATS_ID` | Target Notion database for chat-turn logging |
+| `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` (+ `RESEND_FROM`) | Email fallback channel |
+| `VERCEL_URL` / `VERCEL_BRANCH_URL` / `VERCEL_PROJECT_PRODUCTION_URL` | Auto-set by Vercel; origin checks trust these hostnames |
+| `VERCEL_GIT_COMMIT_SHA` / `NEXT_PUBLIC_BUILD_ID` | Auto-set / optional; versions the service-worker cache |
 
 ---
 
 ## Common tasks
 
 ### Add a new FAQ question
-1. Add `faqNq` and `faqNa` keys (same N across all three locale files).
+1. Add `faqNq` and `faqNa` keys (same N across all four locale files).
 2. Append one more entry to the `items` array in
    `components/sections/FAQ.tsx`.
 3. Extend `faqItems` in `components/seo/StructuredData.tsx` so the
@@ -282,14 +326,14 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 
 ### Add a new section to the landing
 1. Create `components/sections/NewSection.tsx` with its CSS module.
-2. Add any new i18n keys to all three locale files.
+2. Add any new i18n keys to all four locale files.
 3. Import it in `app/[locale]/page.tsx`, place it in scroll order, and
    add a `<SectionDivider labelKey="divNew" />` above it.
 
 ### Add a new case
 1. Append to `CASES` in `data/cases.ts` with id + i18n key bindings.
 2. Add the four content keys (`caseNTitle / caseNTag / caseNSummary /
-   caseNMetrics`) in all three locale files.
+   caseNMetrics`) in all four locale files.
 3. Sitemap and the per-case route pick it up automatically — `[slug]`
    uses `generateStaticParams` over `CASES`.
 
@@ -297,17 +341,21 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 1. Append to `SERVICES` in `data/services.ts` with key + slug + i18n
    bindings.
 2. Add `svcNTitle / svcNTag / svcNNote / svcNInc / svcNAdd` keys in
-   all three locale files.
+   all four locale files.
 3. Sitemap, the per-service route, and the landing card grid pick it
    up automatically.
 
 ### Add a new language (e.g. French)
 1. Add `"fr"` to `Locale` and `LOCALES` in `i18n/config.ts`. Add a
-   label in `LOCALE_LABELS`.
+   label in `LOCALE_LABELS` and the ISO 639-1 code in `LOCALE_LANG`
+   (slug and code may differ — see `ua` → `uk`).
 2. Copy `locales/en.ts` to `locales/fr.ts` and translate.
 3. Register it in `i18n/dictionary.ts`.
 4. Add metadata getters in `lib/localizedMeta.ts`.
-5. Sitemap + middleware + layout pick it up automatically because they
+5. Add the locale to the cookie-regex in `app/api/lead/route.ts` and
+   `app/api/chat/route.ts`, and a `LOCALE_INSTRUCTION` entry in
+   `lib/systemPrompt.ts` so Vanessa answers in it.
+6. Sitemap + middleware + layout pick it up automatically because they
    all read from `LOCALES`.
 
 ### Tune rate limits
@@ -347,7 +395,7 @@ get converted phase-by-phase, not all at once.
 ## Gotchas
 
 - **Chat history persists** to `localStorage` under `st-chat-history-v1`,
-  last 50 messages. Clear that key to wipe Tess's session memory.
+  last 50 messages. Clear that key to wipe Vanessa's session memory.
 - **GrowthSimulator** saves slider levels in `st-simulator-levels-v1`.
 - **CookieConsent** stores the user's choice in `localStorage` under
   `st-cookie-consent-v1` (`"accepted"` or `"essential"`). Gate any new
@@ -360,8 +408,8 @@ get converted phase-by-phase, not all at once.
   fill it → server returns 200 and silently drops, one warn line in
   logs. Don't add a visible field named `website` without renaming the
   honeypot.
-- **Next-image + tess.jpg**: rendered with explicit width/height because
-  the source is a JPEG. Replace carefully.
+- **Next-image + vanessa.jpg**: rendered with explicit width/height
+  because the source is a JPEG. Replace carefully.
 - **Middleware** runs on every page route (locale routing) and `/api/*`.
   Static assets and the file-based prerender outputs are excluded by
   the `matcher`.

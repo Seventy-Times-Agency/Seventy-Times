@@ -72,17 +72,25 @@ function getRequestOrigin(req: Request): string | null {
 }
 
 /**
- * Automatically trust Vercel preview/production URLs for this project
- * even if they're not listed in ALLOWED_ORIGINS — Vercel generates
- * fresh hostnames on every deploy so an explicit list would rot fast.
+ * Automatically trust this project's own Vercel deployment URLs even if
+ * they're not listed in ALLOWED_ORIGINS — Vercel generates fresh
+ * hostnames on every deploy so an explicit list would rot fast.
  *
- * We still require a real vercel.app suffix, so random strangers on
- * other Vercel projects are rejected.
+ * Matching is against the deployment hostnames Vercel injects at
+ * runtime (VERCEL_URL / VERCEL_BRANCH_URL / production URL), not a
+ * blanket "*.vercel.app" — any other Vercel project could host a page
+ * with that suffix and relay spam through our form endpoints.
  */
 function isVercelHost(candidate: string): boolean {
+  const own = [
+    process.env.VERCEL_URL,
+    process.env.VERCEL_BRANCH_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+  ].filter(Boolean) as string[];
+  if (own.length === 0) return false;
   try {
     const { hostname } = new URL(candidate);
-    return hostname.endsWith(".vercel.app") || hostname === "vercel.app";
+    return own.some((h) => h.toLowerCase() === hostname.toLowerCase());
   } catch {
     return false;
   }
@@ -184,14 +192,19 @@ export function isFirstSeen(key: string, windowMs: number): boolean {
 }
 
 /**
- * Normalise a contact string for dedup keys: lowercase, strip
- * spaces / dashes / dots / @-prefix. "Email@host.com" and
- * "email@HOST.COM " collapse to the same key.
+ * Normalise a contact string for dedup keys: lowercase, strip spaces /
+ * dashes / @-prefix. For emails, dots are stripped from the local part
+ * only ("j.doe@host.com" ≈ "jdoe@host.com" gmail-style) — stripping
+ * them from the domain too would collapse different hosts into one key.
+ * Non-email contacts (phones, usernames) lose dots entirely.
  */
 export function normalizeContactKey(contact: string): string {
-  return contact
+  const base = contact
     .trim()
     .toLowerCase()
     .replace(/^@+/, "")
-    .replace(/[\s\-.]/g, "");
+    .replace(/[\s\-]/g, "");
+  const at = base.indexOf("@");
+  if (at === -1) return base.replace(/\./g, "");
+  return base.slice(0, at).replace(/\./g, "") + base.slice(at);
 }

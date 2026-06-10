@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+} from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
@@ -32,6 +38,9 @@ export default function CallbackForm() {
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  // Pending post-close reset — cancelled if the modal reopens within
+  // the exit animation so a fresh open doesn't get wiped mid-flight.
+  const resetTimer = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -40,6 +49,10 @@ export default function CallbackForm() {
     window.addEventListener("hashchange", check);
     return () => window.removeEventListener("hashchange", check);
   }, []);
+
+  useEffect(() => {
+    if (open) window.clearTimeout(resetTimer.current);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -59,7 +72,7 @@ export default function CallbackForm() {
       );
     }
     setOpen(false);
-    window.setTimeout(() => {
+    resetTimer.current = window.setTimeout(() => {
       setStatus("idle");
       setError("");
     }, 400);
@@ -275,6 +288,7 @@ export default function CallbackForm() {
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
                       required
+                      aria-required="true"
                     />
                     <span>
                       {t.consentPrefix}
@@ -289,7 +303,15 @@ export default function CallbackForm() {
                     </span>
                   </label>
 
-                  {error && <div className={styles.error}>{error}</div>}
+                  {error && (
+                    <div
+                      className={styles.error}
+                      role="alert"
+                      aria-live="polite"
+                    >
+                      {error}
+                    </div>
+                  )}
 
                   <div className={styles.actions}>
                     <button

@@ -36,6 +36,10 @@ export async function sendTelegramMessage(text: string): Promise<boolean> {
           text,
           parse_mode: "MarkdownV2",
         }),
+        // Same ceiling as the Notion calls — the integrations share one
+        // timeout so a slow upstream can't stall the fan-out longer than
+        // the others.
+        timeoutMs: 7000,
       },
     );
     return res.ok;

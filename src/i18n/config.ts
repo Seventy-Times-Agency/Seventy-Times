@@ -11,6 +11,20 @@ export const LOCALE_LABELS: Record<Locale, string> = {
 
 export const DEFAULT_LOCALE: Locale = "en";
 
+/**
+ * ISO 639-1 language code for each locale, used for `<html lang>`,
+ * hreflang alternates and JSON-LD `inLanguage`. The Ukrainian URL slug
+ * is "ua" for brand/marketing reasons, but the language code search
+ * engines and screen readers expect is "uk" — "ua" is a country code
+ * and is ignored as an hreflang value.
+ */
+export const LOCALE_LANG: Record<Locale, string> = {
+  en: "en",
+  ru: "ru",
+  de: "de",
+  ua: "uk",
+};
+
 export function isLocale(value: unknown): value is Locale {
   return (
     typeof value === "string" &&

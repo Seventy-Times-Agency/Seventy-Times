@@ -12,10 +12,12 @@ import ua from "./locales/ua";
  * locales must keep the same shape, otherwise TypeScript will surface
  * the mismatch at build time.
  */
-const dict = { ru, en, de, ua } as const;
-
 export type Dictionary = typeof ru;
 
+// Typed without casts on purpose: if a locale file misses a key (or
+// renames one), this declaration is where TypeScript reports it.
+const dict: Record<Locale, Dictionary> = { ru, en, de, ua };
+
 export function getDictionary(locale: Locale): Dictionary {
-  return dict[locale] as Dictionary;
+  return dict[locale];
 }

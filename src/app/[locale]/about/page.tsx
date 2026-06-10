@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getAboutMeta } from "@/lib/localizedMeta";
+import { getAboutMeta, languageAlternates } from "@/lib/localizedMeta";
 import { isLocale, DEFAULT_LOCALE } from "@/i18n/config";
 import AboutClient from "./AboutClient";
 
@@ -14,7 +14,10 @@ export async function generateMetadata(
   return {
     title: meta.title,
     description: meta.description,
-    alternates: { canonical: `/${locale}/about` },
+    alternates: {
+      canonical: `/${locale}/about`,
+      languages: languageAlternates("/about"),
+    },
   };
 }
 
