@@ -4,6 +4,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type FormEvent,
 } from "react";
@@ -97,6 +98,10 @@ export default function LeadForm() {
     }
   }, [hydrated, mode]);
 
+  // Pending post-close reset — cancelled if the modal reopens within
+  // the exit animation so a fresh open doesn't get wiped mid-flight.
+  const resetTimer = useRef<number | undefined>(undefined);
+
   // Listen to URL hash to know when to open.
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -122,12 +127,16 @@ export default function LeadForm() {
     }
     setOpen(false);
     // Reset ephemeral UI state after the exit animation finishes
-    window.setTimeout(() => {
+    resetTimer.current = window.setTimeout(() => {
       setStatus("idle");
       setError("");
       setStep(0);
     }, 400);
   }, []);
+
+  useEffect(() => {
+    if (open) window.clearTimeout(resetTimer.current);
+  }, [open]);
 
   // Close on Escape
   useEffect(() => {

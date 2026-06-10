@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTermsMeta } from "@/lib/localizedMeta";
+import { getTermsMeta, languageAlternates } from "@/lib/localizedMeta";
 import { isLocale, DEFAULT_LOCALE } from "@/i18n/config";
 import TermsClient from "./TermsClient";
 
@@ -14,7 +14,10 @@ export async function generateMetadata(
   return {
     title: meta.title,
     description: meta.description,
-    alternates: { canonical: `/${locale}/terms` },
+    alternates: {
+      canonical: `/${locale}/terms`,
+      languages: languageAlternates("/terms"),
+    },
   };
 }
 

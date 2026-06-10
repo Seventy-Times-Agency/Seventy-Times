@@ -36,7 +36,7 @@ export default function Footer() {
             className={styles.linkBtn}
             onClick={() => window.dispatchEvent(new Event("open-chat"))}
           >
-            {t.ftTess}
+            {t.ftVanessa}
           </button>
           <a href={anchor("process")}>{t.ftProcess}</a>
           <a href={anchor("faq")}>{t.ftFaq}</a>

@@ -18,23 +18,15 @@ import {
 } from "@/lib/telegram";
 import { isNotionLeadsConfigured, sendLeadToNotion } from "@/lib/notion";
 import { isEmailConfigured, sendEmail } from "@/lib/email";
+import {
+  isLeadBudget,
+  isLeadPackage,
+  type LeadBudget,
+  type LeadPackage,
+} from "@/lib/leadDraft";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-type LeadPackage =
-  | "not_sure"
-  | "standalone"
-  | "launch"
-  | "growth"
-  | "scale";
-
-type LeadBudget =
-  | "not_sure"
-  | "under_1k"
-  | "1k_3k"
-  | "3k_10k"
-  | "10k_plus";
 
 type LeadKind = "lead" | "callback";
 
@@ -64,20 +56,6 @@ const BUDGET_LABEL: Record<LeadBudget, string> = {
   "3k_10k": "$3 000–10 000 / мес",
   "10k_plus": "$10 000+ / мес",
 };
-
-function isLeadPackage(v: unknown): v is LeadPackage {
-  return (
-    typeof v === "string" &&
-    ["not_sure", "standalone", "launch", "growth", "scale"].includes(v)
-  );
-}
-
-function isLeadBudget(v: unknown): v is LeadBudget {
-  return (
-    typeof v === "string" &&
-    ["not_sure", "under_1k", "1k_3k", "3k_10k", "10k_plus"].includes(v)
-  );
-}
 
 const LIMITS = {
   name: 100,
@@ -252,7 +230,7 @@ export async function POST(req: Request) {
   // Read the user's selected locale from the cookie set by I18nProvider.
   const localeMatch = req.headers
     .get("cookie")
-    ?.match(/(?:^|;\s*)lang=(en|ru|de)/);
+    ?.match(/(?:^|;\s*)lang=(en|ru|de|ua)/);
   const locale = localeMatch?.[1] ?? "en";
 
   const lead: LeadPayload = {
@@ -303,6 +281,14 @@ export async function POST(req: Request) {
         console.warn(`[LEAD] channel ${channels[i]} reported failure`);
       }
     });
+    // Every channel failing means the lead is lost despite the 200 the
+    // user already saw — make that loud and searchable in the logs.
+    if (results.every((r) => r.status !== "fulfilled" || r.value === false)) {
+      console.error("[LEAD] ALL channels failed — lead not delivered", {
+        at: new Date().toISOString(),
+        kind,
+      });
+    }
   });
 
   return NextResponse.json({ ok: true });

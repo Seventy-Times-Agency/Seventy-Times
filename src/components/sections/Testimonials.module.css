@@ -157,52 +157,6 @@
   opacity: 1;
 }
 
-.quoteMark {
-  font-size: 80px;
-  font-weight: 800;
-  font-style: italic;
-  line-height: 0.4;
-  color: var(--accent);
-  height: 34px;
-  margin-bottom: -6px;
-}
-
-.quote {
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--text);
-  letter-spacing: -0.005em;
-  flex: 1;
-}
-
-.author {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
-}
-
-.authorName {
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: var(--text);
-}
-
-.authorRole {
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-.authorLocation {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-top: 6px;
-}
 
 /* Controls row ─────────────────────────────────────────── */
 .controls {
@@ -311,9 +265,6 @@
   .card {
     flex: 0 0 calc(100vw - 52px);
     padding: 24px 20px 22px;
-  }
-  .quote {
-    font-size: 14.5px;
   }
   .controls {
     padding: 0 18px;

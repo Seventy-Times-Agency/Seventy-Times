@@ -99,35 +99,6 @@
   box-shadow: 0 40px 100px -20px var(--accent-glow);
 }
 
-.secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 20px 32px;
-  border-radius: var(--radius-pill);
-  background: transparent;
-  border: 1px solid var(--line-strong);
-  color: var(--white);
-  font-weight: 700;
-  font-size: 15px;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.secondary:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--line-hi);
-}
-
-.icon {
-  width: 18px;
-  height: 18px;
-}
-
-.emailRow {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-}
 
 /* Contact channels grid ─────────────────────────── */
 .channelsLabel {
@@ -187,21 +158,6 @@
   word-break: break-all;
 }
 
-.emailLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-muted);
-  letter-spacing: 0.02em;
-  transition: color 0.2s ease;
-  padding: 10px 0;
-}
-
-.emailLink:hover {
-  color: var(--accent-strong);
-}
 
 /* Bottom editorial meta */
 .metaBottom {
@@ -242,14 +198,10 @@
     align-items: stretch;
     gap: 10px;
   }
-  .primary,
-  .secondary {
+  .primary {
     justify-content: center;
     padding: 15px 22px;
     font-size: 14px;
-  }
-  .emailRow {
-    margin-top: 18px;
   }
   .channels {
     grid-template-columns: repeat(3, 1fr);
