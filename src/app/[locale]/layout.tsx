@@ -51,7 +51,7 @@ const organizationJsonLd = {
       alternateName: siteConfig.shortName,
       url: siteConfig.url,
       logo: `${siteConfig.url}/favicon.svg`,
-      image: `${siteConfig.url}/opengraph-image`,
+      image: `${siteConfig.url}/${DEFAULT_LOCALE}/opengraph-image`,
       description: siteConfig.description,
       email: siteConfig.contacts.email.address,
       telephone: siteConfig.contacts.phone.raw,
@@ -128,14 +128,9 @@ export async function generateMetadata(
       title: `${siteConfig.name} — ${siteConfig.tagline}`,
       description: meta.description,
       siteName: siteConfig.name,
-      images: [
-        {
-          url: "/opengraph-image",
-          width: 1200,
-          height: 630,
-          alt: meta.ogImageAlt,
-        },
-      ],
+      // og:image itself comes from the [locale]/opengraph-image.tsx
+      // file convention — localized card + localized alt, and Next
+      // appends the width/height/type from its exports.
     },
     twitter: {
       card: "summary_large_image",
@@ -143,12 +138,13 @@ export async function generateMetadata(
       description: meta.description,
       images: [
         {
-          url: "/opengraph-image",
+          url: `/${locale}/opengraph-image/og`,
           alt: meta.ogImageAlt,
         },
       ],
     },
     icons: { icon: "/favicon.svg" },
+    manifest: "/manifest.webmanifest",
     robots: { index: true, follow: true },
   };
 }

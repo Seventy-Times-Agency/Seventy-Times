@@ -49,12 +49,14 @@ src/
 │   │   ├── services/[slug]/      /<locale>/services/<id> — per-service page
 │   │   ├── privacy/              /<locale>/privacy
 │   │   └── terms/                /<locale>/terms
+│   │   ├── opengraph-image.tsx   Localized OG card at
+│   │   │                         /<locale>/opengraph-image/og
 │   ├── globals.css               Design tokens + reset + skip-link
 │   ├── global-error.tsx          Last-resort React error boundary
 │   │                             (renders its own <html>)
 │   ├── feed.xml/route.ts         RSS feed (cases now, blog later)
-│   ├── manifest.ts               PWA web-app manifest
-│   ├── opengraph-image.tsx       Dynamic OG card at /opengraph-image
+│   ├── manifest.webmanifest/     PWA manifest, localized by the lang
+│   │   route.ts                  cookie (linked via metadata.manifest)
 │   ├── robots.ts                 /robots.txt
 │   ├── sitemap.ts                /sitemap.xml — every locale × page × case × service
 │   └── sw.js/route.ts            Serves the service worker with a per-deploy
@@ -73,6 +75,8 @@ src/
 │   │   ├── forms/CallbackForm.tsx Compact "request a call" modal (#callback),
 │   │   │                         posts to /api/lead with kind="callback"
 │   │   ├── forms/ReviewForm.tsx  Review modal with code gate (#review hash)
+│   │   ├── forms/useHashModal.ts Shared modal lifecycle: hash trigger,
+│   │   │                         scroll lock, Escape, post-close reset
 │   │   ├── CookieConsent.tsx     Cookie banner (gates analytics)
 │   │   ├── MobileStickyCta.tsx   Sticky "Get a quote" pill on phones
 │   │   └── ExitIntent.tsx        Desktop exit-intent prompt (once / session)
@@ -231,9 +235,9 @@ every rAF tick paints a frame.
 ### Security headers
 `next.config.mjs → headers()` returns CSP, HSTS, X-Frame-Options,
 Referrer-Policy, Permissions-Policy, and X-Content-Type-Options for all
-routes. CSP allows `unsafe-inline` / `unsafe-eval` on scripts because
-Framer Motion injects inline styles and Next.js needs inline scripts;
-tighten later with nonces if needed.
+routes. `script-src` allows `unsafe-inline` (Next.js inlines its
+bootstrap; nonces would force every page dynamic and kill SSG) but
+`unsafe-eval` only in dev (HMR needs it — production does not).
 
 ---
 
@@ -274,9 +278,11 @@ pointing to the English version.
 **Robots (`app/robots.ts`):** allow everything, point to the sitemap,
 disallow `/api/*` (no value to crawlers).
 
-**Open Graph + Twitter cards:** `[locale]/layout.tsx` declares `og:image` /
-`twitter:image` pointing at `/opengraph-image`. Width/height/alt are
-explicit so Slack and Telegram preview renderers don't have to guess.
+**Open Graph + Twitter cards:** the card is generated per locale by
+`app/[locale]/opengraph-image.tsx` (file convention → og:image with
+explicit width/height + localized alt via `generateImageMetadata`);
+`[locale]/layout.tsx` points `twitter:image` at the same
+`/<locale>/opengraph-image/og` URL.
 
 **RSS:** `/feed.xml` ships the cases as items so feed aggregators have
 something today; once we add a blog, prepend posts.

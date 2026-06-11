@@ -1,16 +1,11 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type FormEvent,
-} from "react";
+import { useCallback, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
 import { siteConfig } from "@/data/siteConfig";
+import { useHashModal } from "@/components/overlays/forms/useHashModal";
 import styles from "@/components/overlays/forms/LeadForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -33,59 +28,15 @@ const PHONE_RE = /^[+()\d][\d\s().\-]{6,}$/;
  */
 export default function CallbackForm() {
   const { t, localePath } = useT();
-  const [open, setOpen] = useState(false);
   const [fields, setFields] = useState(INITIAL);
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
-  // Pending post-close reset — cancelled if the modal reopens within
-  // the exit animation so a fresh open doesn't get wiped mid-flight.
-  const resetTimer = useRef<number | undefined>(undefined);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const check = () => setOpen(window.location.hash === "#callback");
-    check();
-    window.addEventListener("hashchange", check);
-    return () => window.removeEventListener("hashchange", check);
-  }, []);
-
-  useEffect(() => {
-    if (open) window.clearTimeout(resetTimer.current);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
-
-  const close = useCallback(() => {
-    if (typeof window !== "undefined") {
-      history.replaceState(
-        null,
-        "",
-        window.location.pathname + window.location.search,
-      );
-    }
-    setOpen(false);
-    resetTimer.current = window.setTimeout(() => {
-      setStatus("idle");
-      setError("");
-    }, 400);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, close]);
+  const { open, close } = useHashModal("#callback", () => {
+    setStatus("idle");
+    setError("");
+  });
 
   const setField =
     (key: keyof typeof INITIAL) =>

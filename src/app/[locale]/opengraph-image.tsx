@@ -1,12 +1,37 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/data/siteConfig";
+import { getLocaleMeta } from "@/lib/localizedMeta";
+import { DEFAULT_LOCALE, isLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionary";
 
 export const runtime = "edge";
-export const alt = `${siteConfig.name} — ${siteConfig.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpengraphImage() {
+type Props = { params: { locale: string } };
+
+// Localized og:image:alt — the card itself is also rendered in the
+// page's language below.
+export function generateImageMetadata({ params }: Props) {
+  const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
+  return [
+    {
+      id: "og",
+      alt: getLocaleMeta(locale).ogImageAlt,
+      size,
+      contentType,
+    },
+  ];
+}
+
+export default function OpengraphImage({ params }: Props) {
+  const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
+  const t = getDictionary(locale);
+  // "Marketing · AI · Automation" → "Marketing × AI × Automation":
+  // same string the hero uses, with the brand's × as the separator.
+  const headline = t.heroMeta1.replace(/·/g, "×");
+  const services = [t.ftAds, t.ftAutomation, t.ftBots].join(" · ");
+
   return new ImageResponse(
     (
       <div
@@ -57,7 +82,7 @@ export default function OpengraphImage() {
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <span
               style={{
-                display: "inline-block",
+                display: "flex",
                 width: 10,
                 height: 10,
                 borderRadius: "50%",
@@ -65,7 +90,7 @@ export default function OpengraphImage() {
                 boxShadow: "0 0 16px #4ade80",
               }}
             />
-            Accepting projects · 2026
+            {t.navStatus} · 2026
           </div>
           <div
             style={{
@@ -88,39 +113,38 @@ export default function OpengraphImage() {
           <div
             style={{
               display: "flex",
-              fontSize: 84,
+              fontSize: 76,
               fontWeight: 800,
               lineHeight: 1.0,
               letterSpacing: "-0.04em",
               color: "#e8eef4",
             }}
           >
-            Marketing × AI × Automation
+            {headline}
           </div>
           <div
             style={{
               display: "flex",
-              fontSize: 84,
+              fontSize: 76,
               fontWeight: 800,
               lineHeight: 1.0,
               letterSpacing: "-0.04em",
               color: "#c8d4de",
             }}
           >
-            = one growth machine.
+            {t.heroTitle4}
           </div>
           <div
             style={{
               display: "flex",
               marginTop: 18,
-              fontSize: 26,
+              fontSize: 24,
               color: "#a8b4c0",
-              maxWidth: 880,
+              maxWidth: 900,
               lineHeight: 1.4,
             }}
           >
-            Launched in 30 days, optimised in 90. Ads, AI, automation and sites
-            wired into a single working system.
+            {t.heroSub}
           </div>
         </div>
 
@@ -136,7 +160,7 @@ export default function OpengraphImage() {
             color: "#6c7480",
           }}
         >
-          <span>Ads · Automation · AI · Sites</span>
+          <span>{services}</span>
           <span style={{ color: "#a8b4c0" }}>
             {siteConfig.url.replace(/^https?:\/\//, "")}
           </span>
