@@ -174,46 +174,106 @@
   color: var(--text-dim);
 }
 
-@media (max-width: 900px) {
-  .section {
+/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+
+.section {
     padding: 36px 18px 44px;
   }
-  .inner {
+
+.inner {
     padding: 36px 20px;
   }
-  .title {
+
+.title {
     font-size: clamp(28px, 8vw, 52px);
   }
-  .sub {
+
+.sub {
     font-size: 14.5px;
   }
-  .eyebrowRow,
+
+.eyebrowRow,
   .metaBottom {
     flex-direction: column;
     gap: 10px;
     text-align: center;
   }
-  .buttons {
+
+.buttons {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
   }
-  .primary {
+
+.primary {
     justify-content: center;
     padding: 15px 22px;
     font-size: 14px;
   }
-  .channels {
+
+.channels {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
-}
 
-@media (max-width: 480px) {
-  .channels {
+/*  Base (mobile-first): formerly @media (max-width: 480px).  */
+
+.channels {
     grid-template-columns: repeat(2, 1fr);
   }
-  .inner {
+
+.inner {
     padding: 28px 18px;
+  }
+
+/*  481px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 481px) {
+  .channels {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .inner {
+    padding: 36px 20px;
+  }
+}
+
+/*  901px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 901px) {
+  .section {
+    padding: 64px 48px;
+  }
+  .inner {
+    padding: 88px 72px;
+  }
+  .title {
+    font-size: var(--fs-display);
+  }
+  .sub {
+    font-size: var(--fs-body-lg);
+  }
+  .eyebrowRow {
+    flex-direction: revert;
+    gap: revert;
+    text-align: revert;
+  }
+  .metaBottom {
+    flex-direction: revert;
+    gap: revert;
+    text-align: revert;
+  }
+  .buttons {
+    flex-direction: revert;
+    align-items: revert;
+    gap: 14px;
+  }
+  .primary {
+    justify-content: revert;
+    padding: 20px 36px;
+    font-size: 15px;
+  }
+  .channels {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
   }
 }

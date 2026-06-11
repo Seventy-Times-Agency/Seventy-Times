@@ -59,11 +59,20 @@
   50% { transform: translateX(-30px); }
 }
 
-@media (max-width: 640px) {
-  /* On a phone the giant editorial watermark fights for attention
+/*  Base (mobile-first): formerly @media (max-width: 640px).  */
+
+/* On a phone the giant editorial watermark fights for attention
      with the actual content. Hide it — the section title + number do
      the labelling job by themselves. */
-  .wrap {
+
+.wrap {
     display: none;
+  }
+
+/*  641px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 641px) {
+  .wrap {
+    display: flex;
   }
 }

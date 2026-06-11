@@ -107,13 +107,16 @@ export async function POST(req: Request) {
     body && typeof body === "object" && "locale" in body
       ? (body as { locale: unknown }).locale
       : null;
+  // "ua" is the legacy Ukrainian value (pre-/uk slug); accept and
+  // normalize it — cookies live for a year.
   const cookieMatch = req.headers
     .get("cookie")
-    ?.match(/(?:^|;\s*)lang=(en|ru|de|ua)/);
-  const locale =
-    typeof rawLocale === "string" && /^(en|ru|de|ua)$/.test(rawLocale)
+    ?.match(/(?:^|;\s*)lang=(en|ru|de|uk|ua)/);
+  const picked =
+    typeof rawLocale === "string" && /^(en|ru|de|uk|ua)$/.test(rawLocale)
       ? rawLocale
       : (cookieMatch?.[1] ?? "en");
+  const locale = picked === "ua" ? "uk" : picked;
 
   const client = new Anthropic({ apiKey });
   const model = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6";

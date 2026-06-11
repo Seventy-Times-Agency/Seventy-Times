@@ -38,9 +38,20 @@
   transform: rotate(180deg);
 }
 
-@media (max-width: 900px) {
-  .track,
+/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+
+.track,
   .label {
     display: none;
+  }
+
+/*  901px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 901px) {
+  .track {
+    display: revert;
+  }
+  .label {
+    display: revert;
   }
 }

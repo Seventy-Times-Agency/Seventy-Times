@@ -131,13 +131,13 @@
   margin: 0;
 }
 
-@media (max-width: 720px) {
-  .meta {
+/*  Base (mobile-first): formerly @media (max-width: 720px).  */
+
+.meta {
     grid-template-columns: 1fr;
     gap: 16px;
     padding: 18px;
   }
-}
 
 .cols {
   display: grid;
@@ -302,12 +302,30 @@
   color: var(--accent);
 }
 
-@media (max-width: 720px) {
-  .main {
+/*  Base (mobile-first): formerly @media (max-width: 720px).  */
+
+.main {
     padding: 96px 20px 72px;
   }
-  .cols {
+
+.cols {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+
+/*  721px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 721px) {
+  .meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  .main {
+    padding: 120px 24px 96px;
+  }
+  .cols {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
   }
 }

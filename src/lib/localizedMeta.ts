@@ -8,7 +8,7 @@ import { siteConfig } from "@/data/siteConfig";
 
 /**
  * hreflang alternates for a page, keyed by ISO 639-1 language code
- * (the "ua" slug maps to "uk" — see LOCALE_LANG), with x-default
+ * (see LOCALE_LANG), with x-default
  * pointing at the English version. `path` is the locale-less suffix,
  * e.g. "" for the landing or "/cases/convioo".
  */
@@ -87,7 +87,7 @@ const META: Record<Locale, LocaleMeta> = {
     ogImageAlt:
       "Seventy Times — Werbung, Automatisierung und KI-Bots als eine Wachstumsmaschine.",
   },
-  ua: {
+  uk: {
     description:
       "Seventy Times перетворює AI та digital-маркетинг на передбачуваний потік кваліфікованих клієнтів: реклама, автоматизація та розумні боти — все працює на одну метрику: ваше зростання.",
     keywords: [
@@ -134,7 +134,7 @@ const PRIVACY: Record<Locale, LegalMeta> = {
     description:
       "Wie Seventy Times Ihre Daten erhebt, verwendet und schützt. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
   },
-  ua: {
+  uk: {
     title: "Політика конфіденційності",
     description:
       "Як Seventy Times збирає, використовує та захищає ваші дані. Чесний мінімум для ранньої стадії — буде переглянутий з юристом у міру зростання.",
@@ -157,7 +157,7 @@ const TERMS: Record<Locale, LegalMeta> = {
     description:
       "Nutzungsbedingungen für seventy-times.com. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
   },
-  ua: {
+  uk: {
     title: "Умови використання",
     description:
       "Умови використання сайту seventy-times.com. Чесний мінімум для ранньої стадії — буде переглянутий з юристом у міру зростання.",
@@ -188,7 +188,7 @@ const ABOUT: Record<Locale, LegalMeta> = {
     description:
       "Wer hinter Seventy Times steht: ein verteiltes KI- und Performance-Marketing-Studio, das Werbung, Automatisierung und KI-Bots zu einer Wachstumsmaschine für ambitionierte Unternehmen verbindet.",
   },
-  ua: {
+  uk: {
     title: "Про нас — Seventy Times",
     description:
       "Хто стоїть за Seventy Times: розподілена команда AI та performance-маркетингу, що збирає рекламу, автоматизацію та AI-ботів у єдину машину росту для амбітного бізнесу.",
@@ -215,7 +215,7 @@ const TEAM: Record<Locale, LegalMeta> = {
     description:
       "Die Menschen hinter Seventy Times — vollständige Team-Profile folgen in Kürze.",
   },
-  ua: {
+  uk: {
     title: "Команда — Seventy Times",
     description:
       "Люди, які стоять за Seventy Times — повні біо команди з'являться скоро.",

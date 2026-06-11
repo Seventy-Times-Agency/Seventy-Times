@@ -78,19 +78,41 @@
   text-align: center;
 }
 
-@media (max-width: 900px) {
+/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+
+.ringWrap {
+    width: 110px;
+    height: 110px;
+  }
+
+/*  Base (mobile-first): formerly @media (max-width: 420px).  */
+
+.ringWrap {
+    width: 96px;
+    height: 96px;
+  }
+
+.value {
+    font-size: 20px;
+  }
+
+/*  421px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 421px) {
   .ringWrap {
     width: 110px;
     height: 110px;
   }
+  .value {
+    font-size: clamp(20px, 2.2vw, 28px);
+  }
 }
 
-@media (max-width: 420px) {
+/*  901px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 901px) {
   .ringWrap {
-    width: 96px;
-    height: 96px;
-  }
-  .value {
-    font-size: 20px;
+    width: 132px;
+    height: 132px;
   }
 }

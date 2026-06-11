@@ -47,10 +47,27 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // Legacy ?lang=ru|de|en query: set the cookie and 308-redirect to the
-  // locale-prefixed clean URL. Lets shared / hreflang links land on the
-  // right language without polluting analytics with query strings.
-  const langParam = req.nextUrl.searchParams.get("lang");
+  // Legacy Ukrainian slug: /ua… lived in production while the locale
+  // was misnamed after the country code. 301 every old URL (links,
+  // bookmarks, indexed pages) to the ISO 639-1 slug /uk….
+  if (/^\/ua(?:\/|$)/.test(req.nextUrl.pathname)) {
+    const url = req.nextUrl.clone();
+    url.pathname = req.nextUrl.pathname.replace(/^\/ua/, "/uk");
+    const res = NextResponse.redirect(url, 301);
+    res.cookies.set("lang", "uk", {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+    });
+    return res;
+  }
+
+  // Legacy ?lang=ru|de|en|uk query: set the cookie and 308-redirect to
+  // the locale-prefixed clean URL. Lets shared / hreflang links land on
+  // the right language without polluting analytics with query strings.
+  // ?lang=ua is accepted as an alias for uk (old shared links).
+  const rawLangParam = req.nextUrl.searchParams.get("lang");
+  const langParam = rawLangParam === "ua" ? "uk" : rawLangParam;
   if (langParam && isLocale(langParam)) {
     const url = req.nextUrl.clone();
     url.searchParams.delete("lang");

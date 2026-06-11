@@ -1,4 +1,4 @@
-// Ukrainian (ua) UI strings for Seventy Times
+// Ukrainian (uk) UI strings for Seventy Times
 // Auto-split from a single dictionary; edit this file to change strings
 // for the corresponding language. See src/i18n/dictionary.ts for the
 // shape and language-switch logic.
