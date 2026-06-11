@@ -105,11 +105,23 @@
   border-color: var(--text-muted);
 }
 
-@media (max-width: 480px) {
-  .modal {
+/*  Base (mobile-first): formerly @media (max-width: 480px).  */
+
+.modal {
     padding: 24px 20px;
   }
-  .title {
+
+.title {
     font-size: 22px;
+  }
+
+/*  481px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 481px) {
+  .modal {
+    padding: 32px 28px;
+  }
+  .title {
+    font-size: 26px;
   }
 }

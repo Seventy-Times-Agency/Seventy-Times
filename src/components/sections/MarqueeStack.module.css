@@ -14,11 +14,10 @@
 /* Pure decoration: brand keywords scrolling — no actionable info.
    Hide entirely on phones to cut ~130 px of dead scroll. Desktop
    keeps it as editorial flourish. */
-@media (max-width: 767px) {
-  .wrap {
+/*  Base (mobile-first): formerly @media (max-width: 767px).  */
+.wrap {
     display: none;
   }
-}
 
 /* Edge fades via pseudo-elements — much cheaper than mask-image. */
 .wrap::before,
@@ -94,12 +93,12 @@
   }
 }
 
-@media (max-width: 640px) {
-  .rowTop,
+/*  Base (mobile-first): formerly @media (max-width: 640px).  */
+
+.rowTop,
   .rowBottom {
     animation-duration: 36s;
   }
-}
 
 /* Top row — bold brand presence, same scale as the old VelocityTicker. */
 .itemTop {
@@ -157,5 +156,20 @@
   .rowTop,
   .rowBottom {
     animation-duration: 160s;
+  }
+}
+/*  641px and up — restores the desktop values overridden above.  */
+@media (min-width: 641px) {
+  .rowTop {
+    animation-duration: 60s;
+  }
+  .rowBottom {
+    animation-duration: 60s;
+  }
+}
+/*  768px and up — restores the desktop values overridden above.  */
+@media (min-width: 768px) {
+  .wrap {
+    display: flex;
   }
 }

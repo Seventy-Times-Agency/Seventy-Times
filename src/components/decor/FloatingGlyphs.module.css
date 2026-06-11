@@ -83,8 +83,16 @@
   50% { transform: translate(-25px, 35px) rotate(15deg); }
 }
 
-@media (max-width: 820px) {
-  .layer {
+/*  Base (mobile-first): formerly @media (max-width: 820px).  */
+
+.layer {
     display: none;
+  }
+
+/*  821px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 821px) {
+  .layer {
+    display: revert;
   }
 }

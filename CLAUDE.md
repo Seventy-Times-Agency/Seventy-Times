@@ -397,8 +397,13 @@ queries.
 Breakpoint constants live in `globals.css` as `--bp-tablet (768)`,
 `--bp-desktop (1024)`, `--bp-wide (1280)` — copy the px value into the
 query directly (CSS custom properties can't be used inside `@media`).
-Older components still use `@media (max-width: ...)` overrides; they
-get converted phase-by-phase, not all at once.
+Every module is mobile-first now (the only remaining `max-width` query
+is the intentional `(max-width: 900px) and (prefers-reduced-motion)`
+a11y override in Principles). In converted files, blocks commented
+"formerly @media (max-width: N)" hold the mobile values and the
+`@media (min-width: N+1)` blocks at the bottom restore desktop — when
+touching one, prefer folding your change into that structure rather
+than adding a new `max-width` block.
 
 ---
 

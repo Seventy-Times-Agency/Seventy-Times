@@ -68,25 +68,29 @@
   white-space: nowrap;
 }
 
-@media (max-width: 820px) {
-  .bigNumeral {
+/*  Base (mobile-first): formerly @media (max-width: 820px).  */
+
+.bigNumeral {
     display: none;
   }
-  /* Keep the drifting glows on mobile, just make each frame
+
+/* Keep the drifting glows on mobile, just make each frame
      cheaper: smaller blur radius (paint cost scales ~quadratically
      with blur) and slightly smaller footprint. Motion stays. */
-  .glow {
+
+.glow {
     filter: blur(40px);
   }
-  .glowA {
+
+.glowA {
     width: 360px;
     height: 360px;
   }
-  .glowB {
+
+.glowB {
     width: 340px;
     height: 340px;
   }
-}
 
 /* Thin highlight line at the top of the page */
 .topLight {
@@ -101,4 +105,21 @@
     rgba(200, 212, 222, 0.32),
     transparent
   );
+}
+/*  821px and up — restores the desktop values overridden above.  */
+@media (min-width: 821px) {
+  .bigNumeral {
+    display: revert;
+  }
+  .glow {
+    filter: blur(60px);
+  }
+  .glowA {
+    width: 560px;
+    height: 560px;
+  }
+  .glowB {
+    width: 540px;
+    height: 540px;
+  }
 }
