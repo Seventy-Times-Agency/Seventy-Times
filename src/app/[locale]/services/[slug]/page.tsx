@@ -27,7 +27,7 @@ export async function generateMetadata(
   const tag = t[item.i18n.tag];
 
   return {
-    title: `${title} — ${siteConfig.name}`,
+    title,
     description: tag,
     alternates: {
       canonical: `${siteConfig.url}/${locale}/services/${item.slug}`,

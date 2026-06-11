@@ -174,22 +174,22 @@ export function getTermsMeta(locale: Locale): LegalMeta {
 
 const ABOUT: Record<Locale, LegalMeta> = {
   en: {
-    title: "About — Seventy Times",
+    title: "About",
     description:
       "Who's behind Seventy Times: a remote-first AI + performance marketing studio that assembles ads, automation and AI bots into one growth machine for ambitious businesses.",
   },
   ru: {
-    title: "О нас — Seventy Times",
+    title: "О нас",
     description:
       "Кто стоит за Seventy Times: распределённая команда AI и performance-маркетинга, которая собирает рекламу, автоматизацию и AI-ботов в единую машину роста для амбициозного бизнеса.",
   },
   de: {
-    title: "Über uns — Seventy Times",
+    title: "Über uns",
     description:
       "Wer hinter Seventy Times steht: ein verteiltes KI- und Performance-Marketing-Studio, das Werbung, Automatisierung und KI-Bots zu einer Wachstumsmaschine für ambitionierte Unternehmen verbindet.",
   },
   uk: {
-    title: "Про нас — Seventy Times",
+    title: "Про нас",
     description:
       "Хто стоїть за Seventy Times: розподілена команда AI та performance-маркетингу, що збирає рекламу, автоматизацію та AI-ботів у єдину машину росту для амбітного бізнесу.",
   },
@@ -201,22 +201,22 @@ export function getAboutMeta(locale: Locale): LegalMeta {
 
 const TEAM: Record<Locale, LegalMeta> = {
   en: {
-    title: "Team — Seventy Times",
+    title: "Team",
     description:
       "The people behind Seventy Times — full team bios coming soon.",
   },
   ru: {
-    title: "Команда — Seventy Times",
+    title: "Команда",
     description:
       "Люди, которые стоят за Seventy Times — полные био команды появятся скоро.",
   },
   de: {
-    title: "Team — Seventy Times",
+    title: "Team",
     description:
       "Die Menschen hinter Seventy Times — vollständige Team-Profile folgen in Kürze.",
   },
   uk: {
-    title: "Команда — Seventy Times",
+    title: "Команда",
     description:
       "Люди, які стоять за Seventy Times — повні біо команди з'являться скоро.",
   },

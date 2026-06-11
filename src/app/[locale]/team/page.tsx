@@ -20,6 +20,11 @@ export async function generateMetadata(
       canonical: `${siteConfig.url}/${locale}/team`,
       languages: languageAlternates("/team"),
     },
+    openGraph: {
+      title: `${meta.title} — ${siteConfig.name}`,
+      description: meta.description,
+      url: `${siteConfig.url}/${locale}/team`,
+    },
   };
 }
 

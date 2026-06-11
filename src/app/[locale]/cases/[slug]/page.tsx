@@ -27,7 +27,7 @@ export async function generateMetadata(
   const summary = t[item.summaryKey];
 
   return {
-    title: `${title} — ${siteConfig.name}`,
+    title,
     description: summary,
     alternates: {
       canonical: `${siteConfig.url}/${locale}/cases/${item.id}`,

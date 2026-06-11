@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getAboutMeta, languageAlternates } from "@/lib/localizedMeta";
 import { isLocale, DEFAULT_LOCALE } from "@/i18n/config";
+import { siteConfig } from "@/data/siteConfig";
 import AboutClient from "./AboutClient";
 
 export async function generateMetadata(
@@ -17,6 +18,11 @@ export async function generateMetadata(
     alternates: {
       canonical: `/${locale}/about`,
       languages: languageAlternates("/about"),
+    },
+    openGraph: {
+      title: `${meta.title} — ${siteConfig.name}`,
+      description: meta.description,
+      url: `${siteConfig.url}/${locale}/about`,
     },
   };
 }
