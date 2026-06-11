@@ -18,7 +18,7 @@ const NOTION_QUERY_ENDPOINT = (databaseId: string) =>
 
 import type { LeadBudget, LeadPackage } from "@/lib/leadDraft";
 
-type Locale = "en" | "ru" | "de" | "ua";
+type Locale = "en" | "ru" | "de" | "uk";
 
 const PACKAGE_NOTION_LABEL: Record<LeadPackage, string> = {
   not_sure: "Not sure",
@@ -148,7 +148,7 @@ export async function sendLeadToNotion(
   if (!token || !databaseId) return false;
 
   const locale = (lead.locale ?? "en").toString();
-  const localeOption = ["en", "ru", "de", "ua"].includes(locale) ? locale : "en";
+  const localeOption = ["en", "ru", "de", "uk"].includes(locale) ? locale : "en";
 
   const properties: Record<string, unknown> = {
     Name: { title: title(lead.name) },
@@ -207,7 +207,7 @@ export async function logChatTurn(turn: ChatRecord): Promise<void> {
   if (!token || !databaseId) return;
 
   const locale = (turn.locale ?? "en").toString();
-  const localeOption = ["en", "ru", "de", "ua"].includes(locale) ? locale : "en";
+  const localeOption = ["en", "ru", "de", "uk"].includes(locale) ? locale : "en";
 
   await createPage(
     token,

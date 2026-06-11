@@ -228,10 +228,12 @@ export async function POST(req: Request) {
   }
 
   // Read the user's selected locale from the cookie set by I18nProvider.
+  // "ua" is the legacy Ukrainian cookie value (pre-/uk slug) — cookies
+  // live for a year, so keep accepting it as an alias.
   const localeMatch = req.headers
     .get("cookie")
-    ?.match(/(?:^|;\s*)lang=(en|ru|de|ua)/);
-  const locale = localeMatch?.[1] ?? "en";
+    ?.match(/(?:^|;\s*)lang=(en|ru|de|uk|ua)/);
+  const locale = localeMatch?.[1] === "ua" ? "uk" : (localeMatch?.[1] ?? "en");
 
   const lead: LeadPayload = {
     name,

@@ -3,7 +3,7 @@
 Marketing landing for **Seventy Times**, a US-based AI + performance-marketing
 agency. Single page with a lead form, a callback form, a review form, and a
 live Claude-powered chat assistant named Vanessa. Four languages
-(en / ru / de / ua).
+(en / ru / de / uk).
 
 This file is the short orientation map. Read it first when opening the repo.
 
@@ -35,7 +35,7 @@ src/
 │   │   ├── review/route.ts       /api/review — review form → Telegram + Notion
 │   │   └── error/route.ts        /api/error — sink for client-side errors
 │   ├── [locale]/                 Every public URL is locale-prefixed
-│   │   │                         (/en, /ru, /de, /ua + their subpages)
+│   │   │                         (/en, /ru, /de, /uk + their subpages)
 │   │   ├── layout.tsx            THE root layout (there is no app/layout.tsx):
 │   │   │                         <html lang>, fonts, JSON-LD, metadata,
 │   │   │                         I18nProvider + decor + overlays
@@ -114,7 +114,7 @@ src/
 │   │                             localePath)
 │   ├── dictionary.ts             Aggregates the four locale files,
 │   │                             infers the Dictionary type from ru.ts
-│   └── locales/{en,ru,de,ua}.ts  Translation tables (must stay in sync — TS
+│   └── locales/{en,ru,de,uk}.ts  Translation tables (must stay in sync — TS
 │                                 will complain if a key is missing)
 │
 ├── lib/                          Server-side / pure utilities
@@ -152,19 +152,23 @@ nothing else.
 ## Key concepts
 
 ### Routing & i18n
-- Four locales: `en` (default), `ru`, `de`, `ua`. Defined in
-  `src/i18n/config.ts`.
-- **URL slug vs language code**: the Ukrainian slug is `/ua` (brand
-  choice), but its ISO 639-1 language code is `uk`. `LOCALE_LANG` in
-  `i18n/config.ts` maps slugs to codes — `<html lang>`, hreflang
-  alternates and JSON-LD all go through it. Never emit `ua` as a
-  language code; search engines ignore it.
+- Four locales: `en` (default), `ru`, `de`, `uk`. Defined in
+  `src/i18n/config.ts`. Slugs match ISO 639-1 codes; `LOCALE_LANG`
+  in `i18n/config.ts` keeps the slug→code mapping for `<html lang>`,
+  hreflang and JSON-LD in case they ever diverge again.
+- **Legacy `/ua` URLs** (the Ukrainian locale was originally named
+  after the country code) 301-redirect to `/uk` in middleware; the
+  `lang=ua` cookie/query/body value is accepted everywhere as an alias
+  for `uk` because cookies persist for a year. The switcher still
+  *displays* "UA" (`LOCALE_LABELS`) — that's what Ukrainians expect to
+  see, and a "UK" label would read as United Kingdom.
 - **Every public URL is locale-prefixed**: `/en`, `/ru/about`, `/de/cases/X`.
   Each `(locale × page)` is statically pre-rendered at build time via
   `generateStaticParams`.
 - Bare `/` always 307s to `/en`. Browser `Accept-Language` is intentionally
-  ignored — the agency operates in English first; RU / DE / UA are opt-in.
-- `?lang=ru|de|en|ua` 308-redirects to `/<locale>` and sets the cookie. Lets
+  ignored — the agency operates in English first; ru / de / uk are opt-in.
+- `?lang=ru|de|en|uk` 308-redirects to `/<locale>` and sets the cookie
+  (`?lang=ua` is a legacy alias for `uk`). Lets
   shared / hreflang links land on the right language without a query string.
 - **`app/[locale]/layout.tsx` is the root layout** (there is no
   `app/layout.tsx`). It renders `<html lang>` from the URL's locale
@@ -354,7 +358,7 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 ### Add a new language (e.g. French)
 1. Add `"fr"` to `Locale` and `LOCALES` in `i18n/config.ts`. Add a
    label in `LOCALE_LABELS` and the ISO 639-1 code in `LOCALE_LANG`
-   (slug and code may differ — see `ua` → `uk`).
+   (slug and code should match; the map exists in case they diverge).
 2. Copy `locales/en.ts` to `locales/fr.ts` and translate.
 3. Register it in `i18n/dictionary.ts`.
 4. Add metadata getters in `lib/localizedMeta.ts`.

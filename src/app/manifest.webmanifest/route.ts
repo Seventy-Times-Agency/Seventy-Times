@@ -14,9 +14,11 @@ export const dynamic = "force-dynamic";
  * route handler. The layout links it via `metadata.manifest`.
  */
 export async function GET(req: Request) {
-  const raw = req.headers
+  // "ua" is the legacy Ukrainian cookie value (pre-/uk slug).
+  const matched = req.headers
     .get("cookie")
-    ?.match(/(?:^|;\s*)lang=(en|ru|de|ua)/)?.[1];
+    ?.match(/(?:^|;\s*)lang=(en|ru|de|uk|ua)/)?.[1];
+  const raw = matched === "ua" ? "uk" : matched;
   const locale: Locale = isLocale(raw) ? raw : DEFAULT_LOCALE;
   const meta = getLocaleMeta(locale);
 
