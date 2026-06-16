@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/data/siteConfig";
-import { LOCALES, DEFAULT_LOCALE } from "@/i18n/config";
+import { LOCALES } from "@/i18n/config";
+import { languageAlternates } from "@/lib/localizedMeta";
 import { CASES } from "@/data/cases";
 import { SERVICES } from "@/data/services";
 
@@ -22,70 +23,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = BUILD_TIME;
   const entries: MetadataRoute.Sitemap = [];
 
+  const push = (
+    path: string,
+    priority: number,
+    changeFrequency: NonNullable<
+      MetadataRoute.Sitemap[number]["changeFrequency"]
+    >,
+  ) => {
+    for (const locale of LOCALES) {
+      entries.push({
+        url: `${siteConfig.url}/${locale}${path}`,
+        lastModified: now,
+        changeFrequency,
+        priority,
+        alternates: { languages: languageAlternates(path) },
+      });
+    }
+  };
+
   for (const page of PAGES) {
-    for (const locale of LOCALES) {
-      const url = `${siteConfig.url}/${locale}${page.path}`;
-      const languages = Object.fromEntries(
-        LOCALES.map((l) => [l, `${siteConfig.url}/${l}${page.path}`]),
-      );
-      entries.push({
-        url,
-        lastModified: now,
-        changeFrequency: page.changeFrequency,
-        priority: page.priority,
-        alternates: {
-          languages: {
-            ...languages,
-            "x-default": `${siteConfig.url}/${DEFAULT_LOCALE}${page.path}`,
-          },
-        },
-      });
-    }
+    push(page.path, page.priority, page.changeFrequency);
   }
-
   for (const item of CASES) {
-    for (const locale of LOCALES) {
-      const url = `${siteConfig.url}/${locale}/cases/${item.id}`;
-      const languages = Object.fromEntries(
-        LOCALES.map((l) => [l, `${siteConfig.url}/${l}/cases/${item.id}`]),
-      );
-      entries.push({
-        url,
-        lastModified: now,
-        changeFrequency: "monthly",
-        priority: 0.6,
-        alternates: {
-          languages: {
-            ...languages,
-            "x-default": `${siteConfig.url}/${DEFAULT_LOCALE}/cases/${item.id}`,
-          },
-        },
-      });
-    }
+    push(`/cases/${item.id}`, 0.6, "monthly");
   }
-
   for (const service of SERVICES) {
-    for (const locale of LOCALES) {
-      const url = `${siteConfig.url}/${locale}/services/${service.slug}`;
-      const languages = Object.fromEntries(
-        LOCALES.map((l) => [
-          l,
-          `${siteConfig.url}/${l}/services/${service.slug}`,
-        ]),
-      );
-      entries.push({
-        url,
-        lastModified: now,
-        changeFrequency: "monthly",
-        priority: 0.7,
-        alternates: {
-          languages: {
-            ...languages,
-            "x-default": `${siteConfig.url}/${DEFAULT_LOCALE}/services/${service.slug}`,
-          },
-        },
-      });
-    }
+    push(`/services/${service.slug}`, 0.7, "monthly");
   }
 
   return entries;

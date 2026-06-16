@@ -297,14 +297,14 @@
   line-height: 1.55;
 }
 
-@media (max-width: 820px) {
-  .customNote {
+/*  Base (mobile-first): formerly @media (max-width: 820px).  */
+
+.customNote {
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
     padding: 14px 16px;
   }
-}
 
 /* ── Details panel — single shared block under the grid ─── */
 .detailsPanel {
@@ -450,89 +450,200 @@
 }
 
 /* ── Responsive ─────────────────────────────────────────── */
-@media (max-width: 1100px) {
-  .grid {
+/*  Base (mobile-first): formerly @media (max-width: 1100px).  */
+.grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .detailsCols {
+.detailsCols {
     grid-template-columns: 1fr;
     gap: 28px;
   }
-}
 
-@media (max-width: 820px) {
-  .section {
+/*  Base (mobile-first): formerly @media (max-width: 820px).  */
+
+.section {
     padding: 40px 18px 36px;
   }
-  .header {
+
+.header {
     grid-template-columns: 1fr;
     gap: 14px;
     align-items: start;
     margin-bottom: 24px;
     padding-bottom: 18px;
   }
-  .title {
+
+.title {
     font-size: clamp(28px, 7.5vw, 44px);
   }
-  .lead {
+
+.lead {
     font-size: 14.5px;
   }
-  .headerRight {
+
+.headerRight {
     align-items: flex-start;
     text-align: left;
   }
-  /* 2x2 on phones — denser than a single tall column and reads as a
+
+/* 2x2 on phones — denser than a single tall column and reads as a
      grid of "what we do" tiles rather than a vertical list. */
-  .grid {
+
+.grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
-  .card {
+
+.card {
     min-height: 168px;
     padding: 16px 14px 14px;
   }
-  /* Strip the descriptive tagline + "also" pill on mobile — the icon
+
+/* Strip the descriptive tagline + "also" pill on mobile — the icon
      + title carry the meaning, the rest is decorative noise that
      pushes the toggle row off-screen. */
-  .tagline,
+
+.tagline,
   .note {
     display: none;
   }
-  .cardTitle {
+
+.cardTitle {
     font-size: 16px;
     line-height: 1.15;
   }
-  .cardHead {
+
+.cardHead {
     margin-bottom: 10px;
   }
-  .cardNum {
+
+.cardNum {
     font-size: 9.5px;
   }
-  .iconBox {
+
+.iconBox {
     width: 32px;
     height: 32px;
   }
-  .iconSvg {
+
+.iconSvg {
     width: 18px;
     height: 18px;
   }
-  .toggleRow {
+
+.toggleRow {
     padding-top: 12px;
     font-size: 9px;
     letter-spacing: 0.16em;
     gap: 6px;
   }
-  .toggleArrow {
+
+.toggleArrow {
     width: 22px;
     height: 22px;
     font-size: 10px;
   }
-  .detailsInner {
+
+.detailsInner {
     padding: 24px 22px;
   }
-  .detailsHeader {
+
+.detailsHeader {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
+  }
+
+/*  821px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 821px) {
+  .customNote {
+    flex-direction: revert;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+  }
+  .section {
+    padding: 80px 48px 64px;
+  }
+  .header {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+  }
+  .title {
+    font-size: var(--fs-h1);
+  }
+  .lead {
+    font-size: var(--fs-body-lg);
+  }
+  .headerRight {
+    align-items: flex-end;
+    text-align: right;
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .card {
+    min-height: 280px;
+    padding: 22px 22px 18px;
+  }
+  .tagline {
+    display: revert;
+  }
+  .note {
+    display: revert;
+  }
+  .cardTitle {
+    font-size: clamp(18px, 1.5vw, 22px);
+    line-height: 1.15;
+  }
+  .cardHead {
+    margin-bottom: 16px;
+  }
+  .cardNum {
+    font-size: 11px;
+  }
+  .iconBox {
+    width: 38px;
+    height: 38px;
+  }
+  .iconSvg {
+    width: 22px;
+    height: 22px;
+  }
+  .toggleRow {
+    padding-top: 16px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    gap: 10px;
+  }
+  .toggleArrow {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+  .detailsInner {
+    padding: 32px 36px;
+  }
+  .detailsHeader {
+    flex-direction: revert;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+/*  1101px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 1101px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .detailsCols {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
   }
 }

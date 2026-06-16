@@ -12,6 +12,8 @@ const strings = {
     navCta: "Get a quote",
     navOpenMenu: "Open menu",
     navCloseMenu: "Close menu",
+    skipToContent: "Skip to content",
+    scrollLabel: "Scroll",
 
     // Hero meta
     heroMeta1: "Marketing · AI · Automation",

@@ -12,6 +12,8 @@ const strings = {
     navCta: "Anfrage",
     navOpenMenu: "Menü öffnen",
     navCloseMenu: "Menü schließen",
+    skipToContent: "Zum Inhalt springen",
+    scrollLabel: "Scrollen",
 
     // Hero meta
     heroMeta1: "Marketing · KI · Automatisierung",

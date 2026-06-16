@@ -1,4 +1,25 @@
-import type { Locale } from "@/i18n/config";
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  LOCALE_LANG,
+  type Locale,
+} from "@/i18n/config";
+import { siteConfig } from "@/data/siteConfig";
+
+/**
+ * hreflang alternates for a page, keyed by ISO 639-1 language code
+ * (see LOCALE_LANG), with x-default
+ * pointing at the English version. `path` is the locale-less suffix,
+ * e.g. "" for the landing or "/cases/convioo".
+ */
+export function languageAlternates(path: string): Record<string, string> {
+  const languages: Record<string, string> = {};
+  for (const l of LOCALES) {
+    languages[LOCALE_LANG[l]] = `${siteConfig.url}/${l}${path}`;
+  }
+  languages["x-default"] = `${siteConfig.url}/${DEFAULT_LOCALE}${path}`;
+  return languages;
+}
 
 type LocaleMeta = {
   description: string;
@@ -66,7 +87,7 @@ const META: Record<Locale, LocaleMeta> = {
     ogImageAlt:
       "Seventy Times — Werbung, Automatisierung und KI-Bots als eine Wachstumsmaschine.",
   },
-  ua: {
+  uk: {
     description:
       "Seventy Times перетворює AI та digital-маркетинг на передбачуваний потік кваліфікованих клієнтів: реклама, автоматизація та розумні боти — все працює на одну метрику: ваше зростання.",
     keywords: [
@@ -113,7 +134,7 @@ const PRIVACY: Record<Locale, LegalMeta> = {
     description:
       "Wie Seventy Times Ihre Daten erhebt, verwendet und schützt. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
   },
-  ua: {
+  uk: {
     title: "Політика конфіденційності",
     description:
       "Як Seventy Times збирає, використовує та захищає ваші дані. Чесний мінімум для ранньої стадії — буде переглянутий з юристом у міру зростання.",
@@ -136,7 +157,7 @@ const TERMS: Record<Locale, LegalMeta> = {
     description:
       "Nutzungsbedingungen für seventy-times.com. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
   },
-  ua: {
+  uk: {
     title: "Умови використання",
     description:
       "Умови використання сайту seventy-times.com. Чесний мінімум для ранньої стадії — буде переглянутий з юристом у міру зростання.",
@@ -153,22 +174,22 @@ export function getTermsMeta(locale: Locale): LegalMeta {
 
 const ABOUT: Record<Locale, LegalMeta> = {
   en: {
-    title: "About — Seventy Times",
+    title: "About",
     description:
       "Who's behind Seventy Times: a remote-first AI + performance marketing studio that assembles ads, automation and AI bots into one growth machine for ambitious businesses.",
   },
   ru: {
-    title: "О нас — Seventy Times",
+    title: "О нас",
     description:
       "Кто стоит за Seventy Times: распределённая команда AI и performance-маркетинга, которая собирает рекламу, автоматизацию и AI-ботов в единую машину роста для амбициозного бизнеса.",
   },
   de: {
-    title: "Über uns — Seventy Times",
+    title: "Über uns",
     description:
       "Wer hinter Seventy Times steht: ein verteiltes KI- und Performance-Marketing-Studio, das Werbung, Automatisierung und KI-Bots zu einer Wachstumsmaschine für ambitionierte Unternehmen verbindet.",
   },
-  ua: {
-    title: "Про нас — Seventy Times",
+  uk: {
+    title: "Про нас",
     description:
       "Хто стоїть за Seventy Times: розподілена команда AI та performance-маркетингу, що збирає рекламу, автоматизацію та AI-ботів у єдину машину росту для амбітного бізнесу.",
   },
@@ -180,22 +201,22 @@ export function getAboutMeta(locale: Locale): LegalMeta {
 
 const TEAM: Record<Locale, LegalMeta> = {
   en: {
-    title: "Team — Seventy Times",
+    title: "Team",
     description:
       "The people behind Seventy Times — full team bios coming soon.",
   },
   ru: {
-    title: "Команда — Seventy Times",
+    title: "Команда",
     description:
       "Люди, которые стоят за Seventy Times — полные био команды появятся скоро.",
   },
   de: {
-    title: "Team — Seventy Times",
+    title: "Team",
     description:
       "Die Menschen hinter Seventy Times — vollständige Team-Profile folgen in Kürze.",
   },
-  ua: {
-    title: "Команда — Seventy Times",
+  uk: {
+    title: "Команда",
     description:
       "Люди, які стоять за Seventy Times — повні біо команди з'являться скоро.",
   },

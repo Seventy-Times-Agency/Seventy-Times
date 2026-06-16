@@ -270,79 +270,180 @@
   color: var(--text-dim);
 }
 
-@media (max-width: 900px) {
-  .hero {
+/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+
+.hero {
     padding: 56px 22px 40px;
   }
-  .heroWordmark {
+
+.heroWordmark {
     font-size: clamp(120px, 28vw, 260px);
   }
-  .meta {
+
+.meta {
     margin-bottom: 28px;
   }
-  .metaLeft,
+
+.metaLeft,
   .metaRight {
     display: none;
   }
-  .metaCenter {
+
+.metaCenter {
     justify-self: center;
   }
-  .title {
+
+.title {
     font-size: clamp(34px, 8.5vw, 64px);
     /* Big editorial margin on desktop is overkill on a phone where
        sub + CTAs are right under the title. */
     margin-bottom: 28px;
   }
-  .grid {
+
+.grid {
     grid-template-columns: 1fr;
     gap: 24px;
     text-align: center;
   }
-  .sub {
+
+.sub {
     margin: 0 auto;
     font-size: 15px;
   }
-  .actions {
+
+.actions {
     align-items: center;
   }
-  .actionsRow {
+
+.actionsRow {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
   }
-  .primary,
+
+.primary,
   .secondary {
     justify-content: center;
     padding: 16px 24px;
     font-size: 14px;
   }
-  .hint {
+
+.hint {
     text-align: center;
   }
-  .stats {
+
+.stats {
     grid-template-columns: repeat(2, 1fr);
     gap: 18px;
     margin-top: 36px;
     padding-top: 26px;
   }
-  .statValue {
+
+.statValue {
     font-size: clamp(26px, 6vw, 38px);
   }
-}
 
-@media (max-width: 420px) {
-  .hero {
+/*  Base (mobile-first): formerly @media (max-width: 420px).  */
+
+.hero {
     padding: 40px 16px 32px;
   }
-  .title {
+
+.title {
     font-size: 30px;
     margin-bottom: 22px;
   }
-  .heroWordmark {
+
+.heroWordmark {
     font-size: 100px;
   }
-  .metaCenter {
+
+.metaCenter {
     font-size: 9px;
     padding: 6px 12px;
+  }
+
+/*  421px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 421px) {
+  .hero {
+    padding: 56px 22px 40px;
+  }
+  .title {
+    font-size: clamp(34px, 8.5vw, 64px);
+    margin-bottom: 28px;
+  }
+  .heroWordmark {
+    font-size: clamp(120px, 28vw, 260px);
+  }
+  .metaCenter {
+    font-size: var(--fs-mini);
+    padding: 8px 18px;
+  }
+}
+
+/*  901px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 901px) {
+  .hero {
+    padding: 120px 48px 80px;
+  }
+  .heroWordmark {
+    font-size: clamp(260px, 38vw, 600px);
+  }
+  .meta {
+    margin-bottom: 48px;
+  }
+  .metaLeft {
+    display: inline-flex;
+  }
+  .metaRight {
+    display: inline-flex;
+  }
+  .metaCenter {
+    justify-self: revert;
+  }
+  .title {
+    font-size: clamp(38px, 5.6vw, 96px);
+    margin-bottom: 112px;
+  }
+  .grid {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    text-align: revert;
+  }
+  .sub {
+    margin: 0;
+    font-size: var(--fs-body-lg);
+  }
+  .actions {
+    align-items: flex-end;
+  }
+  .actionsRow {
+    flex-direction: revert;
+    align-items: revert;
+    gap: 22px;
+  }
+  .primary {
+    justify-content: revert;
+    padding: 18px 34px;
+    font-size: 15px;
+  }
+  .secondary {
+    justify-content: revert;
+    padding: 18px 30px;
+    font-size: 15px;
+  }
+  .hint {
+    text-align: revert;
+  }
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 88px;
+    padding-top: 36px;
+  }
+  .statValue {
+    font-size: clamp(32px, 3.5vw, 56px);
   }
 }

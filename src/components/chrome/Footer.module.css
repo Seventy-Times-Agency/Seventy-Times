@@ -135,7 +135,42 @@
   color: var(--white);
 }
 
-@media (max-width: 900px) {
+/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+
+.footer {
+    padding: 40px 20px 24px;
+  }
+
+.top {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+/*  Base (mobile-first): formerly @media (max-width: 560px).  */
+
+.footer {
+    padding: 32px 18px 22px;
+  }
+
+.top {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+.wordmark {
+    font-size: clamp(48px, 16vw, 160px);
+    margin: 36px 0 24px;
+  }
+
+.bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+/*  561px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 561px) {
   .footer {
     padding: 40px 20px 24px;
   }
@@ -143,23 +178,25 @@
     grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
-}
-
-@media (max-width: 560px) {
-  .footer {
-    padding: 32px 18px 22px;
-  }
-  .top {
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
   .wordmark {
-    font-size: clamp(48px, 16vw, 160px);
-    margin: 36px 0 24px;
+    font-size: clamp(64px, 18vw, 240px);
+    margin: 48px 0 36px;
   }
   .bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
+    flex-direction: revert;
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+/*  901px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 901px) {
+  .footer {
+    padding: 72px 48px 36px;
+  }
+  .top {
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: 48px;
   }
 }

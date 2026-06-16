@@ -157,52 +157,6 @@
   opacity: 1;
 }
 
-.quoteMark {
-  font-size: 80px;
-  font-weight: 800;
-  font-style: italic;
-  line-height: 0.4;
-  color: var(--accent);
-  height: 34px;
-  margin-bottom: -6px;
-}
-
-.quote {
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--text);
-  letter-spacing: -0.005em;
-  flex: 1;
-}
-
-.author {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
-}
-
-.authorName {
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: var(--text);
-}
-
-.authorRole {
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-.authorLocation {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-top: 6px;
-}
 
 /* Controls row ─────────────────────────────────────────── */
 .controls {
@@ -272,56 +226,118 @@
   text-align: center;
 }
 
-@media (max-width: 900px) {
-  .header {
+/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+
+.header {
     grid-template-columns: 1fr;
     gap: 24px;
     align-items: start;
     padding: 0 24px 32px;
   }
-  .headerRight {
+
+.headerRight {
     align-items: flex-start;
   }
-  .lead {
+
+.lead {
     text-align: left;
   }
-  .track {
+
+.track {
     padding: 4px 24px 28px;
   }
-  .controls {
+
+.controls {
     padding: 0 24px;
     flex-wrap: wrap;
   }
-}
 
-@media (max-width: 640px) {
-  .section {
+/*  Base (mobile-first): formerly @media (max-width: 640px).  */
+
+.section {
     padding: 40px 0 32px;
   }
-  .header {
+
+.header {
     padding: 0 18px 22px;
   }
-  .title {
+
+.title {
     font-size: clamp(26px, 7.5vw, 38px);
   }
-  .track {
+
+.track {
     padding: 4px 18px 20px;
     gap: 12px;
   }
-  .card {
+
+.card {
     flex: 0 0 calc(100vw - 52px);
     padding: 24px 20px 22px;
   }
-  .quote {
-    font-size: 14.5px;
-  }
-  .controls {
+
+.controls {
     padding: 0 18px;
     gap: 14px;
   }
-  .navBtn {
+
+.navBtn {
     width: 38px;
     height: 38px;
     font-size: 15px;
+  }
+
+/*  641px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 641px) {
+  .section {
+    padding: 72px 0 56px;
+  }
+  .header {
+    padding: 0 24px 32px;
+  }
+  .title {
+    font-size: var(--fs-h1);
+  }
+  .track {
+    padding: 4px 24px 28px;
+    gap: 22px;
+  }
+  .card {
+    flex: 0 0 clamp(300px, 46vw, 560px);
+    padding: 44px 36px 38px;
+  }
+  .controls {
+    padding: 0 24px;
+    gap: 24px;
+  }
+  .navBtn {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+}
+
+/*  901px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 901px) {
+  .header {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+    padding: 0 48px 36px;
+  }
+  .headerRight {
+    align-items: flex-end;
+  }
+  .lead {
+    text-align: right;
+  }
+  .track {
+    padding: 4px 48px 32px;
+  }
+  .controls {
+    padding: 0 48px;
+    flex-wrap: revert;
   }
 }

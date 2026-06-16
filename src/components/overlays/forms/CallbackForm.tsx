@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useCallback, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
 import { siteConfig } from "@/data/siteConfig";
+import { useHashModal } from "@/components/overlays/forms/useHashModal";
 import styles from "@/components/overlays/forms/LeadForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -27,52 +28,15 @@ const PHONE_RE = /^[+()\d][\d\s().\-]{6,}$/;
  */
 export default function CallbackForm() {
   const { t, localePath } = useT();
-  const [open, setOpen] = useState(false);
   const [fields, setFields] = useState(INITIAL);
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const check = () => setOpen(window.location.hash === "#callback");
-    check();
-    window.addEventListener("hashchange", check);
-    return () => window.removeEventListener("hashchange", check);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
-
-  const close = useCallback(() => {
-    if (typeof window !== "undefined") {
-      history.replaceState(
-        null,
-        "",
-        window.location.pathname + window.location.search,
-      );
-    }
-    setOpen(false);
-    window.setTimeout(() => {
-      setStatus("idle");
-      setError("");
-    }, 400);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, close]);
+  const { open, close } = useHashModal("#callback", () => {
+    setStatus("idle");
+    setError("");
+  });
 
   const setField =
     (key: keyof typeof INITIAL) =>
@@ -275,6 +239,7 @@ export default function CallbackForm() {
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
                       required
+                      aria-required="true"
                     />
                     <span>
                       {t.consentPrefix}
@@ -289,7 +254,15 @@ export default function CallbackForm() {
                     </span>
                   </label>
 
-                  {error && <div className={styles.error}>{error}</div>}
+                  {error && (
+                    <div
+                      className={styles.error}
+                      role="alert"
+                      aria-live="polite"
+                    >
+                      {error}
+                    </div>
+                  )}
 
                   <div className={styles.actions}>
                     <button

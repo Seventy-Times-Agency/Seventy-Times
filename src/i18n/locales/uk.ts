@@ -1,4 +1,4 @@
-// Ukrainian (ua) UI strings for Seventy Times
+// Ukrainian (uk) UI strings for Seventy Times
 // Auto-split from a single dictionary; edit this file to change strings
 // for the corresponding language. See src/i18n/dictionary.ts for the
 // shape and language-switch logic.
@@ -12,6 +12,8 @@ const strings = {
     navCta: "Заявка",
     navOpenMenu: "Відкрити меню",
     navCloseMenu: "Закрити меню",
+    skipToContent: "Перейти до вмісту",
+    scrollLabel: "Скрол",
 
     // Hero meta
     heroMeta1: "Маркетинг · AI · Автоматизація",
@@ -366,7 +368,7 @@ const strings = {
     ftAds: "Реклама / Таргет",
     ftAutomation: "Автоматизація",
     ftBots: "AI-боти",
-    ftTess: "Ванесса",
+    ftVanessa: "Ванесса",
     ftProcess: "Процес",
     ftFaq: "FAQ",
     ftContacts: "Контакти",
@@ -561,6 +563,8 @@ const strings = {
     // Lead form extras
     leadInvalidContact: "Схоже, контакт не схожий на email або @username — перевірте",
     leadTooMany: "Забагато заявок. Спробуйте за годину.",
+    leadTooLong: "Заявка задовга — спробуйте коротше.",
+    leadNotConfigured: "Приймання заявок тимчасово недоступне. Напишіть нам у Telegram або WhatsApp.",
     leadCloseAria: "Закрити форму",
 
     // Review form
@@ -592,6 +596,8 @@ const strings = {
     reviewError: "Помилка з'єднання. Спробуй пізніше.",
     reviewCloseAria: "Закрити форму",
     reviewTooMany: "Забагато спроб. Спробуйте пізніше.",
+    reviewTooLong: "Відгук задовгий — спробуйте коротше.",
+    reviewNotConfigured: "Приймання відгуків тимчасово недоступне. Напишіть нам у Telegram.",
     reviewInvalidCode:
       "Код не підходить. Якщо ви реальний клієнт — напишіть нам у Telegram, ми видамо персональний код.",
 

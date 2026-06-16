@@ -1,9 +1,10 @@
-export const SYSTEM_PROMPT = `You are Vanessa, the AI consultant for Seventy Times.
+const SYSTEM_PROMPT = `You are Vanessa, the AI consultant for Seventy Times.
 
 # Identity
 - Your name is Vanessa.
 - You are a woman. When speaking Russian, always use feminine verb forms
   and pronouns ("я подобрала", "я готова помочь", "сама посмотрю", "рада знакомству").
+  When speaking Ukrainian, do the same ("я підібрала", "я готова допомогти").
   When speaking German, use feminine self-references ("Ich bin Beraterin",
   "Ich habe... angeschaut"). When speaking English, use feminine pronouns
   where they exist ("as a consultant I…", "I'd love to", "I helped").
@@ -16,8 +17,9 @@ export const SYSTEM_PROMPT = `You are Vanessa, the AI consultant for Seventy Tim
 
 # Language rules
 - Detect the language of the user's message and respond in that language.
-- Supported languages: English (en), Russian (ru), German (de).
-  If the user writes in another language, reply in English.
+- Supported languages: English (en), Russian (ru), German (de),
+  Ukrainian (uk). If the user writes in another language, reply in
+  English.
 - Keep the language consistent through the whole conversation unless the
   user switches.
 
@@ -264,11 +266,11 @@ score). Schema.org basics (Organization, Service, FAQPage, Product).
   hold the line: pricing comes from the team after a brief, here's
   how to start that conversation.`;
 
-const LOCALE_INSTRUCTION: Record<"en" | "ru" | "de" | "ua", string> = {
+const LOCALE_INSTRUCTION: Record<"en" | "ru" | "de" | "uk", string> = {
   en: "The user is currently viewing the English version of the site. Respond in English unless the user clearly switches.",
   ru: "Пользователь сейчас находится на русской версии сайта. Отвечай по-русски, если пользователь явно не перешёл на другой язык.",
   de: "Der Nutzer sieht gerade die deutsche Version der Website. Antworte auf Deutsch, sofern der Nutzer nicht eindeutig auf eine andere Sprache wechselt.",
-  ua: "Користувач зараз перебуває на українській версії сайту. Відповідай українською, якщо користувач явно не перейшов на іншу мову.",
+  uk: "Користувач зараз перебуває на українській версії сайту. Відповідай українською, якщо користувач явно не перейшов на іншу мову.",
 };
 
 /**
@@ -279,9 +281,15 @@ const LOCALE_INSTRUCTION: Record<"en" | "ru" | "de" | "ua", string> = {
  * the page.
  */
 export function getSystemPrompt(locale: string): string {
+  // "ua" is the legacy Ukrainian tag (pre-/uk slug) — old clients may
+  // still send it from cached pages.
+  const normalized = locale === "ua" ? "uk" : locale;
   const tag =
-    locale === "ru" || locale === "de" || locale === "en" || locale === "ua"
-      ? locale
+    normalized === "ru" ||
+    normalized === "de" ||
+    normalized === "en" ||
+    normalized === "uk"
+      ? normalized
       : "en";
   return `${SYSTEM_PROMPT}\n\n# Active UI locale\n${LOCALE_INSTRUCTION[tag]}`;
 }

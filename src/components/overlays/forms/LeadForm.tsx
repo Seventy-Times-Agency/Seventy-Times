@@ -19,6 +19,7 @@ import {
   type LeadBudget,
   type LeadPackage,
 } from "@/lib/leadDraft";
+import { useHashModal } from "@/components/overlays/forms/useHashModal";
 import styles from "@/components/overlays/forms/LeadForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -49,7 +50,6 @@ const TOTAL_STEPS = 3;
  */
 export default function LeadForm() {
   const { t, localePath } = useT();
-  const [open, setOpen] = useState(false);
   const [fields, setFields] = useState(INITIAL);
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
@@ -57,6 +57,14 @@ export default function LeadForm() {
   const [hydrated, setHydrated] = useState(false);
   const [mode, setMode] = useState<FormMode>("steps");
   const [step, setStep] = useState(0);
+
+  // Open/close lifecycle (hash trigger, scroll lock, Escape, reset
+  // after the exit animation) — shared with the other modals.
+  const { open, close } = useHashModal("#lead", () => {
+    setStatus("idle");
+    setError("");
+    setStep(0);
+  });
 
   // Restore the user's draft (everything except the honeypot) and
   // their preferred form mode on mount.
@@ -96,48 +104,6 @@ export default function LeadForm() {
       // ignore
     }
   }, [hydrated, mode]);
-
-  // Listen to URL hash to know when to open.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const check = () => setOpen(window.location.hash === "#lead");
-    check();
-    window.addEventListener("hashchange", check);
-    return () => window.removeEventListener("hashchange", check);
-  }, []);
-
-  // Lock body scroll while modal is open.
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
-
-  const close = useCallback(() => {
-    if (typeof window !== "undefined") {
-      history.replaceState(null, "", window.location.pathname + window.location.search);
-    }
-    setOpen(false);
-    // Reset ephemeral UI state after the exit animation finishes
-    window.setTimeout(() => {
-      setStatus("idle");
-      setError("");
-      setStep(0);
-    }, 400);
-  }, []);
-
-  // Close on Escape
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, close]);
 
   const setField = (key: keyof typeof INITIAL) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>

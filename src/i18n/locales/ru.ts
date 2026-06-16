@@ -12,6 +12,8 @@ const strings = {
     navCta: "Заявка",
     navOpenMenu: "Открыть меню",
     navCloseMenu: "Закрыть меню",
+    skipToContent: "Перейти к содержимому",
+    scrollLabel: "Скролл",
 
     // Hero meta
     heroMeta1: "Маркетинг · AI · Автоматизация",
@@ -366,7 +368,7 @@ const strings = {
     ftAds: "Реклама / Таргет",
     ftAutomation: "Автоматизация",
     ftBots: "AI-боты",
-    ftTess: "Ванесса",
+    ftVanessa: "Ванесса",
     ftProcess: "Процесс",
     ftFaq: "FAQ",
     ftContacts: "Контакты",

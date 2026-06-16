@@ -2,10 +2,11 @@
  * Notion integration — direct REST calls (no SDK) so the bundle stays
  * small and we don't depend on a client library's lifecycle.
  *
- * All functions here are fire-and-forget: they never throw, and they
- * log (without PII) if something goes wrong. The public API route
- * stays fast and the user still gets a successful response even if
- * Notion is down — Telegram remains the primary notification channel.
+ * All functions here never throw: they log (without PII) if something
+ * goes wrong and report success/failure through their return value so
+ * the route can tell when a record actually landed. The public API
+ * route stays fast and the user still gets a successful response even
+ * if Notion is down — Telegram remains the primary notification channel.
  */
 
 import { fetchWithTimeout } from "@/lib/fetchWithTimeout";
@@ -15,21 +16,9 @@ const NOTION_ENDPOINT = "https://api.notion.com/v1/pages";
 const NOTION_QUERY_ENDPOINT = (databaseId: string) =>
   `https://api.notion.com/v1/databases/${databaseId}/query`;
 
-type Locale = "en" | "ru" | "de" | "ua";
+import type { LeadBudget, LeadPackage } from "@/lib/leadDraft";
 
-type LeadPackage =
-  | "not_sure"
-  | "standalone"
-  | "launch"
-  | "growth"
-  | "scale";
-
-type LeadBudget =
-  | "not_sure"
-  | "under_1k"
-  | "1k_3k"
-  | "3k_10k"
-  | "10k_plus";
+type Locale = "en" | "ru" | "de" | "uk";
 
 const PACKAGE_NOTION_LABEL: Record<LeadPackage, string> = {
   not_sure: "Not sure",
@@ -109,7 +98,7 @@ async function createPage(
   databaseId: string,
   properties: Record<string, unknown>,
   label: string,
-): Promise<void> {
+): Promise<boolean> {
   try {
     const res = await fetchWithTimeout(NOTION_ENDPOINT, {
       method: "POST",
@@ -122,6 +111,7 @@ async function createPage(
         parent: { database_id: databaseId },
         properties,
       }),
+      timeoutMs: 7000,
     });
 
     if (!res.ok) {
@@ -129,10 +119,12 @@ async function createPage(
         status: res.status,
       });
     }
+    return res.ok;
   } catch (err) {
     console.error(`[${label}] Notion request error`, {
       message: err instanceof Error ? err.message : "unknown",
     });
+    return false;
   }
 }
 
@@ -148,12 +140,6 @@ export function isNotionReviewsConfigured(): boolean {
   );
 }
 
-export function isNotionChatsConfigured(): boolean {
-  return Boolean(
-    process.env.NOTION_TOKEN && process.env.NOTION_DATABASE_CHATS_ID,
-  );
-}
-
 export async function sendLeadToNotion(
   lead: LeadRecord,
 ): Promise<boolean> {
@@ -162,7 +148,7 @@ export async function sendLeadToNotion(
   if (!token || !databaseId) return false;
 
   const locale = (lead.locale ?? "en").toString();
-  const localeOption = ["en", "ru", "de", "ua"].includes(locale) ? locale : "en";
+  const localeOption = ["en", "ru", "de", "uk"].includes(locale) ? locale : "en";
 
   const properties: Record<string, unknown> = {
     Name: { title: title(lead.name) },
@@ -189,8 +175,7 @@ export async function sendLeadToNotion(
     properties.Phone = { phone_number: lead.phone };
   }
 
-  await createPage(token, databaseId, properties, "LEAD");
-  return true;
+  return createPage(token, databaseId, properties, "LEAD");
 }
 
 export async function sendReviewToNotion(
@@ -200,7 +185,7 @@ export async function sendReviewToNotion(
   const databaseId = process.env.NOTION_DATABASE_REVIEWS_ID;
   if (!token || !databaseId) return false;
 
-  await createPage(
+  return createPage(
     token,
     databaseId,
     {
@@ -214,7 +199,6 @@ export async function sendReviewToNotion(
     },
     "REVIEW",
   );
-  return true;
 }
 
 export async function logChatTurn(turn: ChatRecord): Promise<void> {
@@ -223,7 +207,7 @@ export async function logChatTurn(turn: ChatRecord): Promise<void> {
   if (!token || !databaseId) return;
 
   const locale = (turn.locale ?? "en").toString();
-  const localeOption = ["en", "ru", "de", "ua"].includes(locale) ? locale : "en";
+  const localeOption = ["en", "ru", "de", "uk"].includes(locale) ? locale : "en";
 
   await createPage(
     token,

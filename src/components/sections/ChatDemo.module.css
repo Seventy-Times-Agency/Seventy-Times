@@ -201,72 +201,89 @@
   opacity: 0.15;
 }
 
-@media (max-width: 1024px) {
-  .layout {
+/*  Base (mobile-first): formerly @media (max-width: 1024px).  */
+
+.layout {
     grid-template-columns: 1fr;
     gap: 48px;
   }
-  .portrait {
+
+.portrait {
     order: -1;
     overflow: hidden;
   }
-  .portraitFrame {
+
+.portraitFrame {
     width: 300px;
     margin: 0 auto;
   }
-  .ringA { width: 380px; height: 380px; }
-  .ringB { width: 460px; height: 460px; }
-}
 
-@media (max-width: 640px) {
-  .section {
+.ringA { width: 380px; height: 380px; }
+
+.ringB { width: 460px; height: 460px; }
+
+/*  Base (mobile-first): formerly @media (max-width: 640px).  */
+
+.section {
     padding: 40px 18px 36px;
   }
 
-  /* Side-by-side: portrait on the right, intro text on the left.
+/* Side-by-side: portrait on the right, intro text on the left.
      Cuts the section height roughly in half vs the stacked variant. */
-  .layout {
+
+.layout {
     grid-template-columns: 1.1fr 130px;
     gap: 16px;
     align-items: start;
   }
-  .intro {
+
+.intro {
     gap: 12px;
     min-width: 0;
   }
-  .portrait {
+
+.portrait {
     order: 0;
   }
-  .portraitFrame {
+
+.portraitFrame {
     width: 130px;
     margin: 0;
   }
-  /* The big concentric rings break the side-by-side layout on a
+
+/* The big concentric rings break the side-by-side layout on a
      phone — let them go, the framed portrait reads cleanly on its own. */
-  .ring {
+
+.ring {
     display: none;
   }
-  .title {
+
+.title {
     font-size: 22px;
     line-height: 1.05;
   }
-  .lead {
+
+.lead {
     font-size: 13.5px;
     line-height: 1.5;
   }
-  /* The lead paragraph already says what Vanessa does — drop the
+
+/* The lead paragraph already says what Vanessa does — drop the
      four-bullet checklist on mobile to keep the section short. */
-  .bullets {
+
+.bullets {
     display: none;
   }
-  .cta {
+
+.cta {
     padding: 13px 22px;
     font-size: 13.5px;
     margin-top: 4px;
   }
 
-  /* Shrink the on-portrait label/badge so they fit the smaller frame. */
-  .portraitBadge {
+/* Shrink the on-portrait label/badge so they fit the smaller frame. */
+
+.portraitBadge {
     padding: 6px 8px;
     bottom: 6px;
     left: 6px;
@@ -275,18 +292,22 @@
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
-  .badgeDot {
+
+.badgeDot {
     width: 7px;
     height: 7px;
   }
-  .badgeName {
+
+.badgeName {
     font-size: 11px;
   }
-  .badgeRole {
+
+.badgeRole {
     font-size: 8.5px;
     letter-spacing: 0.12em;
   }
-  .portraitLabel {
+
+.portraitLabel {
     top: 6px;
     right: 6px;
     padding: 3px 8px;
@@ -294,5 +315,101 @@
     letter-spacing: 0.16em;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+  }
+
+/*  641px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 641px) {
+  .section {
+    padding: 64px 48px;
+  }
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .intro {
+    gap: 24px;
+    min-width: revert;
+  }
+  .portrait {
+    order: -1;
+  }
+  .portraitFrame {
+    width: 300px;
+    margin: 0 auto;
+  }
+  .ring {
+    display: revert;
+  }
+  .title {
+    font-size: var(--fs-h1);
+    line-height: 0.95;
+  }
+  .lead {
+    font-size: var(--fs-body-lg);
+    line-height: 1.65;
+  }
+  .bullets {
+    display: flex;
+  }
+  .cta {
+    padding: 18px 34px;
+    font-size: 15px;
+    margin-top: 14px;
+  }
+  .portraitBadge {
+    padding: 16px 20px;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    gap: 12px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .badgeDot {
+    width: 10px;
+    height: 10px;
+  }
+  .badgeName {
+    font-size: 13px;
+  }
+  .badgeRole {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+  .portraitLabel {
+    top: 18px;
+    right: 18px;
+    padding: 6px 14px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/*  1025px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 1025px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+  .portrait {
+    order: revert;
+    overflow: revert;
+  }
+  .portraitFrame {
+    width: 380px;
+    margin: 0;
+  }
+  .ringA {
+    width: 480px;
+    height: 480px;
+  }
+  .ringB {
+    width: 600px;
+    height: 600px;
   }
 }

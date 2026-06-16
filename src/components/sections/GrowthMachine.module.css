@@ -493,84 +493,180 @@
 }
 
 /* ── Responsive ─────────────────────────────────────────── */
-@media (max-width: 1100px) {
-  .grid {
+/*  Base (mobile-first): formerly @media (max-width: 1100px).  */
+.grid {
     grid-template-columns: 1fr;
     max-width: 560px;
     margin: 0 auto;
   }
-}
 
-@media (max-width: 900px) {
-  .section {
+/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+
+.section {
     padding: 44px 18px 36px;
   }
-  .header {
+
+.header {
     grid-template-columns: 1fr;
     gap: 16px;
     align-items: start;
     margin-bottom: 24px;
     padding-bottom: 18px;
   }
-  .headerRight {
+
+.headerRight {
     align-items: flex-start;
     text-align: left;
   }
-  .lead {
+
+.lead {
     max-width: none;
     font-size: 14.5px;
   }
-  .title {
+
+.title {
     font-size: clamp(28px, 8vw, 44px);
   }
-  .guarantee {
+
+.guarantee {
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
     padding: 16px 18px;
     margin-top: 22px;
   }
-}
 
-@media (max-width: 900px) {
-  /* Drop the descriptive sub-line and the small "INCLUDES" label —
+/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+
+/* Drop the descriptive sub-line and the small "INCLUDES" label —
      the title + the checklist already say what's in the package. */
-  .cardSub,
+
+.cardSub,
   .cardListLabel {
     display: none;
   }
-  .cardListItem {
+
+.cardListItem {
     font-size: 13px;
     gap: 8px;
   }
-  .cardList {
+
+.cardList {
     gap: 7px;
   }
 
-  /* Mobile: collapse the includes checklist behind the toggle button. */
-  .includesToggle {
+/* Mobile: collapse the includes checklist behind the toggle button. */
+
+.includesToggle {
     display: inline-flex;
   }
-  .includesPanel {
+
+.includesPanel {
     display: none;
   }
-  .includesPanelOpen {
+
+.includesPanelOpen {
     display: block;
     margin-top: 12px;
   }
-}
 
-@media (max-width: 480px) {
-  .section {
+/*  Base (mobile-first): formerly @media (max-width: 480px).  */
+
+.section {
     padding: 36px 14px 32px;
   }
-  .grid {
+
+.grid {
     gap: 14px;
   }
-  .card {
+
+.card {
     padding: 20px 18px 18px;
   }
-  .cardTitle {
+
+.cardTitle {
     font-size: 20px;
+  }
+
+/*  481px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 481px) {
+  .section {
+    padding: 44px 18px 36px;
+  }
+  .grid {
+    gap: 22px;
+  }
+  .card {
+    padding: 30px 28px 28px;
+  }
+  .cardTitle {
+    font-size: clamp(24px, 2.2vw, 30px);
+  }
+}
+
+/*  901px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 901px) {
+  .section {
+    padding: 80px 48px 64px;
+  }
+  .header {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 56px;
+    padding-bottom: 36px;
+  }
+  .headerRight {
+    align-items: flex-end;
+    text-align: right;
+  }
+  .lead {
+    max-width: 460px;
+    font-size: var(--fs-body-lg);
+  }
+  .title {
+    font-size: var(--fs-h1);
+  }
+  .guarantee {
+    flex-direction: revert;
+    align-items: center;
+    text-align: revert;
+    padding: 22px 26px;
+    margin-top: 36px;
+  }
+  .cardSub {
+    display: revert;
+  }
+  .cardListLabel {
+    display: revert;
+  }
+  .cardListItem {
+    font-size: 13.5px;
+    gap: 10px;
+  }
+  .cardList {
+    gap: 9px;
+  }
+  .includesToggle {
+    display: none;
+  }
+  .includesPanel {
+    display: block;
+  }
+  .includesPanelOpen {
+    display: block;
+    margin-top: 0;
+  }
+}
+
+/*  1101px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 1101px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: revert;
+    margin: 0;
   }
 }

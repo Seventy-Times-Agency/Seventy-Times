@@ -380,12 +380,25 @@
   border-color: var(--line-hi);
 }
 
-@media (max-width: 640px) {
-  .modal {
+/*  Base (mobile-first): formerly @media (max-width: 640px).  */
+
+.modal {
     padding: 40px 24px 32px;
   }
-  .closeBtn {
+
+.closeBtn {
     top: 14px;
     right: 14px;
+  }
+
+/*  641px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 641px) {
+  .modal {
+    padding: 48px 44px 40px;
+  }
+  .closeBtn {
+    top: 20px;
+    right: 20px;
   }
 }

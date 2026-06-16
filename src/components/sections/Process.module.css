@@ -136,45 +136,54 @@
   max-width: 28ch;
 }
 
-@media (max-width: 1024px) {
-  .grid {
+/*  Base (mobile-first): formerly @media (max-width: 1024px).  */
+
+.grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 56px 24px;
   }
-  .grid::before {
+
+.grid::before {
     display: none;
   }
-}
 
-@media (max-width: 640px) {
-  .section {
+/*  Base (mobile-first): formerly @media (max-width: 640px).  */
+
+.section {
     padding: 40px 18px 36px;
   }
-  .header {
+
+.header {
     grid-template-columns: 1fr;
     gap: 14px;
     align-items: start;
     margin-bottom: 28px;
     padding-bottom: 20px;
   }
-  .title {
+
+.title {
     font-size: clamp(28px, 7.5vw, 44px);
   }
-  .headerRight {
+
+.headerRight {
     justify-content: flex-start;
   }
-  .lead {
+
+.lead {
     text-align: left;
     font-size: 14.5px;
   }
-  /* 2x2 numbered tiles. Drop the long description — number + duration
+
+/* 2x2 numbered tiles. Drop the long description — number + duration
      + title carry the meaning, and the rest is editorial flourish that
      only works at desktop reading widths. */
-  .grid {
+
+.grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  .step {
+
+.step {
     position: relative;
     padding: 16px 14px 14px;
     gap: 10px;
@@ -186,12 +195,15 @@
     overflow: hidden;
     min-height: 124px;
   }
-  .step:hover {
+
+.step:hover {
     transform: none;
     border-color: var(--accent);
   }
-  /* Replace the bordered ring number with a flat accent numeral. */
-  .numberWrap {
+
+/* Replace the bordered ring number with a flat accent numeral. */
+
+.numberWrap {
     width: auto;
     height: auto;
     background: transparent;
@@ -203,22 +215,110 @@
     display: block;
     line-height: 1;
   }
-  .step:hover .numberWrap {
+
+.step:hover .numberWrap {
     background: transparent;
     color: var(--accent-strong);
     box-shadow: none;
   }
-  .duration {
+
+.duration {
     font-size: 9px;
     letter-spacing: 0.16em;
     color: var(--text-dim);
   }
-  .stepTitle {
+
+.stepTitle {
     font-size: 16px;
     line-height: 1.15;
     margin-top: auto;
   }
-  .stepDesc {
+
+.stepDesc {
     display: none;
+  }
+
+/*  641px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 641px) {
+  .section {
+    padding: 72px 48px 56px;
+  }
+  .header {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 80px;
+    padding-bottom: 40px;
+  }
+  .title {
+    font-size: var(--fs-h1);
+  }
+  .headerRight {
+    justify-content: flex-end;
+  }
+  .lead {
+    text-align: right;
+    font-size: var(--fs-body-lg);
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 56px 24px;
+  }
+  .step {
+    position: relative;
+    padding: 0 28px;
+    gap: 18px;
+    border: revert;
+    border-radius: revert;
+    background: revert;
+    overflow: revert;
+    min-height: revert;
+  }
+  .step:hover {
+    transform: translateY(-6px);
+    border-color: revert;
+  }
+  .numberWrap {
+    width: 88px;
+    height: 88px;
+    background: var(--black);
+    border: 1px solid var(--line-strong);
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--white);
+    display: grid;
+    line-height: revert;
+  }
+  .step:hover .numberWrap {
+    background: var(--accent);
+    color: var(--black);
+    box-shadow: 0 20px 50px -18px var(--accent-glow);
+  }
+  .duration {
+    font-size: var(--fs-mini);
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+  }
+  .stepTitle {
+    font-size: 26px;
+    line-height: 1.1;
+    margin-top: 0;
+  }
+  .stepDesc {
+    display: revert;
+  }
+}
+
+/*  1025px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 1025px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .grid::before {
+    display: revert;
   }
 }

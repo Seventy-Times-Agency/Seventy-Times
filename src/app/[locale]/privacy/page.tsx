@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { getPrivacyMeta } from "@/lib/localizedMeta";
+import { getPrivacyMeta, languageAlternates } from "@/lib/localizedMeta";
 import { isLocale, DEFAULT_LOCALE } from "@/i18n/config";
+import { siteConfig } from "@/data/siteConfig";
 import PrivacyClient from "./PrivacyClient";
 
 export async function generateMetadata(
@@ -14,7 +15,15 @@ export async function generateMetadata(
   return {
     title: meta.title,
     description: meta.description,
-    alternates: { canonical: `/${locale}/privacy` },
+    alternates: {
+      canonical: `/${locale}/privacy`,
+      languages: languageAlternates("/privacy"),
+    },
+    openGraph: {
+      title: `${meta.title} — ${siteConfig.name}`,
+      description: meta.description,
+      url: `${siteConfig.url}/${locale}/privacy`,
+    },
   };
 }
 

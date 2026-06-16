@@ -312,41 +312,90 @@
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
-@media (max-width: 1000px) {
-  .grid {
+/*  Base (mobile-first): formerly @media (max-width: 1000px).  */
+.grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
-@media (max-width: 900px) {
-  .section {
+/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+
+.section {
     padding: 40px 18px 32px;
   }
-  .header {
+
+.header {
     grid-template-columns: 1fr;
     gap: 14px;
     align-items: start;
     margin-bottom: 26px;
   }
-  .headerRight {
+
+.headerRight {
     align-items: flex-start;
     text-align: left;
   }
-  .lead {
+
+.lead {
     max-width: none;
     font-size: 14.5px;
   }
-  .title {
+
+.title {
     font-size: clamp(28px, 8vw, 52px);
   }
-}
 
-@media (max-width: 640px) {
-  .grid {
+/*  Base (mobile-first): formerly @media (max-width: 640px).  */
+
+.grid {
     grid-template-columns: 1fr;
     gap: 14px;
   }
-  .card {
+
+.card {
     padding: 22px 18px 20px;
+  }
+
+/*  641px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 641px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .card {
+    padding: 32px 30px 26px;
+  }
+}
+
+/*  901px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 901px) {
+  .section {
+    padding: 72px 48px 56px;
+  }
+  .header {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 64px;
+  }
+  .headerRight {
+    align-items: flex-end;
+    text-align: right;
+  }
+  .lead {
+    max-width: 420px;
+    font-size: var(--fs-body-lg);
+  }
+  .title {
+    font-size: var(--fs-h1);
+  }
+}
+
+/*  1001px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 1001px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

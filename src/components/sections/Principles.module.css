@@ -320,50 +320,47 @@
  * The serpentine spine becomes a slim vertical track running along
  * the left edge so the section still feels alive on phones — same
  * traveller animation, same node pulses, just a different path. */
-@media (max-width: 900px) {
-  .wrap {
+/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+.wrap {
     padding: 0 24px 16px 36px;
   }
-  .row {
+.row {
     grid-template-columns: 1fr;
     min-height: 0;
     gap: 10px;
     padding-bottom: 6px;
   }
-  .rowLeft,
+.rowLeft,
   .rowRight {
     grid-template-columns: 1fr;
   }
-  .row .card,
+.row .card,
   .row .nodeWrap {
     grid-column: 1;
     justify-self: start;
   }
-  .row .nodeWrap { order: -1; }
-  .node { font-size: 64px; }
-
-  /* Re-style the spine as a slim left rail. The same SVG paths are
+.row .nodeWrap { order: -1; }
+.node { font-size: 64px; }
+/* Re-style the spine as a slim left rail. The same SVG paths are
    * used; we override their `d` via a CSS variable on the wrap that
    * the JS will read on mobile breakpoints. To avoid extra JS, we
    * simply hide the curved path and overlay a CSS-drawn pseudo-rail
    * that picks up the existing traveller / node animations. */
-  .spine {
+.spine {
     left: 12px;
     right: auto;
     width: 14px;
   }
-  .spine path,
+.spine path,
   .spine circle { display: none; }
-
-  .wrap::before,
+.wrap::before,
   .wrap::after,
   .wrap .mobileRail,
   .wrap .mobileRailDot {
     /* placeholders kept so the rule cascades — actual rail is in
        .mobileRail below */
   }
-
-  .mobileRail {
+.mobileRail {
     position: absolute;
     left: 16px;
     top: 12px;
@@ -382,9 +379,8 @@
     z-index: 0;
     overflow: hidden;
   }
-  .wrapLive .mobileRail { opacity: 1; transition: opacity 0.4s ease; }
-
-  .mobileRail::before {
+.wrapLive .mobileRail { opacity: 1; transition: opacity 0.4s ease; }
+.mobileRail::before {
     content: "";
     position: absolute;
     left: -1px;
@@ -401,8 +397,7 @@
     top: -56px;
     animation: principles-rail-flow 4.2s linear infinite;
   }
-
-  .mobileRailDot {
+.mobileRailDot {
     position: absolute;
     left: -4px;
     width: 10px;
@@ -417,14 +412,16 @@
     animation: principles-rail-dot 2.4s ease-in-out infinite;
   }
 
-  @keyframes principles-rail-flow {
-    from { top: -56px; }
-    to   { top: 100%; }
-  }
-  @keyframes principles-rail-dot {
-    0%, 100% { transform: translateY(-50%) scale(0.7); opacity: 0.5; }
-    50%      { transform: translateY(-50%) scale(1.15); opacity: 0.9; }
-  }
+/* Rail keyframes are referenced only while the mobile rail's
+   `animation` applies (≤900px); defining them unconditionally is
+   inert on desktop. */
+@keyframes principles-rail-flow {
+  from { top: -56px; }
+  to   { top: 100%; }
+}
+@keyframes principles-rail-dot {
+  0%, 100% { transform: translateY(-50%) scale(0.7); opacity: 0.5; }
+  50%      { transform: translateY(-50%) scale(1.15); opacity: 0.9; }
 }
 
 @media (max-width: 900px) and (prefers-reduced-motion: reduce) {
@@ -432,25 +429,155 @@
   .mobileRailDot { animation: none; }
 }
 
-@media (max-width: 640px) {
-  .wrap { padding: 0 18px 10px 26px; }
-  .card {
+/*  Base (mobile-first): formerly @media (max-width: 640px).  */
+
+.wrap { padding: 0 18px 10px 26px; }
+
+.card {
     padding: 16px 16px 14px;
     position: relative;
   }
-  .node { font-size: 48px; }
 
-  /* Collapse body text by default on phone; tap the + button to
+.node { font-size: 48px; }
+
+/* Collapse body text by default on phone; tap the + button to
      expand. Cuts ~600 px aggregate across the four principle cards. */
-  .cardBody {
+
+.cardBody {
     display: none;
     margin-top: 4px;
+  }
+
+.cardBodyOpen {
+    display: block;
+  }
+
+.cardToggle {
+    display: grid;
+    place-items: center;
+  }
+
+/*  641px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 641px) {
+  .wrap {
+    padding: 0 24px 16px 36px;
+  }
+  .card {
+    padding: 26px 26px 24px;
+    position: relative;
+  }
+  .node {
+    font-size: 64px;
+  }
+  .cardBody {
+    display: revert;
+    margin-top: 0;
   }
   .cardBodyOpen {
     display: block;
   }
   .cardToggle {
-    display: grid;
-    place-items: center;
+    display: none;
+    place-items: revert;
+  }
+}
+
+/*  901px and up — restores the desktop values overridden above.  */
+
+@media (min-width: 901px) {
+  .wrap {
+    padding: 0 48px 24px;
+  }
+  .row {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+    min-height: revert;
+    gap: 36px;
+    padding-bottom: 0;
+  }
+  .rowLeft {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+  }
+  .rowRight {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+  }
+  /* Re-state the per-side placement: these selectors out-rank the
+     base .rowLeft/.rowRight rules, so `revert` would erase them. */
+  .rowRight .nodeWrap {
+    grid-column: 1;
+    justify-self: start;
+  }
+  .rowRight .card {
+    grid-column: 2;
+    justify-self: auto;
+  }
+  .rowLeft .card {
+    grid-column: 1;
+    justify-self: auto;
+  }
+  .rowLeft .nodeWrap {
+    grid-column: 2;
+    justify-self: end;
+  }
+  .row .nodeWrap {
+    order: revert;
+  }
+  .node {
+    font-size: clamp(60px, 7vw, 104px);
+  }
+  .spine {
+    /* Base uses `inset: 0`; revert would erase the shorthand-derived
+       offsets, so restore them explicitly. */
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+  .spine path {
+    display: revert;
+  }
+  .spine circle {
+    display: revert;
+  }
+  .mobileRail {
+    position: revert;
+    left: revert;
+    top: revert;
+    bottom: revert;
+    width: revert;
+    background: revert;
+    border-radius: revert;
+    opacity: revert;
+    pointer-events: revert;
+    z-index: revert;
+    overflow: revert;
+  }
+  .wrapLive .mobileRail {
+    opacity: revert;
+    transition: revert;
+  }
+  .mobileRail::before {
+    content: revert;
+    position: revert;
+    left: revert;
+    width: revert;
+    height: revert;
+    border-radius: revert;
+    background: revert;
+    top: revert;
+    animation: revert;
+  }
+  .mobileRailDot {
+    position: revert;
+    left: revert;
+    width: revert;
+    height: revert;
+    border-radius: revert;
+    background: revert;
+    box-shadow: revert;
+    opacity: revert;
+    z-index: revert;
+    pointer-events: revert;
+    transform: revert;
+    animation: revert;
   }
 }
