@@ -123,6 +123,36 @@
   gap: 12px;
 }
 
+.cardTopLeft {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Location badge — region only, never the city. */
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px 3px 8px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: rgba(200, 212, 222, 0.02);
+}
+
+.locationPin {
+  width: 6px;
+  height: 6px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  border: 1.5px solid var(--accent-deep);
+}
+
 .number {
   font-family: ui-monospace, "SF Mono", "Roboto Mono", monospace;
   font-size: 11.5px;

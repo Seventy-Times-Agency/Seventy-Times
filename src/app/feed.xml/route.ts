@@ -1,5 +1,5 @@
 import { siteConfig } from "@/data/siteConfig";
-import { CASES } from "@/data/cases";
+import { CASES, caseCardContent } from "@/data/cases";
 import { DEFAULT_LOCALE } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionary";
 
@@ -26,8 +26,7 @@ export function GET() {
 
   const items = CASES.map((c) => {
     const url = `${siteConfig.url}/${DEFAULT_LOCALE}/cases/${c.id}`;
-    const title = t[c.titleKey];
-    const summary = t[c.summaryKey];
+    const { title, summary } = caseCardContent(c, DEFAULT_LOCALE, t);
     return `
     <item>
       <title>${escape(title)}</title>

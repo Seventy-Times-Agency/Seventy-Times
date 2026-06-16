@@ -12,6 +12,7 @@ export type CaseCardProps = {
   metrics?: readonly string[];
   status: CaseStatus;
   statusLabel: string;
+  location: string;
   ctaLabel: string;
   href: string;
 };
@@ -29,6 +30,7 @@ export default function CaseCard({
   metrics,
   status,
   statusLabel,
+  location,
   ctaLabel,
   href,
 }: CaseCardProps) {
@@ -37,7 +39,13 @@ export default function CaseCard({
   return (
     <Link href={href} className={`${styles.card} ${styles.cardLink}`}>
       <div className={styles.cardTop}>
-        <span className={styles.number}>/ {num}</span>
+        <div className={styles.cardTopLeft}>
+          <span className={styles.number}>/ {num}</span>
+          <span className={styles.location}>
+            <span className={styles.locationPin} aria-hidden="true" />
+            {location}
+          </span>
+        </div>
         <span
           className={`${styles.status} ${styles[`status_${status}`]}`}
           aria-label={statusLabel}
