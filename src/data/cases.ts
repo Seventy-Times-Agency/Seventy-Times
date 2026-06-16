@@ -349,10 +349,10 @@ export const CASES: readonly CaseItem[] = [
         },
       },
       insight: {
-        en: "Results exceeded capacity — the campaign was paused several times. The client referred me to two more businesses.",
-        ru: "Результаты превышали ёмкость — кампанию несколько раз ставили на паузу. Клиент порекомендовал меня ещё двум бизнесам.",
-        de: "Die Ergebnisse überstiegen die Kapazität — die Kampagne wurde mehrfach pausiert. Der Kunde empfahl mich an zwei weitere Unternehmen.",
-        uk: "Результати перевищували спроможність — кампанію кілька разів ставили на паузу. Клієнт порекомендував мене ще двом бізнесам.",
+        en: "Results exceeded capacity — the campaign was paused several times. The client referred us to two more businesses.",
+        ru: "Результаты превышали ёмкость — кампанию несколько раз ставили на паузу. Клиент порекомендовал нас ещё двум бизнесам.",
+        de: "Die Ergebnisse überstiegen die Kapazität — die Kampagne wurde mehrfach pausiert. Der Kunde empfahl uns an zwei weitere Unternehmen.",
+        uk: "Результати перевищували спроможність — кампанію кілька разів ставили на паузу. Клієнт порекомендував нас ще двом бізнесам.",
       },
       services: [
         {
@@ -392,10 +392,10 @@ export const CASES: readonly CaseItem[] = [
       },
       tag: u("META ADS · CREATIVE"),
       summary: {
-        en: "A children's fashion local retailer. End-to-end: I organized the photoshoot, produced every ad creative, and ran the Meta campaign — about $1 cost per lead on a local budget.",
-        ru: "Локальный ритейлер детской моды. Под ключ: организовал фотосессию, отснял все креативы и вёл кампанию в Meta — около $1 за лид на локальном бюджете.",
-        de: "Ein lokaler Händler für Kindermode. Alles aus einer Hand: Fotoshooting organisiert, alle Creatives produziert und die Meta-Kampagne betreut — rund 1 $ pro Lead bei lokalem Budget.",
-        uk: "Локальний ритейлер дитячої моди. Під ключ: організував фотосесію, відзняв усі креативи й вів кампанію в Meta — близько $1 за лід на локальному бюджеті.",
+        en: "A children's fashion local retailer. End-to-end: we organized the photoshoot, produced every ad creative, and ran the Meta campaign — about $1 cost per lead on a local budget.",
+        ru: "Локальный ритейлер детской моды. Под ключ: организовали фотосессию, отсняли все креативы и вели кампанию в Meta — около $1 за лид на локальном бюджете.",
+        de: "Ein lokaler Händler für Kindermode. Alles aus einer Hand: Wir organisierten das Fotoshooting, produzierten alle Creatives und betreuten die Meta-Kampagne — rund 1 $ pro Lead bei lokalem Budget.",
+        uk: "Локальний ритейлер дитячої моди. Під ключ: організували фотосесію, відзняли всі креативи й вели кампанію в Meta — близько $1 за лід на локальному бюджеті.",
       },
       metrics: [
         {
@@ -545,43 +545,43 @@ export const CASES: readonly CaseItem[] = [
       },
       deliverables: {
         heading: {
-          en: "What I delivered",
-          ru: "Что я сделал",
-          de: "Was ich geliefert habe",
-          uk: "Що я зробив",
+          en: "What we delivered",
+          ru: "Что мы сделали",
+          de: "Was wir geliefert haben",
+          uk: "Що ми зробили",
         },
         items: [
           {
             en: "Organized a full photoshoot (photographer + models)",
-            ru: "Организовал полноценную фотосессию (фотограф + модели)",
+            ru: "Организовали полноценную фотосессию (фотограф + модели)",
             de: "Komplettes Fotoshooting organisiert (Fotograf + Models)",
-            uk: "Організував повноцінну фотосесію (фотограф + моделі)",
+            uk: "Організували повноцінну фотосесію (фотограф + моделі)",
           },
           {
             en: "Produced all ad creatives from the shoot",
-            ru: "Сделал все рекламные креативы с этой съёмки",
+            ru: "Сделали все рекламные креативы с этой съёмки",
             de: "Alle Werbe-Creatives aus dem Shooting produziert",
-            uk: "Зробив усі рекламні креативи з цієї зйомки",
+            uk: "Зробили всі рекламні креативи з цієї зйомки",
           },
           {
             en: "Built and managed the Meta Ads campaign",
-            ru: "Собрал и вёл кампанию в Meta Ads",
+            ru: "Собрали и вели кампанию в Meta Ads",
             de: "Meta-Ads-Kampagne aufgebaut und betreut",
-            uk: "Зібрав і вів кампанію в Meta Ads",
+            uk: "Зібрали й вели кампанію в Meta Ads",
           },
           {
             en: "Generated high-volume DM and profile-visit traffic",
-            ru: "Сгенерировал большой поток сообщений и переходов в профиль",
+            ru: "Сгенерировали большой поток сообщений и переходов в профиль",
             de: "Hohes Volumen an DMs und Profilbesuchen generiert",
-            uk: "Згенерував великий потік повідомлень і переходів у профіль",
+            uk: "Згенерували великий потік повідомлень і переходів у профіль",
           },
         ],
       },
       insight: {
-        en: "About $1 cost per lead on a local budget. Engagement volume was high — I ended the campaign because of client-side processing limits.",
-        ru: "Около $1 за лид на локальном бюджете. Поток заявок был большой — я завершил кампанию из-за ограничений на стороне клиента по обработке.",
-        de: "Rund 1 $ pro Lead bei lokalem Budget. Das Engagement-Volumen war hoch — ich beendete die Kampagne wegen Bearbeitungsgrenzen aufseiten des Kunden.",
-        uk: "Близько $1 за лід на локальному бюджеті. Потік заявок був великий — я завершив кампанію через обмеження з боку клієнта в обробці.",
+        en: "About $1 cost per lead on a local budget. Engagement volume was high — we ended the campaign because of client-side processing limits.",
+        ru: "Около $1 за лид на локальном бюджете. Поток заявок был большой — мы завершили кампанию из-за ограничений на стороне клиента по обработке.",
+        de: "Rund 1 $ pro Lead bei lokalem Budget. Das Engagement-Volumen war hoch — wir beendeten die Kampagne wegen Bearbeitungsgrenzen aufseiten des Kunden.",
+        uk: "Близько $1 за лід на локальному бюджеті. Потік заявок був великий — ми завершили кампанію через обмеження з боку клієнта в обробці.",
       },
       services: [
         {
