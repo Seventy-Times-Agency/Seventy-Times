@@ -871,6 +871,7 @@ export const CASES: readonly CaseItem[] = [
     id: "seventy-times",
     status: "live",
     region: "usa",
+    url: "https://seventy-times.com",
     study: {
       accent: "#818cf8",
       title: u("Seventy Times"),
@@ -1282,6 +1283,7 @@ export const CASES: readonly CaseItem[] = [
     id: "convioo",
     status: "progress",
     region: "usa",
+    url: "https://convioo.com",
     study: {
       accent: "#6366F1",
       title: u("Convioo"),
