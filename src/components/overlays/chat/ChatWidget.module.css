@@ -79,6 +79,49 @@
   color: var(--text-dim);
 }
 
+/* Proactive teaser nudge — shown once per session when chat is closed,
+   to lift engagement on paid traffic without nagging. */
+.nudge {
+  position: relative;
+  display: block;
+  max-width: min(280px, calc(100vw - 90px));
+  padding: 13px 36px 13px 15px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px 16px 4px 16px;
+  background:
+    linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  box-shadow: var(--shadow-xl);
+  cursor: pointer;
+  text-align: left;
+}
+
+.nudgeText {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.nudgeClose {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.nudgeClose:hover {
+  color: var(--white);
+  border-color: var(--accent);
+}
+
 /* Panel ───────────────────────────────────────────────── */
 .panel {
   width: 390px;
