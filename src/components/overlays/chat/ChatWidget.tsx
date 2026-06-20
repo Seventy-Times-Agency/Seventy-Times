@@ -13,7 +13,10 @@ type Message = {
 
 const STORAGE_KEY = "st-chat-history-v1";
 const SESSION_KEY = "st-chat-session-v1";
+const NUDGE_KEY = "st-chat-nudge-v1";
 const MAX_STORED = 50;
+// How long the visitor sits on the page before Vanessa offers a hand.
+const NUDGE_DELAY_MS = 18_000;
 
 function getSessionId(): string {
   try {
@@ -39,6 +42,7 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [showNudge, setShowNudge] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const lastLocaleRef = useRef(locale);
@@ -88,6 +92,44 @@ export default function ChatWidget() {
     const handler = () => setOpen(true);
     window.addEventListener("open-chat", handler);
     return () => window.removeEventListener("open-chat", handler);
+  }, []);
+
+  // Proactive teaser: after a short dwell, offer a hand — once per
+  // browser session, only while the chat is closed. Keeps it from
+  // nagging returning visitors or anyone who already engaged.
+  useEffect(() => {
+    if (open) return;
+    let seen = false;
+    try {
+      seen = window.sessionStorage.getItem(NUDGE_KEY) === "1";
+    } catch {
+      // sessionStorage blocked — just skip the nudge.
+      return;
+    }
+    if (seen) return;
+    const timer = window.setTimeout(() => setShowNudge(true), NUDGE_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [open]);
+
+  // Mark the nudge as spent (so it won't reappear this session) the
+  // moment the visitor opens the chat by any route.
+  useEffect(() => {
+    if (!open) return;
+    setShowNudge(false);
+    try {
+      window.sessionStorage.setItem(NUDGE_KEY, "1");
+    } catch {
+      // ignore
+    }
+  }, [open]);
+
+  const dismissNudge = useCallback(() => {
+    setShowNudge(false);
+    try {
+      window.sessionStorage.setItem(NUDGE_KEY, "1");
+    } catch {
+      // ignore
+    }
   }, []);
 
   // React to a UI language change. If the chat is still on the
@@ -174,7 +216,12 @@ export default function ChatWidget() {
 
           for (const line of lines) {
             if (!line.trim()) continue;
-            let parsed: { text?: string; done?: boolean; error?: string };
+            let parsed: {
+              text?: string;
+              done?: boolean;
+              error?: string;
+              action?: string;
+            };
             try {
               parsed = JSON.parse(line);
             } catch {
@@ -182,6 +229,12 @@ export default function ChatWidget() {
             }
             if (parsed.error) {
               errored = true;
+              continue;
+            }
+            // Vanessa asked to open the full lead form for the visitor —
+            // the #lead hash trigger drives the shared modal lifecycle.
+            if (parsed.action === "open_form") {
+              window.location.hash = "#lead";
               continue;
             }
             if (parsed.text) {
@@ -349,6 +402,41 @@ export default function ChatWidget() {
                 →
               </button>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showNudge && !open && (
+          <motion.div
+            key="nudge"
+            className={styles.nudge}
+            role="button"
+            tabIndex={0}
+            onClick={() => setOpen(true)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setOpen(true);
+              }
+            }}
+            initial={{ opacity: 0, y: 10, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.96 }}
+            transition={{ duration: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
+          >
+            <button
+              className={styles.nudgeClose}
+              onClick={(e) => {
+                e.stopPropagation();
+                dismissNudge();
+              }}
+              aria-label={t.chatClose}
+              type="button"
+            >
+              ×
+            </button>
+            <span className={styles.nudgeText}>{t.chatNudge}</span>
           </motion.div>
         )}
       </AnimatePresence>

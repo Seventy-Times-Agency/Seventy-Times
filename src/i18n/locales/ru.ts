@@ -533,6 +533,8 @@ const strings = {
     chatSend: "Отправить",
     chatMessage: "Сообщение",
     chatAlt: "Ванесса — AI-консультант Seventy Times",
+    chatNudge:
+      "Привет 👋 Помочь подобрать решение под ваш бизнес? Спросите меня о чём угодно.",
 
     // Consent (shared between forms)
     consentPrefix: "Я согласен(на) с ",

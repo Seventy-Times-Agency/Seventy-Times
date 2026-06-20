@@ -29,7 +29,9 @@ This file is the short orientation map. Read it first when opening the repo.
 src/
 ├── app/                          Next.js App Router
 │   ├── api/
-│   │   ├── chat/route.ts         /api/chat — streaming Anthropic proxy for Vanessa
+│   │   ├── chat/route.ts         /api/chat — streaming Anthropic proxy for
+│   │   │                         Vanessa + tool use (submit_lead /
+│   │   │                         open_lead_form) so she can close & hand off
 │   │   ├── lead/route.ts         /api/lead — lead + callback form → Telegram
 │   │   │                         + Notion + email
 │   │   ├── review/route.ts       /api/review — review form → Telegram + Notion
@@ -124,9 +126,13 @@ src/
 │   ├── notion.ts                 Notion REST helpers (lead/review/chat create,
 │   │                             approved-reviews query)
 │   ├── email.ts                  Resend email fallback for leads/reviews
+│   ├── leadDelivery.ts           Shared deliverLead() fan-out (Telegram +
+│   │                             Notion + email) used by /api/lead and the
+│   │                             /api/chat submit_lead tool
 │   ├── localizedMeta.ts          Per-locale metadata getters +
 │   │                             languageAlternates() hreflang helper
-│   ├── systemPrompt.ts           Vanessa's Claude system prompt
+│   ├── systemPrompt.ts           Vanessa's Claude system prompt (consultant
+│   │                             + soft-closer sales playbook)
 │   ├── contactValidation.ts      isPlausibleContact() shared by forms
 │   ├── leadDraft.ts              localStorage helpers + LeadPackage/LeadBudget
 │   │                             types & validators (also used by /api/lead
@@ -219,10 +225,35 @@ calls go through `fetchWithTimeout` with a 7s ceiling.
 
 ### Streaming chat
 `POST /api/chat` returns `application/x-ndjson`: one JSON object per
-newline (`{"text":"..."}` per token, `{"done":true}` at the end, or
-`{"error":"UPSTREAM_ERROR"}` on failure). The widget reads the body via a
-`ReadableStream` reader and appends each text delta to the live assistant
-bubble. Turns are logged to the Notion chats database when configured.
+newline (`{"text":"..."}` per token, `{"done":true}` at the end,
+`{"error":"UPSTREAM_ERROR"}` on failure, or `{"action":"open_form"}` /
+`{"action":"lead_captured"}` for tool side-effects). The widget reads the
+body via a `ReadableStream` reader and appends each text delta to the live
+assistant bubble. Turns are logged to the Notion chats database when
+configured.
+
+**Vanessa is a closer, not just a consultant.** The chat route gives
+Claude two tools and runs an agent loop (stream → if `stop_reason` is
+`tool_use`, run the tool, feed the `tool_result` back, re-stream; capped
+at `MAX_TOOL_ROUNDS`):
+- `submit_lead` — captures a contact mid-conversation and fans it out
+  through the **same** `deliverLead()` pipeline the forms use (so chat
+  leads land in Telegram/Notion/email, tagged `source: "chat"` /
+  "Vanessa chat"). Validated like `/api/lead` (plausible contact, length
+  caps, dedup); the widget reflects `{"action":"lead_captured"}`.
+- `open_lead_form` — emits `{"action":"open_form"}`; the widget sets
+  `location.hash = "#lead"` to open the existing modal for visitors who'd
+  rather use a form.
+Vanessa's sales behaviour (qualify → pain → result → soft hand-off, never
+quote a price) lives in `lib/systemPrompt.ts`.
+
+### Lead delivery (shared fan-out)
+`lib/leadDelivery.ts` owns the Telegram + Notion + email fan-out via
+`deliverLead(lead, { duplicate, kind, locale, source })`. Both `/api/lead`
+(`source: "website"`, fired in `after()`) and the `/api/chat` `submit_lead`
+tool (`source: "chat"`, awaited so Vanessa can confirm or fall back) call
+it. Telegram + email always fire; Notion is skipped on a duplicate. Returns
+whether any channel succeeded.
 
 ### Form draft persistence
 `LeadForm` autosaves every keystroke (everything except the honeypot) to
@@ -412,6 +443,9 @@ than adding a new `max-width` block.
 - **Chat history persists** to `localStorage` under `st-chat-history-v1`,
   last 50 messages. Clear that key to wipe Vanessa's session memory.
 - **GrowthSimulator** saves slider levels in `st-simulator-levels-v1`.
+- **Chat nudge** (proactive teaser bubble) shows once per browser session
+  after ~18s on the page while the chat is closed; the spent flag lives in
+  `sessionStorage` under `st-chat-nudge-v1`.
 - **CookieConsent** stores the user's choice in `localStorage` under
   `st-cookie-consent-v1` (`"accepted"` or `"essential"`). Gate any new
   analytics scripts on this value.

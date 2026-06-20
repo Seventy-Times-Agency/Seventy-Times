@@ -533,6 +533,8 @@ const strings = {
     chatSend: "Senden",
     chatMessage: "Nachricht",
     chatAlt: "Vanessa — KI-Beraterin bei Seventy Times",
+    chatNudge:
+      "Hi 👋 Soll ich die passende Lösung für dein Business finden? Frag mich einfach.",
 
     // Consent (shared between forms)
     consentPrefix: "Ich stimme der ",
