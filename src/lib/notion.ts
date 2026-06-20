@@ -45,6 +45,8 @@ type LeadRecord = {
   package?: LeadPackage;
   budget?: LeadBudget;
   phone?: string;
+  /** Where the lead came from — "Website" (forms) or "Vanessa chat". */
+  source?: string;
 };
 
 type ReviewRecord = {
@@ -156,7 +158,7 @@ export async function sendLeadToNotion(
     Business: { rich_text: richText(lead.business) },
     Request: { rich_text: richText(lead.request) },
     Status: { select: { name: "New" } },
-    Source: { select: { name: "Website" } },
+    Source: { select: { name: lead.source ?? "Website" } },
     Locale: { select: { name: localeOption } },
     Submitted: { date: { start: new Date().toISOString() } },
   };
