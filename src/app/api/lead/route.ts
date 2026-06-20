@@ -18,6 +18,7 @@ import {
 } from "@/lib/telegram";
 import { isNotionLeadsConfigured, sendLeadToNotion } from "@/lib/notion";
 import { isEmailConfigured, sendEmail } from "@/lib/email";
+import { isPlausibleContact } from "@/lib/contactValidation";
 import {
   isLeadBudget,
   isLeadPackage,
@@ -199,6 +200,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "TOO_LONG" }, { status: 400 });
   }
 
+  // Server-side mirror of the client contact check — an email, an
+  // @handle, or a phone. Rejects junk (and header-injection attempts)
+  // before the value is forwarded downstream.
+  if (!isPlausibleContact(contact)) {
+    return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
+  }
+
   // Detect repeat submissions from the same contact within the last
   // hour. We don't block (one duplicate is cheaper than losing a real
   // lead), but we tag downstream notifications so the team can spot it.
@@ -270,7 +278,11 @@ export async function POST(req: Request) {
           ? `[duplicate] ${kind === "callback" ? "Callback" : "Lead"}: ${name}`
           : `${kind === "callback" ? "Callback" : "Lead"}: ${name}`,
         text: buildEmailText(lead, isDuplicate),
-        replyTo: contact.includes("@") ? contact : undefined,
+        // Only set Reply-To when the contact is a real email — an
+        // @handle also "includes('@')" but is not a valid header value.
+        replyTo: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)
+          ? contact
+          : undefined,
       }),
     ]);
     const channels = ["telegram", "notion", "email"] as const;

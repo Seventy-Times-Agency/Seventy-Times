@@ -26,6 +26,9 @@ export function useHashModal(
   const resetTimer = useRef<number | undefined>(undefined);
   const afterClose = useRef(onAfterClose);
   afterClose.current = onAfterClose;
+  // Attach to the element carrying role="dialog" to trap Tab focus
+  // inside it while open and restore focus to the trigger on close.
+  const dialogRef = useRef<HTMLDivElement | null>(null);
 
   // Listen to URL hash to know when to open.
   useEffect(() => {
@@ -70,5 +73,53 @@ export function useHashModal(
     return () => window.removeEventListener("keydown", onKey);
   }, [open, close]);
 
-  return { open, close };
+  // Focus trap: keep Tab/Shift+Tab inside the dialog, and restore focus
+  // to whatever triggered it once it closes.
+  useEffect(() => {
+    if (!open) return;
+    const trigger = document.activeElement as HTMLElement | null;
+
+    const focusable = () => {
+      const node = dialogRef.current;
+      if (!node) return [] as HTMLElement[];
+      return Array.from(
+        node.querySelectorAll<HTMLElement>(
+          'a[href],button:not([disabled]),textarea:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+    };
+
+    // Pull focus into the dialog if it isn't already there.
+    const node = dialogRef.current;
+    if (node && !node.contains(document.activeElement)) {
+      (focusable()[0] ?? node).focus?.();
+    }
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const els = focusable();
+      if (els.length === 0) return;
+      const first = els[0];
+      const last = els[els.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (active && node && !node.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKey, true);
+    return () => {
+      document.removeEventListener("keydown", onKey, true);
+      trigger?.focus?.();
+    };
+  }, [open]);
+
+  return { open, close, dialogRef };
 }

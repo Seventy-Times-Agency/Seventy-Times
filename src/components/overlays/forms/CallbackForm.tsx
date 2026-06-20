@@ -33,7 +33,7 @@ export default function CallbackForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
 
-  const { open, close } = useHashModal("#callback", () => {
+  const { open, close, dialogRef } = useHashModal("#callback", () => {
     setStatus("idle");
     setError("");
   });
@@ -117,6 +117,7 @@ export default function CallbackForm() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           onClick={close}
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-labelledby="callback-form-title"
@@ -255,11 +256,7 @@ export default function CallbackForm() {
                   </label>
 
                   {error && (
-                    <div
-                      className={styles.error}
-                      role="alert"
-                      aria-live="polite"
-                    >
+                    <div className={styles.error} role="alert">
                       {error}
                     </div>
                   )}

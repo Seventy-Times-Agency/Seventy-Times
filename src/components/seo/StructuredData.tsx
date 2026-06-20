@@ -1,5 +1,6 @@
 "use client";
 
+import { jsonLd } from "@/lib/jsonLd";
 import { siteConfig } from "@/data/siteConfig";
 import { useT } from "@/i18n/context";
 
@@ -82,13 +83,13 @@ export default function StructuredData() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
       />
       {serviceSchemas.map((schema, i) => (
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
         />
       ))}
     </>

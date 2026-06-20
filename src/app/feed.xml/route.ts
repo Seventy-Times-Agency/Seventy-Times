@@ -1,7 +1,6 @@
 import { siteConfig } from "@/data/siteConfig";
 import { CASES, caseCardContent } from "@/data/cases";
 import { DEFAULT_LOCALE } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionary";
 
 export const dynamic = "force-static";
 
@@ -21,12 +20,11 @@ function escape(str: string) {
 }
 
 export function GET() {
-  const t = getDictionary(DEFAULT_LOCALE);
   const now = new Date().toUTCString();
 
   const items = CASES.map((c) => {
     const url = `${siteConfig.url}/${DEFAULT_LOCALE}/cases/${c.id}`;
-    const { title, summary } = caseCardContent(c, DEFAULT_LOCALE, t);
+    const { title, summary } = caseCardContent(c, DEFAULT_LOCALE);
     return `
     <item>
       <title>${escape(title)}</title>

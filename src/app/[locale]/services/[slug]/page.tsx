@@ -1,3 +1,4 @@
+import { jsonLd } from "@/lib/jsonLd";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SERVICES } from "@/data/services";
@@ -106,11 +107,11 @@ export default async function ServicePage(
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(serviceSchema) }}
       />
       <ServiceDetail item={item} related={related} />
     </>

@@ -1,3 +1,4 @@
+import { jsonLd } from "@/lib/jsonLd";
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import { notFound } from "next/navigation";
@@ -171,7 +172,7 @@ export default async function LocaleLayout(
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
+            __html: jsonLd(organizationJsonLd),
           }}
         />
         <link

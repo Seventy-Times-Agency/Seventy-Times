@@ -43,7 +43,9 @@ export default function Nav() {
 
     nodes.forEach((n) => observer.observe(n));
     return () => observer.disconnect();
-  }, []);
+    // Re-attach after client-side navigation: the landing's sections
+    // are fresh DOM nodes each time we return to it.
+  }, [pathname]);
 
   const close = () => setMenuOpen(false);
 
@@ -85,6 +87,7 @@ export default function Nav() {
               className={`${styles.langBtn}${l === locale ? ` ${styles.langBtnActive}` : ""}`}
               onClick={() => setLocale(l)}
               type="button"
+              aria-pressed={l === locale}
             >
               {LOCALE_LABELS[l]}
             </button>
@@ -98,6 +101,7 @@ export default function Nav() {
           onClick={() => setMenuOpen((v) => !v)}
           aria-label={menuOpen ? t.navCloseMenu : t.navOpenMenu}
           aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
           type="button"
         >
           <span className={menuOpen ? styles.barX1 : ""} />
@@ -107,7 +111,7 @@ export default function Nav() {
       </div>
 
       {menuOpen && (
-        <div className={styles.mobileMenu}>
+        <div className={styles.mobileMenu} id="mobile-menu">
           {NAV_LINKS.map((l) => (
             <a
               key={l.href}
@@ -126,6 +130,7 @@ export default function Nav() {
                 className={`${styles.mobileLangBtn}${l === locale ? ` ${styles.mobileLangBtnActive}` : ""}`}
                 onClick={() => setLocale(l)}
                 type="button"
+                aria-pressed={l === locale}
               >
                 {LOCALE_LABELS[l]}
               </button>

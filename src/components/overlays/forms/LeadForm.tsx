@@ -60,7 +60,7 @@ export default function LeadForm() {
 
   // Open/close lifecycle (hash trigger, scroll lock, Escape, reset
   // after the exit animation) — shared with the other modals.
-  const { open, close } = useHashModal("#lead", () => {
+  const { open, close, dialogRef } = useHashModal("#lead", () => {
     setStatus("idle");
     setError("");
     setStep(0);
@@ -273,6 +273,7 @@ export default function LeadForm() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           onClick={close}
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-labelledby="lead-form-title"
@@ -484,7 +485,7 @@ export default function LeadForm() {
                   )}
 
                   {error && (
-                    <div className={styles.error} role="alert" aria-live="polite">
+                    <div className={styles.error} role="alert">
                       {error}
                     </div>
                   )}
