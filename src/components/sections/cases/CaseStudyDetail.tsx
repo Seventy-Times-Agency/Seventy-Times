@@ -19,15 +19,14 @@ type Props = {
 
 /**
  * Rich, immersive detail layout for inline-localized case studies.
- * Reads every block from `item.study`, renders only the ones present,
+ * Reads every block from `item.study`, rendering only the ones present,
  * and tints a single per-case accent through the `--case-accent`
- * custom property. Falls back gracefully when `study` is missing.
+ * custom property.
  */
 export default function CaseStudyDetail({ item, related }: Props) {
   const { t, locale, localePath } = useT();
   const home = localePath("/");
   const s = item.study;
-  if (!s) return null;
 
   const statusLabel: Record<CaseStatus, string> = {
     live: t.casesStatusLive,
@@ -265,7 +264,7 @@ export default function CaseStudyDetail({ item, related }: Props) {
             <h2 className={styles.relatedTitle}>{t.casesRelatedTitle}</h2>
             <div className={styles.relatedGrid}>
               {related.map((r) => {
-                const card = caseCardContent(r, locale, t);
+                const card = caseCardContent(r, locale);
                 return (
                   <Link
                     key={r.id}

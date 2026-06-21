@@ -16,6 +16,7 @@ import {
   isAnyLeadChannelConfigured,
   type LeadKind,
 } from "@/lib/leadDelivery";
+import { isPlausibleContact } from "@/lib/contactValidation";
 import {
   isLeadBudget,
   isLeadPackage,
@@ -117,6 +118,13 @@ export async function POST(req: Request) {
     (phone !== undefined && phone.length > LIMITS.phone)
   ) {
     return NextResponse.json({ error: "TOO_LONG" }, { status: 400 });
+  }
+
+  // Server-side mirror of the client contact check — an email, an
+  // @handle, or a phone. Rejects junk (and header-injection attempts)
+  // before the value is forwarded downstream.
+  if (!isPlausibleContact(contact)) {
+    return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
   }
 
   // Detect repeat submissions from the same contact within the last

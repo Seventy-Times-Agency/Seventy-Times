@@ -30,7 +30,7 @@ const strings = {
     heroHint: "Reply in 24 hours · No obligations",
     statGoal: "Launch (days)",
     statServices: "AI always on",
-    statSupport: "Platforms",
+    statSupport: "Ad platforms",
     statLaunch: "Combo effect",
 
     // Services
@@ -207,7 +207,7 @@ const strings = {
     venTitle2: "AI consultant",
     venTitle3: "Vanessa.",
     venLead:
-      "Vanessa is a Claude-powered AI assistant trained for your business. She talks to clients on your website, Telegram and Instagram, qualifies leads and passes hot ones directly to you. We build the same bot for every project.",
+      "Vanessa is a Claude-powered AI assistant trained for your business. She talks to clients on your website, Telegram and Instagram, qualifies leads and passes hot ones directly to you. We build a bot like this one for every project.",
     venBullets: [
       "Knows your business inside out — trained on your materials and tone",
       "Responds in any language, works 24/7 without breaks",
@@ -467,24 +467,6 @@ const strings = {
     casesPlaceholderSummary:
       "We take on a limited number of projects at a time — let's talk if the shape looks right.",
     casesPlaceholderCta: "Start a conversation",
-    case1Title: "Convioo",
-    case1Tag: "SITE · BOT · LEAD ENGINE",
-    case1Summary:
-      "A web parser turned into a lead-gen engine. A website + Telegram bot pair automatically build a contact base tailored to your niche, geo and criteria.",
-    case1Metrics: [
-      "Niche-specific parsing",
-      "Ready-to-use lead base",
-      "CRM integration",
-    ],
-    case2Title: "EliteCarMats",
-    case2Tag: "E-COM · ADS · BOT",
-    case2Summary:
-      "Auto floor mats manufacturer. Online store with catalogue and checkout, AI assistant on Telegram, paid ads on Meta + Google. Case study in progress — numbers published once cleared with the client.",
-    case2Metrics: [
-      "Online store with catalogue",
-      "AI assistant on Telegram",
-      "Paid ads on Meta + Google",
-    ],
     casesBack: "Back to all cases",
     casesWhatWeBuilt: "What we built",
     casesStatusHeading: "Status",
@@ -654,7 +636,7 @@ const strings = {
       },
       {
         heading: "Where it is stored",
-        text: 'Requests and reviews are forwarded to our internal Telegram chat. Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Vanessa is processed via the Anthropic API to generate responses.',
+        text: 'Requests and reviews are forwarded to our internal Telegram chat, saved to our CRM (Notion), and emailed to us (via Resend). Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Vanessa is processed via the Anthropic API to generate responses, and chat turns may be logged to our CRM (Notion).',
       },
       {
         heading: "How long we keep it",

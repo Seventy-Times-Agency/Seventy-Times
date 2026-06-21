@@ -160,7 +160,12 @@ export async function deliverLead(
     sendEmail({
       subject: `${duplicate ? "[duplicate] " : ""}${subjectKind}${subjectSource}: ${lead.name}`,
       text: buildEmailText(lead, duplicate),
-      replyTo: lead.contact.includes("@") ? lead.contact : undefined,
+      // Only set Reply-To for a real email address — an @handle also
+      // "includes('@')" but is not a valid header value (and a raw
+      // contact string must not be injected into a header unchecked).
+      replyTo: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.contact)
+        ? lead.contact
+        : undefined,
     }),
   ]);
 

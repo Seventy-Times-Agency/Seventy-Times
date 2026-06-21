@@ -62,7 +62,7 @@ export default function Cases() {
 
       <div className={styles.grid}>
         {orderedCases.map((item, i) => {
-          const card = caseCardContent(item, locale, t);
+          const card = caseCardContent(item, locale);
           return (
             <Reveal key={item.id} delay={i * 0.08}>
               <CaseCard

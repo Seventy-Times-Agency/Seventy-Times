@@ -40,9 +40,25 @@ export function rateLimit(
 }
 
 export function getClientIp(req: Request): string {
+  // On Vercel these are set by the platform and are NOT client-spoofable.
+  // Prefer them over the left-most X-Forwarded-For entry, which the
+  // client fully controls — trusting that would let an attacker rotate
+  // a fake IP per request and bypass every rate-limit / dedup bucket.
+  const vercel = req.headers.get("x-vercel-forwarded-for");
+  if (vercel) return vercel.split(",")[0].trim();
+  const real = req.headers.get("x-real-ip");
+  if (real) return real.trim();
+  // Fallback: take the right-most X-Forwarded-For hop (closest to our
+  // infrastructure), not the spoofable left-most one.
   const forwarded = req.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0].trim();
-  return req.headers.get("x-real-ip") || "unknown";
+  if (forwarded) {
+    const parts = forwarded
+      .split(",")
+      .map((p) => p.trim())
+      .filter(Boolean);
+    if (parts.length) return parts[parts.length - 1];
+  }
+  return "unknown";
 }
 
 function parseOrigins(raw: string | undefined): string[] {

@@ -1,22 +1,14 @@
-// Portfolio cases. Add new entries here — each item references content
-// in one of two ways:
-//
-//  1. Legacy dictionary keys (`titleKey` / `tagKey` / …). The copy lives
-//     in `src/i18n/locales/*` and the detail page renders the simple
-//     `CaseDetail` layout. Used by the two cases we're reworking later.
-//
-//  2. An inline localized `study` object. Because a full case study is
-//     deeply structured (stat grids, revenue maths, client breakdowns,
-//     chat previews) rather than a handful of flat strings, the copy is
-//     co-located here as `Record<Locale, string>` values — TypeScript
-//     still enforces that every locale is present. These render the rich
-//     `CaseStudyDetail` layout.
+// Portfolio cases. Each item carries an inline-localized `study` object.
+// Because a full case study is deeply structured (stat grids, revenue
+// maths, client breakdowns, chat previews) rather than a handful of flat
+// strings, the copy is co-located here as `Record<Locale, string>`
+// values — TypeScript still enforces that every locale is present. The
+// `CaseStudyDetail` component renders it.
 //
 // `url` is optional: when set, the detail page exposes an external link
 // (typically a public live project).
 
 import type { Locale } from "@/i18n/config";
-import type { Dictionary } from "@/i18n/dictionary";
 
 export type CaseStatus = "live" | "progress" | "soon";
 
@@ -85,13 +77,7 @@ export type CaseItem = {
   status: CaseStatus;
   region: Region;
   url?: string;
-  // Legacy dictionary-keyed content.
-  titleKey?: "case1Title" | "case2Title";
-  tagKey?: "case1Tag" | "case2Tag";
-  summaryKey?: "case1Summary" | "case2Summary";
-  metricsKey?: "case1Metrics" | "case2Metrics";
-  // Rich inline-localized study.
-  study?: CaseStudy;
+  study: CaseStudy;
 };
 
 export type CaseCardContent = {
@@ -103,35 +89,19 @@ export type CaseCardContent = {
   regionLabel: string;
 };
 
-/**
- * Resolve the landing-card fields for a case in the active locale,
- * regardless of whether it stores content inline or via the dictionary.
- */
+/** Resolve the landing-card fields for a case in the active locale. */
 export function caseCardContent(
   item: CaseItem,
   locale: Locale,
-  t: Dictionary,
 ): CaseCardContent {
-  const region = item.region;
-  const regionLabel = REGION_LABELS[region][locale];
-  if (item.study) {
-    const s = item.study;
-    return {
-      title: s.title[locale],
-      tag: s.tag[locale],
-      summary: s.summary[locale],
-      metrics: s.metrics?.map((m) => m[locale]),
-      region,
-      regionLabel,
-    };
-  }
+  const s = item.study;
   return {
-    title: t[item.titleKey!],
-    tag: t[item.tagKey!],
-    summary: t[item.summaryKey!],
-    metrics: item.metricsKey ? t[item.metricsKey] : undefined,
-    region,
-    regionLabel,
+    title: s.title[locale],
+    tag: s.tag[locale],
+    summary: s.summary[locale],
+    metrics: s.metrics?.map((m) => m[locale]),
+    region: item.region,
+    regionLabel: REGION_LABELS[item.region][locale],
   };
 }
 
@@ -1259,10 +1229,10 @@ export const CASES: readonly CaseItem[] = [
         },
       ],
       insight: {
-        en: "Scope here was the storefront — design, build, catalog, payments and the admin panel. Paid acquisition is a separate, later phase, so this case is about what we shipped rather than campaign numbers.",
-        ru: "Скоуп здесь — сама витрина: дизайн, разработка, каталог, оплата и админ-панель. Платное продвижение — отдельный, более поздний этап, поэтому кейс про то, что мы построили, а не про рекламные метрики.",
-        de: "Der Umfang hier war der Shop selbst — Design, Build, Katalog, Zahlungen und das Admin-Panel. Bezahlte Akquise ist eine separate, spätere Phase, deshalb geht es in diesem Case um das Gelieferte und nicht um Kampagnenzahlen.",
-        uk: "Скоуп тут — сама вітрина: дизайн, розробка, каталог, оплата та адмін-панель. Платне просування — окремий, пізніший етап, тому кейс про те, що ми побудували, а не про рекламні метрики.",
+        en: "Scope here was the storefront — design, build, catalog, payments and the admin panel. Paid acquisition is a separate, later phase, so this case is about what we've built so far rather than campaign numbers.",
+        ru: "Скоуп здесь — сама витрина: дизайн, разработка, каталог, оплата и админ-панель. Платное продвижение — отдельный, более поздний этап, поэтому кейс про то, что мы уже построили, а не про рекламные метрики.",
+        de: "Der Umfang hier war der Shop selbst — Design, Build, Katalog, Zahlungen und das Admin-Panel. Bezahlte Akquise ist eine separate, spätere Phase, deshalb geht es in diesem Case um das bisher Gebaute und nicht um Kampagnenzahlen.",
+        uk: "Скоуп тут — сама вітрина: дизайн, розробка, каталог, оплата та адмін-панель. Платне просування — окремий, пізніший етап, тому кейс про те, що ми вже побудували, а не про рекламні метрики.",
       },
       stack: [
         "Next.js 16",

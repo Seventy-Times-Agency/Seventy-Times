@@ -31,7 +31,7 @@ export default function ReviewForm() {
   const [error, setError] = useState("");
   const [hydrated, setHydrated] = useState(false);
 
-  const { open, close } = useHashModal("#review", () => {
+  const { open, close, dialogRef } = useHashModal("#review", () => {
     setStatus("idle");
     setError("");
   });
@@ -144,6 +144,7 @@ export default function ReviewForm() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           onClick={close}
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-labelledby="review-form-title"
@@ -297,7 +298,7 @@ export default function ReviewForm() {
                   </label>
 
                   {error && (
-                    <div className={styles.error} role="alert" aria-live="polite">
+                    <div className={styles.error} role="alert">
                       {error}
                     </div>
                   )}

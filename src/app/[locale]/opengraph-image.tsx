@@ -8,12 +8,13 @@ export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-type Props = { params: { locale: string } };
+type Props = { params: Promise<{ locale: string }> };
 
 // Localized og:image:alt — the card itself is also rendered in the
 // page's language below.
-export function generateImageMetadata({ params }: Props) {
-  const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
+export async function generateImageMetadata({ params }: Props) {
+  const { locale: rawLocale } = await params;
+  const locale = isLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
   return [
     {
       id: "og",
@@ -24,8 +25,9 @@ export function generateImageMetadata({ params }: Props) {
   ];
 }
 
-export default function OpengraphImage({ params }: Props) {
-  const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
+export default async function OpengraphImage({ params }: Props) {
+  const { locale: rawLocale } = await params;
+  const locale = isLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
   const t = getDictionary(locale);
   // "Marketing · AI · Automation" → "Marketing × AI × Automation":
   // same string the hero uses, with the brand's × as the separator.

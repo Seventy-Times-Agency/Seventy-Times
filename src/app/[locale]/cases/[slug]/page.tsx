@@ -1,3 +1,4 @@
+import { jsonLd } from "@/lib/jsonLd";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CASES, caseCardContent } from "@/data/cases";
@@ -5,7 +6,6 @@ import { LOCALES, isLocale, DEFAULT_LOCALE } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionary";
 import { siteConfig } from "@/data/siteConfig";
 import { languageAlternates } from "@/lib/localizedMeta";
-import CaseDetail from "./CaseDetail";
 import CaseStudyDetail from "@/components/sections/cases/CaseStudyDetail";
 
 export function generateStaticParams() {
@@ -24,7 +24,7 @@ export async function generateMetadata(
   const item = CASES.find((c) => c.id === params.slug);
   if (!item) return {};
   const t = getDictionary(locale);
-  const { title, summary } = caseCardContent(item, locale, t);
+  const { title, summary } = caseCardContent(item, locale);
 
   return {
     title,
@@ -54,7 +54,7 @@ export default async function CasePage(
 
   const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
   const t = getDictionary(locale);
-  const { title } = caseCardContent(item, locale, t);
+  const { title } = caseCardContent(item, locale);
 
   // BreadcrumbList JSON-LD — gives Google a real navigation trail it
   // can render directly under the search result instead of the raw URL.
@@ -90,13 +90,9 @@ export default async function CasePage(
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbSchema) }}
       />
-      {item.study ? (
-        <CaseStudyDetail item={item} related={related} />
-      ) : (
-        <CaseDetail item={item} related={related} />
-      )}
+      <CaseStudyDetail item={item} related={related} />
     </>
   );
 }

@@ -30,7 +30,7 @@ const strings = {
     heroHint: "Antwort in 24 Stunden · Unverbindlich",
     statGoal: "Start (Tage)",
     statServices: "KI rund um die Uhr",
-    statSupport: "Plattformen",
+    statSupport: "Werbeplattformen",
     statLaunch: "Combo-Effekt",
 
     // Services
@@ -207,7 +207,7 @@ const strings = {
     venTitle2: "KI-Beraterin",
     venTitle3: "Vanessa.",
     venLead:
-      "Vanessa ist eine KI-Assistentin auf Basis von Claude, trainiert für Ihr Unternehmen. Sie spricht mit Kunden auf Ihrer Website, in Telegram und Instagram, qualifiziert Leads und leitet heiße Kontakte direkt an Sie weiter. Denselben Bot erstellen wir für jedes Projekt.",
+      "Vanessa ist eine KI-Assistentin auf Basis von Claude, trainiert für Ihr Unternehmen. Sie spricht mit Kunden auf Ihrer Website, in Telegram und Instagram, qualifiziert Leads und leitet heiße Kontakte direkt an Sie weiter. Einen solchen Bot erstellen wir für jedes Projekt.",
     venBullets: [
       "Kennt Ihr Business von innen — trainiert auf Ihre Materialien und Tonalität",
       "Antwortet in jeder Sprache, arbeitet 24/7 ohne Pause",
@@ -467,24 +467,6 @@ const strings = {
     casesPlaceholderSummary:
       "Wir nehmen gleichzeitig nur eine begrenzte Anzahl von Projekten an — lassen Sie uns sprechen, wenn das Format passt.",
     casesPlaceholderCta: "Gespräch starten",
-    case1Title: "Convioo",
-    case1Tag: "SITE · BOT · LEAD ENGINE",
-    case1Summary:
-      "Ein Web-Parser, verwandelt in eine Lead-Engine. Website + Telegram-Bot bauen automatisch eine Kontaktbasis auf Ihre Nische, Geo und Kriterien zugeschnitten.",
-    case1Metrics: [
-      "Nischenspezifisches Parsing",
-      "Fertige Lead-Basis",
-      "CRM-Integration",
-    ],
-    case2Title: "EliteCarMats",
-    case2Tag: "E-COM · ADS · BOT",
-    case2Summary:
-      "Hersteller von Auto-Fußmatten. Online-Shop mit Katalog und Checkout, KI-Assistent in Telegram, bezahlte Werbung auf Meta + Google. Fallstudie in Arbeit — Zahlen veröffentlichen wir nach Freigabe des Kunden.",
-    case2Metrics: [
-      "Online-Shop mit Katalog",
-      "KI-Assistent in Telegram",
-      "Bezahlte Werbung Meta + Google",
-    ],
     casesBack: "Zurück zu allen Projekten",
     casesWhatWeBuilt: "Was wir gebaut haben",
     casesStatusHeading: "Status",
@@ -657,7 +639,7 @@ const strings = {
       },
       {
         heading: "Wo Daten gespeichert werden",
-        text: 'Anfragen und Bewertungen werden an unseren internen Telegram-Chat weitergeleitet. Website-Logs werden bei unserem Hosting-Anbieter (Vercel) in technischer Form gespeichert und enthalten keine persönlichen Daten. Der Chat mit Vanessa wird über die Anthropic-API für die Antwortgenerierung verarbeitet.',
+        text: 'Anfragen und Bewertungen werden an unseren internen Telegram-Chat weitergeleitet, in unserem CRM (Notion) gespeichert und uns per E-Mail (über Resend) zugestellt. Website-Logs werden bei unserem Hosting-Anbieter (Vercel) in technischer Form gespeichert und enthalten keine persönlichen Daten. Der Chat mit Vanessa wird über die Anthropic-API für die Antwortgenerierung verarbeitet, und Chat-Nachrichten können in unserem CRM (Notion) protokolliert werden.',
       },
       {
         heading: "Wie lange wir Daten aufbewahren",
