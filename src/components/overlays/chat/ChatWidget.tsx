@@ -328,11 +328,10 @@ export default function ChatWidget() {
               </button>
             </div>
 
-            <div
-              className={styles.messages}
-              aria-live="polite"
-              aria-busy={loading}
-            >
+            {/* The visual list is NOT a live region — streaming would
+                flood a screen reader token-by-token. A dedicated polite
+                announcer below reads the finished reply once. */}
+            <div className={styles.messages} aria-busy={loading}>
               <AnimatePresence initial={false}>
                 {messages.map((msg, i) => (
                   <motion.div
@@ -365,6 +364,30 @@ export default function ChatWidget() {
               </AnimatePresence>
               <div ref={endRef} />
             </div>
+
+            {/* Screen-reader announcer: reads the latest assistant reply
+                once it finishes streaming (loading flips false), instead
+                of every streamed token. */}
+            <p
+              aria-live="polite"
+              style={{
+                position: "absolute",
+                width: 1,
+                height: 1,
+                margin: -1,
+                padding: 0,
+                overflow: "hidden",
+                clip: "rect(0 0 0 0)",
+                whiteSpace: "nowrap",
+                border: 0,
+              }}
+            >
+              {!loading &&
+              messages.length > 0 &&
+              messages[messages.length - 1].role === "assistant"
+                ? messages[messages.length - 1].content
+                : ""}
+            </p>
 
             {showSuggestions && (
               <div className={styles.suggestions} aria-label={t.chatSuggestAria}>

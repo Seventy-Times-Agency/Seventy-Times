@@ -291,9 +291,6 @@ const strings = {
     faq13q: "Unterzeichnen Sie NDAs?",
     faq13a:
       "Ja, wir unterzeichnen ein gegenseitiges Standard-NDA vor Arbeitsbeginn. Alle Projektinformationen bleiben vertraulich.",
-    faq14q: "In welchen Währungen kann ich zahlen?",
-    faq14a:
-      "Die Preise sind in US-Dollar, gezahlt werden kann aber in Ihrer Landeswährung — Banküberweisung, Wise, Krypto und länderspezifische Optionen sind möglich. Den genauen Weg klären wir im Kickoff, je nachdem was auf Ihrer Seite am einfachsten ist.",
 
     // Growth Simulator (levels-based with concrete descriptions)
     simEyebrow: "— 70× ROI-Simulator",
