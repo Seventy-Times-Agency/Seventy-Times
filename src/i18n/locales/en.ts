@@ -291,9 +291,6 @@ const strings = {
     faq13q: "Do you sign NDAs?",
     faq13a:
       "Yes, we sign a standard mutual NDA before any work starts. All project information stays confidential.",
-    faq14q: "Which currencies do you accept?",
-    faq14a:
-      "Pricing is in US dollars, but you can pay in your local currency — we accept bank transfer, Wise, crypto and other country-local options. The exact method is picked together on the kick-off call based on what's easiest on your end.",
 
     // Growth Simulator (levels-based with concrete descriptions)
     simEyebrow: "— 70× ROI Simulator",

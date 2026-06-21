@@ -19,6 +19,16 @@ import { isPlausibleContact } from "@/lib/contactValidation";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+// Reuse one SDK client across requests rather than constructing a new
+// one per call. Keyed on the API key so a rotated env var still applies.
+let cachedAnthropic: { key: string; client: Anthropic } | null = null;
+function getAnthropic(apiKey: string): Anthropic {
+  if (!cachedAnthropic || cachedAnthropic.key !== apiKey) {
+    cachedAnthropic = { key: apiKey, client: new Anthropic({ apiKey }) };
+  }
+  return cachedAnthropic.client;
+}
+
 type IncomingMessage = {
   role: "user" | "assistant";
   content: string;
@@ -206,7 +216,7 @@ export async function POST(req: Request) {
       : (cookieMatch?.[1] ?? "en");
   const locale = picked === "ua" ? "uk" : picked;
 
-  const client = new Anthropic({ apiKey });
+  const client = getAnthropic(apiKey);
   const model = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6";
 
   // Execute one of Vanessa's tool calls. Captures leads through the same

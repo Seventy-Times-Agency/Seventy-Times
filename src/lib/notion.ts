@@ -10,6 +10,7 @@
  */
 
 import { fetchWithTimeout } from "@/lib/fetchWithTimeout";
+import { LOCALES } from "@/i18n/config";
 
 const NOTION_VERSION = "2022-06-28";
 const NOTION_ENDPOINT = "https://api.notion.com/v1/pages";
@@ -150,7 +151,9 @@ export async function sendLeadToNotion(
   if (!token || !databaseId) return false;
 
   const locale = (lead.locale ?? "en").toString();
-  const localeOption = ["en", "ru", "de", "uk"].includes(locale) ? locale : "en";
+  const localeOption = (LOCALES as readonly string[]).includes(locale)
+    ? locale
+    : "en";
 
   const properties: Record<string, unknown> = {
     Name: { title: title(lead.name) },
@@ -209,7 +212,9 @@ export async function logChatTurn(turn: ChatRecord): Promise<void> {
   if (!token || !databaseId) return;
 
   const locale = (turn.locale ?? "en").toString();
-  const localeOption = ["en", "ru", "de", "uk"].includes(locale) ? locale : "en";
+  const localeOption = (LOCALES as readonly string[]).includes(locale)
+    ? locale
+    : "en";
 
   await createPage(
     token,

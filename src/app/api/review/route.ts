@@ -1,4 +1,5 @@
 import { NextResponse, after } from "next/server";
+import { timingSafeEqual } from "node:crypto";
 import {
   checkOrigin,
   enforceBodyLimit,
@@ -48,17 +49,31 @@ function isValid(p: unknown): p is ReviewPayload {
   );
 }
 
+// Constant-time-ish compare: equal-length codes are checked with
+// timingSafeEqual and the loop never short-circuits, so a valid prefix
+// can't be told apart by response timing. (The 5/15min brute-force rate
+// limit is still the primary defence.)
+function safeEqual(a: string, b: string): boolean {
+  const ab = Buffer.from(a);
+  const bb = Buffer.from(b);
+  if (ab.length !== bb.length) return false;
+  return timingSafeEqual(ab, bb);
+}
+
 function isCodeValid(code: string): boolean {
   const normalize = (s: string) => s.replace(/[\s\-_]/g, "").toLowerCase();
   const raw = process.env.CLIENT_CODES || "";
   if (!raw.trim()) return false;
   const needle = normalize(code);
   if (!needle) return false;
-  return raw
+  let ok = false;
+  for (const c of raw
     .split(",")
     .map((c) => normalize(c))
-    .filter(Boolean)
-    .includes(needle);
+    .filter(Boolean)) {
+    if (safeEqual(c, needle)) ok = true;
+  }
+  return ok;
 }
 
 async function notifyTelegram(
