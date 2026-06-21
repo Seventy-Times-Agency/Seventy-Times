@@ -27,7 +27,7 @@ const strings = {
       "Start in 30 Tagen, optimiert in 90. Werbung bringt Leads, KI fängt sie im Chat auf, Automatisierung führt sie durch den Funnel. Keine drei Leistungen im Paket — ein funktionierendes System.",
     heroCta1: "Angebot anfordern",
     heroCta2: "Pakete ansehen",
-    heroHint: "Antwort in 24 Stunden · Unverbindlich",
+    heroHint: "Antwort in 1 Std. werktags · 24 Std. am Wochenende · Unverbindlich",
     statGoal: "Start (Tage)",
     statServices: "KI rund um die Uhr",
     statSupport: "Werbeplattformen",
@@ -79,7 +79,7 @@ const strings = {
     compRowScopeAgency: "Getrennte Teams, getrennte Budgets",
     compRowScopeFreelancer: "Ein Kanal nach dem anderen",
     compRowReplyLabel: "Antwortzeit",
-    compRowReplyUs: "Innerhalb von 24 Stunden, werktags",
+    compRowReplyUs: "Innerhalb einer Stunde werktags, 24 Stunden am Wochenende",
     compRowReplyAgency: "Account Manager, wöchentlicher Call",
     compRowReplyFreelancer: "Wenn er online ist",
     compRowReportLabel: "Reporting",
@@ -247,7 +247,7 @@ const strings = {
     faqTitle1: "Häufige",
     faqTitle2: "Fragen",
     faqLead:
-      "Die häufigsten Fragen vor dem Start. Keine passende Antwort gefunden? Schreiben Sie uns — wir antworten innerhalb einer Stunde.",
+      "Die häufigsten Fragen vor dem Start. Keine passende Antwort gefunden? Schreiben Sie uns — wir antworten werktags innerhalb einer Stunde (am Wochenende innerhalb von 24 Stunden).",
     faqNote: "Schnellere Antwort nötig?",
     faqNoteLink: "Schreiben Sie uns auf Telegram →",
     faqStill: "Ihre Frage nicht dabei?",
@@ -356,7 +356,7 @@ const strings = {
     ctaTitle2: "zu wachsen",
     ctaTitle3: "?",
     ctaSub:
-      "Schreiben Sie uns auf Telegram oder per E-Mail — wir besprechen Ihre Aufgabe, erklären wie wir helfen können und teilen erste Ideen innerhalb einer Stunde. Unverbindlich, ohne Floskeln.",
+      "Schreiben Sie uns auf Telegram oder per E-Mail — wir besprechen Ihre Aufgabe, erklären wie wir helfen können und teilen erste Ideen werktags innerhalb einer Stunde (am Wochenende innerhalb von 24 Stunden). Unverbindlich, ohne Floskeln.",
     ctaPrimary: "Anfrage senden",
     ctaChannelsLabel: "oder schreiben Sie uns direkt",
     ctaTelegram: "Telegram",
@@ -485,7 +485,7 @@ const strings = {
     leadEyebrow: "— Anfrage senden",
     leadTitle: "Erzählen Sie uns von",
     leadTitleAccent: "Ihrer Aufgabe",
-    leadSub: "Wir antworten innerhalb einer Stunde während der Geschäftszeiten. Alle Felder erforderlich.",
+    leadSub: "Wir antworten werktags innerhalb einer Stunde und am Wochenende innerhalb von 24 Stunden. Alle Felder erforderlich.",
     leadName: "Name",
     leadNamePh: "Wie sollen wir Sie ansprechen",
     leadContact: "Kontakt",
@@ -501,7 +501,7 @@ const strings = {
       'Mit Klick auf \u201ESenden\u201C stimmen Sie der Verarbeitung Ihrer Kontaktdaten zur R\u00FCckmeldung zu.',
     leadSuccessTitle: "Anfrage gesendet",
     leadSuccessText:
-      "Vielen Dank! Wir haben Ihre Anfrage erhalten und antworten innerhalb einer Stunde während der Geschäftszeiten. Bis bald 👋",
+      "Vielen Dank! Wir haben Ihre Anfrage erhalten und antworten werktags innerhalb einer Stunde und am Wochenende innerhalb von 24 Stunden. Bis bald 👋",
     leadClose: "Schließen",
     leadFillAll: "Bitte füllen Sie alle Felder aus",
     leadPackage: "Welches Format interessiert Sie?",
@@ -601,7 +601,7 @@ const strings = {
     callbackTitle: "Wir rufen",
     callbackTitleAccent: "Sie zurück",
     callbackSub:
-      "Nur Name und Nummer. Wir rufen innerhalb einer Stunde während der US-Geschäftszeiten zurück.",
+      "Nur Name und Nummer. Wir rufen werktags innerhalb einer Stunde und am Wochenende innerhalb von 24 Stunden zurück.",
     callbackName: "Name",
     callbackNamePh: "Wie sollen wir Sie ansprechen",
     callbackPhone: "Telefon",
@@ -611,7 +611,7 @@ const strings = {
     callbackSubmit: "Rückruf anfordern",
     callbackSuccessTitle: "Notiert",
     callbackSuccessText:
-      "Erhalten — wir rufen innerhalb einer Stunde während der US-Geschäftszeiten zurück. Bis bald 👋",
+      "Erhalten — wir rufen werktags innerhalb einer Stunde und am Wochenende innerhalb von 24 Stunden zurück. Bis bald 👋",
     callbackFillAll: "Bitte Name und Telefon ausfüllen",
     callbackInvalidPhone:
       "Das sieht nicht wie eine Telefonnummer aus — bitte prüfen",
@@ -751,7 +751,7 @@ const strings = {
     exitEyebrow: "Bevor Sie gehen",
     exitTitle: "60 Sekunden reichen",
     exitBody:
-      "Hinterlassen Sie eine kurze Anfrage — wir melden uns innerhalb von 24 Stunden mit einem konkreten nächsten Schritt zurück. Unverbindlich.",
+      "Hinterlassen Sie eine kurze Anfrage — wir melden uns werktags innerhalb einer Stunde (am Wochenende innerhalb von 24 Stunden) mit einem konkreten nächsten Schritt zurück. Unverbindlich.",
     exitCta: "Anfrage senden",
     exitDismiss: "Später",
     exitClose: "Schließen",
