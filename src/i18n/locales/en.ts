@@ -27,7 +27,7 @@ const strings = {
       "Launched in 30 days, optimised in 90. Ads bring leads, AI catches them in chat, automation walks them through the funnel. Not three services bundled — one working system.",
     heroCta1: "Get a quote",
     heroCta2: "See the packages",
-    heroHint: "Reply in 24 hours · No obligations",
+    heroHint: "Within an hour on weekdays · 24h on weekends · No obligations",
     statGoal: "Launch (days)",
     statServices: "AI always on",
     statSupport: "Ad platforms",
@@ -79,7 +79,7 @@ const strings = {
     compRowScopeAgency: "Siloed teams, separate budgets",
     compRowScopeFreelancer: "One channel at a time",
     compRowReplyLabel: "Reply time",
-    compRowReplyUs: "Within 24 hours, every weekday",
+    compRowReplyUs: "Within an hour on weekdays, 24h on weekends",
     compRowReplyAgency: "Account manager, weekly call",
     compRowReplyFreelancer: "When they're awake",
     compRowReportLabel: "Reporting",
@@ -247,7 +247,7 @@ const strings = {
     faqTitle1: "Common",
     faqTitle2: "questions",
     faqLead:
-      "The most common things people ask before getting started. Didn't find your answer? Reach out — we reply within an hour.",
+      "The most common things people ask before getting started. Didn't find your answer? Reach out — we reply within an hour on weekdays, or within 24 hours on weekends.",
     faqNote: "Need a faster answer?",
     faqNoteLink: "Message us on Telegram →",
     faqStill: "Don't see your question?",
@@ -356,7 +356,7 @@ const strings = {
     ctaTitle2: "to grow",
     ctaTitle3: "?",
     ctaSub:
-      "Write us on Telegram or email — we'll discuss your task, explain how we can help, and share first ideas within an hour. No obligations, no fluff.",
+      "Write us on Telegram or email — we'll discuss your task, explain how we can help, and share first ideas within an hour on weekdays (24 hours on weekends). No obligations, no fluff.",
     ctaPrimary: "Get a quote",
     ctaChannelsLabel: "or reach us directly",
     ctaTelegram: "Telegram",
@@ -485,7 +485,7 @@ const strings = {
     leadEyebrow: "— Get a quote",
     leadTitle: "Tell us about",
     leadTitleAccent: "your task",
-    leadSub: "We'll reply within an hour during business hours. All fields required.",
+    leadSub: "We'll reply within an hour on weekdays and within 24 hours on weekends. All fields required.",
     leadName: "Name",
     leadNamePh: "What should we call you",
     leadContact: "Contact",
@@ -501,7 +501,7 @@ const strings = {
       "By clicking \"Submit\" you agree to have your contact data processed for follow-up.",
     leadSuccessTitle: "Request submitted",
     leadSuccessText:
-      "Thank you! We've received your request and will reply within an hour during business hours. Talk soon 👋",
+      "Thank you! We've received your request and will reply within an hour on weekdays and within 24 hours on weekends. Talk soon 👋",
     leadClose: "Close",
     leadFillAll: "Please fill in all fields",
     leadPackage: "Which format are you interested in?",
@@ -598,7 +598,7 @@ const strings = {
     callbackTitle: "We'll call you",
     callbackTitleAccent: "back",
     callbackSub:
-      "Just your name and a number. We'll call within an hour during US business hours.",
+      "Just your name and a number. We'll call within an hour on weekdays and within 24 hours on weekends.",
     callbackName: "Name",
     callbackNamePh: "What should we call you",
     callbackPhone: "Phone",
@@ -608,7 +608,7 @@ const strings = {
     callbackSubmit: "Request a callback",
     callbackSuccessTitle: "On our list",
     callbackSuccessText:
-      "Got it — we'll call you back within an hour during US business hours. Talk soon 👋",
+      "Got it — we'll call you back within an hour on weekdays and within 24 hours on weekends. Talk soon 👋",
     callbackFillAll: "Please fill in your name and phone",
     callbackInvalidPhone:
       "That doesn't look like a phone number — please check",
@@ -748,7 +748,7 @@ const strings = {
     exitEyebrow: "Before you go",
     exitTitle: "60 seconds is all it takes",
     exitBody:
-      "Drop a quick brief — we'll come back within 24 hours with a concrete next step. No commitments.",
+      "Drop a quick brief — we'll come back within an hour on weekdays (24 hours on weekends) with a concrete next step. No commitments.",
     exitCta: "Send a brief",
     exitDismiss: "Maybe later",
     exitClose: "Close",
