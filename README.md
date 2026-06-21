@@ -2,8 +2,9 @@
 
 Marketing site for **Seventy Times** — a US-based AI + performance-marketing
 agency. Single-page landing with deep-link case studies, per-service detail
-pages, a streaming Claude-powered chat assistant ("Tess"), a multi-step
-lead form, and full trilingual coverage (English / Russian / German).
+pages, **Vanessa** — a streaming Claude-powered chat assistant that qualifies
+and hands off leads — a multi-step lead form, and full four-language coverage
+(English / Russian / German / Ukrainian).
 
 > **For developers / AI agents working on this repo:** the orientation
 > document is **[`CLAUDE.md`](./CLAUDE.md)** — start there. This README
@@ -14,19 +15,19 @@ lead form, and full trilingual coverage (English / Russian / German).
 ## Live
 
 - Production: <https://seventy-times.com>
-- Default landing language is **English**. `/ru` and `/de` are opt-in
-  via the language switcher in the top nav.
+- Default landing language is **English**. `/ru`, `/de` and `/uk` are
+  opt-in via the language switcher in the top nav.
 
 ## Tech stack
 
 | | |
 |---|---|
-| Framework | Next.js 14 (App Router, statically generated) |
+| Framework | Next.js 15 (App Router, statically generated) |
 | Language | TypeScript (strict mode) |
 | Styling | CSS Modules + design tokens in `globals.css` |
 | Animation | Framer Motion + Lenis |
 | AI chat | `@anthropic-ai/sdk` — server-side, streaming |
-| CRM fan-out | Telegram Bot API + Notion REST API |
+| CRM fan-out | Telegram Bot API + Notion REST API + Resend email |
 | Hosting | Vercel |
 
 ## Features
@@ -37,17 +38,19 @@ lead form, and full trilingual coverage (English / Russian / German).
   breadcrumbs, related-projects rail, and BreadcrumbList JSON-LD.
 - **Per-service pages** at `/<locale>/services/<slug>` with full
   "Included / Optional add-ons" breakdown.
-- **Streaming Tess chat** — Claude Sonnet 4.6 reply, token-by-token,
-  via NDJSON over `fetch`'s `ReadableStream`. Quick-prompt chips on
-  fresh chats.
+- **Streaming Vanessa chat** — Claude reply token-by-token via NDJSON
+  over `fetch`'s `ReadableStream`. She's a *closer*: two tools
+  (`submit_lead` / `open_lead_form`) let her capture a contact mid-chat
+  and hand it to the team. Quick-prompt chips on fresh chats.
 - **Multi-step lead form** — three small screens (who you are → what
   you do → what you need) with progress bar and a "show all fields at
   once" escape hatch. Drafts auto-save to `localStorage` so a closed
   tab doesn't lose work.
 - **Review form** with one-off client codes, mirror-image draft
   persistence.
-- **Lead + review fan-out** — Telegram + Notion in parallel
-  (`Promise.allSettled`); either failing doesn't block the user.
+- **Lead + review fan-out** — Telegram + Notion + email (Resend) in
+  parallel (`Promise.allSettled`); a failing channel doesn't block the
+  user. Chat-captured leads use the same `deliverLead()` pipeline.
 - **Honest comparison table** — Seventy Times vs classic agency vs
   solo freelancer.
 - **Trust marquee** — two opposite-direction scrolling rows with our
@@ -96,8 +99,8 @@ npm run dev                      # http://localhost:3000
 ```
 
 The middleware redirects bare `/` to `/en` — if you want to test a
-specific locale, navigate to `http://localhost:3000/ru` or `/de`
-directly.
+specific locale, navigate to `http://localhost:3000/ru`, `/de` or
+`/uk` directly.
 
 ### Useful scripts
 
@@ -115,12 +118,13 @@ instructions in [`.env.example`](./.env.example):
 
 | Variable | Required? | Purpose |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | yes | Powers the Tess chat |
+| `ANTHROPIC_API_KEY` | yes | Powers the Vanessa chat |
 | `ANTHROPIC_MODEL` | no | Override Claude model id |
 | `ALLOWED_ORIGINS` | recommended | Lock /api/* to known hosts |
 | `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` | optional | Forward submissions to Telegram |
 | `CLIENT_CODES` | optional | Comma-separated codes that unlock the review form |
-| `NOTION_TOKEN` + `NOTION_DATABASE_LEADS_ID` + `NOTION_DATABASE_REVIEWS_ID` | optional | Forward submissions into Notion CRM |
+| `NOTION_TOKEN` + `NOTION_DATABASE_{LEADS,REVIEWS,CHATS}_ID` | optional | Forward leads / reviews / chat turns into Notion CRM |
+| `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` | optional | Email channel for lead / review notifications |
 
 Without Telegram / Notion env vars submissions still succeed for the
 user — they're just logged to Vercel runtime logs and not forwarded.

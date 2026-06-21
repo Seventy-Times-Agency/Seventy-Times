@@ -47,7 +47,7 @@ src/
 │   │   ├── about/                /<locale>/about
 │   │   ├── team/                 /<locale>/team
 │   │   ├── cases/[slug]/         /<locale>/cases/<id> — per-case page
-│   │   │                         (CaseDetail uses CaseCard from sections/cases)
+│   │   │                         (renders CaseStudyDetail from sections/cases)
 │   │   ├── services/[slug]/      /<locale>/services/<id> — per-service page
 │   │   ├── privacy/              /<locale>/privacy
 │   │   └── terms/                /<locale>/terms
@@ -91,7 +91,8 @@ src/
 │   │   │                         (falls back to Principles when no approved
 │   │   │                         reviews), Cases, GrowthSimulator, FAQ, CTA
 │   │   ├── cases/                Sub-components used by Cases + case pages
-│   │   │   ├── CaseCard.tsx
+│   │   │   ├── CaseCard.tsx        Landing card (status pill + region badge)
+│   │   │   ├── CaseStudyDetail.tsx Rich per-case detail layout
 │   │   │   └── PlaceholderCard.tsx
 │   │   └── services/
 │   │       └── ServiceCard.tsx   Used by Services on the landing
@@ -106,7 +107,11 @@ src/
 │
 ├── data/                         Static content (single source of truth)
 │   ├── siteConfig.ts             Brand name, URL, contacts, hero stats
-│   ├── cases.ts                  Portfolio cases (id + i18n keys + status)
+│   ├── cases/                    Portfolio cases — one file per case
+│   │   ├── types.ts              CaseItem/CaseStudy types + caseCardContent()
+│   │   ├── index.ts              Assembles CASES (display/source order)
+│   │   └── <slug>.ts             Each case: status, region, url + an inline-
+│   │                             localized `study` (stats, sections, chat…)
 │   └── services.ts               Service catalogue (key + slug + i18n keys)
 │
 ├── i18n/
@@ -131,6 +136,8 @@ src/
 │   │                             /api/chat submit_lead tool
 │   ├── localizedMeta.ts          Per-locale metadata getters +
 │   │                             languageAlternates() hreflang helper
+│   ├── jsonLd.ts                 jsonLd() — JSON.stringify + escape `</script>`
+│   │                             for safe inline JSON-LD <script> blocks
 │   ├── systemPrompt.ts           Vanessa's Claude system prompt (consultant
 │   │                             + soft-closer sales playbook)
 │   ├── contactValidation.ts      isPlausibleContact() shared by forms
@@ -372,11 +379,15 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
    add a `<SectionDivider labelKey="divNew" />` above it.
 
 ### Add a new case
-1. Append to `CASES` in `data/cases.ts` with id + i18n key bindings.
-2. Add the four content keys (`caseNTitle / caseNTag / caseNSummary /
-   caseNMetrics`) in all four locale files.
-3. Sitemap and the per-case route pick it up automatically — `[slug]`
-   uses `generateStaticParams` over `CASES`.
+1. Create `data/cases/<slug>.ts` exporting one `CaseItem`: `id`, `status`
+   (`live` / `progress` / `soon`), `region` (`usa` / `europe`), optional
+   `url`, and an inline-localized `study`. Translate every `Loc` field
+   across en/ru/de/uk; wrap non-translatable tokens in `u("…")`.
+2. Register it in `data/cases/index.ts` (import + add to `CASES` in the
+   order you want — the landing grid re-sorts by status anyway).
+3. Sitemap, RSS and the `[slug]` route pick it up automatically —
+   `generateStaticParams` iterates `CASES`. No i18n dictionary keys or
+   JSON-LD edits are needed (case copy lives in the `study` object).
 
 ### Add a new service
 1. Append to `SERVICES` in `data/services.ts` with key + slug + i18n
