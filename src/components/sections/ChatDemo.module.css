@@ -1,415 +1,129 @@
+/* Compact "Meet Vanessa" band — a slim strip (avatar · pitch · CTA)
+   instead of a full-height two-column section. The floating chat widget
+   is the real entry point; this is just an on-page nudge. Mobile-first. */
+
 .section {
   position: relative;
   isolation: isolate;
-  padding: 64px 48px;
+  padding: 28px 18px;
   max-width: var(--container);
   margin: 0 auto;
 }
 
-.layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-/* Left: text + CTA ────────────────────────────────────── */
-.intro {
+.band {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 24px 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(200, 212, 222, 0.025);
+}
+
+/* Avatar with online dot ──────────────────────────────────── */
+.avatar {
+  position: relative;
+  flex-shrink: 0;
+  width: 84px;
+  height: 84px;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--line-strong);
+}
+
+.dot {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  border: 2px solid var(--black);
+  box-shadow: 0 0 8px var(--accent-green);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Copy ────────────────────────────────────────────────────── */
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
 }
 
 .title {
-  font-size: var(--fs-h1);
+  font-size: clamp(22px, 4.5vw, 30px);
   font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--white);
 }
 
-.titleItalic {
+.titleAccent {
   font-style: italic;
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--line-hi);
+  -webkit-text-stroke: 1.2px var(--line-hi);
 }
 
 .lead {
-  font-size: var(--fs-body-lg);
-  color: var(--text-muted);
-  line-height: 1.65;
-  max-width: 480px;
-}
-
-.bullets {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 8px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-}
-
-.bullet {
-  display: flex;
-  gap: 12px;
   font-size: 14px;
   color: var(--text-muted);
   line-height: 1.55;
+  max-width: 56ch;
 }
 
-.bulletIcon {
-  color: var(--accent);
-  font-weight: 800;
-  flex-shrink: 0;
-}
-
+/* CTA ──────────────────────────────────────────────────────── */
 .cta {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 18px 34px;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 13px 26px;
   border-radius: var(--radius-pill);
   background: var(--accent);
   color: var(--black);
   font-weight: 700;
-  font-size: 15px;
-  margin-top: 14px;
-  align-self: flex-start;
-  transition: transform 0.2s var(--ease), background 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 20px 50px -16px var(--accent-glow);
+  font-size: 14px;
+  transition:
+    transform 0.2s var(--ease),
+    background 0.2s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 18px 44px -18px var(--accent-glow);
 }
 
 .cta:hover {
   transform: translateY(-2px);
   background: var(--accent-strong);
-  box-shadow: 0 28px 60px -16px var(--accent-glow);
+  box-shadow: 0 24px 54px -16px var(--accent-glow);
 }
 
-/* Right: Vanessa portrait ──────────────────────────────── */
-.portrait {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.portraitFrame {
-  position: relative;
-  width: 380px;
-  max-width: 100%;
-  aspect-ratio: 3 / 4;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--line-strong);
-  box-shadow: var(--shadow-xl);
-}
-
-.portraitImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Decorative overlays on portrait */
-.portraitBadge {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  padding: 16px 20px;
-  border-radius: var(--radius-md);
-  background: rgba(10, 11, 16, 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.badgeDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent-green);
-  box-shadow: 0 0 8px var(--accent-green);
-  flex-shrink: 0;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.badgeMeta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.badgeName {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--white);
-}
-
-.badgeRole {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-
-.portraitLabel {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  padding: 6px 14px;
-  border-radius: var(--radius-pill);
-  background: rgba(10, 11, 16, 0.72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--line);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-/* Float rings behind portrait */
-.ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  pointer-events: none;
-}
-
-.ringA {
-  width: 480px;
-  height: 480px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.3;
-}
-
-.ringB {
-  width: 600px;
-  height: 600px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.15;
-}
-
-/*  Base (mobile-first): formerly @media (max-width: 1024px).  */
-
-.layout {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-
-.portrait {
-    order: -1;
-    overflow: hidden;
-  }
-
-.portraitFrame {
-    width: 300px;
-    margin: 0 auto;
-  }
-
-.ringA { width: 380px; height: 380px; }
-
-.ringB { width: 460px; height: 460px; }
-
-/*  Base (mobile-first): formerly @media (max-width: 640px).  */
-
-.section {
-    padding: 40px 18px 36px;
-  }
-
-/* Side-by-side: portrait on the right, intro text on the left.
-     Cuts the section height roughly in half vs the stacked variant. */
-
-.layout {
-    grid-template-columns: 1.1fr 130px;
-    gap: 16px;
-    align-items: start;
-  }
-
-.intro {
-    gap: 12px;
-    min-width: 0;
-  }
-
-.portrait {
-    order: 0;
-  }
-
-.portraitFrame {
-    width: 130px;
-    margin: 0;
-  }
-
-/* The big concentric rings break the side-by-side layout on a
-     phone — let them go, the framed portrait reads cleanly on its own. */
-
-.ring {
-    display: none;
-  }
-
-.title {
-    font-size: 22px;
-    line-height: 1.05;
-  }
-
-.lead {
-    font-size: 13.5px;
-    line-height: 1.5;
-  }
-
-/* The lead paragraph already says what Vanessa does — drop the
-     four-bullet checklist on mobile to keep the section short. */
-
-.bullets {
-    display: none;
-  }
-
-.cta {
-    padding: 13px 22px;
-    font-size: 13.5px;
-    margin-top: 4px;
-  }
-
-/* Shrink the on-portrait label/badge so they fit the smaller frame. */
-
-.portraitBadge {
-    padding: 6px 8px;
-    bottom: 6px;
-    left: 6px;
-    right: 6px;
-    gap: 6px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-
-.badgeDot {
-    width: 7px;
-    height: 7px;
-  }
-
-.badgeName {
-    font-size: 11px;
-  }
-
-.badgeRole {
-    font-size: 8.5px;
-    letter-spacing: 0.12em;
-  }
-
-.portraitLabel {
-    top: 6px;
-    right: 6px;
-    padding: 3px 8px;
-    font-size: 8px;
-    letter-spacing: 0.16em;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-  }
-
-/*  641px and up — restores the desktop values overridden above.  */
-
-@media (min-width: 641px) {
+/* Tablet and up — collapse into one horizontal row. */
+@media (min-width: 768px) {
   .section {
-    padding: 64px 48px;
+    padding: 40px 48px;
   }
-  .layout {
-    grid-template-columns: 1fr;
-    gap: 48px;
-    align-items: center;
+  .band {
+    flex-direction: row;
+    text-align: left;
+    gap: 28px;
+    padding: 22px 28px;
   }
-  .intro {
-    gap: 24px;
-    min-width: revert;
+  .avatar {
+    width: 96px;
+    height: 96px;
   }
-  .portrait {
-    order: -1;
-  }
-  .portraitFrame {
-    width: 300px;
-    margin: 0 auto;
-  }
-  .ring {
-    display: revert;
-  }
-  .title {
-    font-size: var(--fs-h1);
-    line-height: 0.95;
+  .copy {
+    flex: 1;
   }
   .lead {
-    font-size: var(--fs-body-lg);
-    line-height: 1.65;
-  }
-  .bullets {
-    display: flex;
-  }
-  .cta {
-    padding: 18px 34px;
-    font-size: 15px;
-    margin-top: 14px;
-  }
-  .portraitBadge {
-    padding: 16px 20px;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    gap: 12px;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
-  .badgeDot {
-    width: 10px;
-    height: 10px;
-  }
-  .badgeName {
-    font-size: 13px;
-  }
-  .badgeRole {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-  }
-  .portraitLabel {
-    top: 18px;
-    right: 18px;
-    padding: 6px 14px;
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-}
-
-/*  1025px and up — restores the desktop values overridden above.  */
-
-@media (min-width: 1025px) {
-  .layout {
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-  }
-  .portrait {
-    order: revert;
-    overflow: revert;
-  }
-  .portraitFrame {
-    width: 380px;
-    margin: 0;
-  }
-  .ringA {
-    width: 480px;
-    height: 480px;
-  }
-  .ringB {
-    width: 600px;
-    height: 600px;
+    font-size: 14.5px;
   }
 }
