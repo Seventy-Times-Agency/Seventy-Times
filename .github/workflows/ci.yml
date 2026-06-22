@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+        env:
+          # Required only at runtime; supply a dummy so the build (which
+          # may construct the Anthropic client at module load) never fails
+          # in CI for a missing key.
+          ANTHROPIC_API_KEY: dummy
+
+      - name: Test
+        # The vitest `test` script is added alongside the test suite; use
+        # --if-present so CI doesn't fail before the suite lands.
+        run: npm test --if-present

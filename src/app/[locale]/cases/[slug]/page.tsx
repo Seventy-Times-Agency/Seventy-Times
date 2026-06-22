@@ -29,6 +29,11 @@ export async function generateMetadata(
   return {
     title,
     description: summary,
+    // "soon" cases are teaser/thin-content until the work ships — keep
+    // them out of the index (but let crawlers follow internal links).
+    ...(item.status === "soon"
+      ? { robots: { index: false, follow: true } }
+      : {}),
     alternates: {
       canonical: `${siteConfig.url}/${locale}/cases/${item.id}`,
       // Per-locale alternates so Google knows the other versions of

@@ -15,7 +15,10 @@
   position: relative;
   width: 100%;
   max-width: 600px;
+  /* 100vh fallback, then dvh so the modal bottom isn't clipped under the
+     mobile browser toolbar. */
   max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - 48px);
   overflow-y: auto;
   background:
     radial-gradient(ellipse 80% 60% at 50% 0%, rgba(160, 190, 220, 0.1), transparent 60%),
@@ -42,24 +45,47 @@
 }
 
 .closeBtn {
+  /* 44×44 tap target (WCAG 2.5.8). The visible 36px bordered circle is
+     drawn with ::before; the surrounding box is transparent hit area. */
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 36px;
-  height: 36px;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1px solid var(--line-strong);
+  border: 0;
   background: transparent;
   color: var(--text-muted);
   font-size: 22px;
   line-height: 1;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  display: grid;
+  place-items: center;
+  transition: color 0.2s ease;
+}
+
+.closeBtn::before {
+  content: "";
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .closeBtn:hover {
-  background: var(--accent);
   color: var(--black);
+}
+
+.closeBtn:hover::before {
+  background: var(--accent);
   border-color: var(--accent);
+}
+
+.closeBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+  border-radius: 50%;
 }
 
 /* Header ───────────────────────────────────────────────── */
@@ -129,9 +155,11 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   color: var(--text);
-  font-size: 15px;
+  /* 16px on mobile so iOS Safari doesn't auto-zoom on focus; desktop
+     restores 15px in the @641 block below. */
+  font-size: 16px;
   outline: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
   font-family: inherit;
 }
 
@@ -144,6 +172,14 @@
 .textarea:focus {
   border-color: var(--accent);
   background: rgba(200, 212, 222, 0.06);
+}
+
+/* Visible keyboard focus: the border-colour change alone is a
+   colour-only cue (WCAG 1.4.11 / 2.4.7). Add an accent focus ring. */
+.input:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
 }
 
 .textarea {
@@ -210,6 +246,11 @@
   border-color: var(--text-muted);
 }
 
+.back:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .actions .submit {
   flex: 1;
   margin-top: 0;
@@ -232,6 +273,12 @@
 .modeToggle:hover {
   color: var(--white);
   text-decoration: underline;
+}
+
+.modeToggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .submit {
@@ -260,6 +307,11 @@
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .note {
@@ -380,6 +432,11 @@
   border-color: var(--line-hi);
 }
 
+.successCloseBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /*  Base (mobile-first): formerly @media (max-width: 640px).  */
 
 .modal {
@@ -400,5 +457,10 @@
   .closeBtn {
     top: 20px;
     right: 20px;
+  }
+  /* Desktop has no iOS auto-zoom concern — restore the compact size. */
+  .input,
+  .textarea {
+    font-size: 15px;
   }
 }

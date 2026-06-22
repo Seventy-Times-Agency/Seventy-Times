@@ -4,6 +4,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type FormEvent,
 } from "react";
@@ -19,6 +20,8 @@ import {
   type LeadBudget,
   type LeadPackage,
 } from "@/lib/leadDraft";
+import { track } from "@/lib/analytics";
+import { captureUtm, readUtm } from "@/lib/utm";
 import { useHashModal } from "@/components/overlays/forms/useHashModal";
 import styles from "@/components/overlays/forms/LeadForm.module.css";
 
@@ -57,6 +60,9 @@ export default function LeadForm() {
   const [hydrated, setHydrated] = useState(false);
   const [mode, setMode] = useState<FormMode>("steps");
   const [step, setStep] = useState(0);
+  // Focus target for the success screen, so screen readers land on the
+  // confirmation heading the moment the lead goes through.
+  const successTitleRef = useRef<HTMLHeadingElement>(null);
 
   // Open/close lifecycle (hash trigger, scroll lock, Escape, reset
   // after the exit animation) — shared with the other modals.
@@ -65,6 +71,22 @@ export default function LeadForm() {
     setError("");
     setStep(0);
   });
+
+  // Capture campaign attribution (utm_*, gclid, fbclid) once on mount so
+  // a lead submitted later this session can be sourced.
+  useEffect(() => {
+    captureUtm();
+  }, []);
+
+  // Fire an analytics event each time the modal opens.
+  useEffect(() => {
+    if (open) track("lead_form_open");
+  }, [open]);
+
+  // Move focus to the success heading and let it be announced politely.
+  useEffect(() => {
+    if (status === "success") successTitleRef.current?.focus();
+  }, [status]);
 
   // Restore the user's draft (everything except the honeypot) and
   // their preferred form mode on mount.
@@ -177,6 +199,7 @@ export default function LeadForm() {
           request,
           package: fields.package,
           budget: fields.budget,
+          utm: readUtm(),
           website: fields.website,
         }),
       });
@@ -211,6 +234,7 @@ export default function LeadForm() {
       setConsent(false);
       setStep(0);
       clearLeadDraft();
+      track("lead_submit", { kind: "lead" });
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : t.chatError);
@@ -296,9 +320,15 @@ export default function LeadForm() {
             </button>
 
             {status === "success" ? (
-              <div className={styles.success}>
+              <div className={styles.success} role="status" aria-live="polite">
                 <div className={styles.successIcon}>✓</div>
-                <h3 className={styles.successTitle}>{t.leadSuccessTitle}</h3>
+                <h3
+                  className={styles.successTitle}
+                  ref={successTitleRef}
+                  tabIndex={-1}
+                >
+                  {t.leadSuccessTitle}
+                </h3>
                 <p className={styles.successText}>{t.leadSuccessText}</p>
                 <button className={styles.successCloseBtn} onClick={close} type="button">
                   {t.leadClose}

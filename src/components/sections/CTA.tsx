@@ -89,6 +89,25 @@ export default function CTA() {
                 {t.ctaPrimary} <span aria-hidden="true">→</span>
               </a>
             </Magnetic>
+            {/* Low-friction alternative: the compact callback form
+                (name + phone) lives behind #callback but had no entry
+                point on the landing. Styled as a ghost/secondary action
+                so it sits beside the primary CTA without competing. */}
+            <a
+              href="#callback"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "20px 32px",
+                borderRadius: "var(--radius-pill)",
+                border: "1px solid var(--border, rgba(255,255,255,0.18))",
+                fontWeight: 600,
+                fontSize: 15,
+              }}
+            >
+              {t.ctaCallback}
+            </a>
           </div>
 
           <p className={styles.channelsLabel}>{t.ctaChannelsLabel}</p>

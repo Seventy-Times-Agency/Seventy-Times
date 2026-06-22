@@ -30,6 +30,11 @@
     will-change: transform;
   }
 
+.cta:focus-visible {
+    outline: 2px solid var(--black);
+    outline-offset: 3px;
+  }
+
 /*  721px and up — restores the desktop values overridden above.  */
 
 @media (min-width: 721px) {

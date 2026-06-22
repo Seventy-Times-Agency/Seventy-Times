@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 /**
  * Mask-clip word reveal.
@@ -37,6 +37,11 @@ export default function AnimatedText({
   immediate = false,
   once = true,
 }: Props) {
+  // Respect prefers-reduced-motion: render words statically (no slide-up
+  // mask) so motion-sensitive users get the text immediately. The public
+  // API is unchanged — only the rendered motion differs.
+  const reduceMotion = useReducedMotion();
+
   return (
     <span className={className}>
       {words.map((w, i) => {
@@ -44,7 +49,12 @@ export default function AnimatedText({
         const wordClass = typeof w === "string" ? undefined : w.className;
         const isLast = i === words.length - 1;
 
-        const inner = (
+        const inner = reduceMotion ? (
+          <span className={wordClass} style={{ display: "inline-block" }}>
+            {text}
+            {!isLast ? " " : ""}
+          </span>
+        ) : (
           <motion.span
             className={wordClass}
             style={{ display: "inline-block" }}

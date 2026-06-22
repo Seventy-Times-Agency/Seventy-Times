@@ -36,7 +36,32 @@ type LeadPayload = {
   budget?: LeadBudget;
   phone?: string;
   kind?: LeadKind;
+  utm?: Record<string, string>;
 };
+
+// Caps for the attribution blob — never trust raw client input.
+const UTM_MAX_KEYS = 8;
+const UTM_MAX_VALUE = 200;
+
+/**
+ * Sanitise the optional `utm` object: keep only string values, cap each
+ * value's length, and cap the number of keys. Returns undefined when
+ * there's nothing usable so downstream lines can be skipped.
+ */
+function sanitizeUtm(raw: unknown): Record<string, string> | undefined {
+  if (typeof raw !== "object" || raw === null) return undefined;
+  const out: Record<string, string> = {};
+  let count = 0;
+  for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
+    if (count >= UTM_MAX_KEYS) break;
+    if (typeof value !== "string") continue;
+    const trimmed = value.trim();
+    if (!trimmed) continue;
+    out[key.slice(0, 50)] = trimmed.slice(0, UTM_MAX_VALUE);
+    count++;
+  }
+  return count > 0 ? out : undefined;
+}
 
 const LIMITS = {
   name: 100,
@@ -105,6 +130,7 @@ export async function POST(req: Request) {
       : undefined;
   const rawKind = (body as Record<string, unknown>).kind;
   const kind: LeadKind = rawKind === "callback" ? "callback" : "lead";
+  const utm = sanitizeUtm((body as Record<string, unknown>).utm);
 
   if (!name || !contact || !business || !request) {
     return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
@@ -167,6 +193,7 @@ export async function POST(req: Request) {
     budget: leadBudget,
     phone,
     kind,
+    utm,
   };
 
   // Fan out to side channels after the response is sent. Without this,

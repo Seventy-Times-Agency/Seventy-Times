@@ -14,6 +14,19 @@ export function generateStaticParams() {
   );
 }
 
+const MAX_DESC = 160;
+
+// Compose tag + note into a single meta description, capped near 160
+// chars on a word boundary so search engines don't hard-truncate it
+// mid-word.
+function buildDescription(tag: string, note: string): string {
+  const combined = `${tag}. ${note}`.replace(/\.\.+/g, ".").trim();
+  if (combined.length <= MAX_DESC) return combined;
+  const slice = combined.slice(0, MAX_DESC);
+  const lastSpace = slice.lastIndexOf(" ");
+  return `${(lastSpace > 0 ? slice.slice(0, lastSpace) : slice).replace(/[.,;:\s]+$/, "")}…`;
+}
+
 export async function generateMetadata(
   props: {
     params: Promise<{ locale: string; slug: string }>;
@@ -25,18 +38,25 @@ export async function generateMetadata(
   if (!item) return {};
   const t = getDictionary(locale);
   const title = t[item.i18n.title];
-  const tag = t[item.i18n.tag];
+  const tag = t[item.i18n.tag] ?? "";
+  const note = t[item.i18n.note] ?? "";
+
+  // Build a richer ~140–160 char description from the service's own
+  // localized fields. A bare `tag` is too thin for a useful SERP snippet;
+  // combining tag + note gives Google more context without repeating the
+  // title (which it already shows separately). Trim on a word boundary.
+  const description = buildDescription(tag, note);
 
   return {
     title,
-    description: tag,
+    description,
     alternates: {
       canonical: `${siteConfig.url}/${locale}/services/${item.slug}`,
       languages: languageAlternates(`/services/${item.slug}`),
     },
     openGraph: {
       title: `${title} — ${siteConfig.name}`,
-      description: tag,
+      description,
       url: `${siteConfig.url}/${locale}/services/${item.slug}`,
     },
   };

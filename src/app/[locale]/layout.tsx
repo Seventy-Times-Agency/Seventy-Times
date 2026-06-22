@@ -18,6 +18,8 @@ import FloatingGlyphs from "@/components/decor/FloatingGlyphs";
 import ScrollProgress from "@/components/decor/ScrollProgress";
 import SmoothScroll from "@/components/decor/SmoothScroll";
 import ClientOverlays from "@/components/overlays/ClientOverlays";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
 
 const manrope = Manrope({
@@ -194,6 +196,10 @@ export default async function LocaleLayout(
           {children}
           <ClientOverlays />
         </I18nProvider>
+        {/* Privacy-friendly product analytics + Core Web Vitals. Both
+            are cookieless, so they need no consent gate. */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

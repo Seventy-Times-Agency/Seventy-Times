@@ -10,32 +10,23 @@
  */
 
 import { fetchWithTimeout } from "@/lib/fetchWithTimeout";
-import { LOCALES } from "@/i18n/config";
+import { LOCALES, type Locale } from "@/i18n/config";
 
 const NOTION_VERSION = "2022-06-28";
 const NOTION_ENDPOINT = "https://api.notion.com/v1/pages";
 const NOTION_QUERY_ENDPOINT = (databaseId: string) =>
   `https://api.notion.com/v1/databases/${databaseId}/query`;
 
-import type { LeadBudget, LeadPackage } from "@/lib/leadDraft";
+import {
+  BUDGET_LABELS,
+  PACKAGE_LABELS,
+  type LeadBudget,
+  type LeadPackage,
+} from "@/lib/leadDraft";
 
-type Locale = "en" | "ru" | "de" | "uk";
-
-const PACKAGE_NOTION_LABEL: Record<LeadPackage, string> = {
-  not_sure: "Not sure",
-  standalone: "Standalone",
-  launch: "Launch",
-  growth: "Growth",
-  scale: "Scale",
-};
-
-const BUDGET_NOTION_LABEL: Record<LeadBudget, string> = {
-  not_sure: "Not sure",
-  under_1k: "<$1k/mo",
-  "1k_3k": "$1k–3k/mo",
-  "3k_10k": "$3k–10k/mo",
-  "10k_plus": "$10k+/mo",
-};
+/** English Notion `select` option name for a package / budget enum. */
+const packageNotionLabel = (p: LeadPackage): string => PACKAGE_LABELS[p].notion;
+const budgetNotionLabel = (b: LeadBudget): string => BUDGET_LABELS[b].notion;
 
 type LeadRecord = {
   name: string;
@@ -48,6 +39,8 @@ type LeadRecord = {
   phone?: string;
   /** Where the lead came from — "Website" (forms) or "Vanessa chat". */
   source?: string;
+  /** Campaign attribution captured at first touch (utm_*, gclid, fbclid). */
+  utm?: Record<string, string>;
 };
 
 type ReviewRecord = {
@@ -155,11 +148,24 @@ export async function sendLeadToNotion(
     ? locale
     : "en";
 
+  // Fold any campaign attribution into the Request text — appending to an
+  // existing rich_text property is safe against any DB schema (a dedicated
+  // UTM property might not exist and would make the create fail).
+  const utmText = lead.utm
+    ? Object.entries(lead.utm)
+        .filter(([, v]) => typeof v === "string" && v.length > 0)
+        .map(([k, v]) => `${k}=${v}`)
+        .join(", ")
+    : "";
+  const requestText = utmText
+    ? `${lead.request}\n\n— Source: ${utmText}`
+    : lead.request;
+
   const properties: Record<string, unknown> = {
     Name: { title: title(lead.name) },
     Contact: { rich_text: richText(lead.contact) },
     Business: { rich_text: richText(lead.business) },
-    Request: { rich_text: richText(lead.request) },
+    Request: { rich_text: richText(requestText) },
     Status: { select: { name: "New" } },
     Source: { select: { name: lead.source ?? "Website" } },
     Locale: { select: { name: localeOption } },
@@ -168,12 +174,12 @@ export async function sendLeadToNotion(
 
   if (lead.package) {
     properties.Package = {
-      select: { name: PACKAGE_NOTION_LABEL[lead.package] },
+      select: { name: packageNotionLabel(lead.package) },
     };
   }
   if (lead.budget) {
     properties.Budget = {
-      select: { name: BUDGET_NOTION_LABEL[lead.budget] },
+      select: { name: budgetNotionLabel(lead.budget) },
     };
   }
   if (lead.phone) {

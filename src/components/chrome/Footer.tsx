@@ -76,7 +76,7 @@ export default function Footer() {
 
       <div className={styles.wordmark} aria-hidden="true">
         seventy<span className={styles.wordmarkOutline}>×</span>times
-        <span className={styles.wordmarkSub}>®</span>
+        <span className={styles.wordmarkSub}>™</span>
       </div>
 
       <p className={styles.disclaimer}>{t.ftDisclaimer}</p>

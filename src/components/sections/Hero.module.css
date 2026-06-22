@@ -447,3 +447,14 @@
     font-size: clamp(32px, 3.5vw, 56px);
   }
 }
+
+/* Stop the perpetual hero wordmark drift and the "online" status pulse
+   for motion-sensitive users. */
+@media (prefers-reduced-motion: reduce) {
+  .heroWordmark {
+    animation: none;
+  }
+  .metaDot {
+    animation: none;
+  }
+}

@@ -355,6 +355,7 @@ const strings = {
     ctaSub:
       "Write us on Telegram or email — we'll discuss your task, explain how we can help, and share first ideas within an hour on weekdays (24 hours on weekends). No obligations, no fluff.",
     ctaPrimary: "Get a quote",
+    ctaCallback: "Request a call",
     ctaChannelsLabel: "or reach us directly",
     ctaTelegram: "Telegram",
     ctaMeta1: "Seventy Times · Ads × Automation × AI",
@@ -532,6 +533,8 @@ const strings = {
     chatAlt: "Vanessa — AI consultant at Seventy Times",
     chatNudge:
       "Hi 👋 Want me to find the right solution for your business? Ask me anything.",
+    chatPrivacyNotice:
+      "Chats are processed via Anthropic (USA) and may be stored. Learn more in our Privacy Policy.",
 
     // Consent (shared between forms)
     consentPrefix: "I agree to the ",
