@@ -40,3 +40,10 @@ next-env.d.ts
 *.docx
 WEBSITE_BRIEF.md
 *.bak
+
+# hyperframes skills install (regenerate with: npx skills add heygen-com/hyperframes)
+/.agents/
+/skills-lock.json
+# also ignore inside experiments — node_modules and large rendered MP4s
+/experiments/**/node_modules/
+/experiments/**/final.mp4
