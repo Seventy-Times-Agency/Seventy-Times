@@ -14,10 +14,10 @@ export const passengerTransport: CaseItem = {
       },
       tag: u("META ADS · EUROPE"),
       summary: {
-        en: "A small passenger-transport business in Europe. Meta Ads on a $200/mo budget brought 7–15 booking requests a day — demand outran capacity and the campaign was paused more than once.",
-        ru: "Небольшой бизнес пассажирских перевозок в Европе. Реклама в Meta на бюджете $200/мес приносила 7–15 заявок в день — спрос превышал ёмкость, и кампанию не раз ставили на паузу.",
-        de: "Ein kleines Personenbeförderungsunternehmen in Europa. Meta Ads mit 200 $/Monat Budget brachten 7–15 Buchungsanfragen pro Tag — die Nachfrage überstieg die Kapazität, die Kampagne wurde mehrfach pausiert.",
-        uk: "Невеликий бізнес пасажирських перевезень у Європі. Реклама в Meta на бюджеті $200/міс приносила 7–15 заявок на день — попит перевищував спроможність, і кампанію не раз ставили на паузу.",
+        en: "A European passenger-transport operator. On a lean $200/mo Meta Ads budget we drove a steady 7–15 booking requests a day — enough that demand outran the available fleet, and the campaign was paused more than once to let operations catch up. Nine months in, the client is still with us and has referred two more businesses.",
+        ru: "Европейский оператор пассажирских перевозок. На скромном бюджете Meta Ads $200/мес мы стабильно приносили 7–15 заявок на бронь в день — спрос превышал доступный автопарк, и кампанию не раз ставили на паузу, чтобы операции успевали. За девять месяцев клиент по-прежнему с нами и порекомендовал нас ещё двум бизнесам.",
+        de: "Ein europäischer Personenbeförderer. Mit einem schlanken Meta-Ads-Budget von 200 $/Monat erzeugten wir konstant 7–15 Buchungsanfragen pro Tag — die Nachfrage überstieg die verfügbare Flotte, und die Kampagne wurde mehrfach pausiert, damit der Betrieb nachkam. Nach neun Monaten ist der Kunde weiterhin bei uns und hat uns an zwei weitere Unternehmen empfohlen.",
+        uk: "Європейський оператор пасажирських перевезень. На скромному бюджеті Meta Ads $200/міс ми стабільно приносили 7–15 заявок на бронювання щодня — попит перевищував доступний автопарк, і кампанію не раз ставили на паузу, щоб операції встигали. За дев'ять місяців клієнт досі з нами й порекомендував нас ще двом бізнесам.",
       },
       metrics: [
         {
@@ -205,17 +205,17 @@ export const passengerTransport: CaseItem = {
         },
         roas: "~45×",
         roasNote: {
-          en: "excl. operational costs",
-          ru: "без учёта операционных расходов",
-          de: "ohne Betriebskosten",
-          uk: "без операційних витрат",
+          en: "illustrative — from the figures above, before operational costs",
+          ru: "иллюстративно — из цифр выше, без операционных расходов",
+          de: "illustrativ — aus den Zahlen oben, vor Betriebskosten",
+          uk: "ілюстративно — з цифр вище, без операційних витрат",
         },
       },
       insight: {
-        en: "Results exceeded capacity — the campaign was paused several times. The client referred us to two more businesses.",
-        ru: "Результаты превышали ёмкость — кампанию несколько раз ставили на паузу. Клиент порекомендовал нас ещё двум бизнесам.",
-        de: "Die Ergebnisse überstiegen die Kapazität — die Kampagne wurde mehrfach pausiert. Der Kunde empfahl uns an zwei weitere Unternehmen.",
-        uk: "Результати перевищували спроможність — кампанію кілька разів ставили на паузу. Клієнт порекомендував нас ще двом бізнесам.",
+        en: "The real constraint here was never demand — it was capacity. Lead flow consistently outpaced what the fleet could serve, which is the kind of problem most operators would like to have.",
+        ru: "Настоящим ограничением был не спрос, а ёмкость. Поток заявок стабильно превышал то, что мог обслужить автопарк, — проблема, которую большинство операторов хотели бы иметь.",
+        de: "Der eigentliche Engpass war nie die Nachfrage, sondern die Kapazität. Der Lead-Fluss übertraf laufend das, was die Flotte bedienen konnte — ein Problem, das die meisten Betreiber gern hätten.",
+        uk: "Справжнім обмеженням був не попит, а спроможність. Потік заявок стабільно перевищував те, що міг обслужити автопарк, — проблема, яку більшість операторів хотіли б мати.",
       },
       services: [
         {
