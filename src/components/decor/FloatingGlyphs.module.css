@@ -96,3 +96,10 @@
     display: revert;
   }
 }
+
+/* Freeze the floating glyphs for motion-sensitive users. */
+@media (prefers-reduced-motion: reduce) {
+  .glyph {
+    animation: none;
+  }
+}

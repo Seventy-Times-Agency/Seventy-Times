@@ -123,3 +123,12 @@
     height: 540px;
   }
 }
+
+/* Stop the perpetual glow drift for motion-sensitive users — the glows
+   stay, they just don't move. */
+@media (prefers-reduced-motion: reduce) {
+  .glowA,
+  .glowB {
+    animation: none;
+  }
+}

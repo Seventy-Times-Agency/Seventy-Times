@@ -44,7 +44,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const page of PAGES) {
     push(page.path, page.priority, page.changeFrequency);
   }
+  // "soon" cases are teaser/thin-content placeholders — keep them out of
+  // the sitemap (and noindexed on their own page) until they ship.
   for (const item of CASES) {
+    if (item.status === "soon") continue;
     push(`/cases/${item.id}`, 0.6, "monthly");
   }
   for (const service of SERVICES) {

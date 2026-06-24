@@ -1,10 +1,12 @@
 "use client";
 
-import { useCallback, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
 import { siteConfig } from "@/data/siteConfig";
+import { track } from "@/lib/analytics";
+import { captureUtm, readUtm } from "@/lib/utm";
 import { useHashModal } from "@/components/overlays/forms/useHashModal";
 import styles from "@/components/overlays/forms/LeadForm.module.css";
 
@@ -37,6 +39,16 @@ export default function CallbackForm() {
     setStatus("idle");
     setError("");
   });
+
+  // Capture campaign attribution (utm_*, gclid, fbclid) once on mount.
+  useEffect(() => {
+    captureUtm();
+  }, []);
+
+  // Fire an analytics event each time the modal opens.
+  useEffect(() => {
+    if (open) track("callback_open");
+  }, [open]);
 
   const setField =
     (key: keyof typeof INITIAL) =>
@@ -82,6 +94,7 @@ export default function CallbackForm() {
               ? `${t.callbackRequestPrefix}\n\n${note}`
               : t.callbackRequestPrefix,
             kind: "callback",
+            utm: readUtm(),
             website: fields.website,
           }),
         });
@@ -99,6 +112,7 @@ export default function CallbackForm() {
         setStatus("success");
         setFields(INITIAL);
         setConsent(false);
+        track("callback_submit");
       } catch (err) {
         setStatus("error");
         setError(err instanceof Error ? err.message : t.chatError);

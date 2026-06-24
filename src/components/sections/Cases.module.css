@@ -201,6 +201,13 @@
   animation: pulse 2s ease-in-out infinite;
 }
 
+/* Stop the perpetual "in progress" pulse for motion-sensitive users. */
+@media (prefers-reduced-motion: reduce) {
+  .status_progress .statusDot {
+    animation: none;
+  }
+}
+
 .status_soon {
   color: var(--text-dim);
 }

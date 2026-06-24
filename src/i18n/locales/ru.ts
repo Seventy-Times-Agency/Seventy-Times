@@ -355,6 +355,7 @@ const strings = {
     ctaSub:
       "Напишите в Telegram или на почту — обсудим задачу, расскажем как можем помочь, и в течение часа по будням (за 24 часа по выходным) дадим первые идеи. Без обязательств, без воды.",
     ctaPrimary: "Оставить заявку",
+    ctaCallback: "Заказать звонок",
     ctaChannelsLabel: "или пишите напрямую",
     ctaTelegram: "Telegram",
     ctaMeta1: "Seventy Times · Реклама × Автоматизация × AI",
@@ -532,6 +533,8 @@ const strings = {
     chatAlt: "Ванесса — AI-консультант Seventy Times",
     chatNudge:
       "Привет 👋 Помочь подобрать решение под ваш бизнес? Спросите меня о чём угодно.",
+    chatPrivacyNotice:
+      "Переписка обрабатывается через Anthropic (США) и может сохраняться. Подробнее — в Политике конфиденциальности.",
 
     // Consent (shared between forms)
     consentPrefix: "Я согласен(на) с ",

@@ -31,18 +31,44 @@ export type LeadDraft = {
   budget: LeadBudget;
 };
 
+/**
+ * Single source of truth for how each package / budget enum renders in
+ * the two downstream surfaces:
+ *   - `ru` — the Russian-labelled Telegram/email notification the team reads
+ *   - `notion` — the English `select` option name in the Notion CRM
+ *
+ * Keeping both maps here (next to the types) means `leadDelivery.ts` and
+ * `notion.ts` import one definition instead of drifting copies, and the
+ * type-guard key lists are derived from these same objects.
+ */
+export const PACKAGE_LABELS: Record<
+  LeadPackage,
+  { ru: string; notion: string }
+> = {
+  not_sure: { ru: "Пока не уверен", notion: "Not sure" },
+  standalone: { ru: "Одна услуга (standalone)", notion: "Standalone" },
+  launch: { ru: "LAUNCH", notion: "Launch" },
+  growth: { ru: "GROWTH ⭐", notion: "Growth" },
+  scale: { ru: "SCALE", notion: "Scale" },
+};
+
+export const BUDGET_LABELS: Record<
+  LeadBudget,
+  { ru: string; notion: string }
+> = {
+  not_sure: { ru: "Не уверен", notion: "Not sure" },
+  under_1k: { ru: "до $1 000 / мес", notion: "<$1k/mo" },
+  "1k_3k": { ru: "$1 000–3 000 / мес", notion: "$1k–3k/mo" },
+  "3k_10k": { ru: "$3 000–10 000 / мес", notion: "$3k–10k/mo" },
+  "10k_plus": { ru: "$10 000+ / мес", notion: "$10k+/mo" },
+};
+
 export function isLeadPackage(v: unknown): v is LeadPackage {
-  return (
-    typeof v === "string" &&
-    ["not_sure", "standalone", "launch", "growth", "scale"].includes(v)
-  );
+  return typeof v === "string" && v in PACKAGE_LABELS;
 }
 
 export function isLeadBudget(v: unknown): v is LeadBudget {
-  return (
-    typeof v === "string" &&
-    ["not_sure", "under_1k", "1k_3k", "3k_10k", "10k_plus"].includes(v)
-  );
+  return typeof v === "string" && v in BUDGET_LABELS;
 }
 
 export function readLeadDraft(): LeadDraft | null {

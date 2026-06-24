@@ -49,6 +49,10 @@ export async function sendEmail({
         text,
         reply_to: replyTo,
       }),
+      // Match the 7s ceiling telegram/notion use, rather than the
+      // fetchWithTimeout default of 5s — email is the fallback channel
+      // and a slightly longer wait is worth not dropping a lead.
+      timeoutMs: 7000,
     });
 
     if (!res.ok) {

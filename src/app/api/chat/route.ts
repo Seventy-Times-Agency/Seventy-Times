@@ -40,6 +40,33 @@ const MAX_CONTENT_LENGTH = 4000;
 // misbehaving model can't loop the lead pipeline indefinitely.
 const MAX_TOOL_ROUNDS = 3;
 
+// Default model + allow-list of cheap chat-tier models. A typo or an
+// accidental Opus/Fable in ANTHROPIC_MODEL would silently multiply the
+// per-token bill, so anything outside this set is ignored in favour of
+// the default. Keep this to Sonnet/Haiku-tier ids only.
+const DEFAULT_MODEL = "claude-sonnet-4-6";
+const ALLOWED_MODELS = new Set([
+  "claude-sonnet-4-6",
+  "claude-haiku-4-5",
+]);
+
+function pickModel(): string {
+  const requested = process.env.ANTHROPIC_MODEL;
+  if (!requested) return DEFAULT_MODEL;
+  if (ALLOWED_MODELS.has(requested)) return requested;
+  console.warn(
+    `[CHAT] ignoring ANTHROPIC_MODEL="${requested}" — not in the allowed ` +
+      `cheap-model set; falling back to ${DEFAULT_MODEL}`,
+  );
+  return DEFAULT_MODEL;
+}
+
+// Lead spam guard for the submit_lead tool: same 3/hour/IP budget as
+// /api/lead, so a visitor can't fan out leads through Vanessa to bypass
+// the form's rate limit.
+const CHAT_LEAD_LIMIT = 3;
+const CHAT_LEAD_WINDOW_MS = 60 * 60_000;
+
 const LEAD_LIMITS = {
   name: 100,
   contact: 200,
@@ -217,7 +244,26 @@ export async function POST(req: Request) {
   const locale = picked === "ua" ? "uk" : picked;
 
   const client = getAnthropic(apiKey);
-  const model = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6";
+  const model = pickModel();
+
+  // The system prompt (~7k tokens) is stable across every round and
+  // every request, so cache it. Sent as a single text block with
+  // cache_control so the agent loop's repeated tool-use rounds (and
+  // subsequent requests within the cache TTL) read it from cache
+  // instead of re-paying full input price each time.
+  //
+  // This pinned SDK (0.32.1) only types cache_control under the beta
+  // prompt-caching namespace; the GA messages.stream() request type
+  // doesn't carry the field. We attach it to a plain text block and
+  // send the prompt-caching beta header on the request so the server
+  // honours it. The extra property is inert if the server ignores it.
+  const systemBlocks: Anthropic.TextBlockParam[] = [
+    {
+      type: "text",
+      text: getSystemPrompt(locale),
+      cache_control: { type: "ephemeral" },
+    } as Anthropic.TextBlockParam,
+  ];
 
   // Execute one of Vanessa's tool calls. Captures leads through the same
   // fan-out the website forms use, validating the same way `/api/lead`
@@ -278,6 +324,26 @@ export async function POST(req: Request) {
           "Lead delivery isn't configured server-side. Apologise and give the " +
           "direct contacts: Telegram @seventytimes or email " +
           "info@seventy-times.com.",
+        isError: true,
+      };
+    }
+
+    // Hard cap on leads submitted through the chat tool, mirroring
+    // /api/lead's 3/hour/IP budget. Without this a visitor could ask
+    // Vanessa to fire lead after lead and bypass the form's own limit.
+    const leadRl = rateLimit(
+      `chatlead:${ip}`,
+      CHAT_LEAD_LIMIT,
+      CHAT_LEAD_WINDOW_MS,
+    );
+    if (!leadRl.ok) {
+      return {
+        text:
+          "Too many lead submissions from this visitor recently. Do NOT submit " +
+          "another lead now. Apologise warmly, say the team already has their " +
+          "earlier request and will be in touch, and suggest they reach out " +
+          "directly via Telegram @seventytimes or email info@seventy-times.com " +
+          "if it's urgent.",
         isError: true,
       };
     }
@@ -359,11 +425,16 @@ export async function POST(req: Request) {
               model,
               max_tokens: 1500,
               temperature: 0.7,
-              system: getSystemPrompt(locale),
+              system: systemBlocks,
               messages: convo,
               tools: TOOLS,
             },
-            { signal: upstreamController.signal },
+            {
+              signal: upstreamController.signal,
+              // Required on this SDK version for the system block's
+              // cache_control to take effect server-side.
+              headers: { "anthropic-beta": "prompt-caching-2024-07-31" },
+            },
           );
 
           for await (const event of upstream) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
@@ -30,11 +30,19 @@ export default function ReviewForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const [hydrated, setHydrated] = useState(false);
+  // Focus target for the success screen so a screen reader lands on the
+  // confirmation heading once the review is submitted.
+  const successTitleRef = useRef<HTMLHeadingElement>(null);
 
   const { open, close, dialogRef } = useHashModal("#review", () => {
     setStatus("idle");
     setError("");
   });
+
+  // Move focus to the success heading and announce it politely.
+  useEffect(() => {
+    if (status === "success") successTitleRef.current?.focus();
+  }, [status]);
 
   // Restore draft on mount.
   useEffect(() => {
@@ -167,9 +175,15 @@ export default function ReviewForm() {
             </button>
 
             {status === "success" ? (
-              <div className={styles.success}>
+              <div className={styles.success} role="status" aria-live="polite">
                 <div className={styles.successIcon}>✓</div>
-                <h3 className={styles.successTitle}>{t.reviewSuccessTitle}</h3>
+                <h3
+                  className={styles.successTitle}
+                  ref={successTitleRef}
+                  tabIndex={-1}
+                >
+                  {t.reviewSuccessTitle}
+                </h3>
                 <p className={styles.successText}>{t.reviewSuccessText}</p>
                 <button
                   className={styles.successCloseBtn}

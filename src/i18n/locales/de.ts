@@ -355,6 +355,7 @@ const strings = {
     ctaSub:
       "Schreiben Sie uns auf Telegram oder per E-Mail — wir besprechen Ihre Aufgabe, erklären wie wir helfen können und teilen erste Ideen werktags innerhalb einer Stunde (am Wochenende innerhalb von 24 Stunden). Unverbindlich, ohne Floskeln.",
     ctaPrimary: "Anfrage senden",
+    ctaCallback: "Rückruf anfordern",
     ctaChannelsLabel: "oder schreiben Sie uns direkt",
     ctaTelegram: "Telegram",
     ctaMeta1: "Seventy Times · Werbung × Automatisierung × KI",
@@ -532,6 +533,8 @@ const strings = {
     chatAlt: "Vanessa — KI-Beraterin bei Seventy Times",
     chatNudge:
       "Hi 👋 Soll ich die passende Lösung für dein Business finden? Frag mich einfach.",
+    chatPrivacyNotice:
+      "Chats werden über Anthropic (USA) verarbeitet und können gespeichert werden. Mehr dazu in unserer Datenschutzerklärung.",
 
     // Consent (shared between forms)
     consentPrefix: "Ich stimme der ",

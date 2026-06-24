@@ -112,9 +112,39 @@ function isVercelHost(candidate: string): boolean {
   }
 }
 
+/**
+ * True when this deployment trusts at least one Vercel-injected host
+ * (VERCEL_URL / VERCEL_BRANCH_URL / production URL). Used by checkOrigin
+ * to decide whether an empty ALLOWED_ORIGINS list is safe.
+ */
+function hasVercelHosts(): boolean {
+  return [
+    process.env.VERCEL_URL,
+    process.env.VERCEL_BRANCH_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+  ].some(Boolean);
+}
+
 export function checkOrigin(req: Request): boolean {
   const allowed = parseOrigins(process.env.ALLOWED_ORIGINS);
-  if (allowed.length === 0) return true;
+  if (allowed.length === 0) {
+    // No explicit allow-list AND no Vercel host to fall back on. In
+    // dev that's expected (localhost) so stay fail-open; in production
+    // an unconfigured origin check would accept any caller — fail
+    // closed instead and shout about the misconfiguration.
+    if (!hasVercelHosts()) {
+      if (process.env.NODE_ENV === "production") {
+        console.warn(
+          "[ORIGIN] reject — no ALLOWED_ORIGINS and no VERCEL_* host " +
+            "configured in production; refusing all callers (fail-closed)",
+        );
+        return false;
+      }
+      return true;
+    }
+    // We have Vercel hosts but no explicit list — fall through so the
+    // candidate is matched against isVercelHost() below.
+  }
 
   const candidate = getRequestOrigin(req);
   if (!candidate) {

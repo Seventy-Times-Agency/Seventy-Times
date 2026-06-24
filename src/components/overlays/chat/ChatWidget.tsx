@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "re
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
+import { track } from "@/lib/analytics";
 import styles from "@/components/overlays/chat/ChatWidget.module.css";
 
 type Message = {
@@ -34,7 +35,7 @@ function getSessionId(): string {
 }
 
 export default function ChatWidget() {
-  const { t, locale } = useT();
+  const { t, locale, localePath } = useT();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: t.chatGreeting },
@@ -116,6 +117,7 @@ export default function ChatWidget() {
   useEffect(() => {
     if (!open) return;
     setShowNudge(false);
+    track("chat_open");
     try {
       window.sessionStorage.setItem(NUDGE_KEY, "1");
     } catch {
@@ -425,6 +427,24 @@ export default function ChatWidget() {
                 →
               </button>
             </div>
+
+            {/* GDPR Art. 13 notice for free-text chat: where the
+                conversation is processed and that it may be stored, with
+                a link to the full policy. Styling kept inline because the
+                CSS module is owned elsewhere. */}
+            <a
+              href={localePath("/privacy")}
+              style={{
+                display: "block",
+                margin: "8px 16px 12px",
+                fontSize: 11,
+                lineHeight: 1.4,
+                opacity: 0.6,
+                textAlign: "center",
+              }}
+            >
+              {t.chatPrivacyNotice}
+            </a>
           </motion.div>
         )}
       </AnimatePresence>

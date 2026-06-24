@@ -70,6 +70,11 @@
   border-color: var(--accent);
 }
 
+.reviewBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* Carousel ─────────────────────────────────────────────── */
 .carousel {
   position: relative;
@@ -211,6 +216,11 @@
   transform: translateY(-1px);
 }
 
+.navBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .navBtn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
@@ -282,8 +292,8 @@
   }
 
 .navBtn {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     font-size: 15px;
   }
 

@@ -21,7 +21,12 @@ import {
 } from "@/lib/telegram";
 import { isNotionLeadsConfigured, sendLeadToNotion } from "@/lib/notion";
 import { isEmailConfigured, sendEmail } from "@/lib/email";
-import type { LeadBudget, LeadPackage } from "@/lib/leadDraft";
+import {
+  BUDGET_LABELS,
+  PACKAGE_LABELS,
+  type LeadBudget,
+  type LeadPackage,
+} from "@/lib/leadDraft";
 
 export type LeadKind = "lead" | "callback";
 export type LeadSource = "website" | "chat";
@@ -34,6 +39,8 @@ export type DeliverableLead = {
   package?: LeadPackage;
   budget?: LeadBudget;
   phone?: string;
+  /** Campaign attribution captured at first touch (utm_*, gclid, fbclid). */
+  utm?: Record<string, string>;
 };
 
 export type DeliverOptions = {
@@ -43,21 +50,22 @@ export type DeliverOptions = {
   source: LeadSource;
 };
 
-export const PACKAGE_LABEL: Record<LeadPackage, string> = {
-  not_sure: "Пока не уверен",
-  standalone: "Одна услуга (standalone)",
-  launch: "LAUNCH",
-  growth: "GROWTH ⭐",
-  scale: "SCALE",
-};
+/** Russian-labelled, human-readable package/budget for Telegram + email. */
+const PACKAGE_LABEL_RU = (p: LeadPackage): string => PACKAGE_LABELS[p].ru;
+const BUDGET_LABEL_RU = (b: LeadBudget): string => BUDGET_LABELS[b].ru;
 
-export const BUDGET_LABEL: Record<LeadBudget, string> = {
-  not_sure: "Не уверен",
-  under_1k: "до $1 000 / мес",
-  "1k_3k": "$1 000–3 000 / мес",
-  "3k_10k": "$3 000–10 000 / мес",
-  "10k_plus": "$10 000+ / мес",
-};
+/**
+ * Flatten captured attribution into a single readable line, e.g.
+ * "utm_source=google, utm_campaign=spring, gclid=abc". Empty string when
+ * there's nothing to show, so callers can skip the line entirely.
+ */
+function formatUtm(utm: Record<string, string> | undefined): string {
+  if (!utm) return "";
+  const parts = Object.entries(utm)
+    .filter(([, v]) => typeof v === "string" && v.length > 0)
+    .map(([k, v]) => `${k}=${v}`);
+  return parts.join(", ");
+}
 
 /** Are any outbound channels configured at all? */
 export function isAnyLeadChannelConfigured(): boolean {
@@ -85,13 +93,17 @@ async function notifyTelegram(
     : headerBase;
 
   const packageLine = lead.package
-    ? `📦 *Пакет:* ${escapeMarkdown(PACKAGE_LABEL[lead.package])}`
+    ? `📦 *Пакет:* ${escapeMarkdown(PACKAGE_LABEL_RU(lead.package))}`
     : null;
   const budgetLine = lead.budget
-    ? `💰 *Бюджет:* ${escapeMarkdown(BUDGET_LABEL[lead.budget])}`
+    ? `💰 *Бюджет:* ${escapeMarkdown(BUDGET_LABEL_RU(lead.budget))}`
     : null;
   const phoneLine = lead.phone
     ? `📱 *Телефон:* ${escapeMarkdown(lead.phone)}`
+    : null;
+  const utmText = formatUtm(lead.utm);
+  const utmLine = utmText
+    ? `🎯 *Источник:* ${escapeMarkdown(utmText)}`
     : null;
 
   const text = [
@@ -103,6 +115,7 @@ async function notifyTelegram(
     `🏢 *Бизнес:* ${escapeMarkdown(lead.business)}`,
     ...(packageLine ? [packageLine] : []),
     ...(budgetLine ? [budgetLine] : []),
+    ...(utmLine ? [utmLine] : []),
     "",
     `💬 *Запрос:*`,
     escapeMarkdown(lead.request),
@@ -118,8 +131,9 @@ function buildEmailText(lead: DeliverableLead, duplicate: boolean): string {
     `Contact: ${lead.contact}`,
     lead.phone ? `Phone: ${lead.phone}` : null,
     `Business: ${lead.business}`,
-    lead.package ? `Package: ${PACKAGE_LABEL[lead.package]}` : null,
-    lead.budget ? `Budget: ${BUDGET_LABEL[lead.budget]}` : null,
+    lead.package ? `Package: ${PACKAGE_LABEL_RU(lead.package)}` : null,
+    lead.budget ? `Budget: ${BUDGET_LABEL_RU(lead.budget)}` : null,
+    formatUtm(lead.utm) ? `Source: ${formatUtm(lead.utm)}` : null,
     "",
     "Request:",
     lead.request,
@@ -156,6 +170,7 @@ export async function deliverLead(
           budget: lead.budget,
           phone: lead.phone,
           source: sourceLabel,
+          utm: lead.utm,
         }),
     sendEmail({
       subject: `${duplicate ? "[duplicate] " : ""}${subjectKind}${subjectSource}: ${lead.name}`,

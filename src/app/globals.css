@@ -246,16 +246,35 @@ html:lang(de) h3 {
 
 @media (prefers-reduced-motion: reduce) {
   /* Snap UI transitions to instant so motion-sensitive users get
-     immediate feedback. `animation-*` is deliberately NOT nuked here
-     — individual components decide for themselves whether to stop,
-     slow, or keep their animation (see MarqueeStack and the hero
-     shimmer for two different policies). Killing animation globally
-     here was overriding those tuned per-component fallbacks. */
+     immediate feedback. `animation-*` is deliberately NOT killed with a
+     universal `!important` here: that would clobber the two components
+     whose authors chose to *slow* (not stop) their motion —
+     MarqueeStack (keeps scrolling at 160s) and Principles (its own
+     reduced-motion policy). Their overrides are plain class selectors
+     without `!important`, so a `* !important` rule would win and break
+     them. Instead, each component with a genuinely-perpetual loop opts
+     OUT of motion in its own module under its own
+     `@media (prefers-reduced-motion: reduce)` block:
+       • globals.css .shimmer          (below)
+       • AnimatedBackground (.glowA/.glowB drift)
+       • FloatingGlyphs (.glyph drift)
+       • Hero (.heroWordmark drift, .metaDot pulse)
+       • Nav (.statusDot pulse)
+       • Cases (.status_progress .statusDot pulse)
+       • ChatWidget (.typingDot blink)
+     This keeps the intentional exceptions intact while stopping every
+     other infinite animation site-wide. */
   *,
   *::before,
   *::after {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Reusable shimmer text runs an infinite sweep — stop it. */
+  .shimmer {
+    animation: none;
+    background-position: 0 0;
   }
 }
 
