@@ -14,10 +14,10 @@ export const kidsFashion: CaseItem = {
       },
       tag: u("META ADS · CREATIVE"),
       summary: {
-        en: "A children's fashion local retailer. End-to-end: we organized the photoshoot, produced every ad creative, and ran the Meta campaign — about $1 cost per lead on a local budget.",
-        ru: "Локальный ритейлер детской моды. Под ключ: организовали фотосессию, отсняли все креативы и вели кампанию в Meta — около $1 за лид на локальном бюджете.",
-        de: "Ein lokaler Händler für Kindermode. Alles aus einer Hand: Wir organisierten das Fotoshooting, produzierten alle Creatives und betreuten die Meta-Kampagne — rund 1 $ pro Lead bei lokalem Budget.",
-        uk: "Локальний ритейлер дитячої моди. Під ключ: організували фотосесію, відзняли всі креативи й вели кампанію в Meta — близько $1 за лід на локальному бюджеті.",
+        en: "A children's fashion retailer. We ran it end-to-end — organized the photoshoot, produced every ad creative, and managed the Meta campaign — delivering leads at roughly $1 each on a modest local budget.",
+        ru: "Ритейлер детской моды. Сделали под ключ — организовали фотосессию, отсняли все рекламные креативы и вели кампанию в Meta — приводя заявки примерно по $1 на скромном локальном бюджете.",
+        de: "Ein Händler für Kindermode. Wir haben alles aus einer Hand gemacht — Fotoshooting organisiert, sämtliche Werbe-Creatives produziert und die Meta-Kampagne betreut — und lieferten Leads für rund 1 $ pro Stück bei bescheidenem lokalem Budget.",
+        uk: "Ритейлер дитячої моди. Зробили під ключ — організували фотосесію, відзняли всі рекламні креативи й вели кампанію в Meta — приводячи заявки приблизно по $1 на скромному локальному бюджеті.",
       },
       metrics: [
         {
@@ -200,10 +200,10 @@ export const kidsFashion: CaseItem = {
         ],
       },
       insight: {
-        en: "About $1 cost per lead on a local budget. Engagement volume was high — we ended the campaign because of client-side processing limits.",
-        ru: "Около $1 за лид на локальном бюджете. Поток заявок был большой — мы завершили кампанию из-за ограничений на стороне клиента по обработке.",
-        de: "Rund 1 $ pro Lead bei lokalem Budget. Das Engagement-Volumen war hoch — wir beendeten die Kampagne wegen Bearbeitungsgrenzen aufseiten des Kunden.",
-        uk: "Близько $1 за лід на локальному бюджеті. Потік заявок був великий — ми завершили кампанію через обмеження з боку клієнта в обробці.",
+        en: "At roughly $1 a lead, the campaign generated more inbound than the store could process — we wound it down on the client's side, not for any lack of results.",
+        ru: "При цене около $1 за заявку кампания давала больше обращений, чем магазин успевал обрабатывать, — мы свернули её из-за ограничений на стороне клиента, а не из-за нехватки результата.",
+        de: "Bei rund 1 $ pro Lead brachte die Kampagne mehr Anfragen, als der Shop verarbeiten konnte — wir fuhren sie aufseiten des Kunden zurück, nicht mangels Ergebnissen.",
+        uk: "За ціною близько $1 за заявку кампанія давала більше звернень, ніж магазин встигав обробляти, — ми згорнули її через обмеження з боку клієнта, а не через брак результату.",
       },
       services: [
         {

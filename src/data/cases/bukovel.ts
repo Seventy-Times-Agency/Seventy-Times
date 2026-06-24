@@ -14,10 +14,10 @@ export const bukovel: CaseItem = {
       },
       tag: u("META ADS · HOSPITALITY"),
       summary: {
-        en: "Two winter-resort clients in Bukovel. A 1.5-month Meta campaign on a combined $2,000 budget sold out seasonal capacity for both.",
-        ru: "Два клиента — зимние курорты в Буковеле. Кампания в Meta за 1,5 месяца на совокупном бюджете $2 000 распродала сезонную ёмкость у обоих.",
-        de: "Zwei Winterresort-Kunden in Bukovel. Eine 1,5-monatige Meta-Kampagne mit insgesamt 2.000 $ Budget machte bei beiden die Saisonkapazität ausverkauft.",
-        uk: "Два клієнти — зимові курорти в Буковелі. Кампанія в Meta за 1,5 місяця на сукупному бюджеті $2 000 розпродала сезонну спроможність в обох.",
+        en: "Two winter-resort clients in Bukovel. A 1.5-month Meta campaign on a combined $2,000 budget sold out the season for both — with average bookings of $500–1,500.",
+        ru: "Два клиента — зимние курорты в Буковеле. Кампания в Meta за 1,5 месяца на совокупном бюджете $2 000 распродала сезон у обоих — при средней броне $500–1 500.",
+        de: "Zwei Winterresort-Kunden in Bukovel. Eine 1,5-monatige Meta-Kampagne mit insgesamt 2.000 $ Budget machte bei beiden die Saison ausverkauft — bei Ø-Buchungen von 500–1.500 $.",
+        uk: "Два клієнти — зимові курорти в Буковелі. Кампанія в Meta за 1,5 місяця на сукупному бюджеті $2 000 розпродала сезон в обох — за середньої броні $500–1 500.",
       },
       metrics: [
         {
