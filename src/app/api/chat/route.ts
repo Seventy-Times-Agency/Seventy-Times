@@ -166,7 +166,7 @@ export async function POST(req: Request) {
   if (tooBig) return tooBig;
 
   const ip = getClientIp(req);
-  const rl = rateLimit(`chat:${ip}`, 20, 60_000);
+  const rl = await rateLimit(`chat:${ip}`, 20, 60_000);
   if (!rl.ok) return rateLimitResponse(rl);
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -331,7 +331,7 @@ export async function POST(req: Request) {
     // Hard cap on leads submitted through the chat tool, mirroring
     // /api/lead's 3/hour/IP budget. Without this a visitor could ask
     // Vanessa to fire lead after lead and bypass the form's own limit.
-    const leadRl = rateLimit(
+    const leadRl = await rateLimit(
       `chatlead:${ip}`,
       CHAT_LEAD_LIMIT,
       CHAT_LEAD_WINDOW_MS,
@@ -349,7 +349,7 @@ export async function POST(req: Request) {
     }
 
     const dedupKey = `lead-dedup:${normalizeContactKey(contact)}`;
-    const isDuplicate = !isFirstSeen(dedupKey, 60 * 60_000);
+    const isDuplicate = !(await isFirstSeen(dedupKey, 60 * 60_000));
 
     const delivered = await deliverLead(
       {

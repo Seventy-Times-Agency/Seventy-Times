@@ -18,6 +18,7 @@ import FloatingGlyphs from "@/components/decor/FloatingGlyphs";
 import ScrollProgress from "@/components/decor/ScrollProgress";
 import SmoothScroll from "@/components/decor/SmoothScroll";
 import ClientOverlays from "@/components/overlays/ClientOverlays";
+import TagManager from "@/components/system/TagManager";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
@@ -200,6 +201,11 @@ export default async function LocaleLayout(
             are cookieless, so they need no consent gate. */}
         <Analytics />
         <SpeedInsights />
+        {/* GTM / GA4 / Meta Pixel loader. Renders nothing unless the
+            corresponding NEXT_PUBLIC_* env vars are set; honours the
+            cookie-consent gate (Consent Mode v2 for GA, accept-only for
+            Meta). */}
+        <TagManager />
       </body>
     </html>
   );
