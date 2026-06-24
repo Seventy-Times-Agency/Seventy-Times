@@ -89,7 +89,7 @@ export async function POST(req: Request) {
   if (tooBig) return tooBig;
 
   const ip = getClientIp(req);
-  const rl = rateLimit(`lead:${ip}`, 5, 60 * 60_000);
+  const rl = await rateLimit(`lead:${ip}`, 5, 60 * 60_000);
   if (!rl.ok) return rateLimitResponse(rl);
 
   let body: unknown;
@@ -157,7 +157,7 @@ export async function POST(req: Request) {
   // hour. We don't block (one duplicate is cheaper than losing a real
   // lead), but we tag downstream notifications so the team can spot it.
   const dedupKey = `lead-dedup:${normalizeContactKey(contact)}`;
-  const isDuplicate = !isFirstSeen(dedupKey, 60 * 60_000);
+  const isDuplicate = !(await isFirstSeen(dedupKey, 60 * 60_000));
 
   console.log("[LEAD] received", {
     at: new Date().toISOString(),

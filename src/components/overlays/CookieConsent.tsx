@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
+import { emitConsent } from "@/lib/consent";
 import styles from "@/components/overlays/CookieConsent.module.css";
 
 const STORAGE_KEY = "st-cookie-consent-v1";
@@ -41,6 +42,9 @@ export default function CookieConsent() {
     } catch {
       // ignore — banner just won't reappear in this session
     }
+    // Notify in-page listeners (TagManager) so analytics/ad tags can
+    // react immediately without a reload.
+    emitConsent(choice);
     setShow(false);
   };
 

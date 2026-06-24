@@ -1,41 +1,32 @@
 import { NextResponse } from "next/server";
-
-type Bucket = { count: number; resetAt: number };
-
-const buckets = new Map<string, Bucket>();
-
-let lastSweep = 0;
-function sweep(now: number) {
-  if (now - lastSweep < 60_000) return;
-  lastSweep = now;
-  for (const [key, b] of buckets) {
-    if (b.resetAt <= now) buckets.delete(key);
-  }
-}
+import { getRateStore } from "./rateStore";
 
 export type RateLimitResult =
   | { ok: true }
   | { ok: false; retryAfter: number };
 
-export function rateLimit(
+/**
+ * Fixed-window rate limit. Increments the counter for `key` in the shared
+ * store and rejects once it exceeds `limit` within `windowMs`. Async now
+ * because the backing store may be a remote Redis (Upstash / Vercel KV);
+ * with no Redis env configured it resolves against the in-memory store
+ * with the same behaviour as before.
+ *
+ * Note: the retryAfter is approximated from the full window — the store
+ * tracks the count, not the per-key reset timestamp, so we report the
+ * whole window length as the worst-case backoff. (The previous in-memory
+ * implementation reported the remaining time; reporting the full window
+ * is a safe over-estimate and keeps the store interface minimal.)
+ */
+export async function rateLimit(
   key: string,
   limit: number,
   windowMs: number
-): RateLimitResult {
-  const now = Date.now();
-  sweep(now);
-
-  const bucket = buckets.get(key);
-  if (!bucket || bucket.resetAt <= now) {
-    buckets.set(key, { count: 1, resetAt: now + windowMs });
-    return { ok: true };
+): Promise<RateLimitResult> {
+  const count = await getRateStore().incrWithExpiry(key, windowMs);
+  if (count > limit) {
+    return { ok: false, retryAfter: Math.ceil(windowMs / 1000) };
   }
-
-  if (bucket.count >= limit) {
-    return { ok: false, retryAfter: Math.ceil((bucket.resetAt - now) / 1000) };
-  }
-
-  bucket.count += 1;
   return { ok: true };
 }
 
@@ -220,21 +211,17 @@ export function silentSuccessResponse() {
 }
 
 /**
- * Sliding-window deduplication. Returns true the first time a key is
- * seen within the window, false on subsequent calls until the window
- * expires. Backed by the same in-memory bucket store as rateLimit, so
- * it shares the same per-instance limitation on Vercel.
+ * Fixed-window deduplication. Returns true the first time a key is seen
+ * within the window, false on subsequent calls until the window expires.
+ * Backed by the shared RateStore (getRateStore) — so with Upstash / KV
+ * env set it's global across serverless instances, otherwise in-memory
+ * per-instance, the same as rateLimit.
  */
-export function isFirstSeen(key: string, windowMs: number): boolean {
-  const now = Date.now();
-  sweep(now);
-  const bucket = buckets.get(key);
-  if (!bucket || bucket.resetAt <= now) {
-    buckets.set(key, { count: 1, resetAt: now + windowMs });
-    return true;
-  }
-  bucket.count += 1;
-  return false;
+export async function isFirstSeen(
+  key: string,
+  windowMs: number,
+): Promise<boolean> {
+  return getRateStore().setIfAbsent(key, windowMs);
 }
 
 /**

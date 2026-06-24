@@ -114,7 +114,7 @@ export async function POST(req: Request) {
   if (tooBig) return tooBig;
 
   const ip = getClientIp(req);
-  const rl = rateLimit(`review:${ip}`, 3, 60 * 60_000);
+  const rl = await rateLimit(`review:${ip}`, 3, 60 * 60_000);
   if (!rl.ok) return rateLimitResponse(rl);
 
   let body: unknown;
@@ -161,7 +161,7 @@ export async function POST(req: Request) {
   }
 
   if (!isCodeValid(code)) {
-    const bruteforce = rateLimit(`review-bad-code:${ip}`, 5, 15 * 60_000);
+    const bruteforce = await rateLimit(`review-bad-code:${ip}`, 5, 15 * 60_000);
     if (!bruteforce.ok) return rateLimitResponse(bruteforce);
     console.warn("[REVIEW] invalid code attempt", {
       at: new Date().toISOString(),

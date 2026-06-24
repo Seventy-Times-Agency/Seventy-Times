@@ -78,7 +78,7 @@ export async function POST(req: Request) {
   if (tooBig) return tooBig;
 
   const ip = getClientIp(req);
-  const rl = rateLimit(`error:${ip}`, 30, 60_000);
+  const rl = await rateLimit(`error:${ip}`, 30, 60_000);
   if (!rl.ok) return rateLimitResponse(rl);
 
   let body: unknown;
@@ -115,7 +115,7 @@ export async function POST(req: Request) {
   // One Telegram ping per signature per hour. Suppresses storms when
   // a single visitor reloads a broken page. Chunk-load failures are
   // skipped entirely — they're recoverable and not actionable.
-  if (!isChunkError && isFirstSeen(`error-sig:${sig}`, 60 * 60_000)) {
+  if (!isChunkError && (await isFirstSeen(`error-sig:${sig}`, 60 * 60_000))) {
     await notifyTelegram(payload, sig);
   }
 
