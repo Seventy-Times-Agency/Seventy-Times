@@ -4,7 +4,6 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
-import Principles from "@/components/sections/Principles";
 import { useT } from "@/i18n/context";
 import type { ApprovedReview } from "@/lib/notion";
 import styles from "@/components/sections/Testimonials.module.css";
@@ -86,6 +85,13 @@ export default function Testimonials({ reviews = [] }: Props) {
 
   const progressPct = total > 1 ? ((index + 1) / total) * 100 : 100;
 
+  // No approved reviews yet → render nothing at all. The brand principles
+  // used to fill this slot, but that read as "principles instead of proof";
+  // they now live in the Process section. The section (and its divider)
+  // reappear automatically once real reviews land — page.tsx only mounts
+  // this component when reviews exist, and this guard is the belt-and-braces.
+  if (!hasReviews) return null;
+
   return (
     <section id="testimonials" className={styles.section}>
       <SectionWatermark text={t.testTitle3} number="/ 04" position="right" />
@@ -113,65 +119,61 @@ export default function Testimonials({ reviews = [] }: Props) {
           </div>
         </Reveal>
       </div>
-      {hasReviews ? (
-        <div className={styles.carousel}>
-          <div className={styles.track} ref={trackRef}>
-            {cards.map((card) => (
-              <div
-                key={card.key}
-                className={styles.card}
-                onMouseMove={handleMove}
-              >
-                <span className={styles.principleBadge}>/ {card.badge}</span>
-                <p className={styles.principleBody}>“{card.body}”</p>
-                <h3 className={styles.principleTitle}>{card.name}</h3>
-                {card.meta && (
-                  <p
-                    className={styles.principleBody}
-                    style={{ opacity: 0.7, marginTop: 4 }}
-                  >
-                    {card.meta}
-                  </p>
-                )}
-              </div>
-            ))}
+      <div className={styles.carousel}>
+        <div className={styles.track} ref={trackRef}>
+          {cards.map((card) => (
+            <div
+              key={card.key}
+              className={styles.card}
+              onMouseMove={handleMove}
+            >
+              <span className={styles.principleBadge}>/ {card.badge}</span>
+              <p className={styles.principleBody}>“{card.body}”</p>
+              <h3 className={styles.principleTitle}>{card.name}</h3>
+              {card.meta && (
+                <p
+                  className={styles.principleBody}
+                  style={{ opacity: 0.7, marginTop: 4 }}
+                >
+                  {card.meta}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className={styles.controls}>
+          <div className={styles.progress}>
+            <div
+              className={styles.progressFill}
+              style={{ width: `${progressPct}%` }}
+            />
           </div>
-          <div className={styles.controls}>
-            <div className={styles.progress}>
-              <div
-                className={styles.progressFill}
-                style={{ width: `${progressPct}%` }}
-              />
-            </div>
-            <span className={styles.counter}>
-              / {String(index + 1).padStart(2, "0")} —{" "}
-              {String(total).padStart(2, "0")}
-            </span>
-            <div className={styles.navButtons}>
-              <button
-                type="button"
-                className={styles.navBtn}
-                onClick={() => scrollByOne(-1)}
-                disabled={index === 0}
-                aria-label={t.testPrev}
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                className={styles.navBtn}
-                onClick={() => scrollByOne(1)}
-                disabled={index >= total - 1}
-                aria-label={t.testNext}
-              >
-                →
-              </button>
-            </div>
+          <span className={styles.counter}>
+            / {String(index + 1).padStart(2, "0")} —{" "}
+            {String(total).padStart(2, "0")}
+          </span>
+          <div className={styles.navButtons}>
+            <button
+              type="button"
+              className={styles.navBtn}
+              onClick={() => scrollByOne(-1)}
+              disabled={index === 0}
+              aria-label={t.testPrev}
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              className={styles.navBtn}
+              onClick={() => scrollByOne(1)}
+              disabled={index >= total - 1}
+              aria-label={t.testNext}
+            >
+              →
+            </button>
           </div>
         </div>
-      ) : (
-        <Principles />
-      )}
+      </div>
     </section>
   );
 }

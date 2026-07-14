@@ -43,16 +43,20 @@ export default async function HomePage() {
         <SectionDivider labelKey="divMachine" />
         <GrowthMachine />
         <Services />
-        <SectionDivider labelKey="divCompare" />
-        <Comparison />
-        <SectionDivider labelKey="divNext" />
-        <Process />
         <SectionDivider labelKey="divMeet" />
         <ChatDemo />
-        <SectionDivider labelKey="divProof" />
-        <Testimonials reviews={reviews} />
+        <SectionDivider labelKey="divCompare" />
+        <Comparison />
         <SectionDivider labelKey="divCases" />
         <Cases />
+        {reviews.length > 0 && (
+          <>
+            <SectionDivider labelKey="divProof" />
+            <Testimonials reviews={reviews} />
+          </>
+        )}
+        <SectionDivider labelKey="divNext" />
+        <Process />
         <SectionDivider labelKey="divSimulator" />
         <GrowthSimulator />
         <SectionDivider labelKey="divQuestions" />

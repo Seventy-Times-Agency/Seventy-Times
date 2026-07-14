@@ -21,40 +21,27 @@ const TOP_ITEMS = [
   "Always Iterating",
 ];
 
-// Bottom row — smaller, calmer. The actual tools, languages and
-// patterns we work with. Mix of recognizable brands (Claude, Stripe…)
-// and "if you know, you know" technical terms (RAG pipelines, edge
-// functions…). The point is texture, not advertising.
+// Bottom row — smaller, calmer. A tight, recognizable set of the tools
+// and patterns we actually work with. Trimmed from a longer word-salad
+// (removed obscure jargon and version numbers that age badly — e.g.
+// "Next.js 14"/"GPT-4") so it reads as texture, not a bloated tech dump.
 const BOTTOM_ITEMS = [
   "Claude",
-  "GPT-4",
+  "GPT",
   "Gemini",
-  "Next.js 14",
-  "React 18",
+  "Next.js",
+  "React",
   "TypeScript",
   "Python",
-  "Node.js",
-  "SQL",
-  "Tailwind",
-  "Framer Motion",
+  "Stripe",
   "Vercel",
   "Notion API",
   "Telegram Bot API",
-  "Stripe",
   "n8n",
   "Make.com",
   "Zapier",
-  "Airtable",
-  "Figma",
-  "Server-side Rendering",
-  "Edge Functions",
-  "Token Streaming",
-  "RAG Pipelines",
-  "Vector Embeddings",
-  "Webhook Orchestration",
   "Conversion Attribution",
   "A/B Testing",
-  "Multi-step Workflows",
   "Pixel Tracking",
 ];
 
