@@ -3,6 +3,7 @@
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
+import Principles from "@/components/sections/Principles";
 import { useT } from "@/i18n/context";
 import styles from "@/components/sections/Process.module.css";
 
@@ -54,6 +55,13 @@ export default function Process() {
           </Reveal>
         ))}
       </div>
+
+      {/* Brand principles live here now — they used to appear only as the
+          empty-state fallback of the Testimonials section, which read as
+          "principles instead of proof". Folded into Process so the page
+          has one "how we work + what we stand by" block instead of two
+          near-identical card sections. */}
+      <Principles />
     </section>
   );
 }

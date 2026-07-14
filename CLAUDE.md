@@ -87,9 +87,11 @@ src/
 │   │   └── ErrorReporter         window.error / unhandledrejection → /api/error
 │   ├── sections/                 Landing sections in scroll order:
 │   │   │                         Hero, MarqueeStack, GrowthMachine, Services,
-│   │   │                         Comparison, Process, ChatDemo, Testimonials
-│   │   │                         (falls back to Principles when no approved
-│   │   │                         reviews), Cases, GrowthSimulator, FAQ, CTA
+│   │   │                         ChatDemo, Comparison, Cases, Testimonials
+│   │   │                         (only rendered when approved reviews exist —
+│   │   │                         page.tsx gates it), Process (which now also
+│   │   │                         renders the brand Principles block),
+│   │   │                         GrowthSimulator, FAQ, CTA
 │   │   ├── cases/                Sub-components used by Cases + case pages
 │   │   │   ├── CaseCard.tsx        Landing card (status pill + region badge)
 │   │   │   ├── CaseStudyDetail.tsx Rich per-case detail layout
