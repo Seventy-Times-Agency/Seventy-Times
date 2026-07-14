@@ -17,11 +17,14 @@
  *   installed BEFORE GTM/GA load, then upgraded to `granted` only once
  *   the visitor accepts in the cookie banner. So the tags can load but
  *   stay storage-less until consent.
- * - Meta Pixel has no Consent Mode, so it is only injected AFTER the
- *   visitor accepts — never before.
+ * - Meta Pixel uses its own Consent Mode: the pixel loads immediately but
+ *   in a `consent revoke` state, so Meta can detect the install (and you
+ *   can finish setup) while it transmits NOTHING — PageView / Lead stay
+ *   queued. On acceptance we call `consent grant` and the queued events
+ *   fire. No events leave the browser before consent.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Script from "next/script";
 import { onConsent, readConsent } from "@/lib/consent";
 
@@ -57,13 +60,19 @@ const GRANTED = {
 } as const;
 
 /**
- * Inject and initialise the Meta Pixel. Idempotent: the standard Meta
- * snippet guards against double-init via `window.fbq`.
+ * Inject and initialise the Meta Pixel in Consent Mode. Idempotent: the
+ * standard Meta snippet guards against double-init via `window.fbq`.
+ *
+ * The pixel is initialised with consent *revoked*, so it is present and
+ * detectable by Meta but sends nothing until `grant`. `PageView` is queued
+ * and only transmits once consent is granted (immediately if the visitor
+ * already accepted on a prior visit).
  */
-function loadMetaPixel(pixelId: string): void {
+function loadMetaPixel(pixelId: string, granted: boolean): void {
   if (typeof window === "undefined") return;
   if (window.fbq) {
-    // Already initialised — nothing else to do.
+    // Already initialised — just reflect the current consent state.
+    if (granted) window.fbq("consent", "grant");
     return;
   }
   const w = window as unknown as { fbq?: Fbq; _fbq?: Fbq };
@@ -86,26 +95,34 @@ function loadMetaPixel(pixelId: string): void {
   s.src = "https://connect.facebook.net/en_US/fbevents.js";
   document.head.appendChild(s);
 
+  // Revoke BEFORE init/track — the pixel loads (Meta can detect it) but
+  // holds every event until `grant`.
+  fbq("consent", "revoke");
   fbq("init", pixelId);
   fbq("track", "PageView");
+  if (granted) fbq("consent", "grant");
 }
 
 export default function TagManager() {
   const usesGtag = Boolean(GTM_ID || GA_ID);
-  const [metaLoaded, setMetaLoaded] = useState(false);
 
-  // Consent reactions: upgrade GA/GTM consent + load Meta Pixel once the
-  // visitor accepts. Also handles the case where consent was accepted in
-  // a previous visit (read on mount).
+  // Load the Meta Pixel (in a revoked state) on mount so Meta can detect
+  // the install, then grant/upgrade consent once the visitor accepts —
+  // also handling the case where consent was accepted on a previous visit.
   useEffect(() => {
+    if (META_PIXEL_ID) {
+      loadMetaPixel(META_PIXEL_ID, readConsent() === "accepted");
+    }
+
     const apply = (granted: boolean) => {
       if (!granted) return;
       if (usesGtag && typeof window.gtag === "function") {
         window.gtag("consent", "update", GRANTED);
       }
-      if (META_PIXEL_ID) {
-        loadMetaPixel(META_PIXEL_ID);
-        setMetaLoaded(true);
+      // Flip the pixel revoked → granted; the queued PageView and any
+      // subsequent Lead events now transmit.
+      if (META_PIXEL_ID && typeof window.fbq === "function") {
+        window.fbq("consent", "grant");
       }
     };
 
@@ -177,21 +194,6 @@ export default function TagManager() {
         </>
       )}
 
-      {/* Meta Pixel <noscript> fallback only renders once loaded (i.e.
-          after consent). Without JS there's no consent gate, so we keep
-          it tied to the consent-driven load state. */}
-      {META_PIXEL_ID && metaLoaded && (
-        <noscript>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            alt=""
-            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
-          />
-        </noscript>
-      )}
     </>
   );
 }
