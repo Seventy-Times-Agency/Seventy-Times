@@ -17,6 +17,17 @@ declare global {
   }
 }
 
+// Events that mean "a lead was captured". These are forwarded to the Meta
+// Pixel as the standard `Lead` conversion so ad campaigns can optimize for
+// real enquiries instead of raw page views. Firing is a no-op until the
+// pixel is actually loaded (`window.fbq` exists), which only happens after
+// the visitor accepts cookies — so this stays consent-safe.
+const LEAD_EVENTS = new Set([
+  "lead_submit",
+  "callback_submit",
+  "chat_lead_captured",
+]);
+
 export function track(
   event: string,
   props?: Record<string, string | number | boolean>,
@@ -25,6 +36,16 @@ export function track(
   try {
     const layer = (window.dataLayer ??= []);
     layer.push({ event, ...props });
+
+    // Forward lead conversions to the Meta Pixel when it's present. Typed
+    // via a local cast — `fbq` is declared globally in TagManager.tsx, and
+    // re-declaring it here would clash on interface merge.
+    if (LEAD_EVENTS.has(event)) {
+      const w = window as unknown as {
+        fbq?: (...args: unknown[]) => void;
+      };
+      if (typeof w.fbq === "function") w.fbq("track", "Lead");
+    }
   } catch {
     // Never let analytics break the page.
   }
