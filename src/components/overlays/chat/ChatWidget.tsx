@@ -239,6 +239,13 @@ export default function ChatWidget() {
               window.location.hash = "#lead";
               continue;
             }
+            // Vanessa captured the visitor's contact mid-conversation —
+            // count it as a lead conversion (track() forwards it to the
+            // Meta Pixel as a standard "Lead" event).
+            if (parsed.action === "lead_captured") {
+              track("chat_lead_captured");
+              continue;
+            }
             if (parsed.text) {
               streamed += parsed.text;
               const current = streamed;
