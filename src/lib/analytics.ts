@@ -31,6 +31,10 @@ const LEAD_EVENTS = new Set([
 export function track(
   event: string,
   props?: Record<string, string | number | boolean>,
+  // Shared with the server-side CAPI event so Meta dedupes the two. Pass
+  // the same id that goes to /api/lead (forms) or arrives on the chat's
+  // `lead_captured` action.
+  eventId?: string,
 ): void {
   if (typeof window === "undefined") return;
   try {
@@ -44,7 +48,10 @@ export function track(
       const w = window as unknown as {
         fbq?: (...args: unknown[]) => void;
       };
-      if (typeof w.fbq === "function") w.fbq("track", "Lead");
+      if (typeof w.fbq === "function") {
+        if (eventId) w.fbq("track", "Lead", {}, { eventID: eventId });
+        else w.fbq("track", "Lead");
+      }
     }
   } catch {
     // Never let analytics break the page.

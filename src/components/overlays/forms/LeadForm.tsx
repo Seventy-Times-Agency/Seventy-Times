@@ -188,6 +188,10 @@ export default function LeadForm() {
     setStatus("loading");
     setError("");
 
+    // Shared id: sent to the server (for its CAPI Lead event) and passed to
+    // the browser Pixel below, so Meta dedupes the browser + server events.
+    const eventId = crypto.randomUUID();
+
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
@@ -200,6 +204,7 @@ export default function LeadForm() {
           package: fields.package,
           budget: fields.budget,
           utm: readUtm(),
+          eventId,
           website: fields.website,
         }),
       });
@@ -234,7 +239,7 @@ export default function LeadForm() {
       setConsent(false);
       setStep(0);
       clearLeadDraft();
-      track("lead_submit", { kind: "lead" });
+      track("lead_submit", { kind: "lead" }, eventId);
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : t.chatError);

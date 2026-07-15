@@ -22,6 +22,11 @@ import {
 import { isNotionLeadsConfigured, sendLeadToNotion } from "@/lib/notion";
 import { isEmailConfigured, sendEmail } from "@/lib/email";
 import {
+  isMetaCapiConfigured,
+  sendMetaLeadEvent,
+  type MetaLeadEvent,
+} from "@/lib/metaCapi";
+import {
   BUDGET_LABELS,
   PACKAGE_LABELS,
   type LeadBudget,
@@ -48,6 +53,10 @@ export type DeliverOptions = {
   kind: LeadKind;
   locale: string;
   source: LeadSource;
+  /** Optional Meta Conversions API context. When present (and CAPI is
+   *  configured) a server-side `Lead` event is fired alongside the
+   *  delivery channels, deduped with the browser Pixel via `eventId`. */
+  meta?: MetaLeadEvent;
 };
 
 /** Russian-labelled, human-readable package/budget for Telegram + email. */
@@ -156,7 +165,8 @@ export async function deliverLead(
   const subjectKind = kind === "callback" ? "Callback" : "Lead";
   const subjectSource = source === "chat" ? " (Vanessa)" : "";
 
-  const results = await Promise.allSettled([
+  // Delivery channels — these are what actually get the lead to the team.
+  const deliveryTasks: Promise<boolean>[] = [
     notifyTelegram(lead, opts),
     duplicate
       ? Promise.resolve(false)
@@ -182,6 +192,19 @@ export async function deliverLead(
         ? lead.contact
         : undefined,
     }),
+  ];
+
+  // Meta CAPI is analytics, not a delivery channel — run it concurrently
+  // but keep it OUT of the `delivered` decision (a lead is "delivered"
+  // when the team was notified, regardless of ad-pixel reporting).
+  const capiEnabled = Boolean(opts.meta && isMetaCapiConfigured());
+  const capiTask: Promise<boolean> = capiEnabled
+    ? sendMetaLeadEvent(opts.meta as MetaLeadEvent)
+    : Promise.resolve(false);
+
+  const [results, capiResult] = await Promise.all([
+    Promise.allSettled(deliveryTasks),
+    capiEnabled ? capiTask.catch(() => false) : Promise.resolve(false),
   ]);
 
   const channels = ["telegram", "notion", "email"] as const;
@@ -194,6 +217,10 @@ export async function deliverLead(
       console.warn(`[LEAD] channel ${channels[i]} reported failure`);
     }
   });
+
+  if (capiEnabled && capiResult === false) {
+    console.warn("[LEAD] Meta CAPI server event not sent");
+  }
 
   const delivered = results.some(
     (r) => r.status === "fulfilled" && r.value === true,

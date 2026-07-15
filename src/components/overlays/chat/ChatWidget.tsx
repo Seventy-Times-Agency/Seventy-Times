@@ -223,6 +223,7 @@ export default function ChatWidget() {
               done?: boolean;
               error?: string;
               action?: string;
+              eventId?: string;
             };
             try {
               parsed = JSON.parse(line);
@@ -243,7 +244,7 @@ export default function ChatWidget() {
             // count it as a lead conversion (track() forwards it to the
             // Meta Pixel as a standard "Lead" event).
             if (parsed.action === "lead_captured") {
-              track("chat_lead_captured");
+              track("chat_lead_captured", undefined, parsed.eventId);
               continue;
             }
             if (parsed.text) {
