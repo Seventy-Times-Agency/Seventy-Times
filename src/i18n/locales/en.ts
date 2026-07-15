@@ -589,6 +589,7 @@ const strings = {
     ftLegal: "Legal",
     ftPrivacy: "Privacy Policy",
     ftTerms: "Terms of Use",
+    ftImprint: "Legal notice",
     ftReview: "Leave a review",
     ftReviewNote: "For clients with a personal code only",
     ftCallback: "Request a callback",
@@ -723,6 +724,24 @@ const strings = {
       "Seventy Times is a remote-first team across the US and Eastern Europe — performance marketers, automation engineers and a few stubborn product people.",
     teamPlaceholder:
       "Full bios, photos and what each of us actually does day-to-day are coming. If you want the short version before it's published, hit Vanessa in the chat or drop us a line directly.",
+
+    // Imprint / legal notice
+    imprintTitle: "Legal Notice / Impressum",
+    imprintUpdated: "Provider information under applicable law.",
+    imprintProviderHeading: "Provider",
+    imprintPlaceholder:
+      "Full provider details will be published here once the legal entity is finalized. For any legal or data-protection request in the meantime, contact us at info@seventy-times.com.",
+    imprintEntity: "Entity",
+    imprintForm: "Legal form",
+    imprintAddress: "Address",
+    imprintResponsible: "Responsible for content",
+    imprintRegistration: "Registration",
+    imprintVat: "VAT ID",
+    imprintEmail: "Email",
+    imprintPhone: "Phone",
+    imprintTransferHeading: "International data transfers",
+    imprintTransferText:
+      "Some data you submit (through the forms or the chat) is processed by service providers in the United States — Anthropic (the AI assistant), Telegram, Notion, Resend and Vercel. These transfers rely on the EU Standard Contractual Clauses and, where applicable, the EU–US Data Privacy Framework. This section will be finalized with legal counsel.",
 
     // Cookie consent banner
     cookieTitle: "Cookies",

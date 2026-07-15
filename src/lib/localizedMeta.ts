@@ -225,3 +225,30 @@ const TEAM: Record<Locale, LegalMeta> = {
 export function getTeamMeta(locale: Locale): LegalMeta {
   return TEAM[locale] ?? TEAM.en;
 }
+
+const IMPRINT: Record<Locale, LegalMeta> = {
+  en: {
+    title: "Legal Notice",
+    description:
+      "Provider identification and international data-transfer basis for seventy-times.com — to be finalized with legal counsel.",
+  },
+  ru: {
+    title: "Правовая информация",
+    description:
+      "Идентификация поставщика услуг и основание международной передачи данных для seventy-times.com — будет доработано с юристом.",
+  },
+  de: {
+    title: "Impressum",
+    description:
+      "Anbieterkennzeichnung und Grundlage der internationalen Datenübermittlung für seventy-times.com — wird mit einem Anwalt finalisiert.",
+  },
+  uk: {
+    title: "Правова інформація",
+    description:
+      "Ідентифікація постачальника послуг та підстава міжнародної передачі даних для seventy-times.com — буде доопрацьовано з юристом.",
+  },
+};
+
+export function getImprintMeta(locale: Locale): LegalMeta {
+  return IMPRINT[locale] ?? IMPRINT.en;
+}
