@@ -592,6 +592,7 @@ const strings = {
     ftLegal: "Rechtliches",
     ftPrivacy: "Datenschutzerklärung",
     ftTerms: "Nutzungsbedingungen",
+    ftImprint: "Impressum",
     ftReview: "Bewertung abgeben",
     ftReviewNote: "Nur für Kunden mit persönlichem Code",
     ftCallback: "Rückruf anfordern",
@@ -726,6 +727,24 @@ const strings = {
       "Seventy Times ist ein verteiltes Team zwischen den USA und Osteuropa — Performance-Marketer, Automatisierungs-Engineers und ein paar sture Produktköpfe.",
     teamPlaceholder:
       "Vollständige Profile, Fotos und was jeder tatsächlich Tag für Tag macht — bald hier. Wenn Sie die Kurzfassung vor der Veröffentlichung wollen, schreiben Sie Vanessa im Chat oder uns direkt.",
+
+    // Imprint / legal notice
+    imprintTitle: "Impressum",
+    imprintUpdated: "Anbieterkennzeichnung gemäß geltendem Recht.",
+    imprintProviderHeading: "Anbieter",
+    imprintPlaceholder:
+      "Die vollständigen Anbieterangaben werden hier veröffentlicht, sobald die Rechtsform feststeht. Für rechtliche oder datenschutzbezogene Anfragen erreichen Sie uns unter info@seventy-times.com.",
+    imprintEntity: "Unternehmen",
+    imprintForm: "Rechtsform",
+    imprintAddress: "Anschrift",
+    imprintResponsible: "Inhaltlich verantwortlich",
+    imprintRegistration: "Registereintrag",
+    imprintVat: "USt-IdNr.",
+    imprintEmail: "E-Mail",
+    imprintPhone: "Telefon",
+    imprintTransferHeading: "Internationale Datenübermittlung",
+    imprintTransferText:
+      "Ein Teil der von Ihnen übermittelten Daten (über die Formulare oder den Chat) wird von Dienstleistern in den USA verarbeitet — Anthropic (KI-Assistent), Telegram, Notion, Resend und Vercel. Diese Übermittlungen stützen sich auf die EU-Standardvertragsklauseln und, soweit einschlägig, auf das EU–US Data Privacy Framework. Dieser Abschnitt wird mit einem Anwalt finalisiert.",
 
     // Cookie consent banner
     cookieTitle: "Cookies",

@@ -112,6 +112,9 @@ src/
 │   ├── team.ts                   Team members (name + localized role/bio +
 │   │                             optional photo/LinkedIn). Empty until real
 │   │                             bios exist; drives /team + Person JSON-LD.
+│   ├── legalEntity.ts            Impressum details (name/address/VAT/…), one
+│   │                             source of truth. Empty → /imprint shows a
+│   │                             placeholder; fill it to publish the notice.
 │   ├── cases/                    Portfolio cases — one file per case
 │   │   ├── types.ts              CaseItem/CaseStudy types + caseCardContent()
 │   │   ├── index.ts              Assembles CASES (display/source order)

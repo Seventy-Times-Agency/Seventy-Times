@@ -11,6 +11,7 @@ const PAGES = [
   { path: "/team", priority: 0.5, changeFrequency: "monthly" as const },
   { path: "/privacy", priority: 0.3, changeFrequency: "yearly" as const },
   { path: "/terms", priority: 0.3, changeFrequency: "yearly" as const },
+  { path: "/imprint", priority: 0.3, changeFrequency: "yearly" as const },
 ];
 
 // Frozen at build time so the sitemap doesn't claim "everything was

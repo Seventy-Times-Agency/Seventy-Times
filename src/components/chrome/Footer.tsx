@@ -68,6 +68,7 @@ export default function Footer() {
           <span className={styles.colTitle}>{t.ftLegal}</span>
           <Link href={localePath("/privacy")}>{t.ftPrivacy}</Link>
           <Link href={localePath("/terms")}>{t.ftTerms}</Link>
+          <Link href={localePath("/imprint")}>{t.ftImprint}</Link>
           <a href={`${onHome ? "" : home}#review`} title={t.ftReviewNote}>
             {t.ftReview}
           </a>

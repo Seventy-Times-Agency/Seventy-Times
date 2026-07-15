@@ -589,6 +589,7 @@ const strings = {
     ftLegal: "Правовое",
     ftPrivacy: "Политика конфиденциальности",
     ftTerms: "Условия использования",
+    ftImprint: "Правовая информация",
     ftReview: "Оставить отзыв",
     ftReviewNote: "Только для клиентов с персональным кодом",
     ftCallback: "Заказать звонок",
@@ -723,6 +724,24 @@ const strings = {
       "Seventy Times — распределённая команда между США и Восточной Европой: performance-маркетологи, инженеры по автоматизации и несколько упрямых продуктовых ребят.",
     teamPlaceholder:
       "Полные био, фото и кто чем реально занимается изо дня в день — на подходе. Если хочется короткой версии до публикации — напишите Ванессе в чат или нам напрямую.",
+
+    // Imprint / legal notice
+    imprintTitle: "Правовая информация / Impressum",
+    imprintUpdated: "Сведения о поставщике услуг согласно законодательству.",
+    imprintProviderHeading: "Поставщик услуг",
+    imprintPlaceholder:
+      "Полные реквизиты будут опубликованы здесь после регистрации юридического лица. По любым юридическим вопросам и вопросам защиты данных пишите на info@seventy-times.com.",
+    imprintEntity: "Организация",
+    imprintForm: "Правовая форма",
+    imprintAddress: "Адрес",
+    imprintResponsible: "Ответственный за содержание",
+    imprintRegistration: "Регистрация",
+    imprintVat: "НДС / налоговый номер",
+    imprintEmail: "Эл. почта",
+    imprintPhone: "Телефон",
+    imprintTransferHeading: "Международная передача данных",
+    imprintTransferText:
+      "Часть данных, которые вы отправляете (через формы или чат), обрабатывается сервис-провайдерами в США — Anthropic (AI-ассистент), Telegram, Notion, Resend и Vercel. Такая передача основана на Стандартных договорных положениях ЕС и, где применимо, на Data Privacy Framework ЕС–США. Раздел будет доработан с юристом.",
 
     // Cookie consent banner
     cookieTitle: "Cookies",
