@@ -1,0 +1,90 @@
+/* Team grid. Mobile-first: one column, widening on larger viewports.
+   Only renders when data/team.ts has entries — empty state uses the
+   shared legal-page placeholder copy instead. */
+
+.grid {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 8px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.card {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+}
+
+.avatar {
+  position: relative;
+  display: block;
+  width: 88px;
+  height: 88px;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: var(--surface-3);
+}
+
+.avatarImg {
+  object-fit: cover;
+}
+
+.name {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.role {
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  margin: 0 0 12px;
+}
+
+.bio {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 2px;
+}
+
+.link:hover {
+  color: var(--accent-strong);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+/* Tablet and up. */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Desktop and up. */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
