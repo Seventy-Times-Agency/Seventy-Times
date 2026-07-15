@@ -109,6 +109,9 @@ src/
 │
 ├── data/                         Static content (single source of truth)
 │   ├── siteConfig.ts             Brand name, URL, contacts, hero stats
+│   ├── team.ts                   Team members (name + localized role/bio +
+│   │                             optional photo/LinkedIn). Empty until real
+│   │                             bios exist; drives /team + Person JSON-LD.
 │   ├── cases/                    Portfolio cases — one file per case
 │   │   ├── types.ts              CaseItem/CaseStudy types + caseCardContent()
 │   │   ├── index.ts              Assembles CASES (display/source order)
