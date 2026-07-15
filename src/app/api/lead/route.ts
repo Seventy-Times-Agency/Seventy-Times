@@ -1,4 +1,5 @@
 import { NextResponse, after } from "next/server";
+import { randomUUID } from "node:crypto";
 import {
   checkOrigin,
   enforceBodyLimit,
@@ -11,6 +12,7 @@ import {
   rateLimitResponse,
   silentSuccessResponse,
 } from "@/lib/apiGuard";
+import { parseFbCookies } from "@/lib/metaCapi";
 import {
   deliverLead,
   isAnyLeadChannelConfigured,
@@ -196,6 +198,26 @@ export async function POST(req: Request) {
     utm,
   };
 
+  // Meta CAPI context. The browser fires its Pixel `Lead` with the same
+  // `eventId` (sent in the body), so Meta dedupes the two. `_fbp`/`_fbc`
+  // cookies + IP + UA lift match quality; email/phone are hashed downstream.
+  const rawEventId = (body as Record<string, unknown>).eventId;
+  const eventId =
+    typeof rawEventId === "string" && rawEventId.trim()
+      ? rawEventId.trim().slice(0, 100)
+      : randomUUID();
+  const { fbp, fbc } = parseFbCookies(req.headers.get("cookie"));
+  const meta = {
+    eventId,
+    email: contact,
+    phone: phone ?? contact,
+    clientIp: ip,
+    userAgent: req.headers.get("user-agent") ?? undefined,
+    fbp,
+    fbc,
+    sourceUrl: req.headers.get("referer") ?? undefined,
+  };
+
   // Fan out to side channels after the response is sent. Without this,
   // a slow Telegram/Notion/Email upstream made the user wait for the
   // slowest one — even though `fetchWithTimeout` caps each at 5s, that
@@ -206,6 +228,7 @@ export async function POST(req: Request) {
       kind,
       locale,
       source: "website",
+      meta,
     }),
   );
 

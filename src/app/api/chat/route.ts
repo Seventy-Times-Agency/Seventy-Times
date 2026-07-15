@@ -1,6 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
 import { getSystemPrompt } from "@/lib/systemPrompt";
+import { parseFbCookies } from "@/lib/metaCapi";
 import {
   checkOrigin,
   enforceBodyLimit,
@@ -157,6 +159,9 @@ type ToolOutcome = {
   isError?: boolean;
   /** Optional signal forwarded to the widget (e.g. open the form). */
   action?: "open_form" | "lead_captured";
+  /** Shared Lead event id — the widget fires the browser Pixel with it so
+   *  Meta dedupes the browser and server (CAPI) events. */
+  eventId?: string;
 };
 
 export async function POST(req: Request) {
@@ -351,6 +356,11 @@ export async function POST(req: Request) {
     const dedupKey = `lead-dedup:${normalizeContactKey(contact)}`;
     const isDuplicate = !(await isFirstSeen(dedupKey, 60 * 60_000));
 
+    // Server-generated Lead event id — echoed to the widget below so the
+    // browser Pixel fires with the same id and Meta dedupes browser+server.
+    const eventId = randomUUID();
+    const { fbp, fbc } = parseFbCookies(req.headers.get("cookie"));
+
     const delivered = await deliverLead(
       {
         name: leadName,
@@ -360,7 +370,22 @@ export async function POST(req: Request) {
         package: leadPackage,
         budget: leadBudget,
       },
-      { duplicate: isDuplicate, kind: "lead", locale, source: "chat" },
+      {
+        duplicate: isDuplicate,
+        kind: "lead",
+        locale,
+        source: "chat",
+        meta: {
+          eventId,
+          email: contact,
+          phone: contact,
+          clientIp: ip,
+          userAgent: req.headers.get("user-agent") ?? undefined,
+          fbp,
+          fbc,
+          sourceUrl: req.headers.get("referer") ?? undefined,
+        },
+      },
     );
 
     if (!delivered) {
@@ -383,6 +408,7 @@ export async function POST(req: Request) {
         "visitor that the team has their request and will reach out shortly " +
         "with the pricelist and next steps. Keep it short.",
       action: "lead_captured",
+      eventId,
     };
   }
 
@@ -469,7 +495,12 @@ export async function POST(req: Request) {
           for (const block of finalMsg.content) {
             if (block.type !== "tool_use") continue;
             const outcome = await runTool(block.name, block.input);
-            if (outcome.action) send({ action: outcome.action });
+            if (outcome.action) {
+              send({
+                action: outcome.action,
+                ...(outcome.eventId ? { eventId: outcome.eventId } : {}),
+              });
+            }
             toolResults.push({
               type: "tool_result",
               tool_use_id: block.id,

@@ -78,6 +78,10 @@ export default function CallbackForm() {
       setStatus("loading");
       setError("");
 
+      // Shared with the browser Pixel Lead below so Meta dedupes the
+      // server (CAPI) and browser events.
+      const eventId = crypto.randomUUID();
+
       try {
         const res = await fetch("/api/lead", {
           method: "POST",
@@ -95,6 +99,7 @@ export default function CallbackForm() {
               : t.callbackRequestPrefix,
             kind: "callback",
             utm: readUtm(),
+            eventId,
             website: fields.website,
           }),
         });
@@ -112,7 +117,7 @@ export default function CallbackForm() {
         setStatus("success");
         setFields(INITIAL);
         setConsent(false);
-        track("callback_submit");
+        track("callback_submit", undefined, eventId);
       } catch (err) {
         setStatus("error");
         setError(err instanceof Error ? err.message : t.chatError);
