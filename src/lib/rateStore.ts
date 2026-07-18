@@ -148,16 +148,16 @@ class UpstashRateStore implements RateStore {
 
   async incrWithExpiry(key: string, windowMs: number): Promise<number> {
     try {
-      // INCR returns the new count; on the first hit it returns 1, which
-      // is exactly when we attach the TTL so the window expires cleanly.
-      const [count] = await this.pipeline([["INCR", key]]);
-      const n = typeof count === "number" ? count : Number(count);
-      if (n === 1) {
-        // PEXPIRE sets the TTL in ms. Fire-and-forget within the same
-        // try: if it fails the catch falls back, which is acceptable.
-        await this.pipeline([["PEXPIRE", key, String(windowMs)]]);
-      }
-      return n;
+      // One pipeline, both commands. PEXPIRE ... NX (Redis ≥ 7, supported
+      // by Upstash) attaches the TTL only when the key has none — sent
+      // unconditionally on EVERY hit, so even if a previous request died
+      // between INCR and PEXPIRE (which used to strand the key without a
+      // TTL, permanently rate-limiting that ip), the next hit repairs it.
+      const [count] = await this.pipeline([
+        ["INCR", key],
+        ["PEXPIRE", key, String(windowMs), "NX"],
+      ]);
+      return typeof count === "number" ? count : Number(count);
     } catch (err) {
       console.warn("[rateStore] Upstash incr failed, falling back", err);
       return this.fallback.incrWithExpiry(key, windowMs);

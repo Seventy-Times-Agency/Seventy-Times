@@ -20,8 +20,9 @@ import {
   type LeadBudget,
   type LeadPackage,
 } from "@/lib/leadDraft";
-import { track } from "@/lib/analytics";
+import { newEventId, track } from "@/lib/analytics";
 import { captureUtm, readUtm } from "@/lib/utm";
+import { readConsent } from "@/lib/consent";
 import { useHashModal } from "@/components/overlays/forms/useHashModal";
 import styles from "@/components/overlays/forms/LeadForm.module.css";
 
@@ -190,7 +191,8 @@ export default function LeadForm() {
 
     // Shared id: sent to the server (for its CAPI Lead event) and passed to
     // the browser Pixel below, so Meta dedupes the browser + server events.
-    const eventId = crypto.randomUUID();
+    // newEventId never throws (crypto.randomUUID needs a secure context).
+    const eventId = newEventId();
 
     try {
       const res = await fetch("/api/lead", {
@@ -205,6 +207,9 @@ export default function LeadForm() {
           budget: fields.budget,
           utm: readUtm(),
           eventId,
+          // Cookie-banner marketing consent — the server only fires its
+          // CAPI Lead event when the visitor actually accepted.
+          adConsent: readConsent() === "accepted",
           website: fields.website,
         }),
       });

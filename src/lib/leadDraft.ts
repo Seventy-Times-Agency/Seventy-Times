@@ -63,12 +63,20 @@ export const BUDGET_LABELS: Record<
   "10k_plus": { ru: "$10 000+ / мес", notion: "$10k+/mo" },
 };
 
+// hasOwnProperty, not `in`: `in` walks the prototype chain, so hostile
+// input like "toString" would pass the guard and index an undefined label.
 export function isLeadPackage(v: unknown): v is LeadPackage {
-  return typeof v === "string" && v in PACKAGE_LABELS;
+  return (
+    typeof v === "string" &&
+    Object.prototype.hasOwnProperty.call(PACKAGE_LABELS, v)
+  );
 }
 
 export function isLeadBudget(v: unknown): v is LeadBudget {
-  return typeof v === "string" && v in BUDGET_LABELS;
+  return (
+    typeof v === "string" &&
+    Object.prototype.hasOwnProperty.call(BUDGET_LABELS, v)
+  );
 }
 
 export function readLeadDraft(): LeadDraft | null {

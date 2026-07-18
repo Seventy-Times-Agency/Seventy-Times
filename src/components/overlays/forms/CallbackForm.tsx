@@ -5,8 +5,9 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
 import { siteConfig } from "@/data/siteConfig";
-import { track } from "@/lib/analytics";
+import { newEventId, track } from "@/lib/analytics";
 import { captureUtm, readUtm } from "@/lib/utm";
+import { readConsent } from "@/lib/consent";
 import { useHashModal } from "@/components/overlays/forms/useHashModal";
 import styles from "@/components/overlays/forms/LeadForm.module.css";
 
@@ -79,8 +80,9 @@ export default function CallbackForm() {
       setError("");
 
       // Shared with the browser Pixel Lead below so Meta dedupes the
-      // server (CAPI) and browser events.
-      const eventId = crypto.randomUUID();
+      // server (CAPI) and browser events. newEventId never throws
+      // (crypto.randomUUID needs a secure context).
+      const eventId = newEventId();
 
       try {
         const res = await fetch("/api/lead", {
@@ -100,6 +102,9 @@ export default function CallbackForm() {
             kind: "callback",
             utm: readUtm(),
             eventId,
+            // Cookie-banner marketing consent — gates the server-side
+            // CAPI Lead event.
+            adConsent: readConsent() === "accepted",
             website: fields.website,
           }),
         });

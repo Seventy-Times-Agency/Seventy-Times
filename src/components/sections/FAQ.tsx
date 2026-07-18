@@ -59,7 +59,7 @@ export default function FAQ() {
 
   return (
     <section id="faq" className={styles.section}>
-      <SectionWatermark text={t.faqTitle2} number="/ 05" position="left" />
+      <SectionWatermark text={t.faqTitle2} number="/ 08" position="left" />
       <div className={styles.layout}>
         <div className={styles.intro}>
           <Reveal><span className="eyebrow">{t.faqEyebrow}</span></Reveal>

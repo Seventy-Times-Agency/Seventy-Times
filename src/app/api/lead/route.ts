@@ -12,7 +12,8 @@ import {
   rateLimitResponse,
   silentSuccessResponse,
 } from "@/lib/apiGuard";
-import { parseFbCookies } from "@/lib/metaCapi";
+import { parseFbCookies, type MetaLeadEvent } from "@/lib/metaCapi";
+import { sanitizeUtm } from "@/lib/utm";
 import {
   deliverLead,
   isAnyLeadChannelConfigured,
@@ -40,30 +41,6 @@ type LeadPayload = {
   kind?: LeadKind;
   utm?: Record<string, string>;
 };
-
-// Caps for the attribution blob — never trust raw client input.
-const UTM_MAX_KEYS = 8;
-const UTM_MAX_VALUE = 200;
-
-/**
- * Sanitise the optional `utm` object: keep only string values, cap each
- * value's length, and cap the number of keys. Returns undefined when
- * there's nothing usable so downstream lines can be skipped.
- */
-function sanitizeUtm(raw: unknown): Record<string, string> | undefined {
-  if (typeof raw !== "object" || raw === null) return undefined;
-  const out: Record<string, string> = {};
-  let count = 0;
-  for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
-    if (count >= UTM_MAX_KEYS) break;
-    if (typeof value !== "string") continue;
-    const trimmed = value.trim();
-    if (!trimmed) continue;
-    out[key.slice(0, 50)] = trimmed.slice(0, UTM_MAX_VALUE);
-    count++;
-  }
-  return count > 0 ? out : undefined;
-}
 
 const LIMITS = {
   name: 100,
@@ -155,6 +132,20 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
   }
 
+  // If nothing is configured, a 200 would silently swallow the lead.
+  // Tell the user clearly so the form can show a fallback ("write to
+  // us on Telegram / WhatsApp directly") instead of a fake success.
+  // Checked BEFORE the dedup mark: a 503'd submission must not burn the
+  // contact's first-seen slot, or their retry (once channels are fixed)
+  // would be tagged duplicate and skip Notion.
+  if (!isAnyLeadChannelConfigured()) {
+    console.error("[LEAD] no outbound channels configured — refusing");
+    return NextResponse.json(
+      { error: "NOT_CONFIGURED" },
+      { status: 503 },
+    );
+  }
+
   // Detect repeat submissions from the same contact within the last
   // hour. We don't block (one duplicate is cheaper than losing a real
   // lead), but we tag downstream notifications so the team can spot it.
@@ -166,17 +157,6 @@ export async function POST(req: Request) {
     kind,
     duplicate: isDuplicate,
   });
-
-  // If nothing is configured, a 200 would silently swallow the lead.
-  // Tell the user clearly so the form can show a fallback ("write to
-  // us on Telegram / WhatsApp directly") instead of a fake success.
-  if (!isAnyLeadChannelConfigured()) {
-    console.error("[LEAD] no outbound channels configured — refusing");
-    return NextResponse.json(
-      { error: "NOT_CONFIGURED" },
-      { status: 503 },
-    );
-  }
 
   // Read the user's selected locale from the cookie set by I18nProvider.
   // "ua" is the legacy Ukrainian cookie value (pre-/uk slug) — cookies
@@ -198,25 +178,32 @@ export async function POST(req: Request) {
     utm,
   };
 
-  // Meta CAPI context. The browser fires its Pixel `Lead` with the same
-  // `eventId` (sent in the body), so Meta dedupes the two. `_fbp`/`_fbc`
-  // cookies + IP + UA lift match quality; email/phone are hashed downstream.
-  const rawEventId = (body as Record<string, unknown>).eventId;
-  const eventId =
-    typeof rawEventId === "string" && rawEventId.trim()
-      ? rawEventId.trim().slice(0, 100)
-      : randomUUID();
-  const { fbp, fbc } = parseFbCookies(req.headers.get("cookie"));
-  const meta = {
-    eventId,
-    email: contact,
-    phone: phone ?? contact,
-    clientIp: ip,
-    userAgent: req.headers.get("user-agent") ?? undefined,
-    fbp,
-    fbc,
-    sourceUrl: req.headers.get("referer") ?? undefined,
-  };
+  // Meta CAPI context — built ONLY when the visitor accepted the cookie
+  // banner (the form sends `adConsent`). The browser Pixel is consent-
+  // gated too, so this keeps the server half of the tracking honest: no
+  // consent, no server event. The browser fires its Pixel `Lead` with the
+  // same `eventId`, so Meta dedupes the two. `_fbp`/`_fbc` cookies + IP +
+  // UA lift match quality; email/phone are hashed downstream.
+  const adConsent = (body as Record<string, unknown>).adConsent === true;
+  let meta: MetaLeadEvent | undefined;
+  if (adConsent) {
+    const rawEventId = (body as Record<string, unknown>).eventId;
+    const eventId =
+      typeof rawEventId === "string" && rawEventId.trim()
+        ? rawEventId.trim().slice(0, 100)
+        : randomUUID();
+    const { fbp, fbc } = parseFbCookies(req.headers.get("cookie"));
+    meta = {
+      eventId,
+      email: contact,
+      phone: phone ?? contact,
+      clientIp: ip,
+      userAgent: req.headers.get("user-agent") ?? undefined,
+      fbp,
+      fbc,
+      sourceUrl: req.headers.get("referer") ?? undefined,
+    };
+  }
 
   // Fan out to side channels after the response is sent. Without this,
   // a slow Telegram/Notion/Email upstream made the user wait for the

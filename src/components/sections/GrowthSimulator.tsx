@@ -165,7 +165,7 @@ export default function GrowthSimulator() {
 
   return (
     <section id="simulator" className={styles.section}>
-      <SectionWatermark text="70×" number="/ 06" position="left" />
+      <SectionWatermark text="70×" number="/ 07" position="left" />
 
       <div className={styles.header}>
         <div className={styles.headerLeft}>
