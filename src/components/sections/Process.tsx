@@ -19,7 +19,7 @@ export default function Process() {
 
   return (
     <section id="process" className={styles.section}>
-      <SectionWatermark text={t.navProcess.toLowerCase()} number="/ 02" position="left" />
+      <SectionWatermark text={t.navProcess.toLowerCase()} number="/ 06" position="left" />
 
       <div className={styles.header}>
         <div className={styles.headerLeft}>

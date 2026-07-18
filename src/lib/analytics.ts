@@ -19,14 +19,32 @@ declare global {
 
 // Events that mean "a lead was captured". These are forwarded to the Meta
 // Pixel as the standard `Lead` conversion so ad campaigns can optimize for
-// real enquiries instead of raw page views. Firing is a no-op until the
-// pixel is actually loaded (`window.fbq` exists), which only happens after
-// the visitor accepts cookies — so this stays consent-safe.
+// real enquiries instead of raw page views. Consent-wise: the pixel loads
+// in a `consent revoke` state (see TagManager), so a Lead fired before
+// acceptance is only QUEUED in-page and transmits solely if the visitor
+// later grants consent — nothing leaves the browser before that.
 const LEAD_EVENTS = new Set([
   "lead_submit",
   "callback_submit",
   "chat_lead_captured",
 ]);
+
+/**
+ * Generate an id shared between a browser Pixel event and its server-side
+ * CAPI twin (Meta dedupes on it). `crypto.randomUUID` is only available in
+ * secure contexts + newer browsers, and throwing here would strand a form
+ * mid-submit — so fall back to a random hex id rather than ever throwing.
+ */
+export function newEventId(): string {
+  try {
+    if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+      return crypto.randomUUID();
+    }
+  } catch {
+    // fall through to the manual id
+  }
+  return `ev-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+}
 
 export function track(
   event: string,

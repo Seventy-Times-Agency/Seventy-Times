@@ -62,7 +62,7 @@ export default function CTA() {
     <section id="contact" className={styles.section}>
       <SectionWatermark
         text={t.ftContact.toLowerCase()}
-        number="/ 06"
+        number="/ 09"
         position="center"
       />
       <Reveal>

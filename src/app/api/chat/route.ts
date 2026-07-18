@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { getSystemPrompt } from "@/lib/systemPrompt";
 import { parseFbCookies } from "@/lib/metaCapi";
+import { sanitizeUtm } from "@/lib/utm";
 import {
   checkOrigin,
   enforceBodyLimit,
@@ -63,9 +64,10 @@ function pickModel(): string {
   return DEFAULT_MODEL;
 }
 
-// Lead spam guard for the submit_lead tool: same 3/hour/IP budget as
-// /api/lead, so a visitor can't fan out leads through Vanessa to bypass
-// the form's rate limit.
+// Lead spam guard for the submit_lead tool: 3/hour/IP — deliberately
+// stricter than /api/lead's 5/hour form budget, since a prompt-injected
+// Vanessa is the cheaper spam vector. Keeps a visitor from fanning out
+// leads through the chat to bypass the form's rate limit.
 const CHAT_LEAD_LIMIT = 3;
 const CHAT_LEAD_WINDOW_MS = 60 * 60_000;
 
@@ -248,6 +250,20 @@ export async function POST(req: Request) {
       : (cookieMatch?.[1] ?? "en");
   const locale = picked === "ua" ? "uk" : picked;
 
+  // Campaign attribution + cookie-banner marketing consent, sent by the
+  // chat widget alongside the messages. utm sources a Vanessa-captured
+  // lead in Telegram/Notion; adConsent gates the server-side CAPI event
+  // (mirrors /api/lead — no consent, no server event).
+  const chatUtm = sanitizeUtm(
+    body && typeof body === "object" && "utm" in body
+      ? (body as { utm: unknown }).utm
+      : undefined,
+  );
+  const adConsent =
+    body !== null &&
+    typeof body === "object" &&
+    (body as Record<string, unknown>).adConsent === true;
+
   const client = getAnthropic(apiKey);
   const model = pickModel();
 
@@ -334,7 +350,7 @@ export async function POST(req: Request) {
     }
 
     // Hard cap on leads submitted through the chat tool, mirroring
-    // /api/lead's 3/hour/IP budget. Without this a visitor could ask
+    // a strict 3/hour/IP budget. Without this a visitor could ask
     // Vanessa to fire lead after lead and bypass the form's own limit.
     const leadRl = await rateLimit(
       `chatlead:${ip}`,
@@ -361,21 +377,9 @@ export async function POST(req: Request) {
     const eventId = randomUUID();
     const { fbp, fbc } = parseFbCookies(req.headers.get("cookie"));
 
-    const delivered = await deliverLead(
-      {
-        name: leadName,
-        contact,
-        business: business || "—",
-        request: request || "—",
-        package: leadPackage,
-        budget: leadBudget,
-      },
-      {
-        duplicate: isDuplicate,
-        kind: "lead",
-        locale,
-        source: "chat",
-        meta: {
+    // CAPI context only with cookie-banner consent (mirrors /api/lead).
+    const meta = adConsent
+      ? {
           eventId,
           email: contact,
           phone: contact,
@@ -384,7 +388,25 @@ export async function POST(req: Request) {
           fbp,
           fbc,
           sourceUrl: req.headers.get("referer") ?? undefined,
-        },
+        }
+      : undefined;
+
+    const delivered = await deliverLead(
+      {
+        name: leadName,
+        contact,
+        business: business || "—",
+        request: request || "—",
+        package: leadPackage,
+        budget: leadBudget,
+        utm: chatUtm,
+      },
+      {
+        duplicate: isDuplicate,
+        kind: "lead",
+        locale,
+        source: "chat",
+        meta,
       },
     );
 

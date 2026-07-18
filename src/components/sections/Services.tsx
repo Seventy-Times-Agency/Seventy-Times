@@ -41,7 +41,7 @@ export default function Services() {
     <section id="services" className={styles.section}>
       <SectionWatermark
         text={t.navServices.toLowerCase()}
-        number="/ 01"
+        number="/ 02"
         position="right"
       />
 

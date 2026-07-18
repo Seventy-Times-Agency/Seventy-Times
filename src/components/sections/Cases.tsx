@@ -34,7 +34,7 @@ export default function Cases() {
     <section id="cases" className={styles.section}>
       <SectionWatermark
         text={t.navCases.toLowerCase()}
-        number="/ 05"
+        number="/ 04"
         position="left"
       />
 

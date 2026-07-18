@@ -5,6 +5,8 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
 import { track } from "@/lib/analytics";
+import { captureUtm, readUtm } from "@/lib/utm";
+import { readConsent } from "@/lib/consent";
 import styles from "@/components/overlays/chat/ChatWidget.module.css";
 
 type Message = {
@@ -112,6 +114,12 @@ export default function ChatWidget() {
     return () => window.clearTimeout(timer);
   }, [open]);
 
+  // Capture campaign attribution (utm_*, gclid, fbclid) once on mount so
+  // a lead Vanessa captures later can be sourced — mirrors the forms.
+  useEffect(() => {
+    captureUtm();
+  }, []);
+
   // Mark the nudge as spent (so it won't reappear this session) the
   // moment the visitor opens the chat by any route.
   useEffect(() => {
@@ -196,6 +204,11 @@ export default function ChatWidget() {
           messages: next,
           sessionId: getSessionId(),
           locale,
+          // Campaign attribution + cookie-banner marketing consent, used
+          // server-side when Vanessa captures a lead: utm sources the lead
+          // in Telegram/Notion, adConsent gates the CAPI Lead event.
+          utm: readUtm(),
+          adConsent: readConsent() === "accepted",
         }),
       });
 

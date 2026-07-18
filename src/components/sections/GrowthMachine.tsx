@@ -62,7 +62,7 @@ export default function GrowthMachine() {
     <section id="growth-machine" className={styles.section}>
       <SectionWatermark
         text={t.navMachine.toLowerCase()}
-        number="/ 02"
+        number="/ 01"
         position="right"
       />
 

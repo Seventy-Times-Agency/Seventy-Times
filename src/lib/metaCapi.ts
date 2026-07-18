@@ -36,9 +36,16 @@ function hashEmail(raw: string): string | undefined {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) ? sha256(e) : undefined;
 }
 
-/** SHA-256 of a phone's digits — needs at least 7 to be plausible. */
+/**
+ * SHA-256 of a phone's digits. Only accepts phone-shaped input (digits
+ * plus +()-. and spaces) with 7+ digits — otherwise an email or @handle
+ * that merely CONTAINS digits ("shop2024_8912345") would produce a hash
+ * of a non-existent phone and drag down Meta's match quality.
+ */
 function hashPhone(raw: string): string | undefined {
-  const digits = raw.replace(/\D/g, "");
+  const v = raw.trim();
+  if (!/^[+()\d][\d\s().-]{5,}$/.test(v)) return undefined;
+  const digits = v.replace(/\D/g, "");
   return digits.length >= 7 ? sha256(digits) : undefined;
 }
 

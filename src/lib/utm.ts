@@ -44,6 +44,35 @@ export function captureUtm(): void {
   }
 }
 
+// Server-side caps for a client-supplied attribution blob.
+const UTM_MAX_KEYS = 8;
+const UTM_MAX_KEY_LENGTH = 50;
+const UTM_MAX_VALUE_LENGTH = 200;
+
+/**
+ * Sanitise an untrusted `utm` object from a request body: keep only
+ * string values, cap key/value lengths and the number of keys. Returns
+ * undefined when nothing usable remains, so downstream attribution lines
+ * can be skipped entirely. Pure — safe on both server and client.
+ */
+export function sanitizeUtm(raw: unknown): Record<string, string> | undefined {
+  if (typeof raw !== "object" || raw === null) return undefined;
+  const out: Record<string, string> = {};
+  let count = 0;
+  for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
+    if (count >= UTM_MAX_KEYS) break;
+    if (typeof value !== "string") continue;
+    const trimmed = value.trim();
+    if (!trimmed) continue;
+    out[key.slice(0, UTM_MAX_KEY_LENGTH)] = trimmed.slice(
+      0,
+      UTM_MAX_VALUE_LENGTH,
+    );
+    count++;
+  }
+  return count > 0 ? out : undefined;
+}
+
 /** Read the stored attribution back; empty object when there's none. */
 export function readUtm(): Record<string, string> {
   if (typeof window === "undefined") return {};
