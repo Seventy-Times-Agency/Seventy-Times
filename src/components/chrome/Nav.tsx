@@ -9,7 +9,7 @@ import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
 import Logo from "@/components/ui/Logo";
 import styles from "@/components/chrome/Nav.module.css";
 
-const SECTION_IDS = ["growth-machine", "services", "process", "chat", "cases", "faq"] as const;
+const SECTION_IDS = ["how-we-start", "services", "process", "chat", "cases", "faq"] as const;
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -50,7 +50,7 @@ export default function Nav() {
   const close = () => setMenuOpen(false);
 
   const NAV_LINKS = [
-    { href: anchor("growth-machine"), id: "growth-machine", label: t.navMachine },
+    { href: anchor("how-we-start"), id: "how-we-start", label: t.navStart },
     { href: anchor("services"), id: "services", label: t.navServices },
     { href: anchor("cases"), id: "cases", label: t.navCases },
     { href: anchor("process"), id: "process", label: t.navProcess },

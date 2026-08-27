@@ -1,0 +1,221 @@
+/* "How we start" — mirrors the Process section's visual language:
+   header split, numbered circles, connector line on desktop. Written
+   mobile-first like every other module. */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  padding: 40px 18px 36px;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  font-size: clamp(28px, 7.5vw, 44px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.titleItalic {
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--line-hi);
+}
+
+.headerRight {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.lead {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 440px;
+  text-align: left;
+}
+
+/* Steps ─────────────────────────────────────────────────── */
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(200, 212, 222, 0.06), transparent 60%),
+    rgba(255, 255, 255, 0.012);
+  transition: transform 0.4s var(--ease);
+}
+
+.numberWrap {
+  position: relative;
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--black);
+  border: 1px solid var(--line-strong);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.4s ease;
+}
+
+.step:hover .numberWrap {
+  background: var(--accent);
+  color: var(--black);
+  border-color: var(--accent);
+  box-shadow: 0 20px 50px -18px var(--accent-glow);
+}
+
+.tag {
+  font-size: var(--fs-mini);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+}
+
+.stepTitle {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.stepDesc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.65;
+  max-width: 36ch;
+}
+
+/* CTA ───────────────────────────────────────────────────── */
+
+.ctaRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--black);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s ease;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -16px var(--accent-glow);
+}
+
+/* Tablet and up. */
+@media (min-width: 768px) {
+  .section {
+    padding: 72px 48px 56px;
+  }
+
+  .header {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+  }
+
+  .title {
+    font-size: var(--fs-h1);
+  }
+
+  .headerRight {
+    justify-content: flex-end;
+  }
+
+  .lead {
+    font-size: var(--fs-body-lg);
+    text-align: right;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  /* Horizontal connector line behind step numbers */
+  .grid::before {
+    content: "";
+    position: absolute;
+    top: 32px;
+    left: 48px;
+    right: 48px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--line-strong) 10%,
+      var(--line-strong) 90%,
+      transparent
+    );
+    z-index: 0;
+  }
+
+  .step {
+    border: none;
+    border-radius: 0;
+    background: none;
+    padding: 0 28px;
+    gap: 16px;
+  }
+
+  .step:hover {
+    transform: translateY(-6px);
+  }
+
+  .ctaRow {
+    margin-top: 48px;
+  }
+}

@@ -130,7 +130,7 @@ export default function Hero() {
                 </a>
               </Magnetic>
               <Magnetic strength={0.3}>
-                <a href="#growth-machine" className={styles.secondary}>
+                <a href="#process" className={styles.secondary}>
                   {t.heroCta2}
                 </a>
               </Magnetic>

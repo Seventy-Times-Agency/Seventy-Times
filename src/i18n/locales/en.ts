@@ -9,7 +9,7 @@ const strings = {
     navProcess: "Process",
     navFaq: "FAQ",
     navStatus: "Accepting projects",
-    navCta: "Get a quote",
+    navCta: "Discuss your project",
     navOpenMenu: "Open menu",
     navCloseMenu: "Close menu",
     skipToContent: "Skip to content",
@@ -25,8 +25,8 @@ const strings = {
     heroTitle4: "= one growth machine.",
     heroSub:
       "Launched in 30 days, optimised in 90. Ads bring leads, AI catches them in chat, automation walks them through the funnel. Not three services bundled — one working system.",
-    heroCta1: "Get a quote",
-    heroCta2: "See the packages",
+    heroCta1: "Discuss your project",
+    heroCta2: "How we work",
     heroHint: "Within an hour on weekdays · 24h on weekends · No obligations",
     statGoal: "Launch (days)",
     statServices: "AI always on",
@@ -188,18 +188,22 @@ const strings = {
     proc1d:
       "We study your business, goals, audience and current funnels. We find where money is leaking and where growth is hiding.",
     proc1t: "1–2 days",
-    proc2: "Strategy",
+    proc2: "Audit",
     proc2d:
-      "We propose a plan: channels, offers, KPIs, budget. We align on what to launch, by when, and how to measure.",
-    proc2t: "3–5 days",
-    proc3: "Launch",
+      "When the case needs it — a deep dive into your ads, funnel and analytics. You get the findings whatever we decide next.",
+    proc2t: "When needed",
+    proc3: "Strategy",
     proc3d:
-      "We set up accounts, write copy, create visuals, build automations and run the first tests. Analytics connected.",
-    proc3t: "1–2 weeks",
-    proc4: "Optimization",
+      "We propose a plan: channels, offers, KPIs, budget. We align on what to launch, by when, and how to measure.",
+    proc3t: "3–5 days",
+    proc4: "Launch",
     proc4d:
+      "We set up accounts, write copy, create visuals, build automations and run the first tests. Analytics connected.",
+    proc4t: "1–2 weeks",
+    proc5: "Optimization",
+    proc5d:
       "We review numbers weekly. Cut what doesn't work, scale what does. Monday reports, dashboard access — always.",
-    proc4t: "Ongoing",
+    proc5t: "Ongoing",
 
     // Vanessa promo
     venEyebrow: "— Meet Vanessa",
@@ -389,65 +393,33 @@ const strings = {
     divTalk: "— get in touch",
     divSimulator: "— estimate the ROI",
     divCases: "— our work",
-    divMachine: "— flagship",
+    divStart: "— start",
     divCompare: "— vs the rest",
 
     // Nav
     navCases: "Work",
-    navMachine: "Growth Machine",
+    navStart: "How we start",
 
-    // 70× Growth Machine combo
-    gmEyebrow: "— 70× / flagship combo",
-    gmTitle1: "One",
-    gmTitle2: "growth",
-    gmTitle3: "machine.",
-    gmLead:
-      "Ads bring leads. The AI bot catches them. Automation walks them through the funnel. Each piece does part of the job alone — together they cover the entire customer path and save 20–25% of budget.",
-    gmRecommended: "Recommended",
-    gmTerm: "Minimum term",
-    gmIncludes: "What's inside",
-    gmPriceLabel: "Starting at",
-    gmPriceHint:
-      "Indicative floor. Final quote is tailored to your case — usually higher once we map the actual scope. Hit \"Get a quote\" for the detailed breakdown.",
-    gmCta: "Get a quote",
-    gmGuaranteeTitle: "Launch guarantee",
-    gmGuaranteeBody:
-      "We launch the full system within 30 days and optimise it within 90. If we don't deliver — 50% of the setup fee comes back.",
-    gmDiscount: "−25%",
-    gmDiscountLabel: "vs buying standalone",
-    gm1Tier: "LAUNCH",
-    gm1Title: "From zero",
-    gm1Sub: "Startup, new product, local business",
-    gm1Inc: [
-      "Landing site + baseline SEO",
-      "Ads Starter (1 platform, 3 creatives)",
-      "AI Bot Starter (up to 30 scenarios)",
-      "Lead Flow Mini (1 key automation)",
-    ],
-    gm1Term: "4-month minimum",
-    gm1Price: "from $1,000+",
-    gm2Tier: "GROWTH",
-    gm2Title: "Growing business",
-    gm2Sub: "Working business with existing sales",
-    gm2Inc: [
-      "Ads Growth (2–3 platforms, A/B, retargeting)",
-      "AI Bot Growth (up to 80 scenarios, CRM)",
-      "Lead Flow Standard (3–5 automations)",
-      "Business site — optional with discount",
-    ],
-    gm2Term: "4-month minimum",
-    gm2Price: "from $2,000+",
-    gm3Tier: "SCALE",
-    gm3Title: "Scaling up",
-    gm3Sub: "Mature business ready for serious growth",
-    gm3Inc: [
-      "Ads Scale (all platforms, look-alike, 2× monthly strategy)",
-      "AI Bot Pro (unlimited scenarios + custom code)",
-      "Lead Flow Pro (Python + AI lead classification)",
-      "E-commerce site — optional with discount",
-    ],
-    gm3Term: "6-month minimum",
-    gm3Price: "from $3,500+",
+    // How we start — no packages, no prices on the site
+    hsEyebrow: "— How we start",
+    hsTitle1: "How",
+    hsTitle2: "we",
+    hsTitle3: "start.",
+    hsLead:
+      "No packages and no price tags on the site. First we understand your case — then you get a plan with numbers built for it.",
+    hs1: "Briefing call",
+    hs1d:
+      "A free 20-minute call: your business, goals, current marketing and the result you're after.",
+    hs1t: "Free · 20 min",
+    hs2: "Diagnostics, if needed",
+    hs2d:
+      "When the case calls for it, we audit your ads, funnel and analytics to see where the growth actually is.",
+    hs2t: "When it's needed",
+    hs3: "Plan and numbers",
+    hs3d:
+      "You get a concrete scope, timeline and budget built for your situation — not a package off the shelf.",
+    hs3t: "After the briefing",
+    hsCta: "Discuss your project",
 
     // Cases section
     casesEyebrow: "— Work / 2026",

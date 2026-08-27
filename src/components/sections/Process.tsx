@@ -15,6 +15,7 @@ export default function Process() {
     { num: "02", title: t.proc2, desc: t.proc2d, dur: t.proc2t },
     { num: "03", title: t.proc3, desc: t.proc3d, dur: t.proc3t },
     { num: "04", title: t.proc4, desc: t.proc4d, dur: t.proc4t },
+    { num: "05", title: t.proc5, desc: t.proc5d, dur: t.proc5t },
   ];
 
   return (
