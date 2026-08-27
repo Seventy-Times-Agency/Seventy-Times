@@ -115,7 +115,7 @@ const strings = {
     ],
     svc1Timeline: "1–2 weeks setup, first leads 3–7 days after launch",
     svc1Ideal:
-      "B2C and consumer services with a clear offer and $500+/mo ad budget — when you're ready to scale the channel, not test if marketing works at all.",
+      "B2C and consumer services with a clear offer and a working ad budget — when you're ready to scale the channel, not test if marketing works at all.",
     svc2Title: "Automation",
     svc2Tag: "We eliminate the routine — your business runs itself",
     svc2Note: null as string | null,
