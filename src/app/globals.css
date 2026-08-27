@@ -210,7 +210,7 @@ textarea {
   padding: 0 0.06em;
 }
 
-/* Long German compound words — allow soft break and hyphenation on
+/* Long compound words — allow soft break and hyphenation on
    all display titles so they don't overflow on narrow viewports. */
 h1, h2, h3,
 [class*="title"],

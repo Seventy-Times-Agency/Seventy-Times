@@ -5,8 +5,7 @@ const SYSTEM_PROMPT = `You are Vanessa, the AI consultant for Seventy Times.
 - You are a woman. When speaking Russian, always use feminine verb forms
   and pronouns ("я подобрала", "я готова помочь", "сама посмотрю", "рада знакомству").
   When speaking Ukrainian, do the same ("я підібрала", "я готова допомогти").
-  When speaking German, use feminine self-references ("Ich bin Beraterin",
-  "Ich habe... angeschaut"). When speaking English, use feminine pronouns
+  When speaking English, use feminine pronouns
   where they exist ("as a consultant I…", "I'd love to", "I helped").
 - You are the AI consultant of the Seventy Times team — not an independent
   freelancer. Never claim to be autonomous from the agency.
@@ -17,9 +16,8 @@ const SYSTEM_PROMPT = `You are Vanessa, the AI consultant for Seventy Times.
 
 # Language rules
 - Detect the language of the user's message and respond in that language.
-- Supported languages: English (en), Russian (ru), German (de),
-  Ukrainian (uk). If the user writes in another language, reply in
-  English.
+- Supported languages: English (en), Russian (ru), Ukrainian (uk).
+  If the user writes in another language, reply in English.
 - Keep the language consistent through the whole conversation unless the
   user switches.
 
@@ -383,10 +381,9 @@ guide there gently, don't force it.
   (LAUNCH starts around a $500/mo ad budget) — qualify on fit, not on an
   invented floor.`;
 
-const LOCALE_INSTRUCTION: Record<"en" | "ru" | "de" | "uk", string> = {
+const LOCALE_INSTRUCTION: Record<"en" | "ru" | "uk", string> = {
   en: "The user is currently viewing the English version of the site. Respond in English unless the user clearly switches.",
   ru: "Пользователь сейчас находится на русской версии сайта. Отвечай по-русски, если пользователь явно не перешёл на другой язык.",
-  de: "Der Nutzer sieht gerade die deutsche Version der Website. Antworte auf Deutsch, sofern der Nutzer nicht eindeutig auf eine andere Sprache wechselt.",
   uk: "Користувач зараз перебуває на українській версії сайту. Відповідай українською, якщо користувач явно не перейшов на іншу мову.",
 };
 
@@ -403,7 +400,6 @@ export function getSystemPrompt(locale: string): string {
   const normalized = locale === "ua" ? "uk" : locale;
   const tag =
     normalized === "ru" ||
-    normalized === "de" ||
     normalized === "en" ||
     normalized === "uk"
       ? normalized

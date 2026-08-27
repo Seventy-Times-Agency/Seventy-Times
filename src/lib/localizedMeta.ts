@@ -68,25 +68,6 @@ const META: Record<Locale, LocaleMeta> = {
     ogImageAlt:
       "Seventy Times — реклама, автоматизация и AI-боты, собранные в одну машину роста.",
   },
-  de: {
-    description:
-      "Seventy Times verwandelt KI und Performance-Marketing in einen planbaren Strom qualifizierter Kunden — Werbung, Automatisierung und smarte Bots, ausgerichtet auf Ihr Wachstum.",
-    keywords: [
-      "Seventy Times",
-      "KI-Marketing-Agentur",
-      "Performance Marketing",
-      "Marketing-Automatisierung",
-      "KI-Chatbot",
-      "Digital Marketing",
-      "Zielgerichtete Werbung",
-      "Meta Ads",
-      "Google Ads",
-      "Claude KI",
-    ],
-    ogLocale: "de_DE",
-    ogImageAlt:
-      "Seventy Times — Werbung, Automatisierung und KI-Bots als eine Wachstumsmaschine.",
-  },
   uk: {
     description:
       "Seventy Times перетворює AI та digital-маркетинг на передбачуваний потік кваліфікованих клієнтів: реклама, автоматизація та розумні боти — все працює на одну метрику: ваше зростання.",
@@ -129,11 +110,6 @@ const PRIVACY: Record<Locale, LegalMeta> = {
     description:
       "Как Seventy Times собирает, использует и защищает ваши данные. Честный минимум для ранней стадии — будет пересмотрен с юристом по мере роста.",
   },
-  de: {
-    title: "Datenschutzerklärung",
-    description:
-      "Wie Seventy Times Ihre Daten erhebt, verwendet und schützt. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
-  },
   uk: {
     title: "Політика конфіденційності",
     description:
@@ -151,11 +127,6 @@ const TERMS: Record<Locale, LegalMeta> = {
     title: "Условия использования",
     description:
       "Условия использования сайта seventy-times.com. Честный минимум для ранней стадии — будет пересмотрен с юристом по мере роста.",
-  },
-  de: {
-    title: "Nutzungsbedingungen",
-    description:
-      "Nutzungsbedingungen für seventy-times.com. Ein ehrliches Minimum für die frühe Phase — wird mit einem Anwalt überarbeitet, sobald wir wachsen.",
   },
   uk: {
     title: "Умови використання",
@@ -183,11 +154,6 @@ const ABOUT: Record<Locale, LegalMeta> = {
     description:
       "Кто стоит за Seventy Times: распределённая команда AI и performance-маркетинга, которая собирает рекламу, автоматизацию и AI-ботов в единую машину роста для амбициозного бизнеса.",
   },
-  de: {
-    title: "Über uns",
-    description:
-      "Wer hinter Seventy Times steht: ein verteiltes KI- und Performance-Marketing-Studio, das Werbung, Automatisierung und KI-Bots zu einer Wachstumsmaschine für ambitionierte Unternehmen verbindet.",
-  },
   uk: {
     title: "Про нас",
     description:
@@ -210,11 +176,6 @@ const TEAM: Record<Locale, LegalMeta> = {
     description:
       "Люди, которые стоят за Seventy Times — полные био команды появятся скоро.",
   },
-  de: {
-    title: "Team",
-    description:
-      "Die Menschen hinter Seventy Times — vollständige Team-Profile folgen in Kürze.",
-  },
   uk: {
     title: "Команда",
     description:
@@ -236,11 +197,6 @@ const IMPRINT: Record<Locale, LegalMeta> = {
     title: "Правовая информация",
     description:
       "Идентификация поставщика услуг и основание международной передачи данных для seventy-times.com — будет доработано с юристом.",
-  },
-  de: {
-    title: "Impressum",
-    description:
-      "Anbieterkennzeichnung und Grundlage der internationalen Datenübermittlung für seventy-times.com — wird mit einem Anwalt finalisiert.",
   },
   uk: {
     title: "Правова інформація",

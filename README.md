@@ -4,7 +4,7 @@ Marketing site for **Seventy Times** — a US-based AI + performance-marketing
 agency. Single-page landing with deep-link case studies, per-service detail
 pages, **Vanessa** — a streaming Claude-powered chat assistant that qualifies
 and hands off leads — a multi-step lead form, and full four-language coverage
-(English / Russian / German / Ukrainian).
+(English / Russian / Ukrainian).
 
 > **For developers / AI agents working on this repo:** the orientation
 > document is **[`CLAUDE.md`](./CLAUDE.md)** — start there. This README
@@ -15,7 +15,7 @@ and hands off leads — a multi-step lead form, and full four-language coverage
 ## Live
 
 - Production: <https://seventy-times.com>
-- Default landing language is **English**. `/ru`, `/de` and `/uk` are
+- Default landing language is **English**. `/ru` and `/uk` are
   opt-in via the language switcher in the top nav.
 
 ## Tech stack
@@ -32,7 +32,7 @@ and hands off leads — a multi-step lead form, and full four-language coverage
 
 ## Features
 
-- **Locale-prefixed URLs** (`/en`, `/ru`, `/de`) — every locale × page
+- **Locale-prefixed URLs** (`/en`, `/ru`, `/uk`) — every locale × page
   is statically pre-rendered, fully indexable.
 - **Per-case study pages** at `/<locale>/cases/<slug>` with
   breadcrumbs, related-projects rail, and BreadcrumbList JSON-LD.
@@ -99,7 +99,7 @@ npm run dev                      # http://localhost:3000
 ```
 
 The middleware redirects bare `/` to `/en` — if you want to test a
-specific locale, navigate to `http://localhost:3000/ru`, `/de` or
+specific locale, navigate to `http://localhost:3000/ru` or
 `/uk` directly.
 
 ### Useful scripts

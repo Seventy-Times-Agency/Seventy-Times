@@ -36,13 +36,11 @@ export type TeamMember = {
 //   role: {
 //     en: "Founder & Performance Lead",
 //     ru: "Основатель и руководитель перформанса",
-//     de: "Gründerin & Performance-Lead",
 //     uk: "Засновниця та керівниця перформансу",
 //   },
 //   bio: {
 //     en: "…",
 //     ru: "…",
-//     de: "…",
 //     uk: "…",
 //   },
 //   photo: "/team/jane.jpg",

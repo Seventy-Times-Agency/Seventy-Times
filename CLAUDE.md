@@ -2,8 +2,8 @@
 
 Marketing landing for **Seventy Times**, a US-based AI + performance-marketing
 agency. Single page with a lead form, a callback form, a review form, and a
-live Claude-powered chat assistant named Vanessa. Four languages
-(en / ru / de / uk).
+live Claude-powered chat assistant named Vanessa. Three languages
+(en / ru / uk).
 
 This file is the short orientation map. Read it first when opening the repo.
 
@@ -37,7 +37,7 @@ src/
 │   │   ├── review/route.ts       /api/review — review form → Telegram + Notion
 │   │   └── error/route.ts        /api/error — sink for client-side errors
 │   ├── [locale]/                 Every public URL is locale-prefixed
-│   │   │                         (/en, /ru, /de, /uk + their subpages)
+│   │   │                         (/en, /ru, /uk + their subpages)
 │   │   ├── layout.tsx            THE root layout (there is no app/layout.tsx):
 │   │   │                         <html lang>, fonts, JSON-LD, metadata,
 │   │   │                         I18nProvider + decor + overlays
@@ -127,9 +127,9 @@ src/
 │   │                             LOCALE_LANG (URL slug → ISO 639-1 code)
 │   ├── context.tsx               I18nProvider + useT() (locale, t, setLocale,
 │   │                             localePath)
-│   ├── dictionary.ts             Aggregates the four locale files,
+│   ├── dictionary.ts             Aggregates the three locale files,
 │   │                             infers the Dictionary type from ru.ts
-│   └── locales/{en,ru,de,uk}.ts  Translation tables (must stay in sync — TS
+│   └── locales/{en,ru,uk}.ts  Translation tables (must stay in sync — TS
 │                                 will complain if a key is missing)
 │
 ├── lib/                          Server-side / pure utilities
@@ -173,7 +173,7 @@ nothing else.
 ## Key concepts
 
 ### Routing & i18n
-- Four locales: `en` (default), `ru`, `de`, `uk`. Defined in
+- Three locales: `en` (default), `ru`, `uk`. Defined in
   `src/i18n/config.ts`. Slugs match ISO 639-1 codes; `LOCALE_LANG`
   in `i18n/config.ts` keeps the slug→code mapping for `<html lang>`,
   hreflang and JSON-LD in case they ever diverge again.
@@ -183,12 +183,12 @@ nothing else.
   for `uk` because cookies persist for a year. The switcher still
   *displays* "UA" (`LOCALE_LABELS`) — that's what Ukrainians expect to
   see, and a "UK" label would read as United Kingdom.
-- **Every public URL is locale-prefixed**: `/en`, `/ru/about`, `/de/cases/X`.
+- **Every public URL is locale-prefixed**: `/en`, `/ru/about`, `/uk/cases/X`.
   Each `(locale × page)` is statically pre-rendered at build time via
   `generateStaticParams`.
 - Bare `/` always 307s to `/en`. Browser `Accept-Language` is intentionally
   ignored — the agency operates in English first; ru / de / uk are opt-in.
-- `?lang=ru|de|en|uk` 308-redirects to `/<locale>` and sets the cookie
+- `?lang=ru|en|uk` 308-redirects to `/<locale>` and sets the cookie
   (`?lang=ua` is a legacy alias for `uk`). Lets
   shared / hreflang links land on the right language without a query string.
 - **`app/[locale]/layout.tsx` is the root layout** (there is no
@@ -311,7 +311,7 @@ concept on the site.
   bare domain — that's a redirect).
 - hreflang maps come from `languageAlternates()` in `lib/localizedMeta.ts`
   so every surface (layout metadata, per-page metadata, sitemap) emits
-  the same set, keyed by ISO codes (`en`, `ru`, `de`, `uk`) with
+  the same set, keyed by ISO codes (`en`, `ru`, `uk`) with
   `x-default` → the English URL.
 
 **JSON-LD already wired:**
@@ -374,7 +374,7 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 ## Common tasks
 
 ### Add a new FAQ question
-1. Add `faqNq` and `faqNa` keys (same N across all four locale files).
+1. Add `faqNq` and `faqNa` keys (same N across all three locale files).
 2. Append one more entry to the `items` array in
    `components/sections/FAQ.tsx`.
 3. Extend `faqItems` in `components/seo/StructuredData.tsx` so the
@@ -382,7 +382,7 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 
 ### Add a new section to the landing
 1. Create `components/sections/NewSection.tsx` with its CSS module.
-2. Add any new i18n keys to all four locale files.
+2. Add any new i18n keys to all three locale files.
 3. Import it in `app/[locale]/page.tsx`, place it in scroll order, and
    add a `<SectionDivider labelKey="divNew" />` above it.
 
@@ -390,7 +390,7 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 1. Create `data/cases/<slug>.ts` exporting one `CaseItem`: `id`, `status`
    (`live` / `progress` / `soon`), `region` (`usa` / `europe`), optional
    `url`, and an inline-localized `study`. Translate every `Loc` field
-   across en/ru/de/uk; wrap non-translatable tokens in `u("…")`.
+   across en/ru/uk; wrap non-translatable tokens in `u("…")`.
 2. Register it in `data/cases/index.ts` (import + add to `CASES` in the
    order you want — the landing grid re-sorts by status anyway).
 3. Sitemap, RSS and the `[slug]` route pick it up automatically —
@@ -401,7 +401,7 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 1. Append to `SERVICES` in `data/services.ts` with key + slug + i18n
    bindings.
 2. Add `svcNTitle / svcNTag / svcNNote / svcNInc / svcNAdd` keys in
-   all four locale files.
+   all three locale files.
 3. Sitemap, the per-service route, and the landing card grid pick it
    up automatically.
 

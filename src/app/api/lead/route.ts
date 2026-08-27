@@ -163,7 +163,7 @@ export async function POST(req: Request) {
   // live for a year, so keep accepting it as an alias.
   const localeMatch = req.headers
     .get("cookie")
-    ?.match(/(?:^|;\s*)lang=(en|ru|de|uk|ua)/);
+    ?.match(/(?:^|;\s*)lang=(en|ru|uk|ua)/);
   const locale = localeMatch?.[1] === "ua" ? "uk" : (localeMatch?.[1] ?? "en");
 
   const lead: LeadPayload = {

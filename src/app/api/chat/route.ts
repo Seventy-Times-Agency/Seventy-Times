@@ -243,9 +243,9 @@ export async function POST(req: Request) {
   // normalize it — cookies live for a year.
   const cookieMatch = req.headers
     .get("cookie")
-    ?.match(/(?:^|;\s*)lang=(en|ru|de|uk|ua)/);
+    ?.match(/(?:^|;\s*)lang=(en|ru|uk|ua)/);
   const picked =
-    typeof rawLocale === "string" && /^(en|ru|de|uk|ua)$/.test(rawLocale)
+    typeof rawLocale === "string" && /^(en|ru|uk|ua)$/.test(rawLocale)
       ? rawLocale
       : (cookieMatch?.[1] ?? "en");
   const locale = picked === "ua" ? "uk" : picked;

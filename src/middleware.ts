@@ -106,7 +106,7 @@ export function middleware(req: NextRequest) {
   // No locale prefix → always redirect to the default locale (English).
   // Browser Accept-Language is intentionally ignored: the agency operates
   // in English first, RU/DE/UA are opt-in via the language switcher or
-  // a direct /ru / /de / /ua URL. This keeps marketing analytics, ad-link
+  // a direct /ru / /uk / /ua URL. This keeps marketing analytics, ad-link
   // landings and shared screenshots predictable.
   // Set the cookie on the redirect itself so the very next request
   // already carries it — without this every fresh visitor pays for
