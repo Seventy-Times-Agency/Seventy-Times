@@ -18,7 +18,7 @@ export default function ChatDemo() {
         <div className={styles.band}>
           <div className={styles.avatar}>
             <Image
-              src="/vanessa.jpg"
+              src="/vanessa-avatar.png"
               alt={t.chatAlt}
               className={styles.avatarImg}
               width={120}

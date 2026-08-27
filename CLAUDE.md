@@ -159,7 +159,8 @@ src/
                                   sets x-locale header (read by not-found),
                                   refreshes cookie, blocks scanner UAs.
 public/
-├── vanessa.jpg                   Vanessa portrait (next/image, fixed size)
+├── vanessa-avatar.png            Vanessa avatar illustration (she is an AI —
+│                                 no human photo by policy; next/image, fixed size)
 ├── sw.js                         Static fallback service worker
 └── favicon.svg
 ```
@@ -476,8 +477,9 @@ than adding a new `max-width` block.
   fill it → server returns 200 and silently drops, one warn line in
   logs. Don't add a visible field named `website` without renaming the
   honeypot.
-- **Next-image + vanessa.jpg**: rendered with explicit width/height
-  because the source is a JPEG. Replace carefully.
+- **Next-image + vanessa-avatar.png**: rendered with explicit width/height.
+  Vanessa is an AI assistant — keep the avatar an illustration, never a
+  human photo (honesty principle).
 - **Middleware** runs on every page route (locale routing) and `/api/*`.
   Static assets and the file-based prerender outputs are excluded by
   the `matcher`.

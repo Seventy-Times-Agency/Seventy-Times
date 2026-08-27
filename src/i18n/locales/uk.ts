@@ -748,7 +748,7 @@ const strings = {
     chatSuggestAria: "Швидкі підказки",
     chatSuggestPricing: "Скільки коштує?",
     chatSuggestCases: "Покажіть кейси",
-    chatSuggestGrowth: "Розкажи про GROWTH",
+    chatSuggestGrowth: "З чого ми почнемо?",
     chatSuggestBot: "Хочу Telegram-бота",
 
     // Lead form — multi-step + progress
