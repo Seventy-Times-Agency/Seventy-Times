@@ -28,18 +28,18 @@ export default function Hero() {
   const { t } = useT();
 
   // Stats are visual rings; display values live in siteConfig.
-  // Ring 0 counts up to 30 (launch days), ring 1 stays static
+  // Ring 0 counts up to 4 (service pillars), ring 1 stays static
   // ("24/7" — no count-up since the value isn't a single number),
-  // ring 2 counts to 3 (platforms), ring 3 to 25% (combo savings).
-  const [launchDays, aiOn, platforms, comboBonus] = siteConfig.stats;
+  // ring 2 counts to 3 (platforms), ring 3 to 20 (briefing minutes).
+  const [pillars, aiOn, platforms, briefingMin] = siteConfig.stats;
   const stats = [
     {
-      display: launchDays.value,
-      to: 30,
+      display: pillars.value,
+      to: 4,
       suffix: "",
       label: t.statGoal,
       fillPct: 100,
-      id: "launch-days",
+      id: "pillars",
       delay: 0,
     },
     {
@@ -60,12 +60,12 @@ export default function Hero() {
       delay: 0.24,
     },
     {
-      display: comboBonus.value,
-      to: 25,
-      suffix: "%",
+      display: briefingMin.value,
+      to: 20,
+      suffix: "",
       label: t.statLaunch,
       fillPct: 100,
-      id: "combo-bonus",
+      id: "briefing-min",
       delay: 0.36,
     },
   ];

@@ -116,9 +116,9 @@ const TOOLS: Anthropic.Tool[] = [
         },
         package: {
           type: "string",
-          enum: ["not_sure", "standalone", "launch", "growth", "scale"],
+          enum: ["not_sure", "standalone", "ads", "site", "ai_bot"],
           description:
-            "Which offering fits best, if it became clear in the chat.",
+            "Which service interest fits best, if it became clear in the chat.",
         },
         budget: {
           type: "string",

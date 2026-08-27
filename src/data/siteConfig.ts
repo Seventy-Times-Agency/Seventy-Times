@@ -49,9 +49,9 @@ export const siteConfig = {
   // overrides count-up targets per ring; non-numeric values like
   // "24/7" stay static.
   stats: [
-    { value: "30", label: "Запуск (дней)" },
+    { value: "4", label: "Направления" },
     { value: "24/7", label: "AI на связи" },
     { value: "3", label: "Платформы" },
-    { value: "25%", label: "Эффект комбо" },
+    { value: "20", label: "Брифинг (минут)" },
   ],
 } as const;

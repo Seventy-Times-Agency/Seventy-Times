@@ -461,9 +461,9 @@ export default function LeadForm() {
                           onChange={setPackage}
                         >
                           <option value="not_sure">{t.leadPackageNotSure}</option>
-                          <option value="launch">{t.leadPackageLaunch}</option>
-                          <option value="growth">{t.leadPackageGrowth}</option>
-                          <option value="scale">{t.leadPackageScale}</option>
+                          <option value="ads">{t.leadPackageAds}</option>
+                          <option value="site">{t.leadPackageSite}</option>
+                          <option value="ai_bot">{t.leadPackageBot}</option>
                           <option value="standalone">{t.leadPackageStandalone}</option>
                         </select>
                       </label>

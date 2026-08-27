@@ -11,9 +11,9 @@ export const LEAD_MODE_KEY = "st-lead-mode-v1";
 export type LeadPackage =
   | "not_sure"
   | "standalone"
-  | "launch"
-  | "growth"
-  | "scale";
+  | "ads"
+  | "site"
+  | "ai_bot";
 
 export type LeadBudget =
   | "not_sure"
@@ -32,7 +32,7 @@ export type LeadDraft = {
 };
 
 /**
- * Single source of truth for how each package / budget enum renders in
+ * Single source of truth for how each interest / budget enum renders in
  * the two downstream surfaces:
  *   - `ru` — the Russian-labelled Telegram/email notification the team reads
  *   - `notion` — the English `select` option name in the Notion CRM
@@ -46,10 +46,10 @@ export const PACKAGE_LABELS: Record<
   { ru: string; notion: string }
 > = {
   not_sure: { ru: "Пока не уверен", notion: "Not sure" },
-  standalone: { ru: "Одна услуга (standalone)", notion: "Standalone" },
-  launch: { ru: "LAUNCH", notion: "Launch" },
-  growth: { ru: "GROWTH ⭐", notion: "Growth" },
-  scale: { ru: "SCALE", notion: "Scale" },
+  standalone: { ru: "Одна услуга", notion: "Single service" },
+  ads: { ru: "Реклама", notion: "Ads" },
+  site: { ru: "Сайт / лендинг", notion: "Website" },
+  ai_bot: { ru: "AI-бот / автоматизация", notion: "AI bot / automation" },
 };
 
 export const BUDGET_LABELS: Record<

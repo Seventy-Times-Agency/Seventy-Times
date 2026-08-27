@@ -102,7 +102,7 @@ async function notifyTelegram(
     : headerBase;
 
   const packageLine = lead.package
-    ? `📦 *Пакет:* ${escapeMarkdown(PACKAGE_LABEL_RU(lead.package))}`
+    ? `🧩 *Интерес:* ${escapeMarkdown(PACKAGE_LABEL_RU(lead.package))}`
     : null;
   const budgetLine = lead.budget
     ? `💰 *Бюджет:* ${escapeMarkdown(BUDGET_LABEL_RU(lead.budget))}`
@@ -140,7 +140,7 @@ function buildEmailText(lead: DeliverableLead, duplicate: boolean): string {
     `Contact: ${lead.contact}`,
     lead.phone ? `Phone: ${lead.phone}` : null,
     `Business: ${lead.business}`,
-    lead.package ? `Package: ${PACKAGE_LABEL_RU(lead.package)}` : null,
+    lead.package ? `Interest: ${PACKAGE_LABEL_RU(lead.package)}` : null,
     lead.budget ? `Budget: ${BUDGET_LABEL_RU(lead.budget)}` : null,
     formatUtm(lead.utm) ? `Source: ${formatUtm(lead.utm)}` : null,
     "",

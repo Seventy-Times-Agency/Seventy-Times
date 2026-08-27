@@ -24,14 +24,14 @@ const strings = {
     heroTitle3: "automation",
     heroTitle4: "= one growth machine.",
     heroSub:
-      "Launched in 30 days, optimised in 90. Ads bring leads, AI catches them in chat, automation walks them through the funnel. Not three services bundled — one working system.",
+      "Ads bring leads, AI catches them in chat, automation walks them through the funnel. Not three separate services — one working system built around your case.",
     heroCta1: "Discuss your project",
     heroCta2: "How we work",
     heroHint: "Within an hour on weekdays · 24h on weekends · No obligations",
-    statGoal: "Launch (days)",
+    statGoal: "Service pillars",
     statServices: "AI always on",
     statSupport: "Ad platforms",
-    statLaunch: "Combo effect",
+    statLaunch: "Briefing (min)",
 
     // Services
     svcEyebrow: "— Services / 2026",
@@ -163,7 +163,7 @@ const strings = {
       "Responsive design across all devices, no bugs on mobile",
       "Baseline SEO: sitemap, meta, schema.org, Core Web Vitals",
       "Google Analytics + the pixels you need, wired up",
-      "30 days of guaranteed fixes after launch",
+      "30 days of free bugfixes after launch",
       "Funnel ready for the ads and the AI bot — works as one system",
     ],
     svc4Add: [
@@ -258,7 +258,7 @@ const strings = {
     faqStillCta: "Ask us directly →",
     faq1q: "How much do your services cost?",
     faq1a:
-      "Pricing is built per case — there's no point quoting a fixed number before we know your project. After a short briefing call we send a detailed pricelist by email with a breakdown of services and combo packages. Minimum thresholds we mention up front, so neither side wastes time.",
+      "Pricing is built per case — there's no point quoting a fixed number before we know your project. After a short briefing call the specialist puts together a plan with a scope and a budget for your situation and sends it by email. Anything that affects the price we say up front, so neither side wastes time.",
     faq2q: "Who pays for the ad budget?",
     faq2a:
       "The client. The Meta / Google / TikTok ad account stays on your name, you pay the platform directly. We only set up and optimise. It's more transparent and the accounts stay yours even if we part ways.",
@@ -267,19 +267,19 @@ const strings = {
       "By default — the client. OpenAI/Claude API keys and Make/Zapier subscriptions are created on your account, you see the spend directly. Want it fully managed? We invoice usage with a 30% management fee.",
     faq4q: "How fast will I see results?",
     faq4a:
-      "First leads from ads — 3–7 days after launch. The AI bot works from day one. Full system optimisation — by the end of 90 days.",
+      "First leads from ads usually come in 3–7 days after launch. The AI bot works from day one. Optimisation is ongoing — most systems settle into stable numbers over the first two to three months.",
     faq5q: "What if I want to leave?",
     faq5a:
-      "Each package has a minimum term in the contract (3–6 months depending on the tier), and after that it's month-to-month with 30-day notice. You can pause or stop earlier — refunds on fees already paid are handled case-by-case based on how far the work has progressed. Separately, the 90-day launch guarantee always stands: if we miss the launch deadline, 50% of the setup fee comes back, no questions.",
+      "The contract sets a minimum term for ongoing work, and after that it's month-to-month with 30-day notice. You can stop earlier — refunds on fees already paid are handled case-by-case based on how far the work has progressed. Deadlines are tracked in the task history from the moment we receive the materials each stage needs, so it's always clear who was waiting on whom. If a deadline slips through our fault, we make it right — a partial refund or a discount, depending on the situation.",
     faq6q: "How much time do I have to spend?",
     faq6a:
       "2–4 hours per week at the start: briefing, materials, approvals. After launch — 30 minutes per week for reports and decisions on edge cases.",
     faq7q: "Do you write copy or design logos?",
     faq7a:
       "We write site copy ourselves — it's part of the build. If you already have ready copy or need specific brand wording, send it our way so the text reads exactly the way you want. Logos and basic brand identity — we can produce them too if you need; handled separately as an add-on.",
-    faq8q: "Is there a discount for the bundle?",
+    faq8q: "What happens if you miss a deadline?",
     faq8a:
-      "Yes. The 70× Growth Machine combo gives a 20–25% discount versus buying services standalone. The higher the tier — the bigger the discount.",
+      "Deadlines are counted in chains from the moment we receive the materials a stage needs, and the task history records who was waiting on whom. If a stage slips through our fault, we own it — a partial refund or a discount on that stage, depending on the situation. If the delay came from missing materials or approvals on the client side, the timeline shifts with them.",
     faq9q: "Do you work with my industry?",
     faq9a:
       "Primary focus: e-commerce, services, retail, auto accessories and beauty. B2B SaaS — case by case. If we don't know your niche, we'll say so honestly instead of learning on your dime.",
@@ -291,7 +291,7 @@ const strings = {
       "Our primary currency is US dollars. Euros are also accepted at the current rate. Anything else — handled individually when we talk.",
     faq12q: "Do you sign a contract?",
     faq12a:
-      "Yes, always. The contract protects both sides: clear scope, deadlines, penalties, guarantees. We don't work without one.",
+      "Yes, always. The contract protects both sides: clear scope, deadlines and the responsibilities of each party. We don't work without one.",
     faq13q: "Do you sign NDAs?",
     faq13a:
       "Yes, we sign a standard mutual NDA before any work starts. All project information stays confidential.",
@@ -474,12 +474,12 @@ const strings = {
       "Thank you! We've received your request and will reply within an hour on weekdays and within 24 hours on weekends. Talk soon 👋",
     leadClose: "Close",
     leadFillAll: "Please fill in all fields",
-    leadPackage: "Which format are you interested in?",
+    leadPackage: "What do you need?",
     leadPackageNotSure: "Not sure yet — please advise",
-    leadPackageStandalone: "Single service (standalone)",
-    leadPackageLaunch: "LAUNCH — starting from zero",
-    leadPackageGrowth: "GROWTH ⭐ — growing business",
-    leadPackageScale: "SCALE — serious scale",
+    leadPackageStandalone: "One specific service",
+    leadPackageAds: "Ads — setup and management",
+    leadPackageSite: "Website or landing page",
+    leadPackageBot: "AI bot / automation",
     leadBudget: "Monthly budget (rough)",
     leadBudgetNotSure: "Not sure yet",
     leadBudgetUnder1k: "Under $1,000 / mo",
@@ -659,7 +659,7 @@ const strings = {
       },
       {
         heading: "Refunds and early exit",
-        text: 'A minimum term is set in the contract (3–6 months depending on the package). Leaving earlier is possible, but a refund of fees already paid is discussed individually — the final call sits with Seventy Times and depends on how much time and money have been put into the project and the reason for the early exit. The 90-day launch guarantee (50% setup back if we miss the launch) is a separate commitment and stands no matter what.',
+        text: 'The contract may set a minimum term for ongoing work. Leaving earlier is possible; a refund of fees already paid is discussed individually and depends on how far the work has progressed. Delivery deadlines are counted from the moment Seventy Times receives the materials a stage needs, and the task history records the sequence of hand-offs. If a deadline is missed through our fault, we compensate — a partial refund or a discount, agreed per situation.',
       },
       {
         heading: "Copy and branding",
@@ -755,7 +755,7 @@ const strings = {
     leadProgressAria: "Form progress",
     leadStepLabel: "Step {n} of {total}",
     leadStep1Sub: "Just two quick fields — your name and the easiest way to reach you.",
-    leadStep2Sub: "Tell us what you do, and pick a package if you already have one in mind.",
+    leadStep2Sub: "Tell us what you do and what you need — we'll figure out the rest together.",
     leadStep3Sub: "Last bit: what would you like us to help with? A few sentences is enough.",
     leadFillStep1: "Please fill in your name and contact",
     leadFillStep2: "Please tell us what you do",
