@@ -62,7 +62,22 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
-  // Legacy ?lang=ru|de|en|uk query: set the cookie and 308-redirect to
+  // Retired German locale: /de… URLs from old links, bookmarks and
+  // search results 301 to the English equivalent (the locale was
+  // removed; content no longer exists in German).
+  if (/^\/de(?:\/|$)/.test(req.nextUrl.pathname)) {
+    const url = req.nextUrl.clone();
+    url.pathname = req.nextUrl.pathname.replace(/^\/de/, "/en");
+    const res = NextResponse.redirect(url, 301);
+    res.cookies.set("lang", "en", {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+    });
+    return res;
+  }
+
+  // Legacy ?lang=ru|en|uk query: set the cookie and 308-redirect to
   // the locale-prefixed clean URL. Lets shared / hreflang links land on
   // the right language without polluting analytics with query strings.
   // ?lang=ua is accepted as an alias for uk (old shared links).
@@ -105,7 +120,7 @@ export function middleware(req: NextRequest) {
 
   // No locale prefix → always redirect to the default locale (English).
   // Browser Accept-Language is intentionally ignored: the agency operates
-  // in English first, RU/DE/UA are opt-in via the language switcher or
+  // in English first, RU/UA are opt-in via the language switcher or
   // a direct /ru / /uk / /ua URL. This keeps marketing analytics, ad-link
   // landings and shared screenshots predictable.
   // Set the cookie on the redirect itself so the very next request
