@@ -20,15 +20,17 @@ export default function Cases() {
 
   // In-progress work leads the grid, "soon" follows, and finished
   // (live) cases settle at the end. Array.sort is stable, so the
-  // authored order is preserved within each status group.
+  // authored order is preserved within each status group. The
+  // 2020–2021 "early experience" shelf renders separately below.
   const statusWeight: Record<CaseStatus, number> = {
     progress: 0,
     soon: 1,
     live: 2,
   };
-  const orderedCases = [...CASES].sort(
-    (a, b) => statusWeight[a.status] - statusWeight[b.status],
-  );
+  const mainCases = [...CASES]
+    .filter((c) => c.era !== "early")
+    .sort((a, b) => statusWeight[a.status] - statusWeight[b.status]);
+  const earlyCases = CASES.filter((c) => c.era === "early");
 
   return (
     <section id="cases" className={styles.section}>
@@ -61,7 +63,7 @@ export default function Cases() {
       </div>
 
       <div className={styles.grid}>
-        {orderedCases.map((item, i) => {
+        {mainCases.map((item, i) => {
           const card = caseCardContent(item, locale);
           return (
             <Reveal key={item.id} delay={i * 0.08}>
@@ -80,7 +82,7 @@ export default function Cases() {
             </Reveal>
           );
         })}
-        <Reveal delay={CASES.length * 0.08}>
+        <Reveal delay={mainCases.length * 0.08}>
           <PlaceholderCard
             href={`${localePath("/")}#lead`}
             title={t.casesPlaceholderTitle}
@@ -89,6 +91,38 @@ export default function Cases() {
           />
         </Reveal>
       </div>
+
+      {earlyCases.length > 0 && (
+        <div className={styles.earlyBlock}>
+          <Reveal>
+            <div className={styles.earlyHeader}>
+              <h3 className={styles.earlyTitle}>{t.casesEarlyTitle}</h3>
+              <p className={styles.earlyNote}>{t.casesEarlyNote}</p>
+            </div>
+          </Reveal>
+          <div className={styles.earlyGrid}>
+            {earlyCases.map((item, i) => {
+              const card = caseCardContent(item, locale);
+              return (
+                <Reveal key={item.id} delay={i * 0.08}>
+                  <CaseCard
+                    index={mainCases.length + i + 1}
+                    title={card.title}
+                    tag={card.tag}
+                    summary={card.summary}
+                    metrics={card.metrics}
+                    status={item.status}
+                    statusLabel={statusLabel[item.status]}
+                    location={card.regionLabel}
+                    ctaLabel={t.casesCta}
+                    href={localePath(`/cases/${item.id}`)}
+                  />
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

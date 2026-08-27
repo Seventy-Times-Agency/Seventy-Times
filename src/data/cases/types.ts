@@ -72,6 +72,9 @@ export type CaseItem = {
   status: CaseStatus;
   region: Region;
   url?: string;
+  /** "early" marks the 2020–2021 pre-war-Ukraine experience shelf —
+   *  rendered as a visually separate group that newer cases displace. */
+  era?: "early";
   study: CaseStudy;
 };
 

@@ -1,5 +1,10 @@
 import { u, type CaseItem } from "./types";
 
+// FLAGSHIP case — a live project. The build part below is complete;
+// the paid-ads part ships as data becomes available. The commented
+// skeleton at the bottom of `study` is the frame for those numbers:
+// the owner fills in the TODO values (and screenshots) from the real
+// ad account, then uncomments the blocks.
 export const eliteCarMats: CaseItem = {
     id: "elitecarmats",
     status: "progress",
@@ -220,10 +225,25 @@ export const eliteCarMats: CaseItem = {
         },
       ],
       insight: {
-        en: "Scope here was the storefront — design, build, catalog, payments and the admin panel. Paid acquisition is a separate, later phase, so this case is about what we've built so far rather than campaign numbers.",
-        ru: "Скоуп здесь — сама витрина: дизайн, разработка, каталог, оплата и админ-панель. Платное продвижение — отдельный, более поздний этап, поэтому кейс про то, что мы уже построили, а не про рекламные метрики.",
-        uk: "Скоуп тут — сама вітрина: дизайн, розробка, каталог, оплата та адмін-панель. Платне просування — окремий, пізніший етап, тому кейс про те, що ми вже побудували, а не про рекламні метрики.",
+        en: "Scope here started with the storefront — design, build, catalog, payments and the admin panel. Paid acquisition is the current phase: campaign numbers will be added to this case as real data accumulates.",
+        ru: "Скоуп начинался с витрины: дизайн, разработка, каталог, оплата и админ-панель. Платное продвижение — текущий этап: рекламные цифры появятся в кейсе по мере накопления реальных данных.",
+        uk: "Скоуп починався з вітрини: дизайн, розробка, каталог, оплата та адмін-панель. Платне просування — поточний етап: рекламні цифри з'являться в кейсі в міру накопичення реальних даних.",
       },
+
+      // ── Paid-ads results — TODO: owner fills from the real ad account ──
+      // Uncomment and complete when the numbers are ready. Screenshots go
+      // to /public/cases/elitecarmats/ and get wired into CaseStudyDetail.
+      //
+      // breakdown: {
+      //   heading: { en: "Ad campaign", ru: "Рекламная кампания", uk: "Рекламна кампанія" },
+      //   rows: [
+      //     { label: { en: "Period", ru: "Период", uk: "Період" }, value: u("TODO") },
+      //     { label: { en: "Monthly ad budget", ru: "Бюджет в месяц", uk: "Бюджет на місяць" }, value: u("TODO") },
+      //     { label: { en: "Impressions / clicks", ru: "Показы / клики", uk: "Покази / кліки" }, value: u("TODO") },
+      //     { label: { en: "Orders attributed", ru: "Заказы из рекламы", uk: "Замовлення з реклами" }, value: u("TODO") },
+      //     { label: { en: "CPA", ru: "CPA", uk: "CPA" }, value: u("TODO") },
+      //   ],
+      // },
       stack: [
         "Next.js 16",
         "React 19",

@@ -406,3 +406,54 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+
+/* ── Early-experience shelf (2020–2021) ─────────────────── */
+/* Visually separated from the main grid: its own divider,
+   muted header, slightly smaller cards. Mobile-first. */
+
+.earlyBlock {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px dashed var(--line-strong);
+}
+
+.earlyHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.earlyTitle {
+  font-size: var(--fs-mini);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+}
+
+.earlyNote {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 520px;
+}
+
+.earlyGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 768px) {
+  .earlyBlock {
+    margin-top: 64px;
+    padding-top: 40px;
+  }
+
+  .earlyGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+}

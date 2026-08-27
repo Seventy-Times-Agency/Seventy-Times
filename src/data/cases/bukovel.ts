@@ -1,9 +1,14 @@
 import { u, type CaseItem } from "./types";
 
+// Early-experience case (pre-war Ukraine market). Deliberately
+// descriptive and number-free: the campaign data from that period was
+// not preserved, so we describe what was done, when and where — and
+// claim nothing we cannot back up.
 export const bukovel: CaseItem = {
     id: "bukovel",
     status: "live",
     region: "europe",
+    era: "early",
     study: {
       accent: "#60A5FA",
       title: {
@@ -11,181 +16,70 @@ export const bukovel: CaseItem = {
         ru: "Курорты Буковеля",
         uk: "Курорти Буковеля",
       },
-      tag: u("META ADS · HOSPITALITY"),
+      tag: u("META ADS · UKRAINE · 2020–2021"),
       summary: {
-        en: "Two winter-resort clients in Bukovel. A 1.5-month Meta campaign on a combined $2,000 budget sold out the season for both — with average bookings of $500–1,500.",
-        ru: "Два клиента — зимние курорты в Буковеле. Кампания в Meta за 1,5 месяца на совокупном бюджете $2 000 распродала сезон у обоих — при средней броне $500–1 500.",
-        uk: "Два клієнти — зимові курорти в Буковелі. Кампанія в Meta за 1,5 місяця на сукупному бюджеті $2 000 розпродала сезон в обох — за середньої броні $500–1 500.",
+        en: "Two winter-resort clients in Bukovel, Ukraine's biggest ski destination — an early project from the 2020–2021 period. We ran seasonal Meta Ads campaigns for both: creatives produced from the resorts' raw materials, audiences built around the winter-holiday demand window. Campaign data from that period wasn't preserved, so this case is descriptive by choice.",
+        ru: "Два клиента — зимние курорты в Буковеле, крупнейшем горнолыжном направлении Украины. Ранний проект периода 2020–2021. Мы вели сезонные кампании Meta Ads для обоих: креативы собирали из исходников курортов, аудитории строили под окно зимнего спроса. Данные кампаний того периода не сохранились, поэтому кейс намеренно описательный.",
+        uk: "Два клієнти — зимові курорти в Буковелі, найбільшому гірськолижному напрямку України. Ранній проєкт періоду 2020–2021. Ми вели сезонні кампанії Meta Ads для обох: креативи збирали з вихідних матеріалів курортів, аудиторії будували під вікно зимового попиту. Дані кампаній того періоду не збереглися, тому кейс навмисно описовий.",
       },
       metrics: [
         {
-          en: "2 resorts sold out",
-          ru: "2 курорта распроданы",
-          uk: "2 курорти розпродані",
+          en: "2 winter-resort clients",
+          ru: "2 клиента-курорта",
+          uk: "2 клієнти-курорти",
         },
         {
-          en: "$2,000 combined budget",
-          ru: "$2 000 совокупный бюджет",
-          uk: "$2 000 сукупний бюджет",
+          en: "Seasonal Meta Ads campaigns",
+          ru: "Сезонные кампании Meta Ads",
+          uk: "Сезонні кампанії Meta Ads",
         },
         {
-          en: "$500–1,500 avg booking",
-          ru: "$500–1 500 средняя бронь",
-          uk: "$500–1 500 середня броня",
+          en: "Pre-war Ukraine market, 2020–2021",
+          ru: "Довоенный рынок Украины, 2020–2021",
+          uk: "Довоєнний ринок України, 2020–2021",
         },
       ],
       headline: {
-        en: "Season sold out",
-        ru: "Сезон распродан",
-        uk: "Сезон розпродано",
+        en: "Seasonal campaigns for two resorts",
+        ru: "Сезонные кампании для двух курортов",
+        uk: "Сезонні кампанії для двох курортів",
       },
       meta: {
-        en: "2 resort clients · $2,000 combined budget · 1.5 months",
-        ru: "2 клиента-курорта · бюджет $2 000 · 1,5 месяца",
-        uk: "2 клієнти-курорти · бюджет $2 000 · 1,5 місяця",
+        en: "Ukraine · 2020–2021 · winter season · 2 clients",
+        ru: "Украина · 2020–2021 · зимний сезон · 2 клиента",
+        uk: "Україна · 2020–2021 · зимовий сезон · 2 клієнти",
       },
       niche: {
-        en: "Hospitality · Europe · Winter",
-        ru: "Гостеприимство · Европа · Зима",
-        uk: "Гостинність · Європа · Зима",
-      },
-      stats: [
-        {
-          value: "$800",
-          label: {
-            en: "Client 1 budget",
-            ru: "Бюджет клиента 1",
-            uk: "Бюджет клієнта 1",
-          },
-        },
-        {
-          value: "$1,200",
-          label: {
-            en: "Client 2 budget",
-            ru: "Бюджет клиента 2",
-            uk: "Бюджет клієнта 2",
-          },
-        },
-        {
-          value: "$500–1.5k",
-          label: {
-            en: "Avg booking",
-            ru: "Средняя бронь",
-            uk: "Середня броня",
-          },
-        },
-        {
-          value: "2×",
-          label: {
-            en: "Sold out",
-            ru: "Распродано",
-            uk: "Розпродано",
-          },
-        },
-      ],
-      clients: {
-        heading: {
-          en: "Campaign breakdown",
-          ru: "Разбивка кампании",
-          uk: "Розбивка кампанії",
-        },
-        items: [
-          {
-            label: {
-              en: "Client 1 · Private chalet base",
-              ru: "Клиент 1 · Частная база шале",
-              uk: "Клієнт 1 · Приватна база шале",
-            },
-            rows: [
-              {
-                label: {
-                  en: "Budget",
-                  ru: "Бюджет",
-                  uk: "Бюджет",
-                },
-                value: u("$800"),
-              },
-              {
-                label: {
-                  en: "Result",
-                  ru: "Результат",
-                  uk: "Результат",
-                },
-                value: {
-                  en: "Fully booked",
-                  ru: "Полностью заполнен",
-                  uk: "Повністю заповнений",
-                },
-              },
-            ],
-          },
-          {
-            label: {
-              en: "Client 2 · Mountain resort",
-              ru: "Клиент 2 · Горный курорт",
-              uk: "Клієнт 2 · Гірський курорт",
-            },
-            rows: [
-              {
-                label: {
-                  en: "Budget",
-                  ru: "Бюджет",
-                  uk: "Бюджет",
-                },
-                value: u("$1,200"),
-              },
-              {
-                label: {
-                  en: "Result",
-                  ru: "Результат",
-                  uk: "Результат",
-                },
-                value: {
-                  en: "Fully booked",
-                  ru: "Полностью заполнен",
-                  uk: "Повністю заповнений",
-                },
-              },
-            ],
-          },
-        ],
-        resultLabel: {
-          en: "Final result",
-          ru: "Итоговый результат",
-          uk: "Підсумковий результат",
-        },
-        result: {
-          en: "Both clients · seasonal capacity sold out",
-          ru: "Оба клиента · сезонная ёмкость распродана",
-          uk: "Обидва клієнти · сезонна спроможність розпродана",
-        },
+        en: "Hospitality · Ukraine · Winter",
+        ru: "Гостеприимство · Украина · Зима",
+        uk: "Гостинність · Україна · Зима",
       },
       breakdown: {
         heading: {
-          en: "Campaign details",
-          ru: "Детали кампании",
-          uk: "Деталі кампанії",
+          en: "What we did",
+          ru: "Что делали",
+          uk: "Що робили",
         },
         rows: [
           {
             label: {
-              en: "Avg booking value",
-              ru: "Средняя стоимость брони",
-              uk: "Середня вартість броні",
+              en: "Clients",
+              ru: "Клиенты",
+              uk: "Клієнти",
             },
-            value: u("$500–$1,500"),
+            value: {
+              en: "A private chalet base and a mountain resort",
+              ru: "Частная база шале и горный курорт",
+              uk: "Приватна база шале та гірський курорт",
+            },
           },
           {
             label: {
-              en: "Campaign duration",
-              ru: "Длительность кампании",
-              uk: "Тривалість кампанії",
+              en: "Channel",
+              ru: "Канал",
+              uk: "Канал",
             },
-            value: {
-              en: "1.5 months",
-              ru: "1,5 месяца",
-              uk: "1,5 місяця",
-            },
+            value: u("Meta Ads"),
           },
           {
             label: {
@@ -194,12 +88,29 @@ export const bukovel: CaseItem = {
               uk: "Креативи",
             },
             value: {
-              en: "From raw materials",
-              ru: "Из исходников",
-              uk: "З вихідних матеріалів",
+              en: "Produced from the resorts' raw materials",
+              ru: "Собраны из исходников курортов",
+              uk: "Зібрані з вихідних матеріалів курортів",
+            },
+          },
+          {
+            label: {
+              en: "Period",
+              ru: "Период",
+              uk: "Період",
+            },
+            value: {
+              en: "Winter season, 2020–2021 · pre-war Ukraine market",
+              ru: "Зимний сезон, 2020–2021 · довоенный рынок Украины",
+              uk: "Зимовий сезон, 2020–2021 · довоєнний ринок України",
             },
           },
         ],
+      },
+      insight: {
+        en: "The campaign numbers from that period weren't preserved, so we don't quote any. What the case shows is the kind of work: seasonal demand, two clients in one destination, creatives and targeting built for a short, high-intent booking window.",
+        ru: "Цифры кампаний того периода не сохранились, поэтому мы их не называем. Кейс показывает сам тип работы: сезонный спрос, два клиента в одном направлении, креативы и таргетинг под короткое окно горячего бронирования.",
+        uk: "Цифри кампаній того періоду не збереглися, тому ми їх не називаємо. Кейс показує сам тип роботи: сезонний попит, два клієнти в одному напрямку, креативи й таргетинг під коротке вікно гарячого бронювання.",
       },
       services: [
         {

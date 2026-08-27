@@ -431,6 +431,9 @@ const strings = {
     casesStatusLive: "В продакшене",
     casesStatusProgress: "В разработке",
     casesStatusSoon: "Скоро",
+    casesEarlyTitle: "Ранний опыт · 2020–2021",
+    casesEarlyNote:
+      "Довоенный рынок Украины — проекты, с которых начиналась команда. Эту полку постепенно вытесняют новые кейсы.",
     casesCta: "Посмотреть кейс",
     casesCtaSoon: "Кейс готовится",
     casesPlaceholderTitle: "Ваш проект здесь",
