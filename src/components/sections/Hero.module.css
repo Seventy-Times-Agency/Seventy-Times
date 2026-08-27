@@ -339,6 +339,13 @@
     padding-top: 26px;
   }
 
+/* Mobile diet: only the first two hero rings render on phones —
+   the strip stays one compact row. Restored at 901px+. */
+
+.stats > *:nth-child(n + 3) {
+    display: none;
+  }
+
 .statValue {
     font-size: clamp(26px, 6vw, 38px);
   }
@@ -387,6 +394,9 @@
 @media (min-width: 901px) {
   .hero {
     padding: 120px 48px 80px;
+  }
+  .stats > *:nth-child(n + 3) {
+    display: flex;
   }
   .heroWordmark {
     font-size: clamp(260px, 38vw, 600px);

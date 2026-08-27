@@ -9,8 +9,15 @@ import SectionWatermark from "@/components/decor/SectionWatermark";
 import { useT } from "@/i18n/context";
 import styles from "@/components/sections/FAQ.module.css";
 
+const MOBILE_VISIBLE = 5;
+
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  // Mobile diet: only the first 5 questions render visibly on phones;
+  // the rest sit behind a "show all" toggle. Desktop always shows all
+  // (the toggle button is display:none at 901+ and the clamp class
+  // only applies under the mobile media query).
+  const [showAll, setShowAll] = useState(false);
   const { t } = useT();
   const btnRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -78,7 +85,11 @@ export default function FAQ() {
         </div>
         <Reveal delay={0.1}>
           <div className={styles.listWrap}>
-          <div className={styles.list}>
+          <div
+            className={`${styles.list}${
+              showAll ? "" : ` ${styles.listClamped}`
+            }`}
+          >
             {items.map((item, i) => {
               const isOpen = openIndex === i;
               const num = String(i + 1).padStart(2, "0");
@@ -110,6 +121,15 @@ export default function FAQ() {
               );
             })}
           </div>
+          <button
+            type="button"
+            className={styles.showAllBtn}
+            onClick={() => setShowAll((v) => !v)}
+            aria-expanded={showAll}
+          >
+            {showAll ? t.faqShowLess : t.faqShowAll}
+            <span aria-hidden="true"> {showAll ? "−" : "+"}</span>
+          </button>
           <div className={styles.still}>
             <span className={styles.stillText}>{t.faqStill}</span>
             <a href="#lead" className={styles.stillCta}>

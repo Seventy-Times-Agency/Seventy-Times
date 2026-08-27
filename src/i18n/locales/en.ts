@@ -254,6 +254,8 @@ const strings = {
       "The most common things people ask before getting started. Didn't find your answer? Reach out — we reply within an hour on weekdays, or within 24 hours on weekends.",
     faqNote: "Need a faster answer?",
     faqNoteLink: "Message us on Telegram →",
+    faqShowAll: "Show all questions",
+    faqShowLess: "Show fewer questions",
     faqStill: "Don't see your question?",
     faqStillCta: "Ask us directly →",
     faq1q: "How much do your services cost?",
@@ -297,6 +299,8 @@ const strings = {
       "Yes, we sign a standard mutual NDA before any work starts. All project information stays confidential.",
 
     // Growth Simulator (levels-based with concrete descriptions)
+    simExpand: "Open the ROI simulator",
+    simCollapse: "Hide the simulator",
     simEyebrow: "— 70× ROI Simulator",
     simTitle1: "Build",
     simTitle2: "your",

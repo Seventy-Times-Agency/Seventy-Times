@@ -82,7 +82,7 @@ export default function Cases() {
             </Reveal>
           );
         })}
-        <Reveal delay={mainCases.length * 0.08}>
+        <Reveal delay={mainCases.length * 0.08} className={styles.placeholderSlot}>
           <PlaceholderCard
             href={`${localePath("/")}#lead`}
             title={t.casesPlaceholderTitle}

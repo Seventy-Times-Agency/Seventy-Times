@@ -259,6 +259,25 @@
     font-size: 10px;
     letter-spacing: 0.22em;
     color: var(--accent);
+    /* Accordion trigger on mobile: full-width tappable row. */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: 0;
+    text-align: left;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+.rowChevron {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-dim);
+    line-height: 1;
   }
 
 .cell {
@@ -280,7 +299,7 @@
 
 /* The 3rd + 4th cells (Agency / Freelancer) compress into a single
      muted line. Add their labels via pseudo-content. Hidden by
-     default — the section-level toggle adds .sectionShowAlts to
+     default — tapping the row (accordion) adds .rowOpen to
      reveal them. */
 
 .cell:nth-child(3),
@@ -291,8 +310,8 @@
     padding-top: 2px;
   }
 
-.sectionShowAlts .cell:nth-child(3),
-  .sectionShowAlts .cell:nth-child(4) {
+.rowOpen .cell:nth-child(3),
+  .rowOpen .cell:nth-child(4) {
     display: flex;
   }
 
@@ -314,11 +333,7 @@
     margin-right: 4px;
   }
 
-/* Show the "Show alternatives" toggle on mobile only. */
 
-.altsToggle {
-    display: inline-flex;
-  }
 
 /*  901px and up — restores the desktop values overridden above.  */
 
@@ -363,6 +378,13 @@
     font-size: 13px;
     letter-spacing: 0.06em;
     color: var(--text-dim);
+    cursor: default;
+    pointer-events: none;
+    text-transform: none;
+    font-weight: 500;
+  }
+  .rowChevron {
+    display: none;
   }
   .cell {
     padding: 18px 18px;
@@ -385,10 +407,6 @@
     font-size: 14px;
     color: var(--text-muted);
     padding-top: 18px;
-  }
-  .sectionShowAlts .cell:nth-child(3),
-  .sectionShowAlts .cell:nth-child(4) {
-    display: flex;
   }
   .cell:nth-child(3)::before {
     content: revert;
