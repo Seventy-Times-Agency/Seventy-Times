@@ -435,9 +435,6 @@ const strings = {
     casesStatusLive: "Live",
     casesStatusProgress: "In development",
     casesStatusSoon: "Soon",
-    casesEarlyTitle: "Early experience · 2020–2021",
-    casesEarlyNote:
-      "Pre-war Ukraine market — the projects the team started with. This shelf gets displaced as newer cases land.",
     casesCta: "Open case",
     casesCtaSoon: "Case in progress",
     casesPlaceholderTitle: "Your project here",

@@ -18,19 +18,22 @@ export default function Cases() {
     soon: t.casesStatusSoon,
   };
 
-  // In-progress work leads the grid, "soon" follows, and finished
-  // (live) cases settle at the end. Array.sort is stable, so the
-  // authored order is preserved within each status group. The
-  // 2020–2021 "early experience" shelf renders separately below.
+  // One grid for every case. Current work leads (in-progress → soon →
+  // live) and the 2020–2021 "early" projects sort last, but they share
+  // the same shelf: each of those cards already carries a
+  // "· 2020–2021" tag, so the period reads off the card itself and a
+  // separate captioned block would only cost vertical space. Array.sort
+  // is stable, so the authored order survives within each group.
   const statusWeight: Record<CaseStatus, number> = {
     progress: 0,
     soon: 1,
     live: 2,
   };
-  const mainCases = [...CASES]
-    .filter((c) => c.era !== "early")
-    .sort((a, b) => statusWeight[a.status] - statusWeight[b.status]);
-  const earlyCases = CASES.filter((c) => c.era === "early");
+  const cases = [...CASES].sort(
+    (a, b) =>
+      Number(a.era === "early") - Number(b.era === "early") ||
+      statusWeight[a.status] - statusWeight[b.status],
+  );
 
   return (
     <section id="cases" className={styles.section}>
@@ -63,7 +66,7 @@ export default function Cases() {
       </div>
 
       <div className={styles.grid}>
-        {mainCases.map((item, i) => {
+        {cases.map((item, i) => {
           const card = caseCardContent(item, locale);
           return (
             <Reveal key={item.id} delay={i * 0.08}>
@@ -82,7 +85,7 @@ export default function Cases() {
             </Reveal>
           );
         })}
-        <Reveal delay={mainCases.length * 0.08} className={styles.placeholderSlot}>
+        <Reveal delay={cases.length * 0.08} className={styles.placeholderSlot}>
           <PlaceholderCard
             href={`${localePath("/")}#lead`}
             title={t.casesPlaceholderTitle}
@@ -91,38 +94,6 @@ export default function Cases() {
           />
         </Reveal>
       </div>
-
-      {earlyCases.length > 0 && (
-        <div className={styles.earlyBlock}>
-          <Reveal>
-            <div className={styles.earlyHeader}>
-              <h3 className={styles.earlyTitle}>{t.casesEarlyTitle}</h3>
-              <p className={styles.earlyNote}>{t.casesEarlyNote}</p>
-            </div>
-          </Reveal>
-          <div className={styles.earlyGrid}>
-            {earlyCases.map((item, i) => {
-              const card = caseCardContent(item, locale);
-              return (
-                <Reveal key={item.id} delay={i * 0.08}>
-                  <CaseCard
-                    index={mainCases.length + i + 1}
-                    title={card.title}
-                    tag={card.tag}
-                    summary={card.summary}
-                    metrics={card.metrics}
-                    status={item.status}
-                    statusLabel={statusLabel[item.status]}
-                    location={card.regionLabel}
-                    ctaLabel={t.casesCta}
-                    href={localePath(`/cases/${item.id}`)}
-                  />
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      )}
     </section>
   );
 }
