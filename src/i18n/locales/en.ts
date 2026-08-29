@@ -616,7 +616,7 @@ const strings = {
       },
       {
         heading: "Where it is stored",
-        text: 'Requests and reviews are forwarded to our internal Telegram chat, saved to our CRM (Notion), and emailed to us (via Resend). Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Vanessa is processed via the Anthropic API to generate responses, and chat turns may be logged to our CRM (Notion).',
+        text: 'Requests and reviews are forwarded to our internal Telegram channel and emailed to us (via Resend). Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Vanessa is processed via the Anthropic API to generate responses.',
       },
       {
         heading: "How long we keep it",
@@ -720,7 +720,7 @@ const strings = {
     imprintPhone: "Phone",
     imprintTransferHeading: "International data transfers",
     imprintTransferText:
-      "Some data you submit (through the forms or the chat) is processed by service providers in the United States — Anthropic (the AI assistant), Telegram, Notion, Resend and Vercel. These transfers rely on the EU Standard Contractual Clauses and, where applicable, the EU–US Data Privacy Framework. This section will be finalized with legal counsel.",
+      "Some data you submit (through the forms or the chat) is processed by service providers in the United States — Anthropic (the AI assistant), Telegram, Resend and Vercel. These transfers rely on the EU Standard Contractual Clauses and, where applicable, the EU–US Data Privacy Framework. This section will be finalized with legal counsel.",
 
     // Cookie consent banner
     cookieTitle: "Cookies",

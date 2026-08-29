@@ -7,7 +7,6 @@ import Services from "@/components/sections/Services";
 import Footer from "@/components/chrome/Footer";
 import SectionDivider from "@/components/decor/SectionDivider";
 import StructuredData from "@/components/seo/StructuredData";
-import { fetchApprovedReviews } from "@/lib/notion";
 
 // Below-fold sections — code-split so the initial route bundle stays
 // lean. Still SSR'd (no `ssr: false`) so search engines and the first
@@ -25,13 +24,11 @@ const GrowthSimulator = dynamic(
 const FAQ = dynamic(() => import("@/components/sections/FAQ"));
 const CTA = dynamic(() => import("@/components/sections/CTA"));
 
-// Re-build the page (and refresh the approved reviews list) every 10
-// minutes. Keeps the testimonials carousel current without paying the
-// Notion roundtrip on every request.
-export const revalidate = 600;
-
 export default async function HomePage() {
-  const reviews = await fetchApprovedReviews();
+  // Approved reviews had their store removed together with the Notion
+  // integration; the Testimonials section stays in the codebase and
+  // lights up again as soon as a reviews source returns entries here.
+  const reviews: import("@/components/sections/Testimonials").ApprovedReview[] = [];
 
   return (
     <>

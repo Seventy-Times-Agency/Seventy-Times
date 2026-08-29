@@ -35,7 +35,6 @@ const BOTTOM_ITEMS = [
   "Python",
   "Stripe",
   "Vercel",
-  "Notion API",
   "Telegram Bot API",
   "n8n",
   "Make.com",

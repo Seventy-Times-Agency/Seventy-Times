@@ -18,7 +18,7 @@ This file is the short orientation map. Read it first when opening the repo.
 | Styling | CSS Modules + `src/app/globals.css` design tokens |
 | Animation | Framer Motion + Lenis smooth scroll |
 | AI chat | `@anthropic-ai/sdk` (server-side only, streaming) |
-| CRM fan-out | Telegram Bot API + Notion REST API + Resend email |
+| Lead fan-out | Telegram Bot API (requests channel) + Resend email |
 | Hosting | Vercel |
 
 ---
@@ -33,8 +33,8 @@ src/
 │   │   │                         Vanessa + tool use (submit_lead /
 │   │   │                         open_lead_form) so she can close & hand off
 │   │   ├── lead/route.ts         /api/lead — lead + callback form → Telegram
-│   │   │                         + Notion + email
-│   │   ├── review/route.ts       /api/review — review form → Telegram + Notion
+│   │   │                         + email
+│   │   ├── review/route.ts       /api/review — review form → Telegram
 │   │   └── error/route.ts        /api/error — sink for client-side errors
 │   ├── [locale]/                 Every public URL is locale-prefixed
 │   │   │                         (/en, /ru, /uk + their subpages)
@@ -136,11 +136,9 @@ src/
 │   ├── apiGuard.ts               Origin check, rate limit, honeypot, dedup
 │   ├── fetchWithTimeout.ts       fetch() with an enforced timeout
 │   ├── telegram.ts               Telegram MarkdownV2 escape + sendMessage
-│   ├── notion.ts                 Notion REST helpers (lead/review/chat create,
-│   │                             approved-reviews query)
 │   ├── email.ts                  Resend email fallback for leads/reviews
 │   ├── leadDelivery.ts           Shared deliverLead() fan-out (Telegram +
-│   │                             Notion + email) used by /api/lead and the
+│   │                             email) used by /api/lead and the
 │   │                             /api/chat submit_lead tool
 │   ├── localizedMeta.ts          Per-locale metadata getters +
 │   │                             languageAlternates() hreflang helper
@@ -150,8 +148,7 @@ src/
 │   │                             + soft-closer sales playbook)
 │   ├── contactValidation.ts      isPlausibleContact() shared by forms
 │   ├── leadDraft.ts              localStorage helpers + LeadPackage/LeadBudget
-│   │                             types & validators (also used by /api/lead
-│   │                             and notion.ts)
+│   │                             types & validators (also used by /api/lead)
 │   └── reviewDraft.ts            Same, for the review form
 │
 └── middleware.ts                 Locale-prefix detection + redirect of /
@@ -231,7 +228,7 @@ localized strings via the dictionary (e.g. `401 → t.reviewInvalidCode`,
 `429 → t.leadTooMany`). Server text is never displayed directly to the user.
 
 ### Lead / review fan-out
-`POST /api/lead` and `POST /api/review` fan out to Telegram, Notion and
+`POST /api/lead` and `POST /api/review` fan out to Telegram and
 email (Resend) in parallel via `Promise.allSettled`, **after** the
 response is sent (`after()` from `next/server`). A failing channel never
 blocks the user's success response; each helper returns a boolean and
@@ -245,8 +242,7 @@ newline (`{"text":"..."}` per token, `{"done":true}` at the end,
 `{"error":"UPSTREAM_ERROR"}` on failure, or `{"action":"open_form"}` /
 `{"action":"lead_captured"}` for tool side-effects). The widget reads the
 body via a `ReadableStream` reader and appends each text delta to the live
-assistant bubble. Turns are logged to the Notion chats database when
-configured.
+assistant bubble.
 
 **Vanessa is a closer, not just a consultant.** The chat route gives
 Claude two tools and runs an agent loop (stream → if `stop_reason` is
@@ -254,7 +250,7 @@ Claude two tools and runs an agent loop (stream → if `stop_reason` is
 at `MAX_TOOL_ROUNDS`):
 - `submit_lead` — captures a contact mid-conversation and fans it out
   through the **same** `deliverLead()` pipeline the forms use (so chat
-  leads land in Telegram/Notion/email, tagged `source: "chat"` /
+  leads land in Telegram/email, tagged `source: "chat"` /
   "Vanessa chat"). Validated like `/api/lead` (plausible contact, length
   caps, dedup); the widget reflects `{"action":"lead_captured"}`.
 - `open_lead_form` — emits `{"action":"open_form"}`; the widget sets
@@ -264,11 +260,11 @@ Vanessa's sales behaviour (qualify → pain → result → soft hand-off, never
 quote a price) lives in `lib/systemPrompt.ts`.
 
 ### Lead delivery (shared fan-out)
-`lib/leadDelivery.ts` owns the Telegram + Notion + email fan-out via
+`lib/leadDelivery.ts` owns the Telegram + email fan-out via
 `deliverLead(lead, { duplicate, kind, locale, source })`. Both `/api/lead`
 (`source: "website"`, fired in `after()`) and the `/api/chat` `submit_lead`
 tool (`source: "chat"`, awaited so Vanessa can confirm or fall back) call
-it. Telegram + email always fire; Notion is skipped on a duplicate. Returns
+it. Telegram + email always fire (duplicates are tagged). Returns
 whether any channel succeeded.
 
 ### Form draft persistence
@@ -362,10 +358,6 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 | `ALLOWED_ORIGINS` | Comma-separated origins allowed to call /api/* |
 | `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` | Forward leads/reviews to Telegram |
 | `CLIENT_CODES` | Comma-separated codes for the review form |
-| `NOTION_TOKEN` | Internal integration secret for the Notion CRM |
-| `NOTION_DATABASE_LEADS_ID` | Target Notion database for leads |
-| `NOTION_DATABASE_REVIEWS_ID` | Target Notion database for reviews |
-| `NOTION_DATABASE_CHATS_ID` | Target Notion database for chat-turn logging |
 | `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` (+ `RESEND_FROM`) | Email fallback channel |
 | `VERCEL_URL` / `VERCEL_BRANCH_URL` / `VERCEL_PROJECT_PRODUCTION_URL` | Auto-set by Vercel; origin checks trust these hostnames |
 | `VERCEL_GIT_COMMIT_SHA` / `NEXT_PUBLIC_BUILD_ID` | Auto-set / optional; versions the service-worker cache |

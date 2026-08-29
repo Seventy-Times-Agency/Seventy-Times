@@ -35,32 +35,32 @@ export type LeadDraft = {
  * Single source of truth for how each interest / budget enum renders in
  * the two downstream surfaces:
  *   - `ru` — the Russian-labelled Telegram/email notification the team reads
- *   - `notion` — the English `select` option name in the Notion CRM
+ *   - `en` — the English label (kept for any future English-facing surface)
  *
- * Keeping both maps here (next to the types) means `leadDelivery.ts` and
- * `notion.ts` import one definition instead of drifting copies, and the
+ * Keeping both maps here (next to the types) means every consumer
+ * imports one definition instead of drifting copies, and the
  * type-guard key lists are derived from these same objects.
  */
 export const PACKAGE_LABELS: Record<
   LeadPackage,
-  { ru: string; notion: string }
+  { ru: string; en: string }
 > = {
-  not_sure: { ru: "Пока не уверен", notion: "Not sure" },
-  standalone: { ru: "Одна услуга", notion: "Single service" },
-  ads: { ru: "Реклама", notion: "Ads" },
-  site: { ru: "Сайт / лендинг", notion: "Website" },
-  ai_bot: { ru: "AI-бот / автоматизация", notion: "AI bot / automation" },
+  not_sure: { ru: "Пока не уверен", en: "Not sure" },
+  standalone: { ru: "Одна услуга", en: "Single service" },
+  ads: { ru: "Реклама", en: "Ads" },
+  site: { ru: "Сайт / лендинг", en: "Website" },
+  ai_bot: { ru: "AI-бот / автоматизация", en: "AI bot / automation" },
 };
 
 export const BUDGET_LABELS: Record<
   LeadBudget,
-  { ru: string; notion: string }
+  { ru: string; en: string }
 > = {
-  not_sure: { ru: "Не уверен", notion: "Not sure" },
-  under_1k: { ru: "до $1 000 / мес", notion: "<$1k/mo" },
-  "1k_3k": { ru: "$1 000–3 000 / мес", notion: "$1k–3k/mo" },
-  "3k_10k": { ru: "$3 000–10 000 / мес", notion: "$3k–10k/mo" },
-  "10k_plus": { ru: "$10 000+ / мес", notion: "$10k+/mo" },
+  not_sure: { ru: "Не уверен", en: "Not sure" },
+  under_1k: { ru: "до $1 000 / мес", en: "<$1k/mo" },
+  "1k_3k": { ru: "$1 000–3 000 / мес", en: "$1k–3k/mo" },
+  "3k_10k": { ru: "$3 000–10 000 / мес", en: "$3k–10k/mo" },
+  "10k_plus": { ru: "$10 000+ / мес", en: "$10k+/mo" },
 };
 
 // hasOwnProperty, not `in`: `in` walks the prototype chain, so hostile

@@ -1,6 +1,6 @@
 /**
  * Resend email helper — fire-and-forget. Used as a fallback channel
- * for /api/lead and /api/review when Telegram and Notion are both
+ * for /api/lead and /api/review when Telegram is
  * unavailable, so a submission never silently disappears.
  *
  * Set RESEND_API_KEY and LEAD_NOTIFY_EMAIL to enable. Without them,
@@ -49,7 +49,7 @@ export async function sendEmail({
         text,
         reply_to: replyTo,
       }),
-      // Match the 7s ceiling telegram/notion use, rather than the
+      // Match the 7s ceiling telegram uses, rather than the
       // fetchWithTimeout default of 5s — email is the fallback channel
       // and a slightly longer wait is worth not dropping a lead.
       timeoutMs: 7000,

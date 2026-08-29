@@ -206,7 +206,7 @@ export async function POST(req: Request) {
   }
 
   // Fan out to side channels after the response is sent. Without this,
-  // a slow Telegram/Notion/Email upstream made the user wait for the
+  // a slow Telegram/Email upstream made the user wait for the
   // slowest one — even though `fetchWithTimeout` caps each at 5s, that
   // is still up to 5s of perceived form latency per channel.
   after(() =>

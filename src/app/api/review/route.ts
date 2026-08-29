@@ -15,7 +15,6 @@ import {
   isTelegramConfigured,
   sendTelegramMessage,
 } from "@/lib/telegram";
-import { isNotionReviewsConfigured, sendReviewToNotion } from "@/lib/notion";
 import { isEmailConfigured, sendEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
@@ -171,15 +170,14 @@ export async function POST(req: Request) {
   }
 
   const telegramOn = isTelegramConfigured();
-  const notionOn = isNotionReviewsConfigured();
   const emailOn = isEmailConfigured();
 
   console.log("[REVIEW] accepted", {
     at: new Date().toISOString(),
-    channels: { telegram: telegramOn, notion: notionOn, email: emailOn },
+    channels: { telegram: telegramOn, email: emailOn },
   });
 
-  if (!telegramOn && !notionOn && !emailOn) {
+  if (!telegramOn && !emailOn) {
     console.error("[REVIEW] no outbound channels configured — refusing");
     return NextResponse.json(
       { error: "NOT_CONFIGURED" },
@@ -190,13 +188,12 @@ export async function POST(req: Request) {
   after(async () => {
     const results = await Promise.allSettled([
       notifyTelegram({ name, role, location, content }, code),
-      sendReviewToNotion({ name, role, location, content, code }),
       sendEmail({
         subject: `Review: ${name}`,
         text: buildEmailText({ name, role, location, content }, code),
       }),
     ]);
-    const channels = ["telegram", "notion", "email"] as const;
+    const channels = ["telegram", "email"] as const;
     results.forEach((r, i) => {
       if (r.status === "rejected") {
         console.error(`[REVIEW] channel ${channels[i]} threw`, {

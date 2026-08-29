@@ -27,7 +27,7 @@ const PHONE_RE = /^[+()\d][\d\s().\-]{6,}$/;
  * Compact "request a call" modal. Trigger by setting the URL hash to
  * `#callback` (e.g. <a href="#callback">). Only asks for name + phone
  * + an optional note, then posts to /api/lead with kind="callback" so
- * the same fan-out (Telegram, Notion, email) handles both channels.
+ * the same fan-out (Telegram, email) handles both channels.
  */
 export default function CallbackForm() {
   const { t, localePath } = useT();
@@ -92,7 +92,7 @@ export default function CallbackForm() {
             name,
             // /api/lead requires `contact`, `business`, `request`. We
             // populate them in a way the team can recognise instantly
-            // in Telegram / Notion as a callback request.
+            // in Telegram as a callback request.
             contact: phone,
             phone,
             business: t.callbackBusinessFiller,

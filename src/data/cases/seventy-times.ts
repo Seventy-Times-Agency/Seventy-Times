@@ -82,9 +82,9 @@ export const seventyTimes: CaseItem = {
         {
           icon: "✉️",
           text: {
-            en: "Captured leads fan out to Telegram, Notion & email in real time",
-            ru: "Захваченные лиды уходят в Telegram, Notion и на почту в реальном времени",
-            uk: "Захоплені ліди йдуть у Telegram, Notion і на пошту в реальному часі",
+            en: "Captured leads land in the team's Telegram in real time",
+            ru: "Захваченные лиды прилетают команде в Telegram в реальном времени",
+            uk: "Захоплені ліди прилітають команді в Telegram у реальному часі",
           },
         },
       ],

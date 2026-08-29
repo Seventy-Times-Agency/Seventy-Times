@@ -15,7 +15,7 @@ import styles from "@/components/landing/OfferLanding.module.css";
  * /go/brief). All copy and offer values come from `data/offers.ts` —
  * this component only lays them out. On mount it tags the visitor
  * (landing=audit|brief) so every lead they submit afterwards carries
- * the source into Telegram / Notion / email.
+ * the source into Telegram / email.
  */
 export default function OfferLanding({ variant }: { variant: OfferVariant }) {
   const { locale } = useT();

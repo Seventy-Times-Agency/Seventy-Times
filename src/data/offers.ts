@@ -11,7 +11,7 @@
 //   - The audit price ($100) exists ONLY here. The main site carries no
 //     prices at all.
 //   - Every lead from these pages is tagged (landing=audit|brief) so the
-//     source reaches Telegram / Notion with the lead.
+//     source reaches Telegram with the lead.
 
 import type { Locale } from "@/i18n/config";
 
