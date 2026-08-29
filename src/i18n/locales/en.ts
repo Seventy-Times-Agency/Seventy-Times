@@ -71,7 +71,7 @@ const strings = {
     compRowSpeedAgency: "60–90 days of onboarding",
     compRowSpeedFreelancer: "Depends on availability",
     compRowAiLabel: "AI in the workflow",
-    compRowAiUs: "Built-in: Claude, GPT, custom agents",
+    compRowAiUs: "Built-in: modern AI models, custom agents",
     compRowAiAgency: "Rare, usually paid add-on",
     compRowAiFreelancer: "Almost never",
     compRowScopeLabel: "Scope",
@@ -207,13 +207,13 @@ const strings = {
 
     // Vanessa promo
     venEyebrow: "— Meet Vanessa",
-    venTitle1: "Your",
+    venTitle1: "Our",
     venTitle2: "AI consultant",
     venTitle3: "Vanessa.",
     venLead:
-      "Vanessa is a Claude-powered AI assistant trained for your business. She talks to clients on your website, Telegram and Instagram, qualifies leads and passes hot ones directly to you. We build a bot like this one for every project.",
+      "Vanessa is our team's own AI consultant. She meets visitors on this site, answers questions about how we work, qualifies requests and hands them to a specialist. Want something like this for your business? We build custom assistants under your brand — with their own name, voice and scenarios.",
     venBullets: [
-      "Knows your business inside out — trained on your materials and tone",
+      "Built custom for your business — your materials, your tone, your brand name",
       "Responds in any language, works 24/7 without breaks",
       "Qualifies leads and drops them straight into your CRM or Telegram",
       "Frees up ~10–15 hours a week your team spends on first-touch chats",
@@ -266,7 +266,7 @@ const strings = {
       "The client. The Meta / Google / TikTok ad account stays on your name, you pay the platform directly. We only set up and optimise. It's more transparent and the accounts stay yours even if we part ways.",
     faq3q: "Who pays for AI tokens and SaaS subscriptions?",
     faq3a:
-      "By default — the client. OpenAI/Claude API keys and Make/Zapier subscriptions are created on your account, you see the spend directly. Want it fully managed? We invoice usage with a 30% management fee.",
+      "By default — the client. AI-provider API keys and Make/Zapier subscriptions are created on your account, you see the spend directly. Want it fully managed? We invoice usage with a 30% management fee.",
     faq4q: "How fast will I see results?",
     faq4a:
       "First leads from ads usually come in 3–7 days after launch. The AI bot works from day one. Optimisation is ongoing — most systems settle into stable numbers over the first two to three months.",

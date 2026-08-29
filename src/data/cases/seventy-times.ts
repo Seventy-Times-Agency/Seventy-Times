@@ -8,11 +8,11 @@ export const seventyTimes: CaseItem = {
     study: {
       accent: "#818cf8",
       title: u("Seventy Times"),
-      tag: u("NEXT.JS · CLAUDE AI"),
+      tag: u("NEXT.JS · AI ASSISTANT"),
       summary: {
-        en: "This very site. A multilingual Next.js 15 build with Vanessa — a Claude-powered AI consultant that qualifies and hands off leads — an interactive ROI simulator, and motion throughout.",
-        ru: "Этот самый сайт. Многоязычный проект на Next.js 15: Ванесса — ИИ-консультант на базе Claude, которая квалифицирует и передаёт лиды, интерактивный ROI-симулятор и анимации повсюду.",
-        uk: "Цей самий сайт. Багатомовний проєкт на Next.js 15: Ванесса — ШІ-консультант на базі Claude, яка кваліфікує та передає ліди, інтерактивний ROI-симулятор та анімації всюди.",
+        en: "This very site. A multilingual Next.js 15 build with Vanessa — our AI consultant who qualifies and hands off leads — an interactive ROI simulator, and motion throughout.",
+        ru: "Этот самый сайт. Многоязычный проект на Next.js 15: Ванесса — наш AI-консультант, которая квалифицирует и передаёт лиды, интерактивный ROI-симулятор и анимации повсюду.",
+        uk: "Цей самий сайт. Багатомовний проєкт на Next.js 15: Ванесса — наш AI-консультант, яка кваліфікує та передає ліди, інтерактивний ROI-симулятор та анімації всюди.",
       },
       metrics: [
         {
@@ -37,9 +37,9 @@ export const seventyTimes: CaseItem = {
         uk: "Сайт агенції + ШІ-консультант",
       },
       meta: {
-        en: "Full build · Next.js 15 · Claude API · 4 languages · live",
-        ru: "Полная разработка · Next.js 15 · Claude API · 4 языка · в проде",
-        uk: "Повна розробка · Next.js 15 · Claude API · 4 мови · у проді",
+        en: "Full build · Next.js 15 · AI assistant · 3 languages · live",
+        ru: "Полная разработка · Next.js 15 · AI-ассистент · 3 языка · в проде",
+        uk: "Повна розробка · Next.js 15 · AI-асистент · 3 мови · у проді",
       },
       niche: {
         en: "Agency · AI · Web dev",
@@ -58,9 +58,9 @@ export const seventyTimes: CaseItem = {
         {
           icon: "🤖",
           text: {
-            en: "Vanessa — Claude-powered AI that qualifies, captures & hands off leads, 24/7",
-            ru: "Ванесса — ИИ на Claude: квалифицирует, захватывает и передаёт лиды, 24/7",
-            uk: "Ванесса — ШІ на Claude: кваліфікує, захоплює й передає ліди, 24/7",
+            en: "Vanessa — our AI consultant: qualifies, captures & hands off leads, 24/7",
+            ru: "Ванесса — наш AI-консультант: квалифицирует, захватывает и передаёт лиды, 24/7",
+            uk: "Ванесса — наш AI-консультант: кваліфікує, захоплює й передає ліди, 24/7",
           },
         },
         {
@@ -124,7 +124,7 @@ export const seventyTimes: CaseItem = {
       stack: [
         "Next.js 15",
         "TypeScript",
-        "Claude API",
+        "AI API",
         "Framer Motion",
         "CSS Modules",
         "Vercel",

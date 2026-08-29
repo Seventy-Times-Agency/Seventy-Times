@@ -7,6 +7,12 @@ import Principles from "@/components/sections/Principles";
 import { useT } from "@/i18n/context";
 import styles from "@/components/sections/Process.module.css";
 
+/**
+ * "How we work" — the five stages as a clean top-down list. Each stage
+ * is one full-width row: number + title + duration on the left,
+ * description on the right (stacked on phones). Deliberately no
+ * connector lines or ring graphics — the reading order IS the process.
+ */
 export default function Process() {
   const { t } = useT();
 
@@ -44,13 +50,19 @@ export default function Process() {
         </div>
       </div>
 
-      <div className={styles.grid}>
+      <div className={styles.list}>
         {steps.map((step, i) => (
-          <Reveal key={step.num} delay={i * 0.1}>
-            <div className={styles.step}>
-              <div className={styles.numberWrap}>{step.num}</div>
-              <span className={styles.duration}>{step.dur}</span>
-              <h3 className={styles.stepTitle}>{step.title}</h3>
+          <Reveal key={step.num} delay={i * 0.06}>
+            <div className={styles.row}>
+              <div className={styles.rowHead}>
+                <span className={styles.num} aria-hidden="true">
+                  {step.num}
+                </span>
+                <div className={styles.headText}>
+                  <h3 className={styles.stepTitle}>{step.title}</h3>
+                  <span className={styles.duration}>{step.dur}</span>
+                </div>
+              </div>
               <p className={styles.stepDesc}>{step.desc}</p>
             </div>
           </Reveal>

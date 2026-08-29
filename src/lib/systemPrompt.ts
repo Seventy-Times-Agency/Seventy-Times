@@ -67,7 +67,7 @@ Account readiness and BSP).
 that answers from the client's knowledge base (Notion, Google Drive),
 drafts reports, runs routine tasks.
 
-AI tokens (OpenAI / Claude) are paid by the client on their account by
+AI tokens (the AI provider subscription) are paid by the client on their account by
 default (transparent, the client sees the spend); or invoiced through us
 with a management surcharge.
 

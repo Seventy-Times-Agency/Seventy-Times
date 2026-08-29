@@ -42,7 +42,7 @@ const META: Record<Locale, LocaleMeta> = {
       "targeted advertising",
       "Meta ads",
       "Google ads",
-      "Claude AI",
+      "AI assistant",
     ],
     ogLocale: "en_US",
     ogImageAlt:
@@ -62,7 +62,7 @@ const META: Record<Locale, LocaleMeta> = {
       "performance маркетинг",
       "Meta реклама",
       "Google реклама",
-      "Claude",
+      "AI",
     ],
     ogLocale: "ru_RU",
     ogImageAlt:
@@ -82,7 +82,7 @@ const META: Record<Locale, LocaleMeta> = {
       "performance маркетинг",
       "Meta реклама",
       "Google реклама",
-      "Claude",
+      "AI",
     ],
     ogLocale: "uk_UA",
     ogImageAlt:

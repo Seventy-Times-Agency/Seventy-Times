@@ -10,15 +10,15 @@ export const convioo: CaseItem = {
       title: u("Convioo"),
       tag: u("AI LEAD-GEN · CRM"),
       summary: {
-        en: "Our own B2B lead-gen platform with a lightweight CRM, built for marketing agencies. A Next.js app over a Python backend: search via Google Places, deep enrichment, AI scoring and outreach drafts from Claude, and Henry — a built-in AI assistant.",
-        ru: "Наш собственный продукт — B2B-платформа лидогенерации с лёгкой CRM для маркетинговых агентств. Веб-аппа на Next.js поверх Python-бэкенда: поиск через Google Places, глубокий enrichment, AI-скоринг и черновики outreach от Claude, и Henry — встроенный AI-ассистент.",
-        uk: "Наш власний продукт — B2B-платформа лідогенерації з легкою CRM для маркетингових агенцій. Вебзастосунок на Next.js поверх Python-бекенду: пошук через Google Places, глибокий enrichment, AI-скоринг і чернетки outreach від Claude, та Henry — вбудований AI-асистент.",
+        en: "Our own B2B lead-gen platform with a lightweight CRM, built for marketing agencies. A Next.js app over a Python backend: search via Google Places, deep enrichment, AI scoring and outreach drafts, and Henry — a built-in AI assistant.",
+        ru: "Наш собственный продукт — B2B-платформа лидогенерации с лёгкой CRM для маркетинговых агентств. Веб-аппа на Next.js поверх Python-бэкенда: поиск через Google Places, глубокий enrichment, AI-скоринг и черновики outreach, и Henry — встроенный AI-ассистент.",
+        uk: "Наш власний продукт — B2B-платформа лідогенерації з легкою CRM для маркетингових агенцій. Вебзастосунок на Next.js поверх Python-бекенду: пошук через Google Places, глибокий enrichment, AI-скоринг і чернетки outreach, та Henry — вбудований AI-асистент.",
       },
       metrics: [
         {
-          en: "AI scoring + outreach drafts (Claude)",
-          ru: "AI-скоринг + черновики outreach (Claude)",
-          uk: "AI-скоринг + чернетки outreach (Claude)",
+          en: "AI scoring + outreach drafts",
+          ru: "AI-скоринг + черновики outreach",
+          uk: "AI-скоринг + чернетки outreach",
         },
         {
           en: "Google Places search + deep enrichment",
@@ -37,9 +37,9 @@ export const convioo: CaseItem = {
         uk: "Платформа AI-лідогена + CRM",
       },
       meta: {
-        en: "Our product · Next.js + Python · Google Places · Claude",
-        ru: "Наш продукт · Next.js + Python · Google Places · Claude",
-        uk: "Наш продукт · Next.js + Python · Google Places · Claude",
+        en: "Our product · Next.js + Python · Google Places · AI",
+        ru: "Наш продукт · Next.js + Python · Google Places · AI",
+        uk: "Наш продукт · Next.js + Python · Google Places · AI",
       },
       niche: {
         en: "SaaS · AI · B2B lead-gen",
@@ -56,7 +56,7 @@ export const convioo: CaseItem = {
           },
         },
         {
-          value: "Claude",
+          value: "AI",
           label: {
             en: "AI scoring engine",
             ru: "Движок AI-скоринга",
@@ -100,9 +100,9 @@ export const convioo: CaseItem = {
         {
           icon: "⭐",
           text: {
-            en: "AI scoring and outreach drafts via Claude Haiku",
-            ru: "AI-скоринг и черновики outreach через Claude Haiku",
-            uk: "AI-скоринг і чернетки outreach через Claude Haiku",
+            en: "AI scoring and outreach drafts built in",
+            ru: "AI-скоринг и черновики outreach из коробки",
+            uk: "AI-скоринг і чернетки outreach з коробки",
           },
         },
         {
@@ -232,7 +232,7 @@ export const convioo: CaseItem = {
         "Next.js",
         "Python / FastAPI",
         "PostgreSQL",
-        "Claude (Haiku)",
+        "LLM API",
         "Google Places API",
         "Redis / arq",
         "Resend",
