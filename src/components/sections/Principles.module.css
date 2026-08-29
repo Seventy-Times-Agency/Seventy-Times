@@ -1,583 +1,88 @@
+/* Brand principles — quiet 2×2 card grid under the Process stages.
+   Mobile-first; no decorative connectors. */
+
 .wrap {
-  position: relative;
-  padding: 0 48px 24px;
-  isolation: isolate;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* The serpentine spine — three stacked paths (halo / main / traveller)
- * plus pulsing nodes. All animations run on their own timelines and do
- * NOT respond to scroll position, so the spine reads as a living
- * organism instead of a thing that jitters with the page scroll. */
-.spine {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: visible;
+.lead {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 62ch;
 }
 
-.spinePath,
-.spineHalo,
-.spineTraveller {
-  fill: none;
-  vector-effect: non-scaling-stroke;
-}
-
-/* Wide, low-opacity blur sitting behind the main line — gives the
- * spine depth without making it busy. */
-.spineHalo {
-  stroke: var(--accent);
-  stroke-opacity: 0.12;
-  stroke-width: 9;
-  stroke-linecap: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-
-/* The main visible line. Drawn in once when the section enters view
- * (CSS keyframe — not a per-frame React state). */
-.spinePath {
-  stroke: url(#principles-gradient);
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  opacity: 0;
-}
-
-/* Short bright dash that loops along the path forever. The glow used
- * to come from a CSS `drop-shadow` which forces an offscreen paint on
- * every keyframe — moved into a static SVG filter (#principles-glow)
- * so the cost is paid once per layout, not per frame. */
-.spineTraveller {
-  stroke: var(--accent);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-dasharray: 0.05 0.95;
-  stroke-dashoffset: 1;
-  opacity: 0;
-  filter: url(#principles-glow);
-}
-
-/* Once the section enters the viewport, kick all the spine animations
- * off. We toggle this with a single class on the wrapper so the
- * timings line up cleanly. */
-.wrapLive .spineHalo {
-  opacity: 1;
-  animation: principles-draw 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.05s forwards;
-}
-
-.wrapLive .spinePath {
-  opacity: 1;
-  animation: principles-draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
-}
-
-.wrapLive .spineTraveller {
-  /* Wait for the draw-in to finish, then loop forever. */
-  animation:
-    principles-traveller-fade 0.5s ease 1.6s forwards,
-    principles-traveller-flow 4.2s linear 1.6s infinite;
-}
-
-@keyframes principles-draw {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes principles-traveller-fade {
-  to { opacity: 1; }
-}
-
-@keyframes principles-traveller-flow {
-  from { stroke-dashoffset: 1; }
-  to   { stroke-dashoffset: 0; }
-}
-
-/* Pulse nodes at the four row centres ─────────────────────────── */
-.nodeGroup {
-  opacity: 0;
-}
-.wrapLive .nodeGroup {
-  animation: principles-node-in 0.7s ease 1.4s forwards;
-}
-
-.nodeDot {
-  fill: var(--accent);
-  filter: url(#principles-glow);
-}
-
-.nodeHalo {
-  fill: var(--accent);
-  fill-opacity: 0.18;
-  transform-origin: center;
-  transform-box: fill-box;
-  animation: principles-node-pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes principles-node-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes principles-node-pulse {
-  0%, 100% { transform: scale(0.85); fill-opacity: 0.16; }
-  50%      { transform: scale(1.65); fill-opacity: 0.04; }
-}
-
-/* Respect reduced-motion users: kill the traveller + node pulses but
- * still draw the spine in once so the layout reads correctly. */
-@media (prefers-reduced-motion: reduce) {
-  .wrapLive .spineHalo,
-  .wrapLive .spinePath {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
-  .spineTraveller,
-  .nodeHalo {
-    animation: none !important;
-  }
-  .spineTraveller { opacity: 0; }
-}
-
-/* The list of cards — left/right alternating to form the snake.     */
-.list {
-  position: relative;
+.grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 36px;
-  z-index: 1;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.row {
-  display: grid;
-  /* Card column takes more width than the ordinal column — the digit
-   * is a graphic accent, the card is the content. */
-  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
-  align-items: end;
-  gap: 36px;
-}
-
-.rowRight {
-  /* Digit on the left, card on the right. Order matches the natural
-   * grid-column order so we don't have to override per side. */
-}
-
-.rowLeft {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
-}
-
-.rowRight .nodeWrap { grid-column: 1; justify-self: start; }
-.rowRight .card     { grid-column: 2; }
-.rowLeft  .card     { grid-column: 1; }
-.rowLeft  .nodeWrap { grid-column: 2; justify-self: end; }
-
-/* Big outlined ordinal "01..04" sits next to its card, baseline-
- * aligned with the bottom of the card so the pair reads as a unit. */
-.nodeWrap {
-  display: flex;
-  align-items: flex-end;
-  line-height: 0.85;
-}
-
-.node {
-  font-size: clamp(60px, 7vw, 104px);
-  font-weight: 800;
-  line-height: 0.85;
-  letter-spacing: -0.05em;
-  color: transparent;
-  -webkit-text-stroke: 1.2px var(--line-hi);
-  user-select: none;
-  display: inline-block;
-  transform: translateY(0);
-  transition: transform 0.6s var(--ease), -webkit-text-stroke-color 0.6s ease;
-}
-
-.row.inView .node {
-  -webkit-text-stroke-color: var(--accent);
+  gap: 14px;
 }
 
 .card {
-  position: relative;
-  padding: 26px 26px 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 16px;
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background:
-    linear-gradient(
-      180deg,
-      rgba(10, 12, 18, 0.78),
-      rgba(10, 12, 18, 0.62)
-    );
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
-  border: 1px solid var(--line);
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(24px);
+    radial-gradient(circle at 100% 0%, rgba(200, 212, 222, 0.05), transparent 60%),
+    rgba(255, 255, 255, 0.012);
   transition:
-    opacity 0.7s var(--ease),
-    transform 0.7s var(--ease),
-    border-color 0.4s ease;
-}
-
-.row.inView .card {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    320px circle at var(--mx, 50%) var(--my, 0%),
-    rgba(94, 234, 212, 0.07),
-    transparent 60%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
+    border-color 0.3s ease,
+    transform 0.35s var(--ease);
 }
 
 .card:hover {
   border-color: var(--line-hi);
+  transform: translateY(-4px);
 }
-.card:hover::after { opacity: 1; }
 
-.cardKicker {
-  font-size: 11px;
+.badge {
+  font-size: var(--fs-mini);
   font-weight: 800;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  letter-spacing: 0.2em;
   color: var(--accent);
-  margin-bottom: 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.cardKicker::before {
-  content: "";
-  width: 18px;
-  height: 1.5px;
-  background: var(--accent);
-  display: inline-block;
+  font-variant-numeric: tabular-nums;
 }
 
 .cardTitle {
-  font-size: clamp(18px, 1.8vw, 24px);
+  font-size: 19px;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   line-height: 1.15;
-  color: var(--text);
-  margin: 0 0 10px;
 }
 
 .cardBody {
-  font-size: 14.5px;
+  font-size: 14px;
+  line-height: 1.65;
   color: var(--text-muted);
-  line-height: 1.6;
-  margin: 0;
 }
 
-/* Per-card collapse toggle — hidden on desktop, shown on mobile.
-   Tap reveals the cardBody (which is collapsed by default at narrow
-   widths). */
-.cardToggle {
-  display: none;
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid var(--line-strong);
-  background: rgba(200, 212, 222, 0.04);
-  color: var(--accent);
-  font-size: 18px;
-  font-weight: 800;
-  line-height: 1;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.cardToggle:hover {
-  border-color: var(--accent);
-  background: rgba(200, 212, 222, 0.1);
-}
-
-.cardBodyOpen {
-  display: block;
-}
-
-/* Mobile: collapse the zigzag into a single stacked column. Numbers
- * sit above each card instead of beside them, so nothing overflows.
- * The serpentine spine becomes a slim vertical track running along
- * the left edge so the section still feels alive on phones — same
- * traveller animation, same node pulses, just a different path. */
-/*  Base (mobile-first): formerly @media (max-width: 900px).  */
-.wrap {
-    padding: 0 24px 16px 36px;
-  }
-.row {
-    grid-template-columns: 1fr;
-    min-height: 0;
-    gap: 10px;
-    padding-bottom: 6px;
-  }
-.rowLeft,
-  .rowRight {
-    grid-template-columns: 1fr;
-  }
-.row .card,
-  .row .nodeWrap {
-    grid-column: 1;
-    justify-self: start;
-  }
-.row .nodeWrap { order: -1; }
-.node { font-size: 64px; }
-/* Re-style the spine as a slim left rail. The same SVG paths are
-   * used; we override their `d` via a CSS variable on the wrap that
-   * the JS will read on mobile breakpoints. To avoid extra JS, we
-   * simply hide the curved path and overlay a CSS-drawn pseudo-rail
-   * that picks up the existing traveller / node animations. */
-.spine {
-    left: 12px;
-    right: auto;
-    width: 14px;
-  }
-.spine path,
-  .spine circle { display: none; }
-.wrap::before,
-  .wrap::after,
-  .wrap .mobileRail,
-  .wrap .mobileRailDot {
-    /* placeholders kept so the rule cascades — actual rail is in
-       .mobileRail below */
-  }
-.mobileRail {
-    position: absolute;
-    left: 16px;
-    top: 12px;
-    bottom: 12px;
-    width: 2px;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      var(--line-strong) 8%,
-      var(--line-strong) 92%,
-      transparent 100%
-    );
-    border-radius: 2px;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
-  }
-.wrapLive .mobileRail { opacity: 1; transition: opacity 0.4s ease; }
-.mobileRail::before {
-    content: "";
-    position: absolute;
-    left: -1px;
-    width: 4px;
-    height: 56px;
-    border-radius: 4px;
-    background: linear-gradient(
-      180deg,
-      transparent,
-      var(--accent) 35%,
-      var(--accent) 65%,
-      transparent
-    );
-    top: -56px;
-    animation: principles-rail-flow 4.2s linear infinite;
-  }
-.mobileRailDot {
-    position: absolute;
-    left: -4px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 6px var(--accent);
-    opacity: 0.65;
-    z-index: 1;
-    pointer-events: none;
-    transform: translateY(-50%);
-    animation: principles-rail-dot 2.4s ease-in-out infinite;
-  }
-
-/* Rail keyframes are referenced only while the mobile rail's
-   `animation` applies (≤900px); defining them unconditionally is
-   inert on desktop. */
-@keyframes principles-rail-flow {
-  from { top: -56px; }
-  to   { top: 100%; }
-}
-@keyframes principles-rail-dot {
-  0%, 100% { transform: translateY(-50%) scale(0.7); opacity: 0.5; }
-  50%      { transform: translateY(-50%) scale(1.15); opacity: 0.9; }
-}
-
-@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
-  .mobileRail::before { animation: none; }
-  .mobileRailDot { animation: none; }
-}
-
-/*  Base (mobile-first): formerly @media (max-width: 640px).  */
-
-.wrap { padding: 0 18px 10px 26px; }
-
-.card {
-    padding: 16px 16px 14px;
-    position: relative;
-  }
-
-.node { font-size: 48px; }
-
-/* Collapse body text by default on phone; tap the + button to
-     expand. Cuts ~600 px aggregate across the four principle cards. */
-
-.cardBody {
-    display: none;
-    margin-top: 4px;
-  }
-
-.cardBodyOpen {
-    display: block;
-  }
-
-.cardToggle {
-    display: grid;
-    place-items: center;
-  }
-
-/*  641px and up — restores the desktop values overridden above.  */
-
-@media (min-width: 641px) {
+/* Tablet and up. */
+@media (min-width: 768px) {
   .wrap {
-    padding: 0 24px 16px 36px;
+    margin-top: 64px;
+    padding-top: 36px;
+    gap: 28px;
   }
+
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
   .card {
-    padding: 26px 26px 24px;
-    position: relative;
+    padding: 24px 24px 22px;
   }
-  .node {
-    font-size: 64px;
-  }
-  .cardBody {
-    display: revert;
-    margin-top: 0;
-  }
-  .cardBodyOpen {
-    display: block;
-  }
-  .cardToggle {
-    display: none;
-    place-items: revert;
-  }
-}
 
-/*  901px and up — restores the desktop values overridden above.  */
-
-@media (min-width: 901px) {
-  .wrap {
-    padding: 0 48px 24px;
-  }
-  .row {
-    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
-    min-height: revert;
-    gap: 36px;
-    padding-bottom: 0;
-  }
-  .rowLeft {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
-  }
-  .rowRight {
-    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
-  }
-  /* Re-state the per-side placement: these selectors out-rank the
-     base .rowLeft/.rowRight rules, so `revert` would erase them. */
-  .rowRight .nodeWrap {
-    grid-column: 1;
-    justify-self: start;
-  }
-  .rowRight .card {
-    grid-column: 2;
-    justify-self: auto;
-  }
-  .rowLeft .card {
-    grid-column: 1;
-    justify-self: auto;
-  }
-  .rowLeft .nodeWrap {
-    grid-column: 2;
-    justify-self: end;
-  }
-  .row .nodeWrap {
-    order: revert;
-  }
-  .node {
-    font-size: clamp(60px, 7vw, 104px);
-  }
-  .spine {
-    /* Base uses `inset: 0`; revert would erase the shorthand-derived
-       offsets, so restore them explicitly. */
-    left: 0;
-    right: 0;
-    width: 100%;
-  }
-  .spine path {
-    display: revert;
-  }
-  .spine circle {
-    display: revert;
-  }
-  .mobileRail {
-    position: revert;
-    left: revert;
-    top: revert;
-    bottom: revert;
-    width: revert;
-    background: revert;
-    border-radius: revert;
-    opacity: revert;
-    pointer-events: revert;
-    z-index: revert;
-    overflow: revert;
-  }
-  .wrapLive .mobileRail {
-    opacity: revert;
-    transition: revert;
-  }
-  .mobileRail::before {
-    content: revert;
-    position: revert;
-    left: revert;
-    width: revert;
-    height: revert;
-    border-radius: revert;
-    background: revert;
-    top: revert;
-    animation: revert;
-  }
-  .mobileRailDot {
-    position: revert;
-    left: revert;
-    width: revert;
-    height: revert;
-    border-radius: revert;
-    background: revert;
-    box-shadow: revert;
-    opacity: revert;
-    z-index: revert;
-    pointer-events: revert;
-    transform: revert;
-    animation: revert;
+  .cardTitle {
+    font-size: 21px;
   }
 }
