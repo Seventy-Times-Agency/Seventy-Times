@@ -1,13 +1,16 @@
-/* Brand principles — quiet 2×2 card grid under the Process stages.
-   Mobile-first; no decorative connectors. */
+/* Brand principles — the closing band of the Process section.
+   Deliberately drawn in the SAME language as the stage list above
+   (hairline rules, no fill, no radius) instead of the old raised card
+   grid: two different treatments stacked made one section read as two
+   unrelated blocks. Mobile-first. */
 
 .wrap {
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px dashed var(--line-strong);
+  margin-top: 36px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-strong);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .lead {
@@ -20,28 +23,24 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+}
+
+.grid > * {
+  min-width: 0;
 }
 
 .card {
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 18px 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at 100% 0%, rgba(200, 212, 222, 0.05), transparent 60%),
-    rgba(255, 255, 255, 0.012);
-  transition:
-    border-color 0.3s ease,
-    transform 0.35s var(--ease);
+  gap: 7px;
+  padding: 15px 2px;
+  border-top: 1px solid var(--line);
+  transition: background 0.3s ease;
 }
 
 .card:hover {
-  border-color: var(--line-hi);
-  transform: translateY(-4px);
+  background: rgba(200, 212, 222, 0.025);
 }
 
 .badge {
@@ -53,36 +52,61 @@
 }
 
 .cardTitle {
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: -0.025em;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
 .cardBody {
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: 13.5px;
+  line-height: 1.6;
   color: var(--text-muted);
 }
 
-/* Tablet and up. */
+/* Tablet — two up. */
 @media (min-width: 768px) {
   .wrap {
-    margin-top: 64px;
-    padding-top: 36px;
-    gap: 28px;
+    margin-top: 56px;
+    padding-top: 32px;
+    gap: 24px;
   }
 
   .grid {
     grid-template-columns: 1fr 1fr;
-    gap: 18px;
   }
 
   .card {
-    padding: 24px 24px 22px;
+    padding: 18px 24px 20px;
+  }
+
+  /* Hairline gutter between the two columns. */
+  .grid > *:nth-child(even) .card {
+    border-left: 1px solid var(--line);
+  }
+}
+
+/* Desktop — one four-column band, matching the five-stage band above. */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .card {
+    padding: 20px 18px 22px;
+  }
+
+  .grid > * + * .card {
+    border-left: 1px solid var(--line);
   }
 
   .cardTitle {
-    font-size: 21px;
+    font-size: 18px;
+  }
+
+  .cardBody {
+    font-size: 13px;
+    line-height: 1.55;
   }
 }

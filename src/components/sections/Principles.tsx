@@ -11,10 +11,15 @@ type Principle = {
 };
 
 /**
- * The four brand principles, rendered as a calm 2×2 card grid inside
- * the Process section. The old serpentine "spine" decoration (curved
- * SVG threads with pulse nodes) is gone by owner's call — it read as
- * hanging fishing line rather than structure.
+ * The four brand principles, closing the Process section as a band that
+ * matches the stage list above: hairline rules, no fill, no radius.
+ * They used to be raised 2×2 cards, but a flat list followed by
+ * elevated cards made one section read as two unrelated blocks.
+ *
+ * The serpentine "spine" decoration before that (curved SVG threads
+ * with pulse nodes) is gone by owner's call — it read as hanging
+ * fishing line rather than structure. Nothing decorative has replaced
+ * it on purpose.
  */
 export default function Principles() {
   const { t } = useT();

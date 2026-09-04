@@ -1,5 +1,11 @@
-/* "How we work" — five stages as a top-down list. Mobile-first, no
-   connector lines: each stage is a bordered row that reads in order. */
+/* "How we work" — five stages. Mobile-first.
+   Layouts by width:
+     base    — compact vertical list, number + title on one line
+     768px+  — two columns, left one fixed to fit the longest title
+               (no elastic gutter: the old minmax(280px,1fr) left a
+               240-315px hole in the middle of every row)
+     1024px+ — horizontal five-column stepper, hairline separated
+   No connector graphics anywhere: the reading order is the process. */
 
 .section {
   position: relative;
@@ -58,11 +64,17 @@
   border-top: 1px solid var(--line-strong);
 }
 
+/* Direct children are the Reveal wrappers, not .row — the grid and the
+   separators have to hang off them. */
+.list > * {
+  min-width: 0;
+}
+
 .row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 8px;
-  padding: 18px 2px;
+  gap: 6px;
+  padding: 15px 2px;
   border-bottom: 1px solid var(--line);
   transition: background 0.3s ease;
 }
@@ -74,7 +86,7 @@
 .rowHead {
   display: flex;
   align-items: baseline;
-  gap: 14px;
+  gap: 12px;
 }
 
 .num {
@@ -88,13 +100,14 @@
 
 .headText {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
   min-width: 0;
 }
 
 .stepTitle {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 800;
   letter-spacing: -0.025em;
   line-height: 1.15;
@@ -106,18 +119,20 @@
   text-transform: uppercase;
   letter-spacing: 0.18em;
   color: var(--text-dim);
+  white-space: nowrap;
 }
 
 .stepDesc {
   color: var(--text-muted);
-  font-size: 14px;
-  line-height: 1.65;
-  /* Indent under the title, past the number column. */
-  padding-left: 34px;
-  max-width: 60ch;
+  font-size: 13.5px;
+  line-height: 1.6;
+  /* Line up under the title, past the number column. */
+  padding-left: 32px;
+  max-width: 62ch;
 }
 
-/* Tablet and up: number+title left, description right. */
+/* Tablet — two columns, left one sized to the longest title so the
+   description starts at a predictable place and no hole opens up. */
 @media (min-width: 768px) {
   .section {
     padding: 72px 48px 56px;
@@ -144,22 +159,74 @@
   }
 
   .row {
-    grid-template-columns: minmax(280px, 1fr) 1.6fr;
-    gap: 32px;
-    align-items: start;
-    padding: 26px 10px;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    align-items: baseline;
+    padding: 20px 8px;
+  }
+
+  .rowHead {
+    align-items: baseline;
+  }
+
+  .headText {
+    flex-direction: column;
+    gap: 5px;
   }
 
   .num {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .stepTitle {
-    font-size: 24px;
+    font-size: 21px;
   }
 
   .stepDesc {
     padding-left: 0;
-    font-size: 14.5px;
+  }
+}
+
+/* Desktop — the five stages become one horizontal band. Each column
+   shrinks to its own content, which is what removes the dead gutter
+   entirely rather than just narrowing it. */
+@media (min-width: 1024px) {
+  .list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .list > * + * {
+    border-left: 1px solid var(--line);
+  }
+
+  .row {
+    height: 100%;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    align-content: start;
+    padding: 22px 18px 24px;
+    border-bottom: 0;
+  }
+
+  .rowHead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .headText {
+    gap: 4px;
+  }
+
+  .stepTitle {
+    font-size: 19px;
+  }
+
+  .stepDesc {
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: none;
   }
 }

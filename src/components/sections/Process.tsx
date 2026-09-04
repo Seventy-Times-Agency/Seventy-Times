@@ -8,10 +8,15 @@ import { useT } from "@/i18n/context";
 import styles from "@/components/sections/Process.module.css";
 
 /**
- * "How we work" — the five stages as a clean top-down list. Each stage
- * is one full-width row: number + title + duration on the left,
- * description on the right (stacked on phones). Deliberately no
- * connector lines or ring graphics — the reading order IS the process.
+ * "How we work" — the five stages, laid out by width: a compact list on
+ * phones, two columns on tablets, and one horizontal five-column band
+ * on desktop. The band exists to kill a real defect: the old
+ * `minmax(280px, 1fr)` left column stretched to ~397px to hold
+ * one-word titles like "Брифинг", leaving a 240-315px hole in the
+ * middle of every row.
+ *
+ * Still deliberately no connector lines or ring graphics — the reading
+ * order IS the process.
  */
 export default function Process() {
   const { t } = useT();
