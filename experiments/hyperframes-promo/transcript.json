@@ -1,0 +1,812 @@
+[
+  {
+    "id": "w0",
+    "text": "H",
+    "start": 0,
+    "end": 0.207
+  },
+  {
+    "id": "w1",
+    "text": "T",
+    "start": 0.225,
+    "end": 0.431
+  },
+  {
+    "id": "w2",
+    "text": "M",
+    "start": 0.449,
+    "end": 0.656
+  },
+  {
+    "id": "w3",
+    "text": "L",
+    "start": 0.674,
+    "end": 0.881
+  },
+  {
+    "id": "w4",
+    "text": "is",
+    "start": 0.899,
+    "end": 1.106
+  },
+  {
+    "id": "w5",
+    "text": "the",
+    "start": 1.124,
+    "end": 1.33
+  },
+  {
+    "id": "w6",
+    "text": "new",
+    "start": 1.487,
+    "end": 1.717
+  },
+  {
+    "id": "w7",
+    "text": "video",
+    "start": 1.874,
+    "end": 2.083
+  },
+  {
+    "id": "w8",
+    "text": "format",
+    "start": 2.101,
+    "end": 2.309
+  },
+  {
+    "id": "w9",
+    "text": "Not",
+    "start": 2.515,
+    "end": 2.686
+  },
+  {
+    "id": "w10",
+    "text": "a",
+    "start": 2.701,
+    "end": 2.872
+  },
+  {
+    "id": "w11",
+    "text": "render",
+    "start": 3.027,
+    "end": 3.25
+  },
+  {
+    "id": "w12",
+    "text": "queue",
+    "start": 3.269,
+    "end": 3.492
+  },
+  {
+    "id": "w13",
+    "text": "Not",
+    "start": 3.7,
+    "end": 3.919
+  },
+  {
+    "id": "w14",
+    "text": "a",
+    "start": 3.938,
+    "end": 4.157
+  },
+  {
+    "id": "w15",
+    "text": "frame",
+    "start": 4.317,
+    "end": 4.54
+  },
+  {
+    "id": "w16",
+    "text": "buffer",
+    "start": 4.559,
+    "end": 4.783
+  },
+  {
+    "id": "w17",
+    "text": "Just",
+    "start": 4.802,
+    "end": 5.025
+  },
+  {
+    "id": "w18",
+    "text": "markup",
+    "start": 5.045,
+    "end": 5.268
+  },
+  {
+    "id": "w19",
+    "text": "Just",
+    "start": 5.288,
+    "end": 5.511
+  },
+  {
+    "id": "w20",
+    "text": "motion",
+    "start": 5.53,
+    "end": 5.754
+  },
+  {
+    "id": "w21",
+    "text": "Just",
+    "start": 5.773,
+    "end": 5.996
+  },
+  {
+    "id": "w22",
+    "text": "time",
+    "start": 6.162,
+    "end": 6.401
+  },
+  {
+    "id": "w23",
+    "text": "This",
+    "start": 6.422,
+    "end": 6.662
+  },
+  {
+    "id": "w24",
+    "text": "is",
+    "start": 6.683,
+    "end": 6.922
+  },
+  {
+    "id": "w25",
+    "text": "HyperFrames",
+    "start": 6.943,
+    "end": 7.182
+  },
+  {
+    "id": "w26",
+    "text": "A",
+    "start": 7.203,
+    "end": 7.443
+  },
+  {
+    "id": "w27",
+    "text": "div",
+    "start": 7.781,
+    "end": 8.005
+  },
+  {
+    "id": "w28",
+    "text": "becomes",
+    "start": 8.024,
+    "end": 8.248
+  },
+  {
+    "id": "w29",
+    "text": "a",
+    "start": 8.268,
+    "end": 8.491
+  },
+  {
+    "id": "w30",
+    "text": "scene",
+    "start": 8.511,
+    "end": 8.735
+  },
+  {
+    "id": "w31",
+    "text": "Data",
+    "start": 8.754,
+    "end": 8.978
+  },
+  {
+    "id": "w32",
+    "text": "attributes",
+    "start": 8.998,
+    "end": 9.221
+  },
+  {
+    "id": "w33",
+    "text": "become",
+    "start": 9.241,
+    "end": 9.465
+  },
+  {
+    "id": "w34",
+    "text": "your",
+    "start": 9.484,
+    "end": 9.708
+  },
+  {
+    "id": "w35",
+    "text": "timeline",
+    "start": 9.727,
+    "end": 9.951
+  },
+  {
+    "id": "w36",
+    "text": "CSS",
+    "start": 9.971,
+    "end": 10.195
+  },
+  {
+    "id": "w37",
+    "text": "is",
+    "start": 10.408,
+    "end": 10.63
+  },
+  {
+    "id": "w38",
+    "text": "your",
+    "start": 10.65,
+    "end": 10.872
+  },
+  {
+    "id": "w39",
+    "text": "look",
+    "start": 10.891,
+    "end": 11.113
+  },
+  {
+    "id": "w40",
+    "text": "G",
+    "start": 11.133,
+    "end": 11.355
+  },
+  {
+    "id": "w41",
+    "text": "sap",
+    "start": 11.374,
+    "end": 11.596
+  },
+  {
+    "id": "w42",
+    "text": "is",
+    "start": 11.616,
+    "end": 11.838
+  },
+  {
+    "id": "w43",
+    "text": "your",
+    "start": 11.857,
+    "end": 12.079
+  },
+  {
+    "id": "w44",
+    "text": "motion",
+    "start": 12.099,
+    "end": 12.321
+  },
+  {
+    "id": "w45",
+    "text": "engine",
+    "start": 12.34,
+    "end": 12.562
+  },
+  {
+    "id": "w46",
+    "text": "Whatever",
+    "start": 12.582,
+    "end": 12.804
+  },
+  {
+    "id": "w47",
+    "text": "the",
+    "start": 12.823,
+    "end": 13.045
+  },
+  {
+    "id": "w48",
+    "text": "browser",
+    "start": 13.2,
+    "end": 13.411
+  },
+  {
+    "id": "w49",
+    "text": "can",
+    "start": 13.429,
+    "end": 13.64
+  },
+  {
+    "id": "w50",
+    "text": "render",
+    "start": 13.658,
+    "end": 13.869
+  },
+  {
+    "id": "w51",
+    "text": "becomes",
+    "start": 14.264,
+    "end": 14.493
+  },
+  {
+    "id": "w52",
+    "text": "a",
+    "start": 14.513,
+    "end": 14.742
+  },
+  {
+    "id": "w53",
+    "text": "frame",
+    "start": 14.762,
+    "end": 14.991
+  },
+  {
+    "id": "w54",
+    "text": "in",
+    "start": 15.011,
+    "end": 15.24
+  },
+  {
+    "id": "w55",
+    "text": "your",
+    "start": 15.26,
+    "end": 15.489
+  },
+  {
+    "id": "w56",
+    "text": "video",
+    "start": 15.509,
+    "end": 15.738
+  },
+  {
+    "id": "w57",
+    "text": "Three",
+    "start": 15.758,
+    "end": 15.987
+  },
+  {
+    "id": "w58",
+    "text": "point",
+    "start": 16.006,
+    "end": 16.235
+  },
+  {
+    "id": "w59",
+    "text": "J",
+    "start": 16.255,
+    "end": 16.484
+  },
+  {
+    "id": "w60",
+    "text": "S",
+    "start": 16.806,
+    "end": 17.005
+  },
+  {
+    "id": "w61",
+    "text": "Lottie",
+    "start": 17.023,
+    "end": 17.222
+  },
+  {
+    "id": "w62",
+    "text": "CSS",
+    "start": 17.405,
+    "end": 17.583
+  },
+  {
+    "id": "w63",
+    "text": "animations",
+    "start": 17.752,
+    "end": 17.976
+  },
+  {
+    "id": "w64",
+    "text": "Shaders",
+    "start": 17.996,
+    "end": 18.22
+  },
+  {
+    "id": "w65",
+    "text": "Real",
+    "start": 18.239,
+    "end": 18.463
+  },
+  {
+    "id": "w66",
+    "text": "footage",
+    "start": 18.483,
+    "end": 18.707
+  },
+  {
+    "id": "w67",
+    "text": "They",
+    "start": 18.726,
+    "end": 18.95
+  },
+  {
+    "id": "w68",
+    "text": "all",
+    "start": 18.969,
+    "end": 19.193
+  },
+  {
+    "id": "w69",
+    "text": "compose",
+    "start": 19.213,
+    "end": 19.437
+  },
+  {
+    "id": "w70",
+    "text": "together",
+    "start": 19.456,
+    "end": 19.68
+  },
+  {
+    "id": "w71",
+    "text": "in",
+    "start": 19.7,
+    "end": 19.924
+  },
+  {
+    "id": "w72",
+    "text": "a",
+    "start": 19.943,
+    "end": 20.167
+  },
+  {
+    "id": "w73",
+    "text": "single",
+    "start": 20.187,
+    "end": 20.411
+  },
+  {
+    "id": "w74",
+    "text": "H",
+    "start": 20.95,
+    "end": 21.202
+  },
+  {
+    "id": "w75",
+    "text": "T",
+    "start": 21.224,
+    "end": 21.476
+  },
+  {
+    "id": "w76",
+    "text": "M",
+    "start": 21.688,
+    "end": 21.897
+  },
+  {
+    "id": "w77",
+    "text": "L",
+    "start": 21.915,
+    "end": 22.123
+  },
+  {
+    "id": "w78",
+    "text": "file",
+    "start": 22.141,
+    "end": 22.35
+  },
+  {
+    "id": "w79",
+    "text": "Type",
+    "start": 22.368,
+    "end": 22.577
+  },
+  {
+    "id": "w80",
+    "text": "a",
+    "start": 22.718,
+    "end": 22.954
+  },
+  {
+    "id": "w81",
+    "text": "script",
+    "start": 22.974,
+    "end": 23.209
+  },
+  {
+    "id": "w82",
+    "text": "Generate",
+    "start": 23.23,
+    "end": 23.465
+  },
+  {
+    "id": "w83",
+    "text": "narration",
+    "start": 23.486,
+    "end": 23.721
+  },
+  {
+    "id": "w84",
+    "text": "Get",
+    "start": 23.741,
+    "end": 23.977
+  },
+  {
+    "id": "w85",
+    "text": "word",
+    "start": 24.272,
+    "end": 24.506
+  },
+  {
+    "id": "w86",
+    "text": "perfect",
+    "start": 24.527,
+    "end": 24.761
+  },
+  {
+    "id": "w87",
+    "text": "captions",
+    "start": 24.782,
+    "end": 25.016
+  },
+  {
+    "id": "w88",
+    "text": "Render",
+    "start": 25.175,
+    "end": 25.416
+  },
+  {
+    "id": "w89",
+    "text": "to",
+    "start": 25.438,
+    "end": 25.679
+  },
+  {
+    "id": "w90",
+    "text": "M",
+    "start": 25.838,
+    "end": 26.051
+  },
+  {
+    "id": "w91",
+    "text": "P",
+    "start": 26.069,
+    "end": 26.282
+  },
+  {
+    "id": "w92",
+    "text": "four",
+    "start": 26.3,
+    "end": 26.513
+  },
+  {
+    "id": "w93",
+    "text": "Every",
+    "start": 26.531,
+    "end": 26.744
+  },
+  {
+    "id": "w94",
+    "text": "frame",
+    "start": 26.993,
+    "end": 27.208
+  },
+  {
+    "id": "w95",
+    "text": "deterministic",
+    "start": 27.227,
+    "end": 27.442
+  },
+  {
+    "id": "w96",
+    "text": "Every",
+    "start": 27.46,
+    "end": 27.675
+  },
+  {
+    "id": "w97",
+    "text": "output",
+    "start": 27.694,
+    "end": 27.909
+  },
+  {
+    "id": "w98",
+    "text": "identical",
+    "start": 27.928,
+    "end": 28.142
+  },
+  {
+    "id": "w99",
+    "text": "No",
+    "start": 28.161,
+    "end": 28.376
+  },
+  {
+    "id": "w100",
+    "text": "new",
+    "start": 28.395,
+    "end": 28.61
+  },
+  {
+    "id": "w101",
+    "text": "framework",
+    "start": 28.628,
+    "end": 28.843
+  },
+  {
+    "id": "w102",
+    "text": "No",
+    "start": 28.862,
+    "end": 29.077
+  },
+  {
+    "id": "w103",
+    "text": "new",
+    "start": 29.095,
+    "end": 29.31
+  },
+  {
+    "id": "w104",
+    "text": "abstractions",
+    "start": 29.329,
+    "end": 29.544
+  },
+  {
+    "id": "w105",
+    "text": "Just",
+    "start": 29.562,
+    "end": 29.777
+  },
+  {
+    "id": "w106",
+    "text": "the",
+    "start": 29.796,
+    "end": 30.011
+  },
+  {
+    "id": "w107",
+    "text": "platform",
+    "start": 30.03,
+    "end": 30.244
+  },
+  {
+    "id": "w108",
+    "text": "your",
+    "start": 30.263,
+    "end": 30.478
+  },
+  {
+    "id": "w109",
+    "text": "agent",
+    "start": 30.622,
+    "end": 30.825
+  },
+  {
+    "id": "w110",
+    "text": "already",
+    "start": 30.842,
+    "end": 31.045
+  },
+  {
+    "id": "w111",
+    "text": "speaks",
+    "start": 31.063,
+    "end": 31.266
+  },
+  {
+    "id": "w112",
+    "text": "N",
+    "start": 31.284,
+    "end": 31.487
+  },
+  {
+    "id": "w113",
+    "text": "P",
+    "start": 31.504,
+    "end": 31.707
+  },
+  {
+    "id": "w114",
+    "text": "X",
+    "start": 31.725,
+    "end": 31.928
+  },
+  {
+    "id": "w115",
+    "text": "hyperframes",
+    "start": 32.347,
+    "end": 32.569
+  },
+  {
+    "id": "w116",
+    "text": "init",
+    "start": 32.588,
+    "end": 32.81
+  },
+  {
+    "id": "w117",
+    "text": "Tell",
+    "start": 32.829,
+    "end": 33.051
+  },
+  {
+    "id": "w118",
+    "text": "it",
+    "start": 33.07,
+    "end": 33.292
+  },
+  {
+    "id": "w119",
+    "text": "what",
+    "start": 33.311,
+    "end": 33.533
+  },
+  {
+    "id": "w120",
+    "text": "to",
+    "start": 33.552,
+    "end": 33.774
+  },
+  {
+    "id": "w121",
+    "text": "make",
+    "start": 33.951,
+    "end": 34.156
+  },
+  {
+    "id": "w122",
+    "text": "Watch",
+    "start": 34.174,
+    "end": 34.379
+  },
+  {
+    "id": "w123",
+    "text": "it",
+    "start": 34.396,
+    "end": 34.601
+  },
+  {
+    "id": "w124",
+    "text": "ship",
+    "start": 34.768,
+    "end": 35.025
+  },
+  {
+    "id": "w125",
+    "text": "H",
+    "start": 35.048,
+    "end": 35.305
+  },
+  {
+    "id": "w126",
+    "text": "T",
+    "start": 35.595,
+    "end": 35.795
+  },
+  {
+    "id": "w127",
+    "text": "M",
+    "start": 35.813,
+    "end": 36.013
+  },
+  {
+    "id": "w128",
+    "text": "L",
+    "start": 36.03,
+    "end": 36.231
+  },
+  {
+    "id": "w129",
+    "text": "in",
+    "start": 36.248,
+    "end": 36.448
+  },
+  {
+    "id": "w130",
+    "text": "Video",
+    "start": 36.638,
+    "end": 36.836
+  },
+  {
+    "id": "w131",
+    "text": "out",
+    "start": 36.853,
+    "end": 37.052
+  },
+  {
+    "id": "w132",
+    "text": "Go",
+    "start": 37.222,
+    "end": 37.419
+  },
+  {
+    "id": "w133",
+    "text": "make",
+    "start": 37.436,
+    "end": 37.634
+  },
+  {
+    "id": "w134",
+    "text": "something",
+    "start": 37.651,
+    "end": 37.848
+  }
+]

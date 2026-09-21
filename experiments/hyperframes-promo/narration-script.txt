@@ -1,0 +1,25 @@
+H T M L is the new video format.
+
+Not a render queue. Not a frame buffer. Just markup. Just motion. Just time.
+
+This is HyperFrames.
+
+A div becomes a scene. Data attributes become your timeline. CSS is your look. G sap is your motion engine.
+
+Whatever the browser can render becomes a frame in your video.
+
+Three point J S. Lottie. CSS animations. Shaders. Real footage. They all compose together in a single H T M L file.
+
+Type a script. Generate narration. Get word perfect captions.
+
+Render to M P four. Every frame, deterministic. Every output, identical.
+
+No new framework. No new abstractions. Just the platform your agent already speaks.
+
+N P X hyperframes init.
+
+Tell it what to make. Watch it ship.
+
+H T M L in. Video out.
+
+Go make something.
