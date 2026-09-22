@@ -7,6 +7,17 @@ import Principles from "@/components/sections/Principles";
 import { useT } from "@/i18n/context";
 import styles from "@/components/sections/Process.module.css";
 
+/**
+ * "How we work" — the five stages, laid out by width: a compact list on
+ * phones, two columns on tablets, and one horizontal five-column band
+ * on desktop. The band exists to kill a real defect: the old
+ * `minmax(280px, 1fr)` left column stretched to ~397px to hold
+ * one-word titles like "Брифинг", leaving a 240-315px hole in the
+ * middle of every row.
+ *
+ * Still deliberately no connector lines or ring graphics — the reading
+ * order IS the process.
+ */
 export default function Process() {
   const { t } = useT();
 
@@ -15,6 +26,7 @@ export default function Process() {
     { num: "02", title: t.proc2, desc: t.proc2d, dur: t.proc2t },
     { num: "03", title: t.proc3, desc: t.proc3d, dur: t.proc3t },
     { num: "04", title: t.proc4, desc: t.proc4d, dur: t.proc4t },
+    { num: "05", title: t.proc5, desc: t.proc5d, dur: t.proc5t },
   ];
 
   return (
@@ -43,13 +55,19 @@ export default function Process() {
         </div>
       </div>
 
-      <div className={styles.grid}>
+      <div className={styles.list}>
         {steps.map((step, i) => (
-          <Reveal key={step.num} delay={i * 0.1}>
-            <div className={styles.step}>
-              <div className={styles.numberWrap}>{step.num}</div>
-              <span className={styles.duration}>{step.dur}</span>
-              <h3 className={styles.stepTitle}>{step.title}</h3>
+          <Reveal key={step.num} delay={i * 0.06}>
+            <div className={styles.row}>
+              <div className={styles.rowHead}>
+                <span className={styles.num} aria-hidden="true">
+                  {step.num}
+                </span>
+                <div className={styles.headText}>
+                  <h3 className={styles.stepTitle}>{step.title}</h3>
+                  <span className={styles.duration}>{step.dur}</span>
+                </div>
+              </div>
               <p className={styles.stepDesc}>{step.desc}</p>
             </div>
           </Reveal>

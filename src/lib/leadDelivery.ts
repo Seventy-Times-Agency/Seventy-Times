@@ -4,7 +4,7 @@
  *   - Vanessa capturing a contact mid-conversation (`/api/chat` tool use).
  *
  * Both funnel through `deliverLead`, so the team gets identical Telegram /
- * Notion / email notifications no matter where the lead came from — the
+ * email notifications no matter where the lead came from — the
  * only difference is the `source` tag, which lets you see at a glance that
  * Vanessa closed it.
  *
@@ -19,7 +19,6 @@ import {
   isTelegramConfigured,
   sendTelegramMessage,
 } from "@/lib/telegram";
-import { isNotionLeadsConfigured, sendLeadToNotion } from "@/lib/notion";
 import { isEmailConfigured, sendEmail } from "@/lib/email";
 import {
   isMetaCapiConfigured,
@@ -79,7 +78,7 @@ function formatUtm(utm: Record<string, string> | undefined): string {
 /** Are any outbound channels configured at all? */
 export function isAnyLeadChannelConfigured(): boolean {
   return (
-    isTelegramConfigured() || isNotionLeadsConfigured() || isEmailConfigured()
+    isTelegramConfigured() || isEmailConfigured()
   );
 }
 
@@ -102,7 +101,7 @@ async function notifyTelegram(
     : headerBase;
 
   const packageLine = lead.package
-    ? `📦 *Пакет:* ${escapeMarkdown(PACKAGE_LABEL_RU(lead.package))}`
+    ? `🧩 *Интерес:* ${escapeMarkdown(PACKAGE_LABEL_RU(lead.package))}`
     : null;
   const budgetLine = lead.budget
     ? `💰 *Бюджет:* ${escapeMarkdown(BUDGET_LABEL_RU(lead.budget))}`
@@ -140,7 +139,7 @@ function buildEmailText(lead: DeliverableLead, duplicate: boolean): string {
     `Contact: ${lead.contact}`,
     lead.phone ? `Phone: ${lead.phone}` : null,
     `Business: ${lead.business}`,
-    lead.package ? `Package: ${PACKAGE_LABEL_RU(lead.package)}` : null,
+    lead.package ? `Interest: ${PACKAGE_LABEL_RU(lead.package)}` : null,
     lead.budget ? `Budget: ${BUDGET_LABEL_RU(lead.budget)}` : null,
     formatUtm(lead.utm) ? `Source: ${formatUtm(lead.utm)}` : null,
     "",
@@ -151,10 +150,9 @@ function buildEmailText(lead: DeliverableLead, duplicate: boolean): string {
 }
 
 /**
- * Fan a lead out to Telegram + Notion + email in parallel. Telegram and
- * email always fire (with a duplicate tag); Notion is skipped on a
- * duplicate so the CRM doesn't accumulate near-identical rows. Returns
- * true if any channel reported success.
+ * Fan a lead out to Telegram + email in parallel (Telegram is the
+ * team's primary intake channel — a dedicated requests channel/chat;
+ * email is the fallback). Returns true if any channel reported success.
  */
 export async function deliverLead(
   lead: DeliverableLead,
@@ -168,20 +166,6 @@ export async function deliverLead(
   // Delivery channels — these are what actually get the lead to the team.
   const deliveryTasks: Promise<boolean>[] = [
     notifyTelegram(lead, opts),
-    duplicate
-      ? Promise.resolve(false)
-      : sendLeadToNotion({
-          name: lead.name,
-          contact: lead.contact,
-          business: lead.business,
-          request: lead.request,
-          locale,
-          package: lead.package,
-          budget: lead.budget,
-          phone: lead.phone,
-          source: sourceLabel,
-          utm: lead.utm,
-        }),
     sendEmail({
       subject: `${duplicate ? "[duplicate] " : ""}${subjectKind}${subjectSource}: ${lead.name}`,
       text: buildEmailText(lead, duplicate),
@@ -207,7 +191,7 @@ export async function deliverLead(
     capiEnabled ? capiTask.catch(() => false) : Promise.resolve(false),
   ]);
 
-  const channels = ["telegram", "notion", "email"] as const;
+  const channels = ["telegram", "email"] as const;
   results.forEach((r, i) => {
     if (r.status === "rejected") {
       console.error(`[LEAD] channel ${channels[i]} threw`, {

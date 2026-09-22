@@ -14,7 +14,6 @@ import {
   rateLimit,
   rateLimitResponse,
 } from "@/lib/apiGuard";
-import { logChatTurn } from "@/lib/notion";
 import { deliverLead, isAnyLeadChannelConfigured } from "@/lib/leadDelivery";
 import { isLeadBudget, isLeadPackage } from "@/lib/leadDraft";
 import { isPlausibleContact } from "@/lib/contactValidation";
@@ -116,9 +115,9 @@ const TOOLS: Anthropic.Tool[] = [
         },
         package: {
           type: "string",
-          enum: ["not_sure", "standalone", "launch", "growth", "scale"],
+          enum: ["not_sure", "standalone", "ads", "site", "ai_bot"],
           description:
-            "Which offering fits best, if it became clear in the chat.",
+            "Which service interest fits best, if it became clear in the chat.",
         },
         budget: {
           type: "string",
@@ -218,20 +217,6 @@ export async function POST(req: Request) {
     );
   }
 
-  const rawSessionId =
-    body && typeof body === "object" && "sessionId" in body
-      ? (body as { sessionId: unknown }).sessionId
-      : null;
-  const sessionId =
-    typeof rawSessionId === "string" && rawSessionId.length > 0
-      ? rawSessionId.slice(0, 64)
-      : "anon";
-
-  // Most recent user turn — what we'll log alongside Vanessa's response.
-  const lastUserMessage =
-    [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
-  const turnIndex = messages.filter((m) => m.role === "user").length;
-
   // Body wins over cookie — the chat widget sends the active locale
   // explicitly so a mid-session language switch is reflected in Vanessa's
   // very next reply, even if the cookie hasn't been refreshed yet.
@@ -243,9 +228,9 @@ export async function POST(req: Request) {
   // normalize it — cookies live for a year.
   const cookieMatch = req.headers
     .get("cookie")
-    ?.match(/(?:^|;\s*)lang=(en|ru|de|uk|ua)/);
+    ?.match(/(?:^|;\s*)lang=(en|ru|uk|ua)/);
   const picked =
-    typeof rawLocale === "string" && /^(en|ru|de|uk|ua)$/.test(rawLocale)
+    typeof rawLocale === "string" && /^(en|ru|uk|ua)$/.test(rawLocale)
       ? rawLocale
       : (cookieMatch?.[1] ?? "en");
   const locale = picked === "ua" ? "uk" : picked;
@@ -551,22 +536,6 @@ export async function POST(req: Request) {
           // controller may already be closed if the client aborted
         }
 
-        // Log the turn fire-and-forget so the response time the user
-        // sees doesn't include a Notion roundtrip. Skip on errors so we
-        // don't fill the database with empty Vanessa columns.
-        if (success && lastUserMessage) {
-          logChatTurn({
-            sessionId,
-            turnIndex,
-            user: lastUserMessage,
-            assistant: fullReply,
-            locale,
-          }).catch((err) => {
-            console.error("[CHAT] log error", {
-              message: err instanceof Error ? err.message : "unknown",
-            });
-          });
-        }
       }
     },
   });

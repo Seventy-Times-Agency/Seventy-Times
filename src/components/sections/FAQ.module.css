@@ -294,3 +294,41 @@
   }
 }
 
+
+
+/* ── Mobile diet: clamp to 5 questions behind "show all" ──
+   Mobile-first: the clamp + button are the base state; desktop
+   (901px+) unclamps and hides the button. */
+
+.listClamped .item:nth-child(n + 6) {
+  display: none;
+}
+
+.showAllBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+@media (min-width: 901px) {
+  .listClamped .item:nth-child(n + 6) {
+    display: block;
+  }
+
+  .showAllBtn {
+    display: none;
+  }
+}

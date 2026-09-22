@@ -646,3 +646,41 @@
     padding: 40px;
   }
 }
+
+
+/* ── Mobile diet: collapse the simulator behind one button ──
+   Mobile-first: collapsed body + visible button are the base;
+   desktop (901px+) always shows the body and hides the button. */
+
+.expandBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin: 4px 0 0;
+  padding: 14px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: rgba(200, 212, 222, 0.03);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.bodyCollapsed {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  .expandBtn {
+    display: none;
+  }
+
+  .bodyCollapsed {
+    display: block;
+  }
+}

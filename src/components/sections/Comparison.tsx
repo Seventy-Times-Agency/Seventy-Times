@@ -63,19 +63,15 @@ const ROWS: readonly RowKeys[] = [
 
 export default function Comparison() {
   const { t } = useT();
-  // Mobile: show only the Seventy Times column by default; the
-  // "Agency" and "Freelancer" lines under each criterion are hidden
-  // behind one global toggle. Desktop renders the full 4-column
-  // table regardless (the toggle button is display:none at 1024+).
-  const [showAlternatives, setShowAlternatives] = useState(false);
+  // Mobile accordion: each criterion is a compact card showing only
+  // the Seventy Times value; tapping a card reveals the Agency /
+  // Freelancer lines for that criterion. Desktop renders the full
+  // 4-column table regardless (the chevron is display:none at 901+
+  // and the label button is inert there).
+  const [openRow, setOpenRow] = useState<number | null>(null);
 
   return (
-    <section
-      id="comparison"
-      className={`${styles.section}${
-        showAlternatives ? ` ${styles.sectionShowAlts}` : ""
-      }`}
-    >
+    <section id="comparison" className={styles.section}>
       <SectionWatermark text="vs" number="/ 03" position="left" />
 
       <div className={styles.header}>
@@ -98,18 +94,6 @@ export default function Comparison() {
         </Reveal>
       </div>
 
-      <button
-        type="button"
-        className={styles.altsToggle}
-        onClick={() => setShowAlternatives((v) => !v)}
-        aria-expanded={showAlternatives}
-      >
-        {showAlternatives ? t.compHideAlts : t.compShowAlts}
-        <span className={styles.altsToggleArrow} aria-hidden="true">
-          {showAlternatives ? "−" : "+"}
-        </span>
-      </button>
-
       <Reveal delay={0.1}>
         <div className={styles.tableWrap}>
           <div className={styles.colHeaders}>
@@ -127,9 +111,24 @@ export default function Comparison() {
           </div>
 
           <div className={styles.rows}>
-            {ROWS.map((row) => (
-              <div key={row.label} className={styles.row}>
-                <div className={styles.rowLabel}>{t[row.label] as string}</div>
+            {ROWS.map((row, i) => (
+              <div
+                key={row.label}
+                className={`${styles.row}${
+                  openRow === i ? ` ${styles.rowOpen}` : ""
+                }`}
+              >
+                <button
+                  type="button"
+                  className={styles.rowLabel}
+                  onClick={() => setOpenRow((v) => (v === i ? null : i))}
+                  aria-expanded={openRow === i}
+                >
+                  {t[row.label] as string}
+                  <span className={styles.rowChevron} aria-hidden="true">
+                    {openRow === i ? "−" : "+"}
+                  </span>
+                </button>
                 <div className={`${styles.cell} ${styles.cellUs}`}>
                   <span className={styles.checkUs} aria-hidden="true">
                     ✓

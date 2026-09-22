@@ -5,7 +5,15 @@ import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
 import { useT } from "@/i18n/context";
-import type { ApprovedReview } from "@/lib/notion";
+/** A published visitor review. The original store (Notion) was removed;
+ * any future source just needs to hand the page a list of these. */
+export type ApprovedReview = {
+  id: string;
+  name: string;
+  role?: string;
+  location?: string;
+  content: string;
+};
 import styles from "@/components/sections/Testimonials.module.css";
 
 type Props = {

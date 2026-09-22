@@ -18,16 +18,21 @@ export default function Cases() {
     soon: t.casesStatusSoon,
   };
 
-  // In-progress work leads the grid, "soon" follows, and finished
-  // (live) cases settle at the end. Array.sort is stable, so the
-  // authored order is preserved within each status group.
+  // One grid for every case. Current work leads (in-progress → soon →
+  // live) and the 2020–2021 "early" projects sort last, but they share
+  // the same shelf: each of those cards already carries a
+  // "· 2020–2021" tag, so the period reads off the card itself and a
+  // separate captioned block would only cost vertical space. Array.sort
+  // is stable, so the authored order survives within each group.
   const statusWeight: Record<CaseStatus, number> = {
     progress: 0,
     soon: 1,
     live: 2,
   };
-  const orderedCases = [...CASES].sort(
-    (a, b) => statusWeight[a.status] - statusWeight[b.status],
+  const cases = [...CASES].sort(
+    (a, b) =>
+      Number(a.era === "early") - Number(b.era === "early") ||
+      statusWeight[a.status] - statusWeight[b.status],
   );
 
   return (
@@ -61,7 +66,7 @@ export default function Cases() {
       </div>
 
       <div className={styles.grid}>
-        {orderedCases.map((item, i) => {
+        {cases.map((item, i) => {
           const card = caseCardContent(item, locale);
           return (
             <Reveal key={item.id} delay={i * 0.08}>
@@ -80,7 +85,7 @@ export default function Cases() {
             </Reveal>
           );
         })}
-        <Reveal delay={CASES.length * 0.08}>
+        <Reveal delay={cases.length * 0.08} className={styles.placeholderSlot}>
           <PlaceholderCard
             href={`${localePath("/")}#lead`}
             title={t.casesPlaceholderTitle}

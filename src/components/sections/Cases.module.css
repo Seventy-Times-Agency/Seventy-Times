@@ -352,10 +352,32 @@
   }
 
 /*  Base (mobile-first): formerly @media (max-width: 640px).  */
+/*  Mobile diet: the case grid is a horizontal snap strip of the
+    case cards; the placeholder card is hidden on phones
+    (CSS only — content stays). */
 
 .grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
     gap: 14px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+.grid::-webkit-scrollbar {
+    display: none;
+  }
+
+.grid > * {
+    flex: 0 0 auto;
+    width: min(80vw, 320px);
+    scroll-snap-align: start;
+  }
+
+.placeholderSlot {
+    display: none;
   }
 
 .card {
@@ -366,8 +388,18 @@
 
 @media (min-width: 641px) {
   .grid {
+    display: grid;
+    overflow-x: visible;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
+    padding-bottom: 0;
+  }
+  .grid > * {
+    flex: initial;
+    width: auto;
+  }
+  .placeholderSlot {
+    display: block;
   }
   .card {
     padding: 32px 30px 26px;

@@ -9,7 +9,7 @@ const strings = {
     navProcess: "Process",
     navFaq: "FAQ",
     navStatus: "Accepting projects",
-    navCta: "Get a quote",
+    navCta: "Discuss your project",
     navOpenMenu: "Open menu",
     navCloseMenu: "Close menu",
     skipToContent: "Skip to content",
@@ -24,14 +24,14 @@ const strings = {
     heroTitle3: "automation",
     heroTitle4: "= one growth machine.",
     heroSub:
-      "Launched in 30 days, optimised in 90. Ads bring leads, AI catches them in chat, automation walks them through the funnel. Not three services bundled — one working system.",
-    heroCta1: "Get a quote",
-    heroCta2: "See the packages",
+      "Ads bring leads, AI catches them in chat, automation walks them through the funnel. Not three separate services — one working system built around your case.",
+    heroCta1: "Discuss your project",
+    heroCta2: "How we work",
     heroHint: "Within an hour on weekdays · 24h on weekends · No obligations",
-    statGoal: "Launch (days)",
+    statGoal: "Service pillars",
     statServices: "AI always on",
     statSupport: "Ad platforms",
-    statLaunch: "Combo effect",
+    statLaunch: "Briefing (min)",
 
     // Services
     svcEyebrow: "— Services / 2026",
@@ -71,7 +71,7 @@ const strings = {
     compRowSpeedAgency: "60–90 days of onboarding",
     compRowSpeedFreelancer: "Depends on availability",
     compRowAiLabel: "AI in the workflow",
-    compRowAiUs: "Built-in: Claude, GPT, custom agents",
+    compRowAiUs: "Built-in: modern AI models, custom agents",
     compRowAiAgency: "Rare, usually paid add-on",
     compRowAiFreelancer: "Almost never",
     compRowScopeLabel: "Scope",
@@ -115,7 +115,7 @@ const strings = {
     ],
     svc1Timeline: "1–2 weeks setup, first leads 3–7 days after launch",
     svc1Ideal:
-      "B2C and consumer services with a clear offer and $500+/mo ad budget — when you're ready to scale the channel, not test if marketing works at all.",
+      "B2C and consumer services with a clear offer and a working ad budget — when you're ready to scale the channel, not test if marketing works at all.",
     svc2Title: "Automation",
     svc2Tag: "We eliminate the routine — your business runs itself",
     svc2Note: null as string | null,
@@ -163,7 +163,7 @@ const strings = {
       "Responsive design across all devices, no bugs on mobile",
       "Baseline SEO: sitemap, meta, schema.org, Core Web Vitals",
       "Google Analytics + the pixels you need, wired up",
-      "30 days of guaranteed fixes after launch",
+      "30 days of free bugfixes after launch",
       "Funnel ready for the ads and the AI bot — works as one system",
     ],
     svc4Add: [
@@ -188,28 +188,32 @@ const strings = {
     proc1d:
       "We study your business, goals, audience and current funnels. We find where money is leaking and where growth is hiding.",
     proc1t: "1–2 days",
-    proc2: "Strategy",
+    proc2: "Audit",
     proc2d:
-      "We propose a plan: channels, offers, KPIs, budget. We align on what to launch, by when, and how to measure.",
-    proc2t: "3–5 days",
-    proc3: "Launch",
+      "When the case needs it — a deep dive into your ads, funnel and analytics. You get the findings whatever we decide next.",
+    proc2t: "When needed",
+    proc3: "Strategy",
     proc3d:
-      "We set up accounts, write copy, create visuals, build automations and run the first tests. Analytics connected.",
-    proc3t: "1–2 weeks",
-    proc4: "Optimization",
+      "We propose a plan: channels, offers, KPIs, budget. We align on what to launch, by when, and how to measure.",
+    proc3t: "3–5 days",
+    proc4: "Launch",
     proc4d:
+      "We set up accounts, write copy, create visuals, build automations and run the first tests. Analytics connected.",
+    proc4t: "1–2 weeks",
+    proc5: "Optimization",
+    proc5d:
       "We review numbers weekly. Cut what doesn't work, scale what does. Monday reports, dashboard access — always.",
-    proc4t: "Ongoing",
+    proc5t: "Ongoing",
 
     // Vanessa promo
     venEyebrow: "— Meet Vanessa",
-    venTitle1: "Your",
+    venTitle1: "Our",
     venTitle2: "AI consultant",
     venTitle3: "Vanessa.",
     venLead:
-      "Vanessa is a Claude-powered AI assistant trained for your business. She talks to clients on your website, Telegram and Instagram, qualifies leads and passes hot ones directly to you. We build a bot like this one for every project.",
+      "Vanessa is our team's own AI consultant. She meets visitors on this site, answers questions about how we work, qualifies requests and hands them to a specialist. Want something like this for your business? We build custom assistants under your brand — with their own name, voice and scenarios.",
     venBullets: [
-      "Knows your business inside out — trained on your materials and tone",
+      "Built custom for your business — your materials, your tone, your brand name",
       "Responds in any language, works 24/7 without breaks",
       "Qualifies leads and drops them straight into your CRM or Telegram",
       "Frees up ~10–15 hours a week your team spends on first-touch chats",
@@ -250,32 +254,34 @@ const strings = {
       "The most common things people ask before getting started. Didn't find your answer? Reach out — we reply within an hour on weekdays, or within 24 hours on weekends.",
     faqNote: "Need a faster answer?",
     faqNoteLink: "Message us on Telegram →",
+    faqShowAll: "Show all questions",
+    faqShowLess: "Show fewer questions",
     faqStill: "Don't see your question?",
     faqStillCta: "Ask us directly →",
     faq1q: "How much do your services cost?",
     faq1a:
-      "Pricing is built per case — there's no point quoting a fixed number before we know your project. After a short briefing call we send a detailed pricelist by email with a breakdown of services and combo packages. Minimum thresholds we mention up front, so neither side wastes time.",
+      "Pricing is built per case — there's no point quoting a fixed number before we know your project. After a short briefing call the specialist puts together a plan with a scope and a budget for your situation and sends it by email. Anything that affects the price we say up front, so neither side wastes time.",
     faq2q: "Who pays for the ad budget?",
     faq2a:
       "The client. The Meta / Google / TikTok ad account stays on your name, you pay the platform directly. We only set up and optimise. It's more transparent and the accounts stay yours even if we part ways.",
     faq3q: "Who pays for AI tokens and SaaS subscriptions?",
     faq3a:
-      "By default — the client. OpenAI/Claude API keys and Make/Zapier subscriptions are created on your account, you see the spend directly. Want it fully managed? We invoice usage with a 30% management fee.",
+      "By default — the client. AI-provider API keys and Make/Zapier subscriptions are created on your account, you see the spend directly. Want it fully managed? We invoice usage with a 30% management fee.",
     faq4q: "How fast will I see results?",
     faq4a:
-      "First leads from ads — 3–7 days after launch. The AI bot works from day one. Full system optimisation — by the end of 90 days.",
+      "First leads from ads usually come in 3–7 days after launch. The AI bot works from day one. Optimisation is ongoing — most systems settle into stable numbers over the first two to three months.",
     faq5q: "What if I want to leave?",
     faq5a:
-      "Each package has a minimum term in the contract (3–6 months depending on the tier), and after that it's month-to-month with 30-day notice. You can pause or stop earlier — refunds on fees already paid are handled case-by-case based on how far the work has progressed. Separately, the 90-day launch guarantee always stands: if we miss the launch deadline, 50% of the setup fee comes back, no questions.",
+      "The contract sets a minimum term for ongoing work, and after that it's month-to-month with 30-day notice. You can stop earlier — refunds on fees already paid are handled case-by-case based on how far the work has progressed. Deadlines are tracked in the task history from the moment we receive the materials each stage needs, so it's always clear who was waiting on whom. If a deadline slips through our fault, we make it right — a partial refund or a discount, depending on the situation.",
     faq6q: "How much time do I have to spend?",
     faq6a:
       "2–4 hours per week at the start: briefing, materials, approvals. After launch — 30 minutes per week for reports and decisions on edge cases.",
     faq7q: "Do you write copy or design logos?",
     faq7a:
       "We write site copy ourselves — it's part of the build. If you already have ready copy or need specific brand wording, send it our way so the text reads exactly the way you want. Logos and basic brand identity — we can produce them too if you need; handled separately as an add-on.",
-    faq8q: "Is there a discount for the bundle?",
+    faq8q: "What happens if you miss a deadline?",
     faq8a:
-      "Yes. The 70× Growth Machine combo gives a 20–25% discount versus buying services standalone. The higher the tier — the bigger the discount.",
+      "Deadlines are counted in chains from the moment we receive the materials a stage needs, and the task history records who was waiting on whom. If a stage slips through our fault, we own it — a partial refund or a discount on that stage, depending on the situation. If the delay came from missing materials or approvals on the client side, the timeline shifts with them.",
     faq9q: "Do you work with my industry?",
     faq9a:
       "Primary focus: e-commerce, services, retail, auto accessories and beauty. B2B SaaS — case by case. If we don't know your niche, we'll say so honestly instead of learning on your dime.",
@@ -287,12 +293,14 @@ const strings = {
       "Our primary currency is US dollars. Euros are also accepted at the current rate. Anything else — handled individually when we talk.",
     faq12q: "Do you sign a contract?",
     faq12a:
-      "Yes, always. The contract protects both sides: clear scope, deadlines, penalties, guarantees. We don't work without one.",
+      "Yes, always. The contract protects both sides: clear scope, deadlines and the responsibilities of each party. We don't work without one.",
     faq13q: "Do you sign NDAs?",
     faq13a:
       "Yes, we sign a standard mutual NDA before any work starts. All project information stays confidential.",
 
     // Growth Simulator (levels-based with concrete descriptions)
+    simExpand: "Open the ROI simulator",
+    simCollapse: "Hide the simulator",
     simEyebrow: "— 70× ROI Simulator",
     simTitle1: "Build",
     simTitle2: "your",
@@ -389,65 +397,33 @@ const strings = {
     divTalk: "— get in touch",
     divSimulator: "— estimate the ROI",
     divCases: "— our work",
-    divMachine: "— flagship",
+    divStart: "— start",
     divCompare: "— vs the rest",
 
     // Nav
     navCases: "Work",
-    navMachine: "Growth Machine",
+    navStart: "How we start",
 
-    // 70× Growth Machine combo
-    gmEyebrow: "— 70× / flagship combo",
-    gmTitle1: "One",
-    gmTitle2: "growth",
-    gmTitle3: "machine.",
-    gmLead:
-      "Ads bring leads. The AI bot catches them. Automation walks them through the funnel. Each piece does part of the job alone — together they cover the entire customer path and save 20–25% of budget.",
-    gmRecommended: "Recommended",
-    gmTerm: "Minimum term",
-    gmIncludes: "What's inside",
-    gmPriceLabel: "Starting at",
-    gmPriceHint:
-      "Indicative floor. Final quote is tailored to your case — usually higher once we map the actual scope. Hit \"Get a quote\" for the detailed breakdown.",
-    gmCta: "Get a quote",
-    gmGuaranteeTitle: "Launch guarantee",
-    gmGuaranteeBody:
-      "We launch the full system within 30 days and optimise it within 90. If we don't deliver — 50% of the setup fee comes back.",
-    gmDiscount: "−25%",
-    gmDiscountLabel: "vs buying standalone",
-    gm1Tier: "LAUNCH",
-    gm1Title: "From zero",
-    gm1Sub: "Startup, new product, local business",
-    gm1Inc: [
-      "Landing site + baseline SEO",
-      "Ads Starter (1 platform, 3 creatives)",
-      "AI Bot Starter (up to 30 scenarios)",
-      "Lead Flow Mini (1 key automation)",
-    ],
-    gm1Term: "4-month minimum",
-    gm1Price: "from $1,000+",
-    gm2Tier: "GROWTH",
-    gm2Title: "Growing business",
-    gm2Sub: "Working business with existing sales",
-    gm2Inc: [
-      "Ads Growth (2–3 platforms, A/B, retargeting)",
-      "AI Bot Growth (up to 80 scenarios, CRM)",
-      "Lead Flow Standard (3–5 automations)",
-      "Business site — optional with discount",
-    ],
-    gm2Term: "4-month minimum",
-    gm2Price: "from $2,000+",
-    gm3Tier: "SCALE",
-    gm3Title: "Scaling up",
-    gm3Sub: "Mature business ready for serious growth",
-    gm3Inc: [
-      "Ads Scale (all platforms, look-alike, 2× monthly strategy)",
-      "AI Bot Pro (unlimited scenarios + custom code)",
-      "Lead Flow Pro (Python + AI lead classification)",
-      "E-commerce site — optional with discount",
-    ],
-    gm3Term: "6-month minimum",
-    gm3Price: "from $3,500+",
+    // How we start — no packages, no prices on the site
+    hsEyebrow: "— How we start",
+    hsTitle1: "How",
+    hsTitle2: "we",
+    hsTitle3: "start.",
+    hsLead:
+      "No packages and no price tags on the site. First we understand your case — then you get a plan with numbers built for it.",
+    hs1: "Briefing call",
+    hs1d:
+      "A free 20-minute call: your business, goals, current marketing and the result you're after.",
+    hs1t: "Free · 20 min",
+    hs2: "Diagnostics, if needed",
+    hs2d:
+      "When the case calls for it, we audit your ads, funnel and analytics to see where the growth actually is.",
+    hs2t: "When it's needed",
+    hs3: "Plan and numbers",
+    hs3d:
+      "You get a concrete scope, timeline and budget built for your situation — not a package off the shelf.",
+    hs3t: "After the briefing",
+    hsCta: "Discuss your project",
 
     // Cases section
     casesEyebrow: "— Work / 2026",
@@ -502,12 +478,12 @@ const strings = {
       "Thank you! We've received your request and will reply within an hour on weekdays and within 24 hours on weekends. Talk soon 👋",
     leadClose: "Close",
     leadFillAll: "Please fill in all fields",
-    leadPackage: "Which format are you interested in?",
+    leadPackage: "What do you need?",
     leadPackageNotSure: "Not sure yet — please advise",
-    leadPackageStandalone: "Single service (standalone)",
-    leadPackageLaunch: "LAUNCH — starting from zero",
-    leadPackageGrowth: "GROWTH ⭐ — growing business",
-    leadPackageScale: "SCALE — serious scale",
+    leadPackageStandalone: "One specific service",
+    leadPackageAds: "Ads — setup and management",
+    leadPackageSite: "Website or landing page",
+    leadPackageBot: "AI bot / automation",
     leadBudget: "Monthly budget (rough)",
     leadBudgetNotSure: "Not sure yet",
     leadBudgetUnder1k: "Under $1,000 / mo",
@@ -637,7 +613,7 @@ const strings = {
       },
       {
         heading: "Where it is stored",
-        text: 'Requests and reviews are forwarded to our internal Telegram chat, saved to our CRM (Notion), and emailed to us (via Resend). Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Vanessa is processed via the Anthropic API to generate responses, and chat turns may be logged to our CRM (Notion).',
+        text: 'Requests and reviews are forwarded to our internal Telegram channel and emailed to us (via Resend). Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Vanessa is processed via the Anthropic API to generate responses.',
       },
       {
         heading: "How long we keep it",
@@ -687,7 +663,7 @@ const strings = {
       },
       {
         heading: "Refunds and early exit",
-        text: 'A minimum term is set in the contract (3–6 months depending on the package). Leaving earlier is possible, but a refund of fees already paid is discussed individually — the final call sits with Seventy Times and depends on how much time and money have been put into the project and the reason for the early exit. The 90-day launch guarantee (50% setup back if we miss the launch) is a separate commitment and stands no matter what.',
+        text: 'The contract may set a minimum term for ongoing work. Leaving earlier is possible; a refund of fees already paid is discussed individually and depends on how far the work has progressed. Delivery deadlines are counted from the moment Seventy Times receives the materials a stage needs, and the task history records the sequence of hand-offs. If a deadline is missed through our fault, we compensate — a partial refund or a discount, agreed per situation.',
       },
       {
         heading: "Copy and branding",
@@ -741,7 +717,7 @@ const strings = {
     imprintPhone: "Phone",
     imprintTransferHeading: "International data transfers",
     imprintTransferText:
-      "Some data you submit (through the forms or the chat) is processed by service providers in the United States — Anthropic (the AI assistant), Telegram, Notion, Resend and Vercel. These transfers rely on the EU Standard Contractual Clauses and, where applicable, the EU–US Data Privacy Framework. This section will be finalized with legal counsel.",
+      "Some data you submit (through the forms or the chat) is processed by service providers in the United States — Anthropic (the AI assistant), Telegram, Resend and Vercel. These transfers rely on the EU Standard Contractual Clauses and, where applicable, the EU–US Data Privacy Framework. This section will be finalized with legal counsel.",
 
     // Cookie consent banner
     cookieTitle: "Cookies",
@@ -776,14 +752,14 @@ const strings = {
     chatSuggestAria: "Quick prompts",
     chatSuggestPricing: "How much does it cost?",
     chatSuggestCases: "Show me cases",
-    chatSuggestGrowth: "Tell me about GROWTH",
+    chatSuggestGrowth: "How do we start?",
     chatSuggestBot: "Set up a Telegram bot",
 
     // Lead form — multi-step + progress
     leadProgressAria: "Form progress",
     leadStepLabel: "Step {n} of {total}",
     leadStep1Sub: "Just two quick fields — your name and the easiest way to reach you.",
-    leadStep2Sub: "Tell us what you do, and pick a package if you already have one in mind.",
+    leadStep2Sub: "Tell us what you do and what you need — we'll figure out the rest together.",
     leadStep3Sub: "Last bit: what would you like us to help with? A few sentences is enough.",
     leadFillStep1: "Please fill in your name and contact",
     leadFillStep2: "Please tell us what you do",

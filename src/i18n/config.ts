@@ -1,6 +1,6 @@
-export type Locale = "ru" | "en" | "de" | "uk";
+export type Locale = "ru" | "en" | "uk";
 
-export const LOCALES: Locale[] = ["en", "ru", "de", "uk"];
+export const LOCALES: Locale[] = ["en", "ru", "uk"];
 
 // Visible labels in the language switcher. Ukrainian is displayed as
 // "UA" — that's how Ukrainians expect to see it (and "UK" would read
@@ -9,7 +9,6 @@ export const LOCALES: Locale[] = ["en", "ru", "de", "uk"];
 export const LOCALE_LABELS: Record<Locale, string> = {
   en: "EN",
   ru: "RU",
-  de: "DE",
   uk: "UA",
 };
 
@@ -25,7 +24,6 @@ export const DEFAULT_LOCALE: Locale = "en";
 export const LOCALE_LANG: Record<Locale, string> = {
   en: "en",
   ru: "ru",
-  de: "de",
   uk: "uk",
 };
 
@@ -40,7 +38,7 @@ export function isLocale(value: unknown): value is Locale {
  * Build a URL path scoped to the given locale.
  *   localizedPath("ru", "/about")  → "/ru/about"
  *   localizedPath("en", "/")       → "/en"
- *   localizedPath("de", "")        → "/de"
+ *   localizedPath("uk", "")        → "/uk"
  */
 export function localizedPath(locale: Locale, path: string): string {
   const trimmed = path.replace(/^\/+/, "");

@@ -90,3 +90,24 @@ export function readUtm(): Record<string, string> {
     return {};
   }
 }
+
+/**
+ * Tag the current visitor with an entry-landing marker
+ * (landing=audit|brief). Merged into the same stored attribution
+ * object, so it rides along with every lead the visitor submits later
+ * (form or chat) and reaches Telegram / email as part of the
+ * source line. First-touch wins — an existing landing tag is kept.
+ */
+export function markLanding(landing: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    const current = readUtm();
+    if (current.landing) return;
+    window.localStorage.setItem(
+      UTM_KEY,
+      JSON.stringify({ ...current, landing: landing.slice(0, 50) }),
+    );
+  } catch {
+    // localStorage blocked / full — ignore.
+  }
+}

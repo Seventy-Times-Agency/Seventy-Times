@@ -163,7 +163,7 @@ export async function POST(req: Request) {
   // live for a year, so keep accepting it as an alias.
   const localeMatch = req.headers
     .get("cookie")
-    ?.match(/(?:^|;\s*)lang=(en|ru|de|uk|ua)/);
+    ?.match(/(?:^|;\s*)lang=(en|ru|uk|ua)/);
   const locale = localeMatch?.[1] === "ua" ? "uk" : (localeMatch?.[1] ?? "en");
 
   const lead: LeadPayload = {
@@ -206,7 +206,7 @@ export async function POST(req: Request) {
   }
 
   // Fan out to side channels after the response is sent. Without this,
-  // a slow Telegram/Notion/Email upstream made the user wait for the
+  // a slow Telegram/Email upstream made the user wait for the
   // slowest one — even though `fetchWithTimeout` caps each at 5s, that
   // is still up to 5s of perceived form latency per channel.
   after(() =>

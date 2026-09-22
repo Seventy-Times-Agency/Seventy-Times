@@ -199,7 +199,7 @@ export function forbiddenOriginResponse() {
 /**
  * If the honeypot field is filled, return a response that looks
  * identical to a successful submission — so the bot moves on — but
- * don't process the payload (no Telegram, no Notion, no logs beyond
+ * don't process the payload (no Telegram, no logs beyond
  * one warn line). Real users never see this field.
  */
 export function isHoneypotTripped(value: unknown): boolean {

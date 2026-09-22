@@ -26,7 +26,6 @@ const TOP_ITEMS = [
 // (removed obscure jargon and version numbers that age badly — e.g.
 // "Next.js 14"/"GPT-4") so it reads as texture, not a bloated tech dump.
 const BOTTOM_ITEMS = [
-  "Claude",
   "GPT",
   "Gemini",
   "Next.js",
@@ -35,7 +34,6 @@ const BOTTOM_ITEMS = [
   "Python",
   "Stripe",
   "Vercel",
-  "Notion API",
   "Telegram Bot API",
   "n8n",
   "Make.com",

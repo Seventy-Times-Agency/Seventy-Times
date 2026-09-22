@@ -11,15 +11,15 @@ export type CaseStatus = "live" | "progress" | "soon";
 type Loc = Record<Locale, string>;
 
 /** Same text in every locale — for numbers, symbols and brand tokens. */
-export const u = (s: string): Loc => ({ en: s, ru: s, de: s, uk: s });
+export const u = (s: string): Loc => ({ en: s, ru: s, uk: s });
 
 /** Where the work was delivered. Shown as a location badge — we keep
  *  it to the region level (no city) on purpose. */
 export type Region = "usa" | "europe";
 
 export const REGION_LABELS: Record<Region, Loc> = {
-  usa: { en: "USA", ru: "США", de: "USA", uk: "США" },
-  europe: { en: "Europe", ru: "Европа", de: "Europa", uk: "Європа" },
+  usa: { en: "USA", ru: "США", uk: "США" },
+  europe: { en: "Europe", ru: "Европа", uk: "Європа" },
 };
 
 type Stat = { value: string; label: Loc };
@@ -72,6 +72,9 @@ export type CaseItem = {
   status: CaseStatus;
   region: Region;
   url?: string;
+  /** "early" marks the 2020–2021 pre-war-Ukraine experience shelf —
+   *  rendered as a visually separate group that newer cases displace. */
+  era?: "early";
   study: CaseStudy;
 };
 

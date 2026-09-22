@@ -327,7 +327,7 @@ export default function ChatWidget() {
             <div className={styles.header}>
               <div className={styles.avatar}>
                 <Image
-                  src="/vanessa.jpg"
+                  src="/vanessa-avatar.png"
                   alt={t.chatAlt}
                   className={styles.avatarImg}
                   width={48}
@@ -512,7 +512,7 @@ export default function ChatWidget() {
         type="button"
       >
         <Image
-          src="/vanessa.jpg"
+          src="/vanessa-avatar.png"
           alt=""
           className={styles.toggleImg}
           width={56}

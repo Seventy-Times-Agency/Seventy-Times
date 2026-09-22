@@ -117,7 +117,16 @@ export default function RingCounter({
 
   const gradientId = `ringGradient-${id}`;
 
-  // Radial tick marks around the ring (decorative)
+  // Radial tick marks around the ring (decorative).
+  //
+  // Coordinates are rounded to 3 decimals on purpose. ECMAScript does
+  // not require Math.sin/Math.cos to be bit-identical across engines,
+  // so Node (SSR) and the browser can disagree in the last ULP — React
+  // then sees `y1="15.770526580502569"` vs `15.770526580502576` and
+  // reports an unpatchable hydration mismatch. Rounding makes both
+  // sides serialize the same string; at a 132-unit viewBox, 0.001 is
+  // far below one rendered pixel, so nothing moves.
+  const round = (n: number) => Math.round(n * 1000) / 1000;
   const ticks = Array.from({ length: 12 }, (_, i) => {
     const angle = (i * 30 * Math.PI) / 180;
     const rOuter = RADIUS + 8;
@@ -125,10 +134,10 @@ export default function RingCounter({
     const cx = VIEWBOX / 2;
     const cy = VIEWBOX / 2;
     return {
-      x1: cx + Math.cos(angle) * rInner,
-      y1: cy + Math.sin(angle) * rInner,
-      x2: cx + Math.cos(angle) * rOuter,
-      y2: cy + Math.sin(angle) * rOuter,
+      x1: round(cx + Math.cos(angle) * rInner),
+      y1: round(cy + Math.sin(angle) * rInner),
+      x2: round(cx + Math.cos(angle) * rOuter),
+      y2: round(cy + Math.sin(angle) * rOuter),
     };
   });
 

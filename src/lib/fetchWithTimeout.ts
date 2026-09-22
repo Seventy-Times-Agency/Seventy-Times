@@ -4,7 +4,7 @@
  * underlying promise rejects with AbortError. Caller-supplied
  * AbortSignal still works — the request aborts when either fires.
  *
- * Used by telegram / notion / email helpers so a slow upstream can't
+ * Used by telegram / email helpers so a slow upstream can't
  * pin a route handler for the full platform timeout.
  */
 

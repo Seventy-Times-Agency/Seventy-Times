@@ -44,6 +44,11 @@ const AI_CONTRIB = [0, 0.25, 0.45, 0.70];
 export default function GrowthSimulator() {
   const { t } = useT();
 
+  // Mobile diet: the whole simulator body collapses behind one
+  // expand button on phones. Desktop always shows it (the button is
+  // display:none at 901+ and the collapsed class only bites in the
+  // mobile media range).
+  const [expanded, setExpanded] = useState(false);
   const [adsLevel, setAdsLevel] = useState(2);
   const [autoLevel, setAutoLevel] = useState(1);
   const [aiLevel, setAiLevel] = useState(1);
@@ -187,6 +192,17 @@ export default function GrowthSimulator() {
         </Reveal>
       </div>
 
+      <button
+        type="button"
+        className={styles.expandBtn}
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+      >
+        {expanded ? t.simCollapse : t.simExpand}
+        <span aria-hidden="true"> {expanded ? "−" : "→"}</span>
+      </button>
+
+      <div className={expanded ? styles.body : `${styles.body} ${styles.bodyCollapsed}`}>
       <Reveal delay={0.1}>
         <div className={styles.pillars}>
           {pillars.map((p) => (
@@ -290,6 +306,7 @@ export default function GrowthSimulator() {
       </Reveal>
 
       <p className={styles.disclaimer}>{t.simDisclaimer}</p>
+      </div>
     </section>
   );
 }
