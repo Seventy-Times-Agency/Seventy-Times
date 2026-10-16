@@ -103,6 +103,8 @@ src/
 │   │   │   ├── CaseStudyDetail.tsx Rich per-case detail layout
 │   │   │   ├── CaseShowcase.tsx  One-screen case layout, used instead
 │   │   │   │                     when the case has `study.showcase`
+│   │   │   │                     (screenshots, or `scheme`: route
+│   │   │   │                     board + funnel when there are none)
 │   │   │   └── PlaceholderCard.tsx
 │   │   └── services/
 │   │       └── ServiceCard.tsx   Used by Services on the landing
