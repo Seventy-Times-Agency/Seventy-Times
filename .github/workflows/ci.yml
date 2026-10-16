@@ -22,7 +22,9 @@ jobs:
       - name: Install dependencies
         # `npm install`, not `npm ci`: this repo deliberately gitignores
         # package-lock.json, so there is no lockfile to install from.
-        run: npm install --no-audit --no-fund
+        # --legacy-peer-deps: npm 10's peer resolver crashes ("reading
+        # 'edgesOut'") on vitest's optional jsdom → canvas peer chain.
+        run: npm install --no-audit --no-fund --legacy-peer-deps
 
       - name: Lint
         run: npm run lint
