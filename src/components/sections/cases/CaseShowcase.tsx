@@ -10,7 +10,7 @@ import styles from "./CaseShowcase.module.css";
 
 // Interface copy that belongs to this layout only.
 const UI: Record<
-  "start" | "finish" | "more" | "details" | "close" | "shots" | "site",
+  "start" | "finish" | "more" | "details" | "close" | "shots" | "scheme" | "site",
   Record<Locale, string>
 > = {
   start: { en: "Start", ru: "Старт", uk: "Старт" },
@@ -19,14 +19,19 @@ const UI: Record<
   details: { en: "Details", ru: "Подробности", uk: "Подробиці" },
   close: { en: "Close", ru: "Закрыть", uk: "Закрити" },
   shots: { en: "Screenshots", ru: "Скриншоты", uk: "Скриншоти" },
+  scheme: { en: "The niche at a glance", ru: "Схема ниши", uk: "Схема ніші" },
   site: { en: "Website", ru: "Сайт", uk: "Сайт" },
 };
 
 type Props = { item: CaseItem; showcase: Showcase };
 
+// Long names (e.g. "Пассажирские") get a smaller title on desktop.
+const LONG_NAME = 10;
+
 /**
- * One-screen case page: brand, start → finish, revenue, two tilted
- * screenshots, and a drawer with channel numbers and the story.
+ * One-screen case page: brand, start → finish, the key figure, two
+ * tilted screenshots (or, without screenshots, a route board and a
+ * funnel), and a drawer with the numbers and the story.
  */
 export default function CaseShowcase({ item, showcase: s }: Props) {
   const { locale, localePath } = useT();
@@ -58,6 +63,8 @@ export default function CaseShowcase({ item, showcase: s }: Props) {
   }, [open]);
 
   const [before, after] = s.spendNote[locale].split("{spend}");
+  const name = s.name.map((n) => (typeof n === "string" ? n : n[locale]));
+  const long = name.some((n) => n.length > LONG_NAME);
   const rootStyle = { "--case-accent": item.study.accent } as CSSProperties;
 
   return (
@@ -71,9 +78,9 @@ export default function CaseShowcase({ item, showcase: s }: Props) {
             <span className={styles.chip}>{s.chip[locale]}</span>
           </div>
 
-          <h1 className={styles.title}>
-            {s.name[0]}
-            <span>{s.name[1]}</span>
+          <h1 className={`${styles.title} ${long ? styles.long : ""}`}>
+            {name[0]}
+            <span>{name[1]}</span>
           </h1>
 
           <div className={styles.path}>
@@ -114,47 +121,23 @@ export default function CaseShowcase({ item, showcase: s }: Props) {
           </div>
         </section>
 
-        <section className={styles.right} aria-label={UI.shots[locale]}>
+        <section
+          className={styles.right}
+          aria-label={(s.shots ? UI.shots : UI.scheme)[locale]}
+        >
           <div className={styles.well} />
-          <span className={`${styles.shotLabel} ${styles.labelSite}`}>
-            {UI.site[locale]}
-          </span>
-          <figure className={`${styles.shot} ${styles.site}`}>
-            <div className={styles.bar}>
-              <i />
-              <i />
-              <i />
-              <span>{s.shots.site.host}</span>
-            </div>
-            <Image
-              src={s.shots.site.src}
-              width={s.shots.site.width}
-              height={s.shots.site.height}
-              alt={s.shots.site.alt[locale]}
-              sizes="(min-width: 1024px) 50vw, 80vw"
-              priority
-            />
-          </figure>
-          <figure className={`${styles.shot} ${styles.ads}`}>
-            <Image
-              src={s.shots.ads.src}
-              width={s.shots.ads.width}
-              height={s.shots.ads.height}
-              alt={s.shots.ads.alt[locale]}
-              sizes="(min-width: 1024px) 36vw, 60vw"
-            />
-          </figure>
-          <span className={`${styles.shotLabel} ${styles.labelAds}`}>
-            {s.shots.ads.label}
-          </span>
+          {s.shots && <Shots shots={s.shots} locale={locale} />}
+          {s.scheme && <Scheme scheme={s.scheme} locale={locale} />}
           <div className={`${styles.sticker} ${styles.stickerTop}`}>
             {s.stickers.top.value[locale]}
             <small>{s.stickers.top.label[locale]}</small>
           </div>
-          <div className={`${styles.sticker} ${styles.stickerBottom}`}>
-            {s.stickers.bottom.value[locale]}
-            <small>{s.stickers.bottom.label[locale]}</small>
-          </div>
+          {s.stickers.bottom && (
+            <div className={`${styles.sticker} ${styles.stickerBottom}`}>
+              {s.stickers.bottom.value[locale]}
+              <small>{s.stickers.bottom.label[locale]}</small>
+            </div>
+          )}
         </section>
       </main>
 
@@ -195,6 +178,7 @@ export default function CaseShowcase({ item, showcase: s }: Props) {
             </div>
           ))}
         </div>
+        {s.source && <p className={styles.fine}>{s.source[locale]}</p>}
         <div className={styles.story}>
           <h3>{s.story.heading[locale]}</h3>
           {s.story.paragraphs.map((p) => (
@@ -202,6 +186,91 @@ export default function CaseShowcase({ item, showcase: s }: Props) {
           ))}
         </div>
       </aside>
+    </>
+  );
+}
+
+type Part<K extends keyof Showcase> = {
+  locale: Locale;
+} & Record<K, NonNullable<Showcase[K]>>;
+
+function Shots({ shots, locale }: Part<"shots">) {
+  return (
+    <>
+      <span className={`${styles.shotLabel} ${styles.labelSite}`}>
+        {UI.site[locale]}
+      </span>
+      <figure className={`${styles.shot} ${styles.site}`}>
+        <div className={styles.bar}>
+          <i />
+          <i />
+          <i />
+          <span>{shots.site.host}</span>
+        </div>
+        <Image
+          src={shots.site.src}
+          width={shots.site.width}
+          height={shots.site.height}
+          alt={shots.site.alt[locale]}
+          sizes="(min-width: 1024px) 50vw, 80vw"
+          priority
+        />
+      </figure>
+      <figure className={`${styles.shot} ${styles.ads}`}>
+        <Image
+          src={shots.ads.src}
+          width={shots.ads.width}
+          height={shots.ads.height}
+          alt={shots.ads.alt[locale]}
+          sizes="(min-width: 1024px) 36vw, 60vw"
+        />
+      </figure>
+      <span className={`${styles.shotLabel} ${styles.labelAds}`}>
+        {shots.ads.label}
+      </span>
+    </>
+  );
+}
+
+function Scheme({ scheme, locale }: Part<"scheme">) {
+  const last = scheme.funnel.length - 1;
+  return (
+    <>
+      <span className={`${styles.shotLabel} ${styles.labelSite}`}>
+        {scheme.label[locale]}
+      </span>
+      <div className={`${styles.shot} ${styles.site} ${styles.board}`}>
+        <div className={styles.bar}>
+          <i />
+          <i />
+          <i />
+          <span>{scheme.caption[locale]}</span>
+        </div>
+        <div className={styles.route}>
+          <b>{scheme.route[0][locale]}</b>
+          <em aria-hidden="true">⇄</em>
+          <b>{scheme.route[1][locale]}</b>
+        </div>
+        <dl className={styles.rows}>
+          {scheme.rows.map((r) => (
+            <div key={r.label.en}>
+              <dt>{r.label[locale]}</dt>
+              <dd>{r.value[locale]}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <ol className={`${styles.shot} ${styles.ads} ${styles.funnel}`}>
+        {scheme.funnel.map((f, i) => (
+          <li key={f.label.en} className={i === last ? styles.hot : undefined}>
+            <small>{f.label[locale]}</small>
+            <b>{f.value[locale]}</b>
+          </li>
+        ))}
+      </ol>
+      <span className={`${styles.shotLabel} ${styles.labelAds}`}>
+        {scheme.funnelLabel[locale]}
+      </span>
     </>
   );
 }
