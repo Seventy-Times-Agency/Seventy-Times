@@ -65,6 +65,33 @@ export type CaseStudy = {
   stack?: string[];
   services?: Loc[];
   insight?: Loc;
+
+  /** One-screen showcase layout. When present, the case page renders
+   *  `CaseShowcase` (brand, start → finish, revenue, two tilted
+   *  screenshots, details drawer) instead of the long detail page. */
+  showcase?: CaseShowcase;
+};
+
+type Shot = { src: string; alt: Loc; width: number; height: number };
+type Fact = { value: Loc; label: Loc };
+
+export type CaseShowcase = {
+  /** Small pill next to the logo, e.g. "Case · E-commerce · USA". */
+  chip: Loc;
+  /** Brand name split in two lines; the second is drawn as outline. */
+  name: [string, string];
+  start: Loc;
+  finish: Loc;
+  revenueLabel: Loc;
+  revenue: Loc;
+  /** Line under the revenue figure, e.g. "on $2,267 ad spend". The
+   *  `{spend}` token is replaced by `spend` in bold. */
+  spendNote: Loc;
+  spend: Loc;
+  shots: { site: Shot & { host: string }; ads: Shot & { label: string } };
+  stickers: { top: Fact; bottom: Fact };
+  details: Fact[];
+  story: { heading: Loc; paragraphs: Loc[] };
 };
 
 export type CaseItem = {

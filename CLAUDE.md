@@ -101,6 +101,8 @@ src/
 │   │   ├── cases/                Sub-components used by Cases + case pages
 │   │   │   ├── CaseCard.tsx        Landing card (status pill + region badge)
 │   │   │   ├── CaseStudyDetail.tsx Rich per-case detail layout
+│   │   │   ├── CaseShowcase.tsx  One-screen case layout, used instead
+│   │   │   │                     when the case has `study.showcase`
 │   │   │   └── PlaceholderCard.tsx
 │   │   └── services/
 │   │       └── ServiceCard.tsx   Used by Services on the landing
