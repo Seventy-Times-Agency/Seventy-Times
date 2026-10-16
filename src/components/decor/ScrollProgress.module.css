@@ -55,3 +55,9 @@
     display: revert;
   }
 }
+
+/* One-screen pages (case showcase) have nothing to scroll. */
+:global(html[data-one-screen]) .track,
+:global(html[data-one-screen]) .label {
+  display: none;
+}

@@ -1,10 +1,10 @@
 import { u, type CaseItem } from "./types";
 
-// FLAGSHIP case — a live project. The build part below is complete;
-// the paid-ads part ships as data becomes available. The commented
-// skeleton at the bottom of `study` is the frame for those numbers:
-// the owner fills in the TODO values (and screenshots) from the real
-// ad account, then uncomments the blocks.
+// FLAGSHIP case — a live project, still in progress. Every number below
+// has a source and a period (19.07–15.10.2026): orders and revenue from
+// the store admin + the client's CRM (paid orders only, cancellations
+// excluded), spend and conversations from Meta Ads Manager. Revenue is
+// gross order value, not profit. Buyer names are never published.
 export const eliteCarMats: CaseItem = {
     id: "elitecarmats",
     status: "progress",
@@ -13,38 +13,38 @@ export const eliteCarMats: CaseItem = {
     study: {
       accent: "#D4A54A",
       title: u("Elite Car Mats"),
-      tag: u("CUSTOM E-COMMERCE · USA"),
+      tag: u("E-COMMERCE · META ADS · USA · 2026"),
       summary: {
-        en: "A custom-built e-commerce store for a car-mat manufacturer entering the U.S. market. A Next.js storefront with a full vehicle configurator across ~60 brands and ~700 models, Stripe checkout, and an operator dashboard. Paid ads are a separate later phase — this case is the build.",
-        ru: "Кастомный интернет-магазин для производителя автоковриков, выходящего на рынок США. Витрина на Next.js с полным конфигуратором под авто — ~60 брендов и ~700 моделей, оплата через Stripe и операторская панель. Платная реклама — отдельный поздний этап, этот кейс про саму разработку.",
-        uk: "Кастомний інтернет-магазин для виробника автомобільних килимків, що виходить на ринок США. Вітрина на Next.js з повним конфігуратором під авто — ~60 брендів і ~700 моделей, оплата через Stripe та операторська панель. Платна реклама — окремий пізніший етап, цей кейс про саму розробку.",
+        en: "A first business that started with nothing — no website, no ads, no social accounts, not a single sale. We built the store, the brand presence and the ads, and set up sales in two channels. In the first three months of advertising: 86 paid orders and $16,188 in revenue on $2,267 of ad spend.",
+        ru: "Первый бизнес владельца, старт с полного нуля: ни сайта, ни рекламы, ни соцсетей, ни одной продажи. Мы собрали магазин, упаковку бренда и рекламу и выстроили продажи в двух каналах. За первые три месяца рекламы — 86 оплаченных заказов и $16 188 выручки при рекламном бюджете $2 267.",
+        uk: "Перший бізнес власника, старт з повного нуля: ні сайту, ні реклами, ні соцмереж, жодного продажу. Ми зібрали магазин, упаковку бренду та рекламу й вибудували продажі у двох каналах. За перші три місяці реклами — 86 оплачених замовлень і $16 188 виручки при рекламному бюджеті $2 267.",
       },
       metrics: [
         {
-          en: "~700 vehicle models, ~60 brands",
-          ru: "~700 моделей авто, ~60 брендов",
-          uk: "~700 моделей авто, ~60 брендів",
+          en: "86 paid orders in 3 months of ads",
+          ru: "86 оплаченных заказов за 3 месяца рекламы",
+          uk: "86 оплачених замовлень за 3 місяці реклами",
         },
         {
-          en: "Full vehicle configurator + Stripe",
-          ru: "Полный конфигуратор под авто + Stripe",
-          uk: "Повний конфігуратор під авто + Stripe",
+          en: "$16,188 revenue on $2,267 ad spend",
+          ru: "$16 188 выручки при бюджете $2 267",
+          uk: "$16 188 виручки при бюджеті $2 267",
         },
         {
-          en: "Custom Next.js build, 3 languages",
-          ru: "Кастомная разработка на Next.js, 3 языка",
-          uk: "Кастомна розробка на Next.js, 3 мови",
+          en: "1,360 vehicle models in the configurator",
+          ru: "1 360 моделей авто в конфигураторе",
+          uk: "1 360 моделей авто в конфігураторі",
         },
       ],
       headline: {
-        en: "Custom car-mat store, built end-to-end",
-        ru: "Магазин автоковриков под ключ",
-        uk: "Магазин автокилимків під ключ",
+        en: "From zero to 86 orders and $16,188 in revenue",
+        ru: "С нуля до 86 заказов и $16 188 выручки",
+        uk: "З нуля до 86 замовлень і $16 188 виручки",
       },
       meta: {
-        en: "Next.js · ~60 brands / ~700 models · Stripe · 3 languages",
-        ru: "Next.js · ~60 брендов / ~700 моделей · Stripe · 3 языка",
-        uk: "Next.js · ~60 брендів / ~700 моделей · Stripe · 3 мови",
+        en: "USA · Apr–Oct 2026 · store, brand, ads, sales script · in progress",
+        ru: "США · апр–окт 2026 · магазин, бренд, реклама, скрипт продаж · в работе",
+        uk: "США · квіт–жовт 2026 · магазин, бренд, реклама, скрипт продажів · у роботі",
       },
       niche: {
         en: "Auto · E-commerce · USA",
@@ -53,197 +53,431 @@ export const eliteCarMats: CaseItem = {
       },
       stats: [
         {
-          value: "~700",
-          label: {
-            en: "Vehicle models",
-            ru: "Моделей авто",
-            uk: "Моделей авто",
-          },
+          value: "86",
+          label: { en: "Paid orders", ru: "Оплаченных заказов", uk: "Оплачених замовлень" },
         },
         {
-          value: "~60",
-          label: {
-            en: "Car brands",
-            ru: "Брендов авто",
-            uk: "Брендів авто",
-          },
+          value: "$16.2K",
+          label: { en: "Revenue", ru: "Выручка", uk: "Виручка" },
         },
         {
-          value: "3",
-          label: {
-            en: "Languages",
-            ru: "Языка",
-            uk: "Мови",
-          },
+          value: "$2,267",
+          label: { en: "Ad spend", ru: "Рекламный бюджет", uk: "Рекламний бюджет" },
         },
         {
-          value: "100%",
-          label: {
-            en: "Custom build",
-            ru: "Кастомная",
-            uk: "Кастомна",
+          value: "~$190",
+          label: { en: "Average order", ru: "Средний чек", uk: "Середній чек" },
+        },
+      ],
+      revenue: {
+        heading: {
+          en: "Where the sales came from",
+          ru: "Откуда пришли продажи",
+          uk: "Звідки прийшли продажі",
+        },
+        rows: [
+          {
+            label: { en: "Website checkout", ru: "Заказы через сайт", uk: "Замовлення через сайт" },
+            value: {
+              en: "21 orders · $3,998",
+              ru: "21 заказ · $3 998",
+              uk: "21 замовлення · $3 998",
+            },
           },
+          {
+            label: {
+              en: "Direct messages (Instagram / Facebook)",
+              ru: "Переписка (Instagram / Facebook)",
+              uk: "Листування (Instagram / Facebook)",
+            },
+            value: {
+              en: "65 orders · $12,190",
+              ru: "65 заказов · $12 190",
+              uk: "65 замовлень · $12 190",
+            },
+          },
+          {
+            label: { en: "Total", ru: "Всего", uk: "Усього" },
+            value: {
+              en: "86 orders · $16,188",
+              ru: "86 заказов · $16 188",
+              uk: "86 замовлень · $16 188",
+            },
+          },
+          {
+            label: { en: "Meta ad spend", ru: "Расход на рекламу Meta", uk: "Витрати на рекламу Meta" },
+            value: u("$2,267"),
+          },
+        ],
+        roasLabel: {
+          en: "Revenue / ad spend",
+          ru: "Выручка / рекламный бюджет",
+          uk: "Виручка / рекламний бюджет",
+        },
+        roas: "7.1×",
+        roasNote: {
+          en: "Jul 19 – Oct 15, 2026 · gross revenue, not profit · paid orders only · sources: store admin, client CRM, Meta Ads Manager",
+          ru: "19 июля – 15 октября 2026 · выручка, не прибыль · только оплаченные заказы · источники: админка магазина, CRM клиента, Meta Ads Manager",
+          uk: "19 липня – 15 жовтня 2026 · виручка, не прибуток · лише оплачені замовлення · джерела: адмінка магазину, CRM клієнта, Meta Ads Manager",
+        },
+      },
+      breakdown: {
+        heading: {
+          en: "Ad campaigns · Meta",
+          ru: "Рекламные кампании · Meta",
+          uk: "Рекламні кампанії · Meta",
+        },
+        rows: [
+          {
+            label: { en: "Period", ru: "Период", uk: "Період" },
+            value: {
+              en: "Jul 19 – Oct 15, 2026",
+              ru: "19.07 – 15.10.2026",
+              uk: "19.07 – 15.10.2026",
+            },
+          },
+          {
+            label: { en: "Impressions", ru: "Показы", uk: "Покази" },
+            value: { en: "~276K", ru: "~276 тыс.", uk: "~276 тис." },
+          },
+          {
+            label: {
+              en: "Conversations started",
+              ru: "Начатых диалогов",
+              uk: "Розпочатих діалогів",
+            },
+            value: {
+              en: "675 · ~$3.09 each",
+              ru: "675 · ~$3.09 за диалог",
+              uk: "675 · ~$3.09 за діалог",
+            },
+          },
+          {
+            label: {
+              en: "Store visits from ads",
+              ru: "Переходов на сайт",
+              uk: "Переходів на сайт",
+            },
+            value: {
+              en: "1,539 · ~$0.11 each",
+              ru: "1 539 · ~$0.11 за переход",
+              uk: "1 539 · ~$0.11 за перехід",
+            },
+          },
+          {
+            label: { en: "First order", ru: "Первый заказ", uk: "Перше замовлення" },
+            value: {
+              en: "6 days after launch",
+              ru: "через 6 дней после запуска",
+              uk: "через 6 днів після запуску",
+            },
+          },
+        ],
+      },
+      deliverables: {
+        heading: {
+          en: "How it went, step by step",
+          ru: "Как шли, шаг за шагом",
+          uk: "Як ішли, крок за кроком",
+        },
+        items: [
+          {
+            en: "Start: the owner came through a referral with nothing in place and asked for a landing page. We explained why a niche where every product is cut for a specific car needs a real store, not a landing page.",
+            ru: "Старт: владелец пришёл по рекомендации, без сайта, рекламы и соцсетей, и просил лендинг. Мы объяснили, почему в нише, где каждый товар режется под конкретную машину, нужен полноценный магазин, а не лендинг.",
+            uk: "Старт: власник прийшов за рекомендацією, без сайту, реклами та соцмереж, і просив лендинг. Ми пояснили, чому в ніші, де кожен товар ріжеться під конкретне авто, потрібен повноцінний магазин, а не лендинг.",
+          },
+          {
+            en: "Brand: the honeycomb pattern of the mats themselves became the visual system — logo, site and social in black and gold, approved by the owner on the first pass.",
+            ru: "Бренд: узор сот с самих ковриков стал визуальной системой — логотип, сайт и соцсети в чёрном и золотом. Владелец утвердил с первого показа.",
+            uk: "Бренд: візерунок сот із самих килимків став візуальною системою — логотип, сайт і соцмережі в чорному та золотому. Власник затвердив з першого показу.",
+          },
+          {
+            en: "Store in about a month (launched May 2026): a product page for every car, from sedans to semi trucks, with a configurator, checkout and an owner dashboard.",
+            ru: "Магазин примерно за месяц (запуск в мае 2026): карточка под каждую машину, от седанов до фур, конфигуратор, оплата и панель владельца.",
+            uk: "Магазин приблизно за місяць (запуск у травні 2026): картка під кожне авто, від седанів до фур, конфігуратор, оплата та панель власника.",
+          },
+          {
+            en: "Instagram and Facebook from scratch: profile concept, first posts, business setup and an Instagram shop — so ads had somewhere to land.",
+            ru: "Instagram и Facebook с нуля: концепция профиля, первые публикации, бизнес-настройки и магазин в Instagram — чтобы рекламе было куда вести.",
+            uk: "Instagram і Facebook з нуля: концепція профілю, перші публікації, бізнес-налаштування та магазин в Instagram — щоб рекламі було куди вести.",
+          },
+          {
+            en: "Ads tested across audiences, languages and destinations. U.S. buyers convert on the website; the Ukrainian- and Russian-speaking audience buys in direct messages. Campaigns were split to match.",
+            ru: "Реклама: тесты аудиторий, языков и точек назначения. Американцы покупают на сайте, украино- и русскоязычная аудитория — в переписке. Кампании разделили под каждый сценарий.",
+            uk: "Реклама: тести аудиторій, мов і точок призначення. Американці купують на сайті, україно- та російськомовна аудиторія — у листуванні. Кампанії розділили під кожен сценарій.",
+          },
+          {
+            en: "Sales script for the owner's two sales managers, plus regular reviews of their conversations to find where deals stall.",
+            ru: "Скрипт продаж для двух менеджеров владельца и регулярный разбор их диалогов — ищем, где сделки застревают.",
+            uk: "Скрипт продажів для двох менеджерів власника та регулярний розбір їхніх діалогів — шукаємо, де угоди застрягають.",
+          },
+          {
+            en: "Demand outgrew what we had planned for, and the store briefly stopped taking orders. We rebuilt it for large traffic spikes: the same audience now puts 2.5× less load on it.",
+            ru: "Поток покупателей вырос больше, чем мы закладывали, и сайт на время перестал принимать заказы. Мы перестроили его под крупные наплывы: теперь та же аудитория нагружает его в 2,5 раза меньше.",
+            uk: "Потік покупців виріс більше, ніж ми закладали, і сайт на деякий час перестав приймати замовлення. Ми перебудували його під великі напливи: тепер та сама аудиторія навантажує його у 2,5 раза менше.",
+          },
+          {
+            en: "A second product at the owner's request: a honeycomb trunk organizer, live on the store since late September.",
+            ru: "Второй продукт по запросу владельца: органайзер в багажник в стиле сот, в продаже с конца сентября.",
+            uk: "Другий продукт на запит власника: органайзер у багажник у стилі сот, у продажу з кінця вересня.",
+          },
+        ],
+      },
+      sections: [
+        {
+          heading: {
+            en: "Every way to find and buy",
+            ru: "Все пути найти и купить",
+            uk: "Усі шляхи знайти й купити",
+          },
+          items: [
+            {
+              en: "Google Shopping via Merchant Center — the feed updates with prices from the admin",
+              ru: "Google Shopping через Merchant Center — фид обновляется по ценам из админки",
+              uk: "Google Shopping через Merchant Center — фід оновлюється за цінами з адмінки",
+            },
+            {
+              en: "Meta product catalog and an Instagram shop",
+              ru: "Каталог товаров Meta и магазин в Instagram",
+              uk: "Каталог товарів Meta та магазин в Instagram",
+            },
+            {
+              en: "Search Console and basic SEO so Google indexes the store",
+              ru: "Search Console и базовое SEO, чтобы Google индексировал магазин",
+              uk: "Search Console та базове SEO, щоб Google індексував магазин",
+            },
+            {
+              en: "Etsy storefront set up with the product range (just launched)",
+              ru: "Магазин на Etsy с загруженным ассортиментом (только запущен)",
+              uk: "Магазин на Etsy із завантаженим асортиментом (щойно запущений)",
+            },
+          ],
+        },
+        {
+          heading: {
+            en: "Owner dashboard",
+            ru: "Панель владельца",
+            uk: "Панель власника",
+          },
+          items: [
+            {
+              en: "Revenue by day / week / month, average order, top models",
+              ru: "Выручка по дням, неделям и месяцам, средний чек, топ-модели",
+              uk: "Виручка по днях, тижнях і місяцях, середній чек, топ-моделі",
+            },
+            {
+              en: "Orders with status, tracking numbers and the channel each one came from",
+              ru: "Заказы со статусами, трек-номерами и каналом, откуда пришёл каждый",
+              uk: "Замовлення зі статусами, трек-номерами та каналом, звідки прийшло кожне",
+            },
+            {
+              en: "Live price editor, promo codes, custom orders with invoices",
+              ru: "Живой редактор цен, промокоды, индивидуальные заказы со счетами",
+              uk: "Живий редактор цін, промокоди, індивідуальні замовлення з рахунками",
+            },
+            {
+              en: "Sales funnel, verified-buyer reviews, blog and newsletter",
+              ru: "Воронка продаж, отзывы проверенных покупателей, блог и рассылка",
+              uk: "Воронка продажів, відгуки перевірених покупців, блог і розсилка",
+            },
+          ],
         },
       ],
       features: [
         {
           icon: "🚗",
           text: {
-            en: "Vehicle configurator — year, set type (profile-aware), mat & edge colour, optional metal brand badge",
-            ru: "Конфигуратор под авто — год, тип комплекта (по профилю кузова), цвет коврика и окантовки, опц. металлический шильдик бренда",
-            uk: "Конфігуратор під авто — рік, тип комплекта (за профілем кузова), колір килимка й окантовки, опц. металевий шильдик бренда",
+            en: "Configurator: year, set type by body profile, mat and edge colour, optional metal badge",
+            ru: "Конфигуратор: год, комплект по профилю кузова, цвет коврика и канта, металлический шильдик",
+            uk: "Конфігуратор: рік, комплект за профілем кузова, колір килимка й канту, металевий шильдик",
           },
         },
         {
           icon: "🔎",
           text: {
-            en: "Catalog of ~60 brands / ~700 models — body-type filters and ⌘K search with autocomplete",
-            ru: "Каталог ~60 брендов / ~700 моделей — фильтры по типу кузова и поиск ⌘K с автокомплитом",
-            uk: "Каталог ~60 брендів / ~700 моделей — фільтри за типом кузова і пошук ⌘K з автокомплітом",
+            en: "1,360 models across 68 brands — cars, SUVs, pickups, vans and semi trucks — with search",
+            ru: "1 360 моделей 68 брендов — легковые, кроссоверы, пикапы, фургоны и тягачи — с поиском",
+            uk: "1 360 моделей 68 брендів — легкові, кросовери, пікапи, фургони та тягачі — з пошуком",
+          },
+        },
+        {
+          icon: "✂️",
+          text: {
+            en: "Custom-order form for cars that aren't in the catalog",
+            ru: "Форма индивидуального заказа для машин, которых нет в каталоге",
+            uk: "Форма індивідуального замовлення для авто, яких немає в каталозі",
           },
         },
         {
           icon: "💳",
           text: {
-            en: "Cart with promo codes and Stripe Checkout (with manual-confirm fallback)",
-            ru: "Корзина с промокодами и оплатой через Stripe Checkout (с резервным ручным подтверждением)",
-            uk: "Кошик з промокодами та оплатою через Stripe Checkout (із резервним ручним підтвердженням)",
+            en: "Cart, promo codes and Stripe checkout",
+            ru: "Корзина, промокоды и оплата через Stripe",
+            uk: "Кошик, промокоди та оплата через Stripe",
           },
         },
         {
           icon: "📦",
           text: {
-            en: "Order tracking via HMAC links, ShipStation fulfillment, and Resend transactional emails",
-            ru: "Отслеживание заказа по HMAC-ссылкам, фулфилмент через ShipStation и транзакционные письма на Resend",
-            uk: "Відстеження замовлення за HMAC-посиланнями, фулфілмент через ShipStation і транзакційні листи на Resend",
-          },
-        },
-        {
-          icon: "❤️",
-          text: {
-            en: "Wishlist and a custom-order form for vehicles outside the catalog",
-            ru: "Вишлист и форма кастом-заказа для авто не из каталога",
-            uk: "Список бажань і форма кастом-замовлення для авто не з каталогу",
+            en: "Order tracking and transactional emails",
+            ru: "Отслеживание заказа и письма покупателю",
+            uk: "Відстеження замовлення та листи покупцю",
           },
         },
         {
           icon: "🌐",
           text: {
-            en: "Three languages (EN / RU / UK), a Markdown blog, and WCAG accessibility",
-            ru: "Три языка (EN / RU / UK), блог на Markdown и доступность по WCAG",
-            uk: "Три мови (EN / RU / UK), блог на Markdown і доступність за WCAG",
+            en: "Three languages (EN / RU / UK), detected from the browser",
+            ru: "Три языка (EN / RU / UK), определяются по браузеру",
+            uk: "Три мови (EN / RU / UK), визначаються за браузером",
           },
-        },
-      ],
-      sections: [
-        {
-          heading: {
-            en: "Operator dashboard",
-            ru: "Операторская панель",
-            uk: "Операторська панель",
-          },
-          items: [
-            {
-              en: "Revenue dashboard — daily / weekly / monthly, AOV, top models",
-              ru: "Дашборд выручки — день / неделя / месяц, средний чек, топ-модели",
-              uk: "Дашборд виручки — день / тиждень / місяць, середній чек, топ-моделі",
-            },
-            {
-              en: "Order management — status timeline, tracking numbers, email re-send",
-              ru: "Управление заказами — статус-таймлайн, трек-номера, повторная отправка письма",
-              uk: "Керування замовленнями — статус-таймлайн, трек-номери, повторне надсилання листа",
-            },
-            {
-              en: "Live price editor with per-vehicle overrides + Google Shopping feed",
-              ru: "Живой редактор цен с переопределениями по типам авто + фид Google Shopping",
-              uk: "Живий редактор цін з перевизначеннями за типами авто + фід Google Shopping",
-            },
-            {
-              en: "Catalog CRUD, blog editor, promo codes, review moderation, newsletter (CSV)",
-              ru: "CRUD каталога, редактор блога, промокоды, модерация отзывов, рассылка (CSV)",
-              uk: "CRUD каталогу, редактор блога, промокоди, модерація відгуків, розсилка (CSV)",
-            },
-          ],
-        },
-        {
-          heading: {
-            en: "SEO & marketing",
-            ru: "SEO и маркетинг",
-            uk: "SEO та маркетинг",
-          },
-          items: [
-            {
-              en: "Sitemap across brand, model, custom and blog URLs",
-              ru: "Sitemap по URL брендов, моделей, кастом-страниц и блога",
-              uk: "Sitemap за URL брендів, моделей, кастом-сторінок і блога",
-            },
-            {
-              en: "Schema.org — Product (+rating), Offer, Organization, Breadcrumb, FAQ, Article",
-              ru: "Schema.org — Product (+рейтинг), Offer, Organization, Breadcrumb, FAQ, Article",
-              uk: "Schema.org — Product (+рейтинг), Offer, Organization, Breadcrumb, FAQ, Article",
-            },
-            {
-              en: "OpenGraph images per page",
-              ru: "OpenGraph-картинки для каждой страницы",
-              uk: "OpenGraph-зображення для кожної сторінки",
-            },
-            {
-              en: "Google Merchant Center product feed that auto-updates with admin prices",
-              ru: "Продуктовый фид Google Merchant Center, авто-обновляемый по ценам из админки",
-              uk: "Продуктовий фід Google Merchant Center, що авто-оновлюється за цінами з адмінки",
-            },
-          ],
-        },
-        {
-          heading: {
-            en: "Security & reliability",
-            ru: "Безопасность и надёжность",
-            uk: "Безпека та надійність",
-          },
-          items: [
-            {
-              en: "HMAC admin sessions, scrypt hashing, CSRF protection",
-              ru: "HMAC-сессии админа, хеширование scrypt, защита от CSRF",
-              uk: "HMAC-сесії адміна, хешування scrypt, захист від CSRF",
-            },
-            {
-              en: "Per-IP rate limiting (Upstash Redis)",
-              ru: "Лимит запросов по IP (Upstash Redis)",
-              uk: "Ліміт запитів за IP (Upstash Redis)",
-            },
-            {
-              en: "Stripe webhook idempotency ledger",
-              ru: "Журнал идемпотентности Stripe-вебхуков",
-              uk: "Журнал ідемпотентності Stripe-вебхуків",
-            },
-            {
-              en: "Hardened security headers and CCPA / CPRA compliance",
-              ru: "Усиленные security-заголовки и соответствие CCPA / CPRA",
-              uk: "Посилені security-заголовки та відповідність CCPA / CPRA",
-            },
-          ],
         },
       ],
       insight: {
-        en: "Scope here started with the storefront — design, build, catalog, payments and the admin panel. Paid acquisition is the current phase: campaign numbers will be added to this case as real data accumulates.",
-        ru: "Скоуп начинался с витрины: дизайн, разработка, каталог, оплата и админ-панель. Платное продвижение — текущий этап: рекламные цифры появятся в кейсе по мере накопления реальных данных.",
-        uk: "Скоуп починався з вітрини: дизайн, розробка, каталог, оплата та адмін-панель. Платне просування — поточний етап: рекламні цифри з'являться в кейсі в міру накопичення реальних даних.",
+        en: "The project is three months into advertising and still in progress — we're not at the ideal result yet. Paid ads drive most of the sales; Google Shopping, the Meta catalog and search add orders on top and are the base for steadier growth. Revenue figures are gross order value from the store admin and the client's CRM, not profit.",
+        ru: "Проекту три месяца рекламы, и он продолжается — до идеального результата мы ещё не дошли. Основной объём продаж даёт реклама; Google Shopping, каталог Meta и поиск добавляют заказы сверху и закладывают основу для более стабильного роста. Выручка — сумма заказов по админке магазина и CRM клиента, а не прибыль.",
+        uk: "Проєкту три місяці реклами, і він триває — до ідеального результату ми ще не дійшли. Основний обсяг продажів дає реклама; Google Shopping, каталог Meta та пошук додають замовлення зверху й закладають основу для стабільнішого зростання. Виручка — сума замовлень за адмінкою магазину та CRM клієнта, а не прибуток.",
       },
-
-      // ── Paid-ads results — TODO: owner fills from the real ad account ──
-      // Uncomment and complete when the numbers are ready. Screenshots go
-      // to /public/cases/elitecarmats/ and get wired into CaseStudyDetail.
-      //
-      // breakdown: {
-      //   heading: { en: "Ad campaign", ru: "Рекламная кампания", uk: "Рекламна кампанія" },
-      //   rows: [
-      //     { label: { en: "Period", ru: "Период", uk: "Період" }, value: u("TODO") },
-      //     { label: { en: "Monthly ad budget", ru: "Бюджет в месяц", uk: "Бюджет на місяць" }, value: u("TODO") },
-      //     { label: { en: "Impressions / clicks", ru: "Показы / клики", uk: "Покази / кліки" }, value: u("TODO") },
-      //     { label: { en: "Orders attributed", ru: "Заказы из рекламы", uk: "Замовлення з реклами" }, value: u("TODO") },
-      //     { label: { en: "CPA", ru: "CPA", uk: "CPA" }, value: u("TODO") },
-      //   ],
-      // },
+      showcase: {
+        chip: {
+          en: "Case · E-commerce · USA",
+          ru: "Кейс · E-commerce · США",
+          uk: "Кейс · E-commerce · США",
+        },
+        name: ["Elite Car", "Mats"],
+        start: {
+          en: "Mats and a warehouse. No website, no brand, no sales.",
+          ru: "Коврики и склад. Без сайта, бренда и продаж.",
+          uk: "Килимки й склад. Без сайту, бренду та продажів.",
+        },
+        finish: {
+          en: "A store, a brand, ads and 86 orders.",
+          ru: "Магазин, бренд, реклама и 86 заказов.",
+          uk: "Магазин, бренд, реклама і 86 замовлень.",
+        },
+        revenueLabel: {
+          en: "Brought the client in 3 months",
+          ru: "Принесли клиенту за 3 месяца",
+          uk: "Принесли клієнту за 3 місяці",
+        },
+        revenue: { en: "$16,188", ru: "$16 188", uk: "$16 188" },
+        spendNote: {
+          en: "on {spend} of ad spend",
+          ru: "при {spend} на рекламу",
+          uk: "при {spend} на рекламу",
+        },
+        spend: { en: "$2,267", ru: "$2 267", uk: "$2 267" },
+        shots: {
+          site: {
+            src: "/cases/elitecarmats/site-hero.webp",
+            width: 1800,
+            height: 1117,
+            host: "elitecarmats.us",
+            alt: {
+              en: "Elite Car Mats store home page",
+              ru: "Главная страница магазина Elite Car Mats",
+              uk: "Головна сторінка магазину Elite Car Mats",
+            },
+          },
+          ads: {
+            src: "/cases/elitecarmats/meta-ads.webp",
+            width: 1200,
+            height: 484,
+            label: "Meta Ads",
+            alt: {
+              en: "Campaigns in Meta Ads Manager",
+              ru: "Кампании в Meta Ads Manager",
+              uk: "Кампанії в Meta Ads Manager",
+            },
+          },
+        },
+        stickers: {
+          top: {
+            value: u("86"),
+            label: { en: "orders", ru: "заказов", uk: "замовлень" },
+          },
+          bottom: {
+            value: { en: "7.1×", ru: "7,1×", uk: "7,1×" },
+            label: {
+              en: "from every $1 of ads",
+              ru: "с каждого $1 рекламы",
+              uk: "з кожного $1 реклами",
+            },
+          },
+        },
+        details: [
+          {
+            value: { en: "65 · $12,190", ru: "65 · $12 190", uk: "65 · $12 190" },
+            label: {
+              en: "orders from DMs",
+              ru: "заказов из директа",
+              uk: "замовлень з директу",
+            },
+          },
+          {
+            value: { en: "21 · $3,998", ru: "21 · $3 998", uk: "21 · $3 998" },
+            label: {
+              en: "orders on the website",
+              ru: "заказов с сайта",
+              uk: "замовлень із сайту",
+            },
+          },
+          {
+            value: { en: "$3.09", ru: "$3,09", uk: "$3,09" },
+            label: {
+              en: "per DM conversation",
+              ru: "за диалог в директе",
+              uk: "за діалог у директі",
+            },
+          },
+          {
+            value: { en: "6 days", ru: "6 дней", uk: "6 днів" },
+            label: {
+              en: "to the first order",
+              ru: "до первого заказа",
+              uk: "до першого замовлення",
+            },
+          },
+        ],
+        story: {
+          heading: { en: "How it went", ru: "Как это было", uk: "Як це було" },
+          paragraphs: [
+            {
+              en: "Vitalii came to us through a referral. He had great EVA mats of his own production and a warehouse in Rochester. Nothing else: no website, no ads, no social accounts, not a single online order. It was his first business.",
+              ru: "Виталий пришёл к нам по рекомендации. У него были отличные EVA-коврики собственного производства и склад в Рочестере. Больше не было ничего: ни сайта, ни рекламы, ни соцсетей, ни одного онлайн-заказа. Это был его первый бизнес.",
+              uk: "Віталій прийшов до нас за рекомендацією. У нього були чудові EVA-килимки власного виробництва та склад у Рочестері. Більше не було нічого: ні сайту, ні реклами, ні соцмереж, жодного онлайн-замовлення. Це був його перший бізнес.",
+            },
+            {
+              en: "First we talked for a long time. We worked out who his buyer is, where to find them and how much he could invest at the start. Vitalii wanted a simple landing page, but hundreds of car models need a real store. That became the concept: a store that fits mats to your car, a brand built on his signature honeycomb and gold, and Meta ads sized to a budget he could afford.",
+              ru: "Сначала мы долго разговаривали. Разбирались, кто его покупатель, где его искать и сколько можно вложить на старте. Виталий хотел простой лендинг, но под сотни моделей авто нужен был полноценный магазин. Так появилась концепция: магазин с подбором под машину, бренд в стиле его фирменных сот с золотом и реклама в Meta под бюджет, который он мог себе позволить.",
+              uk: "Спочатку ми довго розмовляли. Розбиралися, хто його покупець, де його шукати і скільки можна вкласти на старті. Віталій хотів простий лендинг, але під сотні моделей авто потрібен був повноцінний магазин. Так з'явилася концепція: магазин із підбором під машину, бренд у стилі його фірмових сот із золотом і реклама в Meta під бюджет, який він міг собі дозволити.",
+            },
+            {
+              en: "In a month we built the website and set up Instagram and Facebook. Then we launched ads. It quickly became clear that Americans buy on the website, while Russian- and Ukrainian-speaking customers write in DMs. We grew both channels.",
+              ru: "За месяц мы собрали сайт и оформили Instagram и Facebook. Потом запустили рекламу. Быстро стало видно, что американцы покупают на сайте, а русско- и украиноязычные клиенты пишут в директ. Мы стали развивать оба направления.",
+              uk: "За місяць ми зібрали сайт і оформили Instagram та Facebook. Потім запустили рекламу. Швидко стало видно, що американці купують на сайті, а російсько- та україномовні клієнти пишуть у директ. Ми почали розвивати обидва напрями.",
+            },
+            {
+              en: "To turn DMs into orders, we wrote a sales script, trained Vitalii's managers and still review their conversations. We've run the project the whole time: when the website couldn't handle the rush of buyers, we rebuilt it so the load dropped 2.5×. We connected Google Shopping, the Meta catalog and Etsy, and launched a second product.",
+              ru: "Чтобы заявки из директа превращались в заказы, мы написали скрипт продаж, обучили менеджеров Виталия и до сих пор разбираем их диалоги. Всё это время ведём проект: когда сайт не выдержал наплыва покупателей, переделали его так, что нагрузка стала в 2,5 раза ниже. Подключили Google Shopping, каталог Meta и Etsy, запустили второй товар.",
+              uk: "Щоб заявки з директу перетворювалися на замовлення, ми написали скрипт продажів, навчили менеджерів Віталія і досі розбираємо їхні діалоги. Весь цей час ведемо проєкт: коли сайт не витримав напливу покупців, переробили його так, що навантаження стало у 2,5 раза нижчим. Підключили Google Shopping, каталог Meta та Etsy, запустили другий товар.",
+            },
+            {
+              en: "Now we're locking in the result and preparing to scale. We're in it for the long run.",
+              ru: "Сейчас мы закрепляем результат и готовим масштабирование. Работаем дальше вдолгую.",
+              uk: "Зараз ми закріплюємо результат і готуємо масштабування. Працюємо далі вдовгу.",
+            },
+          ],
+        },
+      },
+      services: [
+        { en: "E-commerce store", ru: "Интернет-магазин", uk: "Інтернет-магазин" },
+        { en: "Branding & logo", ru: "Брендинг и логотип", uk: "Брендинг і логотип" },
+        { en: "Social media setup", ru: "Оформление соцсетей", uk: "Оформлення соцмереж" },
+        { en: "Meta Ads", ru: "Реклама Meta", uk: "Реклама Meta" },
+        { en: "Google Shopping & SEO basics", ru: "Google Shopping и базовое SEO", uk: "Google Shopping і базове SEO" },
+        { en: "Sales script & training", ru: "Скрипт продаж и обучение", uk: "Скрипт продажів і навчання" },
+      ],
       stack: [
         "Next.js 16",
         "React 19",
@@ -251,8 +485,8 @@ export const eliteCarMats: CaseItem = {
         "Tailwind",
         "Prisma + Neon",
         "Stripe",
-        "ShipStation",
         "Resend",
+        "Upstash Redis",
         "Vercel",
       ],
     },
