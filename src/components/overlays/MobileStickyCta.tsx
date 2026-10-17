@@ -32,7 +32,10 @@ export default function MobileStickyCta() {
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 320;
       // The contact block has the same CTA — don't double it up.
-      const contact = document.getElementById("contact");
+      // On phones the visible contact block is the funnel's "m-contact".
+      const contact = ["m-contact", "contact"]
+        .map((id) => document.getElementById(id))
+        .find((el) => el && el.offsetParent !== null);
       const contactInView = contact
         ? contact.getBoundingClientRect().top < window.innerHeight
         : false;

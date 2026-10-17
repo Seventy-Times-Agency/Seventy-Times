@@ -92,9 +92,10 @@
 
 /* Proactive teaser nudge — shown once per session when chat is closed,
    to lift engagement on paid traffic without nagging. */
+/* Phones: no teaser — it covers the funnel's CTAs; the launcher stays. */
 .nudge {
   position: relative;
-  display: block;
+  display: none;
   max-width: min(280px, calc(100vw - 90px));
   padding: 13px 36px 13px 15px;
   border: 0;
@@ -555,5 +556,11 @@
   .bubble {
     max-width: 84%;
     font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  .nudge {
+    display: block;
   }
 }

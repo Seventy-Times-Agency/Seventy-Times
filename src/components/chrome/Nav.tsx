@@ -49,6 +49,21 @@ export default function Nav() {
 
   const close = () => setMenuOpen(false);
 
+  // Phones render a separate funnel whose sections carry an "m-" prefix
+  // (the desktop sections are hidden there). Scroll to whichever copy of
+  // the section is actually visible.
+  const PHONE_FALLBACK: Record<string, string> = { process: "m-how-we-start" };
+  const goToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (!onHome || id === "team") return;
+    const desktop = document.getElementById(id);
+    if (desktop && desktop.offsetParent !== null) return; // default jump works
+    const phone =
+      document.getElementById(`m-${id}`) ?? document.getElementById(PHONE_FALLBACK[id] ?? "");
+    if (!phone) return;
+    e.preventDefault();
+    phone.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const NAV_LINKS = [
     { href: anchor("services"), id: "services", label: t.navServices },
     { href: anchor("cases"), id: "cases", label: t.navCases },
@@ -70,6 +85,7 @@ export default function Nav() {
           <a
             key={l.href}
             href={l.href}
+            onClick={(e) => goToSection(e, l.id)}
             className={`${styles.link}${(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? ` ${styles.linkActive}` : ""}`}
             aria-current={(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? "location" : undefined}
           >
@@ -119,7 +135,10 @@ export default function Nav() {
               key={l.href}
               href={l.href}
               className={`${styles.mobileLink}${(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? ` ${styles.mobileLinkActive}` : ""}`}
-              onClick={close}
+              onClick={(e) => {
+                goToSection(e, l.id);
+                close();
+              }}
               aria-current={(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? "location" : undefined}
             >
               {l.label}

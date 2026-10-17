@@ -7,6 +7,7 @@ import Services from "@/components/sections/Services";
 import Footer from "@/components/chrome/Footer";
 import SectionDivider from "@/components/decor/SectionDivider";
 import StructuredData from "@/components/seo/StructuredData";
+import MobileLanding from "@/components/mobile/MobileLanding";
 
 // Below-fold sections — code-split so the initial route bundle stays
 // lean. Still SSR'd (no `ssr: false`) so search engines and the first
@@ -32,32 +33,35 @@ export default async function HomePage() {
       <StructuredData />
       <Nav />
       <main id="main-content">
-        <Hero />
-        <MarqueeStack />
-        <Services />
-        <SectionDivider labelKey="divCases" />
-        <Cases />
-        {reviews.length > 0 && (
-          <>
-            <SectionDivider labelKey="divProof" />
-            <Testimonials reviews={reviews} />
-          </>
-        )}
-        {/* A long table that says little on a phone screen. */}
+        {/* Phones get their own funnel; tablets and desktop the full page. */}
+        <div className="only-phone">
+          <MobileLanding />
+        </div>
         <div className="hide-phone">
+          <Hero />
+          <MarqueeStack />
+          <Services />
+          <SectionDivider labelKey="divCases" />
+          <Cases />
+          {reviews.length > 0 && (
+            <>
+              <SectionDivider labelKey="divProof" />
+              <Testimonials reviews={reviews} />
+            </>
+          )}
           <SectionDivider labelKey="divCompare" />
           <Comparison />
+          <SectionDivider labelKey="divMeet" />
+          <ChatDemo />
+          <SectionDivider labelKey="divStart" />
+          <HowWeStart />
+          <SectionDivider labelKey="divNext" />
+          <Process />
+          <SectionDivider labelKey="divQuestions" />
+          <FAQ />
+          <SectionDivider labelKey="divTalk" />
+          <CTA />
         </div>
-        <SectionDivider labelKey="divMeet" />
-        <ChatDemo />
-        <SectionDivider labelKey="divStart" />
-        <HowWeStart />
-        <SectionDivider labelKey="divNext" />
-        <Process />
-        <SectionDivider labelKey="divQuestions" />
-        <FAQ />
-        <SectionDivider labelKey="divTalk" />
-        <CTA />
       </main>
       <Footer />
     </>
