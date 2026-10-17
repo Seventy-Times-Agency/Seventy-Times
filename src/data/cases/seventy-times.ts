@@ -10,9 +10,9 @@ export const seventyTimes: CaseItem = {
       title: u("Seventy Times"),
       tag: u("NEXT.JS · AI ASSISTANT"),
       summary: {
-        en: "This very site. A multilingual Next.js 15 build with Vanessa — our AI consultant who qualifies and hands off leads — an interactive ROI simulator, and motion throughout.",
-        ru: "Этот самый сайт. Многоязычный проект на Next.js 15: Ванесса — наш AI-консультант, которая квалифицирует и передаёт лиды, интерактивный ROI-симулятор и анимации повсюду.",
-        uk: "Цей самий сайт. Багатомовний проєкт на Next.js 15: Ванесса — наш AI-консультант, яка кваліфікує та передає ліди, інтерактивний ROI-симулятор та анімації всюди.",
+        en: "This very site. A multilingual Next.js 15 build with Vanessa — our AI consultant who qualifies and hands off leads — and motion throughout.",
+        ru: "Этот самый сайт. Многоязычный проект на Next.js 15: Ванесса — наш AI-консультант, которая квалифицирует и передаёт лиды, — и анимации повсюду.",
+        uk: "Цей самий сайт. Багатомовний проєкт на Next.js 15: Ванесса — наш AI-консультант, яка кваліфікує та передає ліди, — та анімації всюди.",
       },
       metrics: [
         {
@@ -24,11 +24,6 @@ export const seventyTimes: CaseItem = {
           en: "Vanessa — AI closer: qualifies & captures leads, 24/7",
           ru: "Ванесса — AI-клоузер: квалифицирует и захватывает лиды, 24/7",
           uk: "Ванесса — AI-клоузер: кваліфікує та захоплює ліди, 24/7",
-        },
-        {
-          en: "Interactive ROI simulator",
-          ru: "Интерактивный ROI-симулятор",
-          uk: "Інтерактивний ROI-симулятор",
         },
       ],
       headline: {
@@ -61,14 +56,6 @@ export const seventyTimes: CaseItem = {
             en: "Vanessa — our AI consultant: qualifies, captures & hands off leads, 24/7",
             ru: "Ванесса — наш AI-консультант: квалифицирует, захватывает и передаёт лиды, 24/7",
             uk: "Ванесса — наш AI-консультант: кваліфікує, захоплює й передає ліди, 24/7",
-          },
-        },
-        {
-          icon: "📊",
-          text: {
-            en: "ROI calculator — interactive growth simulator per pillar",
-            ru: "ROI-калькулятор — интерактивный симулятор роста по направлениям",
-            uk: "ROI-калькулятор — інтерактивний симулятор зростання за напрямами",
           },
         },
         {

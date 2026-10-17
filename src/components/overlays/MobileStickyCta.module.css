@@ -19,19 +19,18 @@
     gap: 10px;
     padding: 16px 22px;
     background: var(--accent);
-    color: var(--black);
+    color: var(--base-lo);
     font-weight: 800;
     font-size: 15px;
     letter-spacing: 0.02em;
     border-radius: var(--radius-pill);
-    box-shadow:
-      0 10px 30px rgba(0, 0, 0, 0.45),
-      0 2px 6px rgba(0, 0, 0, 0.3);
+    /* Lift off the page (dark half of --raise-s) + neon glow. */
+    box-shadow: 6px 6px 14px var(--base-lo), var(--neon);
     will-change: transform;
   }
 
 .cta:focus-visible {
-    outline: 2px solid var(--black);
+    outline: 2px solid var(--white);
     outline-offset: 3px;
   }
 

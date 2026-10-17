@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(5, 6, 12, 0.78);
+  background: rgba(8, 9, 12, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   display: grid;
@@ -20,28 +20,11 @@
   max-height: calc(100vh - 48px);
   max-height: calc(100dvh - 48px);
   overflow-y: auto;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(160, 190, 220, 0.1), transparent 60%),
-    var(--surface);
-  border: 1px solid var(--line-strong);
+  background: var(--base);
+  border: 0;
   border-radius: var(--radius-lg);
   padding: 48px 44px 40px;
-  box-shadow: var(--shadow-xl);
-}
-
-.modal::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 20%;
-  right: 20%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(200, 212, 222, 0.4),
-    transparent
-  );
+  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.1);
 }
 
 .closeBtn {
@@ -61,25 +44,30 @@
   display: grid;
   place-items: center;
   transition: color 0.2s ease;
+  isolation: isolate;
+  z-index: 1;
 }
 
+/* Visible 36px raised disc; sinks into a pressed well with a neon
+   ring on hover. */
 .closeBtn::before {
   content: "";
   position: absolute;
+  z-index: -1;
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid var(--line-strong);
-  transition: background 0.2s ease, border-color 0.2s ease;
+  background: var(--base);
+  box-shadow: var(--raise-s);
+  transition: box-shadow 0.2s ease;
 }
 
 .closeBtn:hover {
-  color: var(--black);
+  color: var(--accent);
 }
 
 .closeBtn:hover::before {
-  background: var(--accent);
-  border-color: var(--accent);
+  box-shadow: var(--press-s), 0 0 0 1px var(--accent), var(--neon-soft);
 }
 
 .closeBtn:focus-visible {
@@ -116,7 +104,8 @@
 .titleItalic {
   font-style: italic;
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--line-hi);
+  -webkit-text-stroke: 1.5px var(--accent);
+  text-shadow: var(--neon-soft);
 }
 
 .subtitle {
@@ -151,16 +140,24 @@
 .textarea {
   width: 100%;
   padding: 14px 18px;
-  background: rgba(200, 212, 222, 0.03);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  /* Pressed well sunk into the modal surface. */
+  background: var(--base);
+  border: 0;
+  border-radius: 14px;
+  box-shadow: var(--press-s);
   color: var(--text);
   /* 16px on mobile so iOS Safari doesn't auto-zoom on focus; desktop
      restores 15px in the @641 block below. */
   font-size: 16px;
   outline: none;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease;
   font-family: inherit;
+}
+
+/* Native <select>s share .input; give the popup list the same surface. */
+select.input option {
+  background: var(--base);
+  color: var(--text);
 }
 
 .input::placeholder,
@@ -168,18 +165,13 @@
   color: var(--text-faint);
 }
 
+/* Focus: accent hairline + soft neon around the pressed well — a ring,
+   not a colour-only cue (WCAG 1.4.11 / 2.4.7). */
 .input:focus,
-.textarea:focus {
-  border-color: var(--accent);
-  background: rgba(200, 212, 222, 0.06);
-}
-
-/* Visible keyboard focus: the border-colour change alone is a
-   colour-only cue (WCAG 1.4.11 / 2.4.7). Add an accent focus ring. */
+.textarea:focus,
 .input:focus-visible,
 .textarea:focus-visible {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent-glow);
+  box-shadow: var(--press-s), 0 0 0 1px var(--accent), var(--neon-soft);
 }
 
 .textarea {
@@ -198,23 +190,25 @@
   line-height: 1.5;
 }
 
-/* Progress bar — sits between header and form, styled as a slim
-   accent track. Fills based on either step count (steps mode) or
+/* Progress bar — sits between header and form: a pressed track with a
+   neon accent fill. Fills based on either step count (steps mode) or
    how many required fields have content (single-page mode). */
 .progress {
   position: relative;
-  height: 3px;
+  height: 10px;
   width: 100%;
-  background: var(--line);
-  border-radius: 2px;
-  overflow: hidden;
+  padding: 3px;
+  background: var(--base);
+  box-shadow: var(--press-s);
+  border-radius: var(--radius-pill);
   margin: 4px 0 18px;
 }
 
 .progressBar {
   height: 100%;
   background: var(--accent);
-  border-radius: 2px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--neon);
   transition: width 0.3s var(--ease);
 }
 
@@ -233,17 +227,18 @@
   gap: 8px;
   padding: 14px 22px;
   border-radius: var(--radius-pill);
-  background: transparent;
-  border: 1px solid var(--line);
+  background: var(--base);
+  border: 0;
+  box-shadow: var(--raise-s);
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   cursor: pointer;
-  transition: color 0.18s ease, border-color 0.18s ease;
+  transition: color 0.18s ease, box-shadow 0.18s ease;
 }
 .back:hover {
-  color: var(--white);
-  border-color: var(--text-muted);
+  color: var(--accent);
+  box-shadow: var(--press-s);
 }
 
 .back:focus-visible {
@@ -271,7 +266,7 @@
   transition: color 0.18s ease;
 }
 .modeToggle:hover {
-  color: var(--white);
+  color: var(--accent);
   text-decoration: underline;
 }
 
@@ -287,15 +282,16 @@
   justify-content: center;
   gap: 12px;
   padding: 18px 32px;
+  border: 0;
   border-radius: var(--radius-pill);
   background: var(--accent);
-  color: var(--black);
-  font-weight: 700;
+  color: var(--base-lo);
+  font-weight: 800;
   font-size: 15px;
   letter-spacing: 0.01em;
   margin-top: 8px;
-  transition: transform 0.15s var(--ease), background 0.2s ease, opacity 0.2s ease;
-  box-shadow: 0 20px 50px -16px var(--accent-glow);
+  transition: transform 0.15s var(--ease), background 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--neon);
 }
 
 .submit:hover:not(:disabled) {
@@ -305,6 +301,7 @@
 
 .submit:disabled {
   opacity: 0.5;
+  box-shadow: none;
   cursor: not-allowed;
   transform: none;
 }
@@ -368,7 +365,7 @@
 .consent a {
   color: var(--text);
   text-decoration: underline;
-  text-decoration-color: rgba(232, 238, 244, 0.3);
+  text-decoration-color: var(--line-hi);
   text-underline-offset: 2px;
   transition: text-decoration-color 0.2s ease;
 }
@@ -392,12 +389,12 @@
   height: 72px;
   border-radius: 50%;
   background: var(--accent);
-  color: var(--black);
+  color: var(--base-lo);
   display: grid;
   place-items: center;
   font-size: 36px;
   font-weight: 900;
-  box-shadow: 0 20px 50px -16px var(--accent-glow);
+  box-shadow: var(--neon);
   margin-bottom: 12px;
 }
 
@@ -419,17 +416,18 @@
   margin-top: 18px;
   padding: 14px 28px;
   border-radius: var(--radius-pill);
-  background: transparent;
-  border: 1px solid var(--line-strong);
+  background: var(--base);
+  border: 0;
+  box-shadow: var(--raise-s);
   color: var(--text);
-  font-weight: 700;
+  font-weight: 800;
   font-size: 14px;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .successCloseBtn:hover {
-  background: rgba(200, 212, 222, 0.05);
-  border-color: var(--line-hi);
+  color: var(--accent);
+  box-shadow: var(--press-s);
 }
 
 .successCloseBtn:focus-visible {

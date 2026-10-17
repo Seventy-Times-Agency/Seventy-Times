@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getImprintMeta, languageAlternates } from "@/lib/localizedMeta";
 import { isLocale, DEFAULT_LOCALE } from "@/i18n/config";
 import { siteConfig } from "@/data/siteConfig";
+import Nav from "@/components/chrome/Nav";
+import Footer from "@/components/chrome/Footer";
 import ImprintClient from "./ImprintClient";
 
 export async function generateMetadata(props: {
@@ -26,5 +28,11 @@ export async function generateMetadata(props: {
 }
 
 export default function Page() {
-  return <ImprintClient />;
+  return (
+    <>
+      <Nav />
+      <ImprintClient />
+      <Footer />
+    </>
+  );
 }

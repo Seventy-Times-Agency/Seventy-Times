@@ -1,20 +1,22 @@
+/* Base (mobile-first). Desktop layers live in the min-width blocks
+   at the bottom. */
 .section {
   position: relative;
   isolation: isolate;
-  padding: 72px 48px 56px;
+  padding: 40px 18px 36px;
   max-width: var(--container);
   margin: 0 auto;
 }
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 64px;
+  grid-template-columns: 1fr;
+  gap: 56px;
   align-items: start;
 }
 
 .intro {
-  position: sticky;
+  position: static;
   top: 120px;
   display: flex;
   flex-direction: column;
@@ -22,16 +24,18 @@
 }
 
 .title {
-  font-size: var(--fs-h1);
+  font-size: clamp(28px, 7.5vw, 44px);
   font-weight: 800;
   line-height: 0.95;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em;
 }
 
 .titleItalic {
   font-style: italic;
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--line-hi);
+  -webkit-text-stroke: 1.5px var(--accent);
+  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.49))
+    drop-shadow(0 0 22px rgba(var(--accent-rgb), 0.28));
 }
 
 .lead {
@@ -43,8 +47,10 @@
 
 .note {
   margin-top: 14px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
+  padding: 18px 20px;
+  background: var(--base);
+  border-radius: var(--radius-md);
+  box-shadow: var(--press-s);
   font-size: 13px;
   color: var(--text-dim);
   max-width: 360px;
@@ -52,35 +58,45 @@
 }
 
 .noteLink {
-  color: var(--white);
+  color: var(--accent);
+  font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 4px;
-  text-decoration-color: var(--line-hi);
-  transition: text-decoration-color 0.2s ease;
+  text-decoration-color: var(--accent-glow);
+  transition: text-decoration-color 0.2s ease, text-shadow 0.2s ease;
 }
 
 .noteLink:hover {
-  text-decoration-color: var(--white);
+  text-decoration-color: var(--accent);
+  text-shadow: var(--neon-text);
 }
 
 /* Accordion list ─────────────────────────────────────── */
+.listWrap {
+  display: flex;
+  flex-direction: column;
+}
+
 .list {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--line);
+  gap: 14px;
 }
 
 .item {
-  border-bottom: 1px solid var(--line);
-  transition: background 0.3s ease;
+  background: var(--base);
+  border-radius: var(--radius-md);
+  box-shadow: var(--raise-s);
+  transition: box-shadow 0.3s ease;
 }
 
 .item:hover {
-  background: rgba(255, 255, 255, 0.02);
+  box-shadow: var(--raise);
 }
 
-.itemOpen {
-  background: rgba(255, 255, 255, 0.025);
+.itemOpen,
+.itemOpen:hover {
+  box-shadow: var(--raise);
 }
 
 .question {
@@ -88,68 +104,73 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding: 32px 8px;
+  gap: 14px;
+  padding: 16px 16px;
   text-align: left;
-  font-size: clamp(18px, 1.8vw, 22px);
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: var(--white);
   cursor: pointer;
-  transition: padding-left 0.3s var(--ease);
+  border-radius: var(--radius-md);
+  transition: color 0.25s ease;
 }
 
 .question:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: -2px;
-  border-radius: 4px;
-}
-
-.item:hover .question {
-  padding-left: 20px;
-}
-
-.itemOpen .question {
-  padding-left: 20px;
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
 }
 
 .qIndex {
+  display: none;
   font-size: var(--fs-mini);
   font-weight: 800;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   color: var(--text-dim);
-  margin-right: 28px;
+  margin-right: 20px;
   min-width: 32px;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.itemOpen .qIndex {
+  color: var(--accent);
+  text-shadow: var(--neon-text);
 }
 
 .qText {
   flex: 1;
 }
 
+/* Small raised circle; flips to the neon accent when open. */
 .toggle {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 1px solid var(--line-strong);
+  background: var(--base);
+  box-shadow: var(--raise-s);
+  color: var(--text-muted);
   display: grid;
   place-items: center;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 800;
   transition:
     background 0.25s ease,
     color 0.25s ease,
-    border-color 0.25s ease,
+    box-shadow 0.25s ease,
     transform 0.4s var(--ease);
 }
 
-.item:hover .toggle,
-.itemOpen .toggle {
-  background: var(--accent);
-  color: var(--black);
-  border-color: var(--accent);
+.item:hover .toggle {
+  color: var(--accent);
 }
 
-.itemOpen .toggle {
+.itemOpen .toggle,
+.itemOpen:hover .toggle {
+  background: var(--accent);
+  color: var(--base-lo);
+  box-shadow: var(--neon);
   transform: rotate(45deg);
 }
 
@@ -157,67 +178,16 @@
   overflow: hidden;
 }
 
+/* Pressed well for the open answer. */
 .answerInner {
-  padding: 0 8px 32px calc(32px + 28px + 8px);
+  margin: 0 10px 12px;
+  padding: 16px 16px;
+  background: var(--base);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--press-s);
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: 13.5px;
   line-height: 1.75;
-  max-width: 62ch;
-}
-
-.itemOpen .answerInner {
-  padding-left: calc(32px + 28px + 8px + 20px);
-}
-
-/*  Base (mobile-first): formerly @media (max-width: 1024px).  */
-
-.layout {
-    grid-template-columns: 1fr;
-    gap: 56px;
-  }
-
-.intro {
-    position: static;
-  }
-
-/*  Base (mobile-first): formerly @media (max-width: 640px).  */
-
-.section {
-    padding: 40px 18px 36px;
-  }
-
-.title {
-    font-size: clamp(28px, 7.5vw, 44px);
-  }
-
-.question {
-    padding: 18px 0;
-    font-size: 15px;
-    gap: 14px;
-  }
-
-.qIndex {
-    display: none;
-  }
-
-.answerInner {
-    padding: 0 0 18px 0;
-    font-size: 13.5px;
-  }
-
-.itemOpen .answerInner {
-    padding-left: 0;
-  }
-
-.toggle {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
-  }
-
-.listWrap {
-  display: flex;
-  flex-direction: column;
 }
 
 .still {
@@ -228,9 +198,9 @@
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  border: 1px solid var(--line-strong);
+  background: var(--base);
   border-radius: var(--radius-md);
-  background: rgba(160, 190, 220, 0.04);
+  box-shadow: var(--press);
 }
 
 .stillText {
@@ -239,67 +209,26 @@
 }
 
 .stillCta {
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--base-lo);
+  box-shadow: var(--neon);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
   white-space: nowrap;
-  transition: color 0.2s ease;
+  transition: transform 0.2s var(--ease), background 0.2s ease;
 }
 
 .stillCta:hover {
-  color: var(--accent);
+  background: var(--accent-strong);
+  transform: translateY(-1px);
 }
-
-/*  641px and up — restores the desktop values overridden above.  */
-
-@media (min-width: 641px) {
-  .section {
-    padding: 72px 48px 56px;
-  }
-  .title {
-    font-size: var(--fs-h1);
-  }
-  .question {
-    padding: 32px 8px;
-    font-size: clamp(18px, 1.8vw, 22px);
-    gap: 24px;
-  }
-  .qIndex {
-    display: revert;
-  }
-  .answerInner {
-    padding: 0 8px 32px calc(32px + 28px + 8px);
-    font-size: 15px;
-  }
-  .itemOpen .answerInner {
-    padding-left: calc(32px + 28px + 8px + 20px);
-  }
-  .toggle {
-    width: 44px;
-    height: 44px;
-    font-size: 18px;
-  }
-}
-
-/*  1025px and up — restores the desktop values overridden above.  */
-
-@media (min-width: 1025px) {
-  .layout {
-    grid-template-columns: 1fr 1.5fr;
-    gap: 64px;
-  }
-  .intro {
-    position: sticky;
-  }
-}
-
-
 
 /* ── Mobile diet: clamp to 5 questions behind "show all" ──
    Mobile-first: the clamp + button are the base state; desktop
    (901px+) unclamps and hides the button. */
-
 .listClamped .item:nth-child(n + 6) {
   display: none;
 }
@@ -310,17 +239,57 @@
   justify-content: center;
   gap: 6px;
   width: 100%;
-  margin-top: 12px;
+  margin-top: 18px;
   padding: 12px 16px;
-  border: 1px dashed var(--line-strong);
-  border-radius: var(--radius-md);
-  background: none;
+  border-radius: var(--radius-pill);
+  background: var(--base);
+  box-shadow: var(--raise-s);
   color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   cursor: pointer;
   font-family: inherit;
+  transition: box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.showAllBtn:hover {
+  color: var(--accent);
+}
+
+.showAllBtn:active {
+  box-shadow: var(--press-s);
+}
+
+@media (min-width: 641px) {
+  .section {
+    padding: 72px 48px 56px;
+  }
+  .title {
+    font-size: var(--fs-h1);
+  }
+  .list {
+    gap: 16px;
+  }
+  .question {
+    padding: 24px 22px;
+    font-size: clamp(17px, 1.6vw, 21px);
+    gap: 24px;
+  }
+  .qIndex {
+    display: revert;
+  }
+  .answerInner {
+    margin: 0 16px 16px;
+    padding: 20px 24px 22px calc(24px + 32px + 20px - 16px);
+    font-size: 15px;
+  }
+  .toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
+  }
 }
 
 @media (min-width: 901px) {
@@ -330,5 +299,15 @@
 
   .showAllBtn {
     display: none;
+  }
+}
+
+@media (min-width: 1025px) {
+  .layout {
+    grid-template-columns: 1fr 1.5fr;
+    gap: 64px;
+  }
+  .intro {
+    position: sticky;
   }
 }

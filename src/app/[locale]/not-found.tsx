@@ -2,6 +2,8 @@ import Link from "next/link";
 import { headers, type UnsafeUnwrappedHeaders } from "next/headers";
 import { getDictionary } from "@/i18n/dictionary";
 import { DEFAULT_LOCALE, isLocale } from "@/i18n/config";
+import Nav from "@/components/chrome/Nav";
+import Footer from "@/components/chrome/Footer";
 import styles from "./not-found.module.css";
 
 export default function NotFound() {
@@ -10,18 +12,25 @@ export default function NotFound() {
   const t = getDictionary(locale);
 
   return (
-    <main className={styles.main}>
-      <div className={styles.inner}>
-        <span className={styles.eyebrow}>{t.notFoundEyebrow}</span>
-        <h1 className={styles.title}>
-          70<span className={styles.titleOutline}>×</span>
-        </h1>
-        <h2 className={styles.subtitle}>{t.notFoundTitle}</h2>
-        <p className={styles.lead}>{t.notFoundLead}</p>
-        <Link href={`/${locale}`} className={styles.cta}>
-          {t.notFoundCta} <span aria-hidden="true">→</span>
-        </Link>
-      </div>
-    </main>
+    <>
+      <Nav />
+      <main id="main-content" className={styles.main}>
+        <div className={styles.inner}>
+          <span className={styles.sticker}>{t.notFoundEyebrow}</span>
+          <p className={styles.code} aria-hidden="true">
+            70<span className="neonOutline">×</span>
+          </p>
+          <div className={styles.card}>
+            <h1 className={styles.title}>{t.notFoundTitle}</h1>
+            <p className={styles.lead}>{t.notFoundLead}</p>
+            <Link href={`/${locale}`} className={styles.cta}>
+              {t.notFoundCta}
+              <i aria-hidden="true">↗</i>
+            </Link>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }

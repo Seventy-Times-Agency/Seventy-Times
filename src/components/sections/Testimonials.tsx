@@ -102,7 +102,7 @@ export default function Testimonials({ reviews = [] }: Props) {
 
   return (
     <section id="testimonials" className={styles.section}>
-      <SectionWatermark text={t.testTitle3} number="/ 05" position="right" />
+      <SectionWatermark text={t.testTitle3} number="/ 02" position="right" />
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <Reveal>
@@ -113,7 +113,10 @@ export default function Testimonials({ reviews = [] }: Props) {
               words={[
                 t.testTitle1,
                 t.testTitle2,
-                { text: t.testTitle3, className: styles.titleItalic },
+                {
+                  text: t.testTitle3,
+                  className: `${styles.titleItalic} neonOutline`,
+                },
               ]}
             />
           </h2>

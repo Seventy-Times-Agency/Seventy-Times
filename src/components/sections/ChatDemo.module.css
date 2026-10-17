@@ -1,129 +1,350 @@
-/* Compact "Meet Vanessa" band — a slim strip (avatar · pitch · CTA)
-   instead of a full-height two-column section. The floating chat widget
-   is the real entry point; this is just an on-page nudge. Mobile-first. */
+/* "Meet Vanessa": pitch on the left, a scripted chat on the right that
+ * plays once when it scrolls into view (question → typing → answer →
+ * contact → "handed to a specialist"). The real chat is the floating
+ * widget; this only shows the AI module at work. Mobile-first. */
 
 .section {
   position: relative;
-  isolation: isolate;
-  padding: 28px 18px;
   max-width: var(--container);
   margin: 0 auto;
+  padding: 56px 18px 64px;
 }
 
-.band {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 16px;
-  padding: 24px 20px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  background: rgba(200, 212, 222, 0.025);
+.grid {
+  display: grid;
+  gap: 40px;
 }
 
-/* Avatar with online dot ──────────────────────────────────── */
-.avatar {
-  position: relative;
-  flex-shrink: 0;
-  width: 84px;
-  height: 84px;
-}
-
-.avatarImg {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid var(--line-strong);
-}
-
-.dot {
-  position: absolute;
-  right: 4px;
-  bottom: 4px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--accent-green);
-  border: 2px solid var(--black);
-  box-shadow: 0 0 8px var(--accent-green);
-  animation: pulse 2s ease-in-out infinite;
-}
-
-/* Copy ────────────────────────────────────────────────────── */
+/* ── Copy ───────────────────────────────────────────────────── */
 .copy {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-width: 0;
+  align-items: flex-start;
+  gap: 18px;
 }
 
 .title {
-  font-size: clamp(22px, 4.5vw, 30px);
+  font-size: clamp(32px, 3.6vw, 56px);
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--white);
-}
-
-.titleAccent {
-  font-style: italic;
-  color: transparent;
-  -webkit-text-stroke: 1.2px var(--line-hi);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 
 .lead {
-  font-size: 14px;
-  color: var(--text-muted);
+  max-width: 520px;
+  font-size: var(--fs-body-lg);
   line-height: 1.55;
-  max-width: 56ch;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
-/* CTA ──────────────────────────────────────────────────────── */
+.bullets {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  max-width: 520px;
+}
+
+.bullets li {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--press-s);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.bullets li::before {
+  content: "✓";
+  flex: none;
+  color: var(--accent);
+  font-weight: 800;
+}
+
 .cta {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  padding: 13px 26px;
+  gap: 12px;
+  padding: 14px 16px 14px 24px;
   border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--black);
-  font-weight: 700;
+  background: var(--base);
+  box-shadow: var(--raise);
   font-size: 14px;
-  transition:
-    transform 0.2s var(--ease),
-    background 0.2s ease,
-    box-shadow 0.3s ease;
-  box-shadow: 0 18px 44px -18px var(--accent-glow);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta i {
+  font-style: normal;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: var(--base-lo);
+  box-shadow: var(--neon);
 }
 
 .cta:hover {
-  transform: translateY(-2px);
-  background: var(--accent-strong);
-  box-shadow: 0 24px 54px -16px var(--accent-glow);
+  color: var(--accent);
 }
 
-/* Tablet and up — collapse into one horizontal row. */
+.cta:active {
+  box-shadow: var(--press);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.team {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.teamLink {
+  font-weight: 800;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.45);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.teamLink:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.teamLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ── Stage with the chat window ─────────────────────────────── */
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 440px;
+  padding: 36px 18px;
+  border-radius: var(--radius-lg);
+  background: rgba(21, 22, 28, 0.55);
+  box-shadow: var(--press);
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(var(--accent-rgb), 0.18);
+  pointer-events: none;
+}
+
+.cross {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  opacity: 0.7;
+}
+
+.cross::before,
+.cross::after {
+  content: "";
+  position: absolute;
+  background: var(--accent);
+  box-shadow: var(--neon-soft);
+}
+
+.cross::before { left: 5px; top: 0; width: 1px; height: 11px; }
+.cross::after { top: 5px; left: 0; width: 11px; height: 1px; }
+.crossTL { left: -6px; top: -6px; }
+.crossTR { right: -6px; top: -6px; }
+.crossBL { left: -6px; bottom: -6px; }
+.crossBR { right: -6px; bottom: -6px; }
+
+.window {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 22px;
+  background: var(--base);
+  box-shadow: var(--raise);
+  transform: rotate(-1.5deg);
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+
+.avatar {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: var(--press-s);
+}
+
+.avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.who small {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-green);
+}
+
+.who small::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+}
+
+.agent {
+  margin-left: auto;
+  padding: 5px 9px;
+  background: var(--base-lo);
+  color: var(--ink);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.log {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 260px;
+  padding: 18px 16px 22px;
+}
+
+.msg {
+  max-width: 86%;
+  padding: 10px 13px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.msgIn {
+  align-self: flex-end;
+  border-radius: 16px 16px 4px 16px;
+  box-shadow: var(--raise-s);
+  color: var(--text-muted);
+}
+
+.msgOut {
+  align-self: flex-start;
+  border-radius: 16px 16px 16px 4px;
+  background: var(--accent);
+  color: var(--base-lo);
+  box-shadow: var(--neon-soft);
+}
+
+.typing {
+  align-self: flex-start;
+  display: inline-flex;
+  gap: 5px;
+  padding: 10px 13px;
+  border-radius: 14px;
+  box-shadow: var(--press-s);
+}
+
+.typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+.typing i:nth-child(2) { animation-delay: 0.2s; }
+.typing i:nth-child(3) { animation-delay: 0.4s; }
+
+/* Brutal "lead handed over" sticker */
+.handoff {
+  position: absolute;
+  right: 6%;
+  bottom: 8%;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--ink);
+  color: var(--base-lo);
+  box-shadow: 5px 5px 0 var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.handoff i {
+  font-style: normal;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: var(--base-lo);
+  font-size: 12px;
+}
+
+/* ── Tablet+ ────────────────────────────────────────────────── */
 @media (min-width: 768px) {
   .section {
-    padding: 40px 48px;
+    padding: 72px 48px 80px;
   }
-  .band {
-    flex-direction: row;
-    text-align: left;
-    gap: 28px;
-    padding: 22px 28px;
+}
+
+/* ── Desktop: copy left, chat right ─────────────────────────── */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 56px;
   }
-  .avatar {
-    width: 96px;
-    height: 96px;
+
+  .stage {
+    min-height: 500px;
   }
-  .copy {
-    flex: 1;
-  }
-  .lead {
-    font-size: 14.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing i {
+    animation: none;
   }
 }

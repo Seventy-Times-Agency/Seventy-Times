@@ -1,15 +1,20 @@
+/* Comparison — "Seventy Times vs the alternatives".
+   Mobile-first: each criterion is a raised accordion card. From 901px
+   the block becomes one raised table whose "Seventy Times" column is the
+   section's single brutal (light-ink) element. */
+
 .section {
   position: relative;
   max-width: var(--container);
   margin: 0 auto;
-  padding: 96px 48px;
+  padding: 40px 18px 36px;
 }
 
 .header {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 32px;
-  margin-bottom: 56px;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 26px;
   align-items: end;
 }
 
@@ -20,58 +25,56 @@
 }
 
 .title {
-  font-size: clamp(40px, 6vw, 76px);
+  font-size: clamp(28px, 7.5vw, 44px);
   font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.025em;
+  line-height: 1;
+  letter-spacing: -0.05em;
   margin: 0;
+  color: var(--text);
 }
 
+/* Paired with the global .neonOutline class in the TSX. */
 .titleItalic {
-  font-style: italic;
-  color: var(--text-muted);
+  font-style: normal;
 }
 
 .lead {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--text-muted);
   max-width: 480px;
 }
 
+/* ── Table shell ───────────────────────────────────────────── */
 .tableWrap {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md, 14px);
-  overflow: hidden;
-  background: rgba(200, 212, 222, 0.02);
+  gap: 14px;
+  background: transparent;
 }
 
 .colHeaders {
-  display: grid;
+  display: none;
   grid-template-columns: 1.4fr 1.3fr 1fr 1fr;
-  gap: 0;
-  border-bottom: 1px solid var(--line);
-  background: rgba(200, 212, 222, 0.025);
 }
 
 .headCell {
   padding: 20px 18px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  border-left: 1px solid var(--line);
-  min-height: 80px;
+  gap: 8px;
+  min-height: 84px;
   justify-content: center;
 }
 
-.headCell:first-child {
-  border-left: 0;
-}
-
+/* Top cap of the brutal column. */
 .headCellUs {
-  background: rgba(200, 212, 222, 0.05);
+  position: relative;
+  z-index: 1;
+  background: var(--ink);
+  color: var(--base-lo);
+  border-radius: 6px 6px 0 0;
+  box-shadow: var(--brutal);
 }
 
 .headBadge {
@@ -79,87 +82,165 @@
   align-self: flex-start;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--black);
-  background: var(--accent);
-  padding: 3px 8px;
-  border-radius: var(--radius-pill);
+  color: var(--ink);
+  background: var(--base-lo);
+  padding: 6px 10px;
+  transform: rotate(-2deg);
 }
 
 .headName {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
-  letter-spacing: -0.01em;
-  color: var(--text);
+  letter-spacing: -0.04em;
+  color: var(--base-lo);
 }
 
 .headLabel {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
 }
 
 .rows {
   display: flex;
   flex-direction: column;
+  gap: 14px;
 }
 
+/* Mobile: each criterion is a raised card. */
 .row {
   display: grid;
-  grid-template-columns: 1.4fr 1.3fr 1fr 1fr;
-  border-top: 1px solid var(--line);
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 16px 16px;
+  border-radius: var(--radius-md);
+  background: var(--base);
+  box-shadow: var(--raise-s);
+  transition: box-shadow 0.25s ease;
 }
 
-.row:first-child {
-  border-top: 0;
+.rowOpen {
+  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--accent-rgb), 0.17);
 }
 
 .rowLabel {
-  padding: 18px 20px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-dim);
+  /* Accordion trigger on mobile: full-width tappable row. */
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.rowLabel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.rowChevron {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--base);
+  box-shadow: var(--raise-s);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.rowOpen .rowChevron {
+  box-shadow: var(--press-s);
 }
 
 .cell {
-  padding: 18px 18px;
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: baseline;
+  gap: 8px;
+  padding: 0;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.4;
   color: var(--text-muted);
-  border-left: 1px solid var(--line);
 }
 
 .cellUs {
   color: var(--text);
-  background: rgba(200, 212, 222, 0.03);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 .checkUs {
   color: var(--accent);
-  font-weight: 700;
+  font-weight: 800;
   flex-shrink: 0;
+  text-shadow: var(--neon-text);
+}
+
+/* Agency / Freelancer: hidden until the accordion opens, then shown as
+   pressed wells with their label prefixed via pseudo-content. */
+.cell:nth-child(3),
+.cell:nth-child(4) {
+  display: none;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--base);
+  box-shadow: var(--press-s);
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.rowOpen .cell:nth-child(3),
+.rowOpen .cell:nth-child(4) {
+  display: block;
+}
+
+.cell:nth-child(3)::before,
+.cell:nth-child(4)::before {
+  color: var(--text-dim);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-right: 6px;
+}
+
+.cell:nth-child(3)::before {
+  content: "Agency — ";
+}
+
+.cell:nth-child(4)::before {
+  content: "Freelancer — ";
 }
 
 .disclaimer {
-  margin-top: 24px;
+  margin-top: 28px;
   font-size: 12px;
   font-style: italic;
   color: var(--text-dim);
   max-width: 720px;
 }
 
-/* "Show vs alternatives" toggle — only visible on mobile (the full
-   4-column table renders unconditionally at desktop sizes). */
+/* "Show vs alternatives" toggle — mobile-only pressed pill (not
+   currently rendered by the TSX; styles kept for parity). */
 .altsToggle {
   display: none;
   align-items: center;
@@ -167,21 +248,25 @@
   width: 100%;
   margin-bottom: 12px;
   padding: 10px 14px;
+  border: 0;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--line);
-  background: rgba(200, 212, 222, 0.03);
+  background: var(--base);
+  box-shadow: var(--raise-s);
   color: var(--text-muted);
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: box-shadow 0.2s ease, color 0.2s ease;
 }
 
 .altsToggle:hover {
-  border-color: var(--accent);
-  color: var(--text);
+  color: var(--accent);
+}
+
+.altsToggle:active {
+  box-shadow: var(--press-s);
 }
 
 .altsToggle:focus-visible {
@@ -195,148 +280,14 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  border: 1px solid var(--line-strong);
+  background: var(--base);
+  box-shadow: var(--press-s);
   color: var(--accent);
   font-size: 14px;
   line-height: 1;
 }
 
-/*  Base (mobile-first): formerly @media (max-width: 900px).  */
-
-.section {
-    padding: 40px 18px 36px;
-  }
-
-.header {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 22px;
-  }
-
-.title {
-    font-size: clamp(28px, 7.5vw, 44px);
-  }
-
-.lead {
-    font-size: 14px;
-  }
-
-/* Mobile redesign: each row is a compact card.
-     Layout per row:
-       CRITERION (small accent caps)
-       ✓ Seventy Times — value (prominent)
-       vs Agency / Freelancer — values (small, one row, very muted)
-     Cuts the section length roughly in half vs the desktop stacked
-     layout while keeping the comparison intact. */
-
-.colHeaders {
-    display: none;
-  }
-
-.tableWrap {
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    gap: 10px;
-  }
-
-.rows {
-    gap: 10px;
-  }
-
-.row {
-    grid-template-columns: 1fr;
-    padding: 14px 16px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
-    background: rgba(200, 212, 222, 0.02);
-    border-top: 1px solid var(--line);
-    gap: 8px;
-  }
-
-.rowLabel {
-    padding: 0;
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    color: var(--accent);
-    /* Accordion trigger on mobile: full-width tappable row. */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    background: none;
-    border: 0;
-    text-align: left;
-    font-weight: 800;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-family: inherit;
-  }
-
-.rowChevron {
-    font-size: 14px;
-    font-weight: 800;
-    color: var(--text-dim);
-    line-height: 1;
-  }
-
-.cell {
-    padding: 0;
-    border-left: 0;
-    border-top: 0;
-    font-size: 14px;
-    line-height: 1.4;
-    gap: 8px;
-    align-items: baseline;
-  }
-
-.cellUs {
-    background: transparent;
-    color: var(--text);
-    font-weight: 700;
-    font-size: 15px;
-  }
-
-/* The 3rd + 4th cells (Agency / Freelancer) compress into a single
-     muted line. Add their labels via pseudo-content. Hidden by
-     default — tapping the row (accordion) adds .rowOpen to
-     reveal them. */
-
-.cell:nth-child(3),
-  .cell:nth-child(4) {
-    display: none;
-    font-size: 12px;
-    color: var(--text-dim);
-    padding-top: 2px;
-  }
-
-.rowOpen .cell:nth-child(3),
-  .rowOpen .cell:nth-child(4) {
-    display: flex;
-  }
-
-.cell:nth-child(3)::before {
-    content: "Agency — ";
-    color: var(--text-dim);
-    opacity: 0.7;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    margin-right: 4px;
-  }
-
-.cell:nth-child(4)::before {
-    content: "Freelancer — ";
-    color: var(--text-dim);
-    opacity: 0.7;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    margin-right: 4px;
-  }
-
-
-
-/*  901px and up — restores the desktop values overridden above.  */
-
+/* ── 901px and up — full 4-column table ───────────────────── */
 @media (min-width: 901px) {
   .section {
     padding: 96px 48px;
@@ -348,81 +299,89 @@
   }
   .title {
     font-size: clamp(40px, 6vw, 76px);
+    line-height: 0.98;
   }
   .lead {
     font-size: 16px;
   }
+
+  /* One raised card holds the whole table; padding leaves room for
+     the brutal column's hard offset shadow (no overflow clipping). */
+  .tableWrap {
+    gap: 0;
+    padding: 14px 22px 22px 14px;
+    border-radius: var(--radius-lg);
+    background: var(--base);
+    box-shadow: var(--raise);
+  }
   .colHeaders {
     display: grid;
   }
-  .tableWrap {
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md, 14px);
-    background: rgba(200, 212, 222, 0.02);
-    gap: revert;
-  }
   .rows {
-    gap: revert;
+    gap: 0;
   }
-  .row {
+  .row,
+  .rowOpen {
     grid-template-columns: 1.4fr 1.3fr 1fr 1fr;
+    gap: 0;
     padding: 0;
-    border: revert;
-    border-radius: revert;
-    background: revert;
-    border-top: 1px solid var(--line);
-    gap: revert;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
   .rowLabel {
     padding: 18px 20px;
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    color: var(--text-dim);
+    font-size: 11px;
+    border-top: 1px solid var(--line);
     cursor: default;
     pointer-events: none;
-    text-transform: none;
-    font-weight: 500;
   }
   .rowChevron {
     display: none;
   }
   .cell {
     padding: 18px 18px;
-    border-left: 1px solid var(--line);
-    border-top: revert;
     font-size: 14px;
     line-height: 1.5;
     gap: 10px;
     align-items: flex-start;
+    border-top: 1px solid var(--line);
   }
+
+  /* Brutal column body: every cell is light ink with the hard accent
+     shadow; stacked cells read as one card because each later cell
+     paints over the previous one's bottom shadow. */
   .cellUs {
-    background: rgba(200, 212, 222, 0.03);
-    color: var(--text);
-    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    background: var(--ink);
+    color: var(--base-lo);
+    font-weight: 700;
     font-size: 14px;
+    border-top: 1px dashed var(--text-muted);
+    box-shadow: var(--brutal);
   }
+  .row:last-child .cellUs {
+    border-radius: 0 0 6px 6px;
+  }
+  .cellUs .checkUs {
+    color: var(--base-lo);
+    text-shadow: none;
+  }
+
   .cell:nth-child(3),
   .cell:nth-child(4) {
     display: flex;
+    padding: 18px 18px;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
     font-size: 14px;
     color: var(--text-muted);
-    padding-top: 18px;
   }
-  .cell:nth-child(3)::before {
-    content: revert;
-    color: revert;
-    opacity: revert;
-    font-weight: revert;
-    letter-spacing: revert;
-    margin-right: 0;
-  }
+  .cell:nth-child(3)::before,
   .cell:nth-child(4)::before {
-    content: revert;
-    color: revert;
-    opacity: revert;
-    font-weight: revert;
-    letter-spacing: revert;
-    margin-right: 0;
+    content: none;
   }
   .altsToggle {
     display: none;

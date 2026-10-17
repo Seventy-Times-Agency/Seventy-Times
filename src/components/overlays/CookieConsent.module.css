@@ -8,12 +8,10 @@
   align-items: center;
   gap: 18px;
   padding: 16px 20px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line-strong);
-  background: rgba(10, 11, 16, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-lg);
+  border: 0;
+  background: var(--base);
+  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.1);
   font-size: 13px;
   color: var(--text-muted);
   line-height: 1.5;
@@ -34,7 +32,7 @@
 .link {
   color: var(--accent);
   text-decoration: underline;
-  text-decoration-color: rgba(200, 212, 222, 0.4);
+  text-decoration-color: var(--line-hi);
   text-underline-offset: 2px;
 }
 
@@ -58,18 +56,20 @@
   padding: 9px 16px;
   border-radius: var(--radius-pill);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.04em;
   cursor: pointer;
-  border: 1px solid var(--line-strong);
-  background: transparent;
+  /* Secondary: raised graphite pill that presses in on hover. */
+  border: 0;
+  background: var(--base);
+  box-shadow: var(--raise-s);
   color: var(--text);
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s var(--ease);
+  transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, transform 0.2s var(--ease);
 }
 
 .btn:hover {
-  border-color: var(--line-hi);
-  background: rgba(255, 255, 255, 0.04);
+  color: var(--accent);
+  box-shadow: var(--press-s);
 }
 
 .btn:focus-visible {
@@ -79,13 +79,14 @@
 
 .btnPrimary {
   background: var(--accent);
-  color: var(--black);
-  border-color: var(--accent);
+  color: var(--base-lo);
+  box-shadow: var(--neon);
 }
 
 .btnPrimary:hover {
   background: var(--accent-strong);
-  border-color: var(--accent-strong);
+  color: var(--base-lo);
+  box-shadow: var(--neon);
   transform: translateY(-1px);
 }
 

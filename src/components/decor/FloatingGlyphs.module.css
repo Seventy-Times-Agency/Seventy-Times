@@ -9,7 +9,8 @@
 .glyph {
   position: absolute;
   color: var(--accent);
-  opacity: 0.06;
+  opacity: 0.12;
+  filter: drop-shadow(0 0 4px var(--accent-glow));
   will-change: transform;
 }
 
@@ -29,7 +30,7 @@
   top: 55%;
   left: 5%;
   animation: glyphDriftB 56s ease-in-out infinite;
-  opacity: 0.04;
+  opacity: 0.08;
 }
 
 /* Diagonal */
@@ -39,7 +40,7 @@
   top: 72%;
   right: 12%;
   animation: glyphDriftA 38s ease-in-out infinite reverse;
-  opacity: 0.05;
+  opacity: 0.1;
 }
 
 /* Triangle */
@@ -49,7 +50,7 @@
   top: 35%;
   left: 10%;
   animation: glyphDriftB 50s ease-in-out infinite;
-  opacity: 0.05;
+  opacity: 0.1;
 }
 
 /* Dot */
@@ -59,7 +60,7 @@
   top: 85%;
   left: 20%;
   animation: glyphDriftA 44s ease-in-out infinite;
-  opacity: 0.08;
+  opacity: 0.16;
 }
 
 /* Chevron */
@@ -69,7 +70,7 @@
   top: 12%;
   left: 30%;
   animation: glyphDriftB 48s ease-in-out infinite reverse;
-  opacity: 0.04;
+  opacity: 0.08;
 }
 
 @keyframes glyphDriftA {

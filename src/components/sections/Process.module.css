@@ -1,232 +1,487 @@
-/* "How we work" — five stages. Mobile-first.
-   Layouts by width:
-     base    — compact vertical list, number + title on one line
-     768px+  — two columns, left one fixed to fit the longest title
-               (no elastic gutter: the old minmax(280px,1fr) left a
-               240-315px hole in the middle of every row)
-     1024px+ — horizontal five-column stepper, hairline separated
-   No connector graphics anywhere: the reading order is the process. */
+/* How we work: a sticky "project console" on the left that reacts to the
+ * step in view, and the five steps on the right joined by a rail that
+ * fills as you scroll. Mobile-first: the console sits above the steps
+ * and is not sticky; from 1024px it pins beside them. */
 
 .section {
   position: relative;
-  isolation: isolate;
-  padding: 40px 18px 36px;
   max-width: var(--container);
   margin: 0 auto;
+  padding: 56px 18px 72px;
 }
 
-/* Header ─────────────────────────────────────────────────── */
-
+/* ── Header ─────────────────────────────────────────────────── */
 .header {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  align-items: start;
-  margin-bottom: 24px;
-}
-
-.headerLeft {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  gap: 18px;
+  margin-bottom: 44px;
 }
 
 .title {
-  font-size: clamp(28px, 7.5vw, 44px);
+  margin-top: 14px;
+  font-size: var(--fs-h2);
   font-weight: 800;
   line-height: 0.95;
-  letter-spacing: -0.04em;
-}
-
-.titleItalic {
-  font-style: italic;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--line-hi);
-}
-
-.headerRight {
-  display: flex;
-  justify-content: flex-start;
+  letter-spacing: -0.05em;
 }
 
 .lead {
-  font-size: 14.5px;
+  max-width: 460px;
+  font-size: var(--fs-body-lg);
+  line-height: 1.5;
+  font-weight: 600;
   color: var(--text-muted);
-  line-height: 1.6;
-  max-width: 440px;
 }
 
-/* Stage rows ─────────────────────────────────────────────── */
-
-.list {
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--line-strong);
-}
-
-/* Direct children are the Reveal wrappers, not .row — the grid and the
-   separators have to hang off them. */
-.list > * {
-  min-width: 0;
-}
-
-.row {
+.layout {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 6px;
-  padding: 15px 2px;
-  border-bottom: 1px solid var(--line);
-  transition: background 0.3s ease;
+  gap: 36px;
 }
 
-.row:hover {
-  background: rgba(200, 212, 222, 0.025);
+/* ── Console ────────────────────────────────────────────────── */
+.console {
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--base);
+  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.12);
 }
 
-.rowHead {
+.consoleHead {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
-.num {
-  font-size: 15px;
+.consoleTitle {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.consoleStep {
+  padding: 6px 10px;
+  background: var(--base-lo);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+
+.consoleStep b {
+  color: var(--accent);
+}
+
+/* Modules */
+.mods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mod {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--base);
+  transition: box-shadow 0.4s var(--ease), color 0.4s var(--ease);
+}
+
+.mod i {
+  grid-row: span 2;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transition: background 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+
+.modName {
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-  flex: 0 0 auto;
 }
 
-.headText {
+.modState {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mod_off {
+  box-shadow: var(--press-s);
+  color: var(--text-dim);
+}
+
+.mod_off i {
+  background: var(--base-hi);
+}
+
+.mod_setup {
+  box-shadow: var(--raise-s);
+}
+
+.mod_setup i {
+  background: #e3b65c;
+  box-shadow: 0 0 10px rgba(227, 182, 92, 0.6);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.mod_setup .modState {
+  color: #e3b65c;
+}
+
+.mod_live,
+.mod_on {
+  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--accent-rgb), 0.3);
+}
+
+.mod_live i,
+.mod_on i {
+  background: var(--accent);
+  box-shadow: var(--neon);
+}
+
+.mod_live .modState,
+.mod_on .modState {
+  color: var(--accent);
+}
+
+/* Leads chart */
+.chart {
+  position: relative;
+  padding: 16px 16px 12px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--press);
+}
+
+.chartLabel {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 140px;
+  margin-top: 10px;
+}
+
+.bars span {
+  flex: 1;
+  height: 4%;
+  border-radius: 4px 4px 0 0;
+  background: var(--base-hi);
+}
+
+.bars .barOn {
+  background: linear-gradient(180deg, var(--accent), rgba(var(--accent-rgb), 0.35));
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.25);
+}
+
+/* Event tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 34px;
+}
+
+.tags > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.tagLeads {
+  background: var(--accent);
+  color: var(--base-lo);
+  box-shadow: var(--neon);
+}
+
+.tagCut {
+  box-shadow: var(--press-s), 0 0 0 1px rgba(var(--signal-rgb), 0.35);
+  color: var(--signal);
+  text-decoration: line-through;
+}
+
+.tagScale {
+  box-shadow: var(--raise-s);
+  color: var(--accent);
+}
+
+.tagAccount {
+  background: var(--ink);
+  color: var(--base-lo);
+  box-shadow: 4px 4px 0 var(--accent);
+  border-radius: 4px !important;
+}
+
+/* ── Steps ──────────────────────────────────────────────────── */
+.stepsWrap {
+  position: relative;
+}
+
+/* Vertical rail; the inner bar fills with scroll. */
+.rail {
+  position: absolute;
+  left: 23px;
+  top: 24px;
+  /* ends at the centre of the finale node */
+  bottom: var(--rail-end, 24px);
+  width: 2px;
+  background: var(--base-hi);
+}
+
+.rail span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: top;
+  background: var(--accent);
+  box-shadow: var(--neon-soft);
+}
+
+.steps {
+  list-style: none;
+  display: grid;
+  gap: 22px;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.node {
+  position: relative;
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--base);
+  box-shadow: var(--press-s);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-dim);
+  transition: background 0.35s var(--ease), color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+
+.card {
+  display: grid;
+  gap: 10px;
+  padding: 20px 22px;
+  border-radius: var(--radius-lg);
+  background: var(--base);
+  box-shadow: var(--press);
+  opacity: 0.55;
+  transition: box-shadow 0.35s var(--ease), opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.cardTop {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 12px;
   flex-wrap: wrap;
-  min-width: 0;
 }
 
 .stepTitle {
-  font-size: 18px;
+  font-size: clamp(20px, 2vw, 26px);
   font-weight: 800;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
+  letter-spacing: -0.03em;
 }
 
-.duration {
-  font-size: var(--fs-mini);
+.dur {
+  padding: 5px 9px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--press-s);
+  font-size: 10px;
   font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--text-dim);
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
-.stepDesc {
+.desc {
+  font-size: 14.5px;
+  line-height: 1.55;
+  font-weight: 600;
   color: var(--text-muted);
-  font-size: 13.5px;
-  line-height: 1.6;
-  /* Line up under the title, past the number column. */
-  padding-left: 32px;
-  max-width: 62ch;
 }
 
-/* Tablet — two columns, left one sized to the longest title so the
-   description starts at a predictable place and no hole opens up. */
+.principle {
+  justify-self: start;
+  padding: 6px 10px;
+  background: var(--base-lo);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  transform: rotate(-1.5deg);
+}
+
+.principle b {
+  margin-right: 4px;
+  color: var(--accent);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+/* Active step */
+.stepActive .node {
+  background: var(--accent);
+  color: var(--base-lo);
+  box-shadow: var(--neon);
+}
+
+.stepActive .card {
+  opacity: 1;
+  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.3);
+  transform: translateX(4px);
+}
+
+.stepActive .stepTitle {
+  color: var(--ink);
+}
+
+.stepActive .dur {
+  color: var(--accent);
+}
+
+/* ── Finale: where the rail leads ───────────────────────────── */
+.finaleNode {
+  font-size: 18px;
+}
+
+.finaleOn .finaleNode {
+  background: var(--accent);
+  color: var(--base-lo);
+  box-shadow: var(--neon), 0 0 0 8px rgba(var(--accent-rgb), 0.12);
+}
+
+.finaleCard {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  padding: 24px 26px;
+  background: var(--ink);
+  color: var(--base-lo);
+  border-radius: 6px;
+  box-shadow: var(--brutal);
+  transform: rotate(-1deg);
+  transition: transform 0.35s var(--ease);
+}
+
+.finaleOn .finaleCard {
+  transform: rotate(-1deg) translateX(4px);
+}
+
+.finaleTitle {
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.finaleBody {
+  max-width: 440px;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #3f444c;
+}
+
+.finaleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 13px 22px;
+  border-radius: var(--radius-pill);
+  background: var(--base-lo);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 800;
+  transition: transform 0.2s var(--ease);
+}
+
+.finaleBtn:hover {
+  transform: translateY(-2px);
+}
+
+.finaleBtn:focus-visible {
+  outline: 2px solid var(--base-lo);
+  outline-offset: 3px;
+}
+
+/* ── Tablet+ ────────────────────────────────────────────────── */
 @media (min-width: 768px) {
   .section {
-    padding: 72px 48px 56px;
-  }
-
-  .header {
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: end;
-    margin-bottom: 40px;
-  }
-
-  .title {
-    font-size: var(--fs-h1);
-  }
-
-  .headerRight {
-    justify-content: flex-end;
-  }
-
-  .lead {
-    font-size: var(--fs-body-lg);
-    text-align: right;
-  }
-
-  .row {
-    grid-template-columns: 220px 1fr;
-    gap: 28px;
-    align-items: baseline;
-    padding: 20px 8px;
-  }
-
-  .rowHead {
-    align-items: baseline;
-  }
-
-  .headText {
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .num {
-    font-size: 16px;
-  }
-
-  .stepTitle {
-    font-size: 21px;
-  }
-
-  .stepDesc {
-    padding-left: 0;
+    padding: 72px 48px 96px;
   }
 }
 
-/* Desktop — the five stages become one horizontal band. Each column
-   shrinks to its own content, which is what removes the dead gutter
-   entirely rather than just narrowing it. */
+/* ── Desktop: console pinned beside the steps ───────────────── */
 @media (min-width: 1024px) {
-  .list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    border-bottom: 1px solid var(--line);
+  .header {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 40px;
   }
 
-  .list > * + * {
-    border-left: 1px solid var(--line);
+  .layout {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 48px;
+    align-items: start;
   }
 
-  .row {
-    height: 100%;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    align-content: start;
-    padding: 22px 18px 24px;
-    border-bottom: 0;
+  .consoleWrap {
+    position: sticky;
+    top: 120px;
   }
 
-  .rowHead {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+  .steps {
+    gap: 28px;
   }
 
-  .headText {
-    gap: 4px;
+  .card {
+    padding: 24px 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mod_setup i {
+    animation: none;
   }
 
-  .stepTitle {
-    font-size: 19px;
-  }
-
-  .stepDesc {
-    font-size: 13px;
-    line-height: 1.55;
-    max-width: none;
+  .stepActive .card {
+    transform: none;
   }
 }

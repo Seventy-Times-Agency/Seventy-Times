@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getTermsMeta, languageAlternates } from "@/lib/localizedMeta";
 import { isLocale, DEFAULT_LOCALE } from "@/i18n/config";
 import { siteConfig } from "@/data/siteConfig";
+import Nav from "@/components/chrome/Nav";
+import Footer from "@/components/chrome/Footer";
 import TermsClient from "./TermsClient";
 
 export async function generateMetadata(
@@ -28,5 +30,11 @@ export async function generateMetadata(
 }
 
 export default function Page() {
-  return <TermsClient />;
+  return (
+    <>
+      <Nav />
+      <TermsClient />
+      <Footer />
+    </>
+  );
 }

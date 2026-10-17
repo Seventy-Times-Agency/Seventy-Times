@@ -8,6 +8,7 @@ import Magnetic from "@/components/ui/Magnetic";
 import { OFFERS, type OfferVariant } from "@/data/offers";
 import { markLanding } from "@/lib/utm";
 import { useT } from "@/i18n/context";
+import { siteConfig } from "@/data/siteConfig";
 import styles from "@/components/landing/OfferLanding.module.css";
 
 /**
@@ -29,69 +30,83 @@ export default function OfferLanding({ variant }: { variant: OfferVariant }) {
     <>
       <Nav />
       <main id="main-content" className={styles.main}>
-        {/* Hero */}
-        <section className={styles.hero}>
-          <Reveal>
-            <span className="eyebrow">{offer.eyebrow[locale]}</span>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h1 className={styles.title}>{offer.title[locale]}</h1>
-          </Reveal>
-          <Reveal delay={0.16}>
-            <p className={styles.sub}>{offer.sub[locale]}</p>
-          </Reveal>
-          <Reveal delay={0.24}>
-            <div className={styles.priceRow}>
-              {offer.price && (
-                <span className={styles.price}>{offer.price}</span>
-              )}
-              <span className={styles.priceNote}>
-                {offer.priceNote[locale]}
+        <div className={styles.inner}>
+          {/* Hero */}
+          <section className={styles.hero}>
+            <Reveal>
+              <span className={styles.role}>
+                <b>{siteConfig.shortName}</b> {offer.eyebrow[locale]}
               </span>
-            </div>
-          </Reveal>
-        </section>
-
-        {/* What you get */}
-        <section className={styles.bullets}>
-          {offer.bullets.map((b, i) => (
-            <Reveal key={i} delay={i * 0.08}>
-              <div className={styles.bullet}>
-                <span className={styles.bulletMark} aria-hidden="true">
-                  ✓
+            </Reveal>
+            <Reveal delay={0.08}>
+              <h1 className={styles.title}>{offer.title[locale]}</h1>
+            </Reveal>
+            <Reveal delay={0.16}>
+              <p className={styles.sub}>{offer.sub[locale]}</p>
+            </Reveal>
+            <Reveal delay={0.24}>
+              <div className={styles.ctas}>
+                <a href="#lead" className={styles.primary}>
+                  {offer.cta[locale]}
+                  <i aria-hidden="true">↗</i>
+                </a>
+                <span className={styles.note}>
+                  {offer.price && <b>{offer.price}</b>}
+                  {offer.priceNote[locale]}
                 </span>
-                <p className={styles.bulletText}>{b[locale]}</p>
               </div>
             </Reveal>
-          ))}
-        </section>
+          </section>
 
-        {/* CTA */}
-        <section className={styles.ctaBlock}>
+          {/* What you get */}
+          <section className={styles.bullets}>
+            {offer.bullets.map((b, i) => (
+              <Reveal key={i} delay={i * 0.06}>
+                <div className={styles.bullet}>
+                  <span className={styles.bulletMark} aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <p className={styles.bulletText}>{b[locale]}</p>
+                </div>
+              </Reveal>
+            ))}
+          </section>
+
+          {/* CTA: price (or "free") + the form trigger */}
           <Reveal>
-            <Magnetic strength={0.4}>
-              <a href="#lead" className={styles.cta}>
-                {offer.cta[locale]}
-                <span aria-hidden="true"> →</span>
-              </a>
-            </Magnetic>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <span className={styles.ctaHint}>{offer.ctaHint[locale]}</span>
-          </Reveal>
-        </section>
-
-        {/* Short FAQ */}
-        <section className={styles.faq}>
-          {offer.faq.map((item, i) => (
-            <Reveal key={i} delay={i * 0.08}>
-              <div className={styles.faqItem}>
-                <h2 className={styles.faqQ}>{item.q[locale]}</h2>
-                <p className={styles.faqA}>{item.a[locale]}</p>
+            <section className={styles.ctaBlock}>
+              <div className={styles.priceRow}>
+                {offer.price && (
+                  <span className={styles.price}>{offer.price}</span>
+                )}
+                <span className={styles.priceNote}>
+                  {offer.priceNote[locale]}
+                </span>
               </div>
-            </Reveal>
-          ))}
-        </section>
+              <div className={styles.ctaSide}>
+                <Magnetic strength={0.4}>
+                  <a href="#lead" className={styles.cta}>
+                    {offer.cta[locale]}
+                    <span aria-hidden="true"> →</span>
+                  </a>
+                </Magnetic>
+                <span className={styles.ctaHint}>{offer.ctaHint[locale]}</span>
+              </div>
+            </section>
+          </Reveal>
+
+          {/* Short FAQ */}
+          <section className={styles.faq}>
+            {offer.faq.map((item, i) => (
+              <Reveal key={i} delay={i * 0.06}>
+                <div className={styles.faqItem}>
+                  <h2 className={styles.faqQ}>{item.q[locale]}</h2>
+                  <p className={styles.faqA}>{item.a[locale]}</p>
+                </div>
+              </Reveal>
+            ))}
+          </section>
+        </div>
       </main>
       <Footer />
     </>

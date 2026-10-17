@@ -53,12 +53,6 @@ const ROWS: readonly RowKeys[] = [
     agency: "compRowContractAgency",
     freelancer: "compRowContractFreelancer",
   },
-  {
-    label: "compRowRiskLabel",
-    us: "compRowRiskUs",
-    agency: "compRowRiskAgency",
-    freelancer: "compRowRiskFreelancer",
-  },
 ];
 
 export default function Comparison() {
@@ -83,7 +77,10 @@ export default function Comparison() {
             <AnimatedText
               words={[
                 t.compTitle1,
-                { text: t.compTitle2, className: styles.titleItalic },
+                {
+                  text: t.compTitle2,
+                  className: `${styles.titleItalic} neonOutline`,
+                },
                 t.compTitle3,
               ]}
             />

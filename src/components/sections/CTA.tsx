@@ -2,7 +2,6 @@
 
 import { siteConfig } from "@/data/siteConfig";
 import Reveal from "@/components/ui/Reveal";
-import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
 import Magnetic from "@/components/ui/Magnetic";
 import { useT } from "@/i18n/context";
@@ -16,121 +15,91 @@ import {
 } from "@/components/ui/ContactIcons";
 import styles from "@/components/sections/CTA.module.css";
 
+/**
+ * Closing CTA, built for conversion: one brutal panel with the offer and
+ * what happens next on the left, three ways in on the right (briefing
+ * form → callback → Vanessa), and a single compact row of direct
+ * channels underneath.
+ */
 export default function CTA() {
   const { t } = useT();
 
   const channels = [
-    {
-      name: "Telegram",
-      icon: TelegramIcon,
-      handle: siteConfig.contacts.telegram.handle,
-      url: siteConfig.contacts.telegram.url,
-    },
-    {
-      name: "Email",
-      icon: EmailIcon,
-      handle: siteConfig.contacts.email.address,
-      url: siteConfig.contacts.email.url,
-    },
-    {
-      name: "WhatsApp",
-      icon: WhatsAppIcon,
-      handle: siteConfig.contacts.whatsapp.handle,
-      url: siteConfig.contacts.whatsapp.url,
-    },
-    {
-      name: "Instagram",
-      icon: InstagramIcon,
-      handle: siteConfig.contacts.instagram.handle,
-      url: siteConfig.contacts.instagram.url,
-    },
-    {
-      name: "Facebook",
-      icon: FacebookIcon,
-      handle: siteConfig.contacts.facebook.handle,
-      url: siteConfig.contacts.facebook.url,
-    },
-    {
-      name: "LinkedIn",
-      icon: LinkedInIcon,
-      handle: siteConfig.contacts.linkedin.handle,
-      url: siteConfig.contacts.linkedin.url,
-    },
+    { name: "Telegram", icon: TelegramIcon, ...siteConfig.contacts.telegram },
+    { name: "Email", icon: EmailIcon, handle: siteConfig.contacts.email.address, url: siteConfig.contacts.email.url },
+    { name: "WhatsApp", icon: WhatsAppIcon, ...siteConfig.contacts.whatsapp },
+    { name: "Instagram", icon: InstagramIcon, ...siteConfig.contacts.instagram },
+    { name: "Facebook", icon: FacebookIcon, ...siteConfig.contacts.facebook },
+    { name: "LinkedIn", icon: LinkedInIcon, ...siteConfig.contacts.linkedin },
   ];
+
+  const openChat = () => {
+    window.dispatchEvent(new Event("open-chat"));
+  };
 
   return (
     <section id="contact" className={styles.section}>
-      <SectionWatermark
-        text={t.ftContact.toLowerCase()}
-        number="/ 09"
-        position="center"
-      />
-      <Reveal>
-        <div className={styles.inner}>
-          <div className={styles.eyebrowRow}>
-            <span className="eyebrow">{t.ctaEyebrow}</span>
-            <span className={styles.eyebrowEnd}>{t.ctaEnd}</span>
-          </div>
-          <h2 className={styles.title}>
-            <AnimatedText
-              stagger={0.12}
-              words={[
-                t.ctaTitle1,
-                { text: t.ctaTitle2, className: styles.titleItalic },
-                t.ctaTitle3,
-              ]}
-            />
-          </h2>
-          <p className={styles.sub}>{t.ctaSub}</p>
+      <SectionWatermark text={t.ftContact.toLowerCase()} number="/ 07" position="center" />
 
-          <div className={styles.buttons}>
-            <Magnetic strength={0.4}>
+      <Reveal>
+        <div className={styles.panel}>
+          <div className={styles.copy}>
+            <span className={styles.eyebrow}>{t.ctaEyebrow}</span>
+            <h2 className={styles.title}>
+              {t.ctaTitle1} <span className={styles.titleOutline}>{t.ctaTitle2}</span>
+              {t.ctaTitle3.trim()}
+            </h2>
+            <p className={styles.sub}>{t.ctaShort}</p>
+            <ol className={styles.path}>
+              <li>{t.ctaPath1}</li>
+              <li>{t.ctaPath2}</li>
+              <li>{t.ctaPath3}</li>
+            </ol>
+          </div>
+
+          <div className={styles.actions}>
+            <Magnetic strength={0.3}>
               <a className={styles.primary} href="#lead">
-                {t.ctaPrimary} <span aria-hidden="true">→</span>
+                {t.hxCtaBrief}
+                <i aria-hidden="true">↗</i>
               </a>
             </Magnetic>
-            {/* Low-friction alternative: the compact callback form
-                (name + phone) lives behind #callback but had no entry
-                point on the landing. Styled as a ghost/secondary action
-                so it sits beside the primary CTA without competing. */}
-            <a
-              href="#callback"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "20px 32px",
-                borderRadius: "var(--radius-pill)",
-                border: "1px solid var(--border, rgba(255,255,255,0.18))",
-                fontWeight: 600,
-                fontSize: 15,
-              }}
-            >
-              {t.ctaCallback}
-            </a>
-          </div>
-
-          <p className={styles.channelsLabel}>{t.ctaChannelsLabel}</p>
-          <div className={styles.channels}>
-            {channels.map((ch) => (
-              <a
-                key={ch.name}
-                href={ch.url}
-                className={styles.channel}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <ch.icon className={styles.channelIcon} />
-                <span className={styles.channelName}>{ch.name}</span>
-                <span className={styles.channelHandle}>{ch.handle}</span>
+            <div className={styles.secondaryRow}>
+              <a href="#callback" className={styles.secondary}>
+                {t.ctaCallback}
               </a>
-            ))}
+              <span className={styles.or}>{t.ctaOr}</span>
+              <button type="button" className={styles.secondary} onClick={openChat}>
+                {t.venCta}
+              </button>
+            </div>
+            <span className={styles.reply}>
+              <i aria-hidden="true" />
+              {t.ctaReply}
+            </span>
           </div>
+        </div>
+      </Reveal>
 
-          <div className={styles.metaBottom}>
-            <span>{t.ctaMeta1}</span>
-            <span>{t.ctaMeta2}</span>
-          </div>
+      <Reveal delay={0.1}>
+        <div className={styles.channelsRow}>
+          <span className={styles.channelsLabel}>{t.ctaChannelsLabel}</span>
+          <ul className={styles.channels}>
+            {channels.map((ch) => (
+              <li key={ch.name}>
+                <a
+                  href={ch.url}
+                  className={styles.channel}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={ch.handle}
+                >
+                  <ch.icon className={styles.channelIcon} />
+                  {ch.name}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </Reveal>
     </section>

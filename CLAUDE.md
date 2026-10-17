@@ -97,13 +97,19 @@ src/
 │   │   │                         (only rendered when approved reviews exist —
 │   │   │                         page.tsx gates it), Process (which now also
 │   │   │                         renders the brand Principles block),
-│   │   │                         GrowthSimulator, FAQ, CTA
-│   │   ├── cases/                Sub-components used by Cases + case pages
-│   │   │   ├── CaseCard.tsx        Landing card (status pill + region badge)
-│   │   │   ├── CaseStudyDetail.tsx Rich per-case detail layout
-│   │   │   └── PlaceholderCard.tsx
+│   │   │                         FAQ, CTA
+│   │   ├── cases/                Case pages (the landing deck lives in
+│   │   │   │                     Cases.tsx, data in data/caseDeck.ts)
+│   │   │   ├── CaseShowcase.tsx  One-screen case layout, used instead
+│   │   │   │                     when the case has `study.showcase`
+│   │   │   │                     (screenshots, or `scheme`: route
+│   │   │   │                     board + funnel when there are none)
+│   │   │   └── CaseStudyDetail.tsx Older per-case layout (no showcase)
 │   │   └── services/
-│   │       └── ServiceCard.tsx   Used by Services on the landing
+│   │       ├── flow.ts           Module order site → ads → bot →
+│   │       │                     automation + landing-only copy keys
+│   │       └── ServiceVisual.tsx Small live "screens" per module, shared
+│   │                             by the landing and /services/<slug>
 │   ├── decor/                    Non-content visuals: AnimatedBackground,
 │   │                             FloatingGlyphs, ScrollProgress, SmoothScroll,
 │   │                             SectionDivider, SectionWatermark
@@ -463,7 +469,6 @@ than adding a new `max-width` block.
 
 - **Chat history persists** to `localStorage` under `st-chat-history-v1`,
   last 50 messages. Clear that key to wipe Vanessa's session memory.
-- **GrowthSimulator** saves slider levels in `st-simulator-levels-v1`.
 - **Chat nudge** (proactive teaser bubble) shows once per browser session
   after ~18s on the page while the chat is closed; the spent flag lives in
   `sessionStorage` under `st-chat-nudge-v1`.

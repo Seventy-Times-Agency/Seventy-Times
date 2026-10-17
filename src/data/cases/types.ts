@@ -65,6 +65,57 @@ export type CaseStudy = {
   stack?: string[];
   services?: Loc[];
   insight?: Loc;
+
+  /** One-screen showcase layout. When present, the case page renders
+   *  `CaseShowcase` (brand, start → finish, revenue, two tilted
+   *  screenshots, details drawer) instead of the long detail page. */
+  showcase?: CaseShowcase;
+};
+
+type Shot = { src: string; alt: Loc; width: number; height: number };
+type Fact = { value: Loc; label: Loc };
+
+type Scheme = {
+  /** Tag above the board, e.g. "Route". */
+  label: Loc;
+  /** Small caption in the board's title bar. */
+  caption: Loc;
+  /** Two ends of the route, drawn as "A ⇄ B". */
+  route: [Loc, Loc];
+  rows: Row[];
+  /** Tag under the funnel card, e.g. "Daily economics". */
+  funnelLabel: Loc;
+  /** Funnel steps, numbered 01–04; the last one is highlighted. */
+  funnel: Fact[];
+  /** Optional stock photo shown behind the route board. */
+  photo?: { src: string; width: number; height: number; alt: Loc };
+};
+
+export type CaseShowcase = {
+  /** Small pill next to the logo, e.g. "Case · E-commerce · USA". */
+  chip: Loc;
+  /** Name split in two lines; the second is drawn as outline. A plain
+   *  string is a brand name, the same in every locale. */
+  name: [string | Loc, string | Loc];
+  start: Loc;
+  finish: Loc;
+  revenueLabel: Loc;
+  revenue: Loc;
+  /** Line under the revenue figure, e.g. "on $2,267 ad spend". The
+   *  `{spend}` token is replaced by `spend` in bold. */
+  spendNote: Loc;
+  spend: Loc;
+  /** Two tilted screenshots on the right. Omit when there are none and
+   *  give `scheme` instead. */
+  shots?: { site: Shot & { host: string }; ads: Shot & { label: string } };
+  /** Screenshot-free right side: a route board and a numbered funnel,
+   *  for cases where the ad accounts no longer exist. */
+  scheme?: Scheme;
+  stickers: { top: Fact; bottom?: Fact };
+  details: Fact[];
+  /** Fine print under the details: where the numbers come from. */
+  source?: Loc;
+  story: { heading: Loc; paragraphs: Loc[] };
 };
 
 export type CaseItem = {

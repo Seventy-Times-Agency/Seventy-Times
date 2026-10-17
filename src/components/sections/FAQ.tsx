@@ -31,10 +31,6 @@ export default function FAQ() {
     { q: t.faq7q, a: t.faq7a },
     { q: t.faq8q, a: t.faq8a },
     { q: t.faq9q, a: t.faq9a },
-    { q: t.faq10q, a: t.faq10a },
-    { q: t.faq11q, a: t.faq11a },
-    { q: t.faq12q, a: t.faq12a },
-    { q: t.faq13q, a: t.faq13a },
   ];
 
   const focus = (i: number) => {
@@ -66,7 +62,7 @@ export default function FAQ() {
 
   return (
     <section id="faq" className={styles.section}>
-      <SectionWatermark text={t.faqTitle2} number="/ 08" position="left" />
+      <SectionWatermark text={t.faqTitle2} number="/ 06" position="left" />
       <div className={styles.layout}>
         <div className={styles.intro}>
           <Reveal><span className="eyebrow">{t.faqEyebrow}</span></Reveal>

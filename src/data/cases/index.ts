@@ -1,6 +1,7 @@
 export * from "./types";
 import type { CaseItem } from "./types";
 import { eliteCarMats } from "./elitecarmats";
+import { lantana } from "./lantana";
 import { convioo } from "./convioo";
 import { seventyTimes } from "./seventy-times";
 import { passengerTransport } from "./passenger-transport";
@@ -11,6 +12,7 @@ import { bukovel } from "./bukovel";
 // 2020–2021" shelf separately below it.
 export const CASES: readonly CaseItem[] = [
   eliteCarMats,
+  lantana,
   convioo,
   seventyTimes,
   passengerTransport,

@@ -50,11 +50,13 @@ export default function Nav() {
   const close = () => setMenuOpen(false);
 
   const NAV_LINKS = [
-    { href: anchor("how-we-start"), id: "how-we-start", label: t.navStart },
     { href: anchor("services"), id: "services", label: t.navServices },
     { href: anchor("cases"), id: "cases", label: t.navCases },
+    { href: anchor("how-we-start"), id: "how-we-start", label: t.navStart },
     { href: anchor("process"), id: "process", label: t.navProcess },
     { href: anchor("faq"), id: "faq", label: t.navFaq },
+    // A page, not a landing anchor — the only way into /team from the top bar.
+    { href: localePath("/team"), id: "team", label: t.ftTeam },
   ];
 
   return (
@@ -68,8 +70,8 @@ export default function Nav() {
           <a
             key={l.href}
             href={l.href}
-            className={`${styles.link}${active === l.id ? ` ${styles.linkActive}` : ""}`}
-            aria-current={active === l.id ? "location" : undefined}
+            className={`${styles.link}${(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? ` ${styles.linkActive}` : ""}`}
+            aria-current={(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? "location" : undefined}
           >
             {l.label}
           </a>
@@ -116,9 +118,9 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className={`${styles.mobileLink}${active === l.id ? ` ${styles.mobileLinkActive}` : ""}`}
+              className={`${styles.mobileLink}${(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? ` ${styles.mobileLinkActive}` : ""}`}
               onClick={close}
-              aria-current={active === l.id ? "location" : undefined}
+              aria-current={(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? "location" : undefined}
             >
               {l.label}
             </a>

@@ -24,14 +24,15 @@
   line-height: 0.82;
   white-space: nowrap;
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.06);
+  -webkit-text-stroke: 1.5px var(--line);
   text-transform: lowercase;
 }
 
 .num {
   font-style: normal;
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.08);
+  -webkit-text-stroke: 1.5px var(--accent);
   font-size: 0.58em;
+  opacity: 0.16;
 }
 
 .left {

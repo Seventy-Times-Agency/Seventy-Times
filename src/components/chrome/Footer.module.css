@@ -1,202 +1,219 @@
+/* Compact footer: one raised panel (brand · services · company · contacts)
+ * and one bottom line. Mobile-first: brand, then two-column link groups;
+ * four columns from 1024px. */
+
 .footer {
-  border-top: 1px solid var(--line);
-  padding: 72px 48px 36px;
+  position: relative;
+  z-index: 1;
   max-width: var(--container);
   margin: 0 auto;
+  padding: 24px 18px 28px;
 }
 
-.top {
+.panel {
   display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr 1fr;
-  gap: 48px;
-  margin-bottom: 56px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 20px;
+  padding: 26px 22px;
+  border-radius: var(--radius-lg);
+  background: var(--base);
+  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.08);
 }
 
+/* ── Brand ──────────────────────────────────────────────────── */
 .brand {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  align-content: start;
 }
 
-/* Tune <Logo variant="full" /> specifically for the footer brand block. */
-.brandLogo {
-  --full-mark-size: 56px;
-  --full-name-size: 12px;
+.logo {
+  display: inline-flex;
+  color: var(--ink);
+  --compact-size: 26px;
 }
 
-.brandText {
+.logo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.tagline {
+  font-size: 13px;
+  font-weight: 700;
   color: var(--text-muted);
-  font-size: 13.5px;
-  line-height: 1.6;
-  max-width: 280px;
 }
 
-.colTitle {
-  font-size: var(--fs-mini);
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--press-s);
+  font-size: 10.5px;
   font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
   color: var(--text-dim);
-  margin-bottom: 20px;
 }
 
+.status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+}
+
+/* ── Link columns ───────────────────────────────────────────── */
 .col {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 9px;
+  min-width: 0;
 }
 
-.col a,
-.col span,
-.col .linkBtn {
-  font-size: 13.5px;
-  color: var(--text-muted);
-  transition: color 0.2s ease;
-}
-
-.col a:hover,
-.col .linkBtn:hover {
-  color: var(--white);
-}
-
-.linkBtn {
-  background: none;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-/* Huge wordmark */
-.wordmark {
-  font-size: clamp(64px, 18vw, 240px);
+.colTitle {
+  margin-bottom: 4px;
+  font-size: 10.5px;
   font-weight: 800;
-  line-height: 0.85;
-  letter-spacing: -0.06em;
-  text-align: left;
-  margin: 48px 0 36px;
-  user-select: none;
-  text-transform: lowercase;
-  color: rgba(200, 212, 222, 0.07);
-  font-style: normal;
-}
-
-.wordmarkOutline {
-  font-style: italic;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(200, 212, 222, 0.12);
-}
-
-.wordmarkSub {
-  font-style: normal;
-  font-size: 0.55em;
-  margin-left: 0.4em;
-  color: rgba(200, 212, 222, 0.05);
-  -webkit-text-stroke: 1px rgba(200, 212, 222, 0.06);
-}
-
-.disclaimer {
-  font-size: 11px;
-  color: var(--text-dim);
-  line-height: 1.65;
-  max-width: 720px;
-  margin: 12px 0 24px;
-  font-style: italic;
-  opacity: 0.7;
-}
-
-.bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-  font-size: var(--fs-mini);
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-dim);
 }
 
-.bottomLinks {
-  display: flex;
-  gap: 24px;
-}
-
-.bottomLinks a {
+.col a {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
   transition: color 0.2s ease;
 }
 
-.bottomLinks a:hover {
-  color: var(--white);
+.col a:hover {
+  color: var(--accent);
 }
 
-/*  Base (mobile-first): formerly @media (max-width: 900px).  */
+.col a:focus-visible,
+.legal a:focus-visible,
+.up:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
-.footer {
-    padding: 40px 20px 24px;
-  }
+.socials {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
 
-.top {
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
+.socials a {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--base);
+  box-shadow: var(--raise-s);
+  color: var(--accent);
+  transition: box-shadow 0.2s ease, color 0.2s ease;
+}
 
-/*  Base (mobile-first): formerly @media (max-width: 560px).  */
+.socials a:hover {
+  color: var(--ink);
+  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--accent-rgb), 0.35);
+}
 
-.footer {
-    padding: 32px 18px 22px;
-  }
+.socials a:active {
+  box-shadow: var(--press-s);
+}
 
-.top {
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
+.socialIcon {
+  width: 15px;
+  height: 15px;
+}
 
-.wordmark {
-    font-size: clamp(48px, 16vw, 160px);
-    margin: 36px 0 24px;
-  }
-
+/* ── Bottom line ────────────────────────────────────────────── */
 .bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 20px;
+  margin-top: 18px;
+  padding: 0 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
 
-/*  561px and up — restores the desktop values overridden above.  */
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
 
-@media (min-width: 561px) {
+.legal a,
+.up {
+  color: var(--text-dim);
+  transition: color 0.2s ease;
+}
+
+.legal a:hover,
+.up:hover {
+  color: var(--accent);
+}
+
+.up {
+  font-weight: 800;
+}
+
+.disclaimer {
+  margin-top: 12px;
+  padding: 0 6px;
+  max-width: 900px;
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: var(--text-dim);
+  opacity: 0.8;
+}
+
+/* ── Tablet+ ────────────────────────────────────────────────── */
+@media (min-width: 768px) {
   .footer {
-    padding: 40px 20px 24px;
+    padding: 32px 48px 36px;
   }
-  .top {
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  .wordmark {
-    font-size: clamp(64px, 18vw, 240px);
-    margin: 48px 0 36px;
-  }
-  .bottom {
-    flex-direction: revert;
-    align-items: center;
-    gap: 24px;
+
+  .panel {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 30px 32px;
   }
 }
 
-/*  901px and up — restores the desktop values overridden above.  */
-
-@media (min-width: 901px) {
-  .footer {
-    padding: 72px 48px 36px;
+/* ── Desktop: brand + three columns in one row ──────────────── */
+@media (min-width: 1024px) {
+  .panel {
+    grid-template-columns: 1.4fr 1fr 1fr 1.1fr;
+    gap: 32px;
+    padding: 32px 40px;
   }
-  .top {
-    grid-template-columns: 1.3fr 1fr 1fr 1fr;
-    gap: 48px;
+
+  .brand {
+    grid-column: auto;
+  }
+
+  .bottom {
+    justify-content: space-between;
+  }
+
+  .up {
+    margin-left: auto;
   }
 }

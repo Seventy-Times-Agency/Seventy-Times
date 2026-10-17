@@ -1,78 +1,88 @@
+/* Two crossed tapes: a light "brutal" front tape with the services and a
+ * dark raised back tape with the tools, tilted opposite ways and running
+ * in opposite directions. The section clips the tape ends.
+ *
+ * Pure decoration: hidden on phones (mobile is rebuilt separately). */
 .wrap {
+  display: none;
   position: relative;
-  padding: 28px 0 24px;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: rgba(200, 212, 222, 0.018);
+  height: 190px;
   overflow: hidden;
   isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
 }
 
-/* Pure decoration: brand keywords scrolling — no actionable info.
-   Hide entirely on phones to cut ~130 px of dead scroll. Desktop
-   keeps it as editorial flourish. */
-/*  Base (mobile-first): formerly @media (max-width: 767px).  */
-.wrap {
-    display: none;
-  }
-
-/* Edge fades via pseudo-elements — much cheaper than mask-image. */
+/* Edge fades — cheaper than mask-image. */
 .wrap::before,
 .wrap::after {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 140px;
-  z-index: 2;
+  width: 120px;
+  z-index: 3;
   pointer-events: none;
 }
 
 .wrap::before {
   left: 0;
-  background: linear-gradient(90deg, var(--black), transparent);
+  background: linear-gradient(90deg, var(--base), transparent);
 }
 
 .wrap::after {
   right: 0;
-  background: linear-gradient(-90deg, var(--black), transparent);
+  background: linear-gradient(-90deg, var(--base), transparent);
 }
 
-.rowTop,
-.rowBottom {
+/* A tape is wider than the viewport so its tilted ends never show. */
+.tape {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: 50%;
+  margin-top: -32px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.tapeFront {
+  z-index: 2;
+  height: 64px;
+  background: var(--ink);
+  color: var(--base-lo);
+  box-shadow: 0 8px 0 var(--signal), 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.tapeBack {
+  z-index: 1;
+  height: 52px;
+  margin-top: -26px;
+  background: var(--base-hi);
+  box-shadow: var(--raise), inset 0 1px 0 rgba(var(--accent-rgb), 0.45),
+    inset 0 -1px 0 rgba(var(--accent-rgb), 0.45);
+}
+
+.track {
   display: flex;
   white-space: nowrap;
   width: max-content;
-  /* Same speed for both rows — only the direction differs. */
-  animation-duration: 60s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  /* Promote to its own compositor layer so neighbouring effects
-   * (Nav backdrop-filter, etc.) can't force the marquee to repaint
-   * on every scroll tick. */
+  /* Own compositor layer: the loop never repaints its neighbours. */
   will-change: transform;
-  transform: translateZ(0);
   backface-visibility: hidden;
-  /* Skip paint for the off-screen half of the duplicated content.
-   * `contain: layout` was tried as well but conflicts with the
-   * `width: max-content` sizing on Safari/Firefox (the container
-   * stops expanding to its actual children's width and the marquee
-   * clips). `paint` alone is enough to isolate the row's repaints
-   * from neighbouring composite layers. */
-  contain: paint;
 }
 
-/* Top: scrolls right-to-left (0 → -50%). */
+/* Front: right-to-left; back: left-to-right and slower, so the two
+   tapes visibly slide past each other at the crossing. */
 .rowTop {
   animation-name: scrollLeft;
+  animation-duration: 55s;
 }
 
-/* Bottom: scrolls left-to-right (-50% → 0) — opposite direction. */
 .rowBottom {
   animation-name: scrollRight;
+  animation-duration: 80s;
 }
 
 @keyframes scrollLeft {
@@ -93,83 +103,69 @@
   }
 }
 
-/*  Base (mobile-first): formerly @media (max-width: 640px).  */
-
-.rowTop,
-  .rowBottom {
-    animation-duration: 36s;
-  }
-
-/* Top row — bold brand presence, same scale as the old VelocityTicker. */
+/* Front tape words: dark ink on light, every other one outlined. */
 .itemTop {
   display: inline-flex;
   align-items: center;
-  gap: 40px;
-  padding-right: 40px;
-  font-size: clamp(22px, 2.6vw, 38px);
+  gap: 32px;
+  padding-right: 32px;
+  font-size: clamp(22px, 2.3vw, 34px);
   font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text);
+  letter-spacing: -0.04em;
   text-transform: uppercase;
   flex-shrink: 0;
+}
+
+/* The doubled list has an even length, so the alternation stays
+   seamless across the loop seam. */
+.itemTop:nth-child(even) {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--base-lo);
 }
 
 .dot {
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--accent);
+  box-shadow: 0 0 0 2px var(--base-lo);
   flex-shrink: 0;
 }
 
-/* Bottom row — calmer, technical, doesn't fight for attention. */
+/* Back tape words: calmer, technical, in the accent colour. */
 .itemBottom {
   display: inline-flex;
   align-items: center;
-  gap: 24px;
-  padding-right: 24px;
-  font-size: clamp(11px, 1.1vw, 13.5px);
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  gap: 22px;
+  padding-right: 22px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--accent);
+  text-shadow: var(--neon-text);
   flex-shrink: 0;
 }
 
 .dotSm {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--text-dim);
-  opacity: 0.6;
   flex-shrink: 0;
 }
 
-/* prefers-reduced-motion: we still allow a linear horizontal scroll
- * (it's non-vestibular and well below the WCAG flicker threshold),
- * just slow it down so motion-sensitive users get a calmer experience
- * instead of a frozen wall of text. Going to `animation: none` here
- * killed the marquee on every iOS user who enables Reduce Motion in
- * Accessibility — and Apple turns that on by default in some
- * accessibility profiles. */
+@media (min-width: 768px) {
+  .wrap {
+    display: block;
+  }
+}
+
+/* Reduced motion: keep a slow linear scroll (non-vestibular) and a
+   fixed tilt (set in the component) instead of freezing the strip. */
 @media (prefers-reduced-motion: reduce) {
   .rowTop,
   .rowBottom {
     animation-duration: 160s;
-  }
-}
-/*  641px and up — restores the desktop values overridden above.  */
-@media (min-width: 641px) {
-  .rowTop {
-    animation-duration: 60s;
-  }
-  .rowBottom {
-    animation-duration: 60s;
-  }
-}
-/*  768px and up — restores the desktop values overridden above.  */
-@media (min-width: 768px) {
-  .wrap {
-    display: flex;
   }
 }

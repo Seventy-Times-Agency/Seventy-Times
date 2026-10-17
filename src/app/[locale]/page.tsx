@@ -18,9 +18,6 @@ const Testimonials = dynamic(
   () => import("@/components/sections/Testimonials"),
 );
 const Cases = dynamic(() => import("@/components/sections/Cases"));
-const GrowthSimulator = dynamic(
-  () => import("@/components/sections/GrowthSimulator"),
-);
 const FAQ = dynamic(() => import("@/components/sections/FAQ"));
 const CTA = dynamic(() => import("@/components/sections/CTA"));
 
@@ -37,13 +34,7 @@ export default async function HomePage() {
       <main id="main-content">
         <Hero />
         <MarqueeStack />
-        <SectionDivider labelKey="divStart" />
-        <HowWeStart />
         <Services />
-        <SectionDivider labelKey="divMeet" />
-        <ChatDemo />
-        <SectionDivider labelKey="divCompare" />
-        <Comparison />
         <SectionDivider labelKey="divCases" />
         <Cases />
         {reviews.length > 0 && (
@@ -52,10 +43,14 @@ export default async function HomePage() {
             <Testimonials reviews={reviews} />
           </>
         )}
+        <SectionDivider labelKey="divCompare" />
+        <Comparison />
+        <SectionDivider labelKey="divMeet" />
+        <ChatDemo />
+        <SectionDivider labelKey="divStart" />
+        <HowWeStart />
         <SectionDivider labelKey="divNext" />
         <Process />
-        <SectionDivider labelKey="divSimulator" />
-        <GrowthSimulator />
         <SectionDivider labelKey="divQuestions" />
         <FAQ />
         <SectionDivider labelKey="divTalk" />

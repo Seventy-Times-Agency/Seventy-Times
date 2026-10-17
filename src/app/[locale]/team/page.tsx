@@ -4,6 +4,8 @@ import { isLocale, DEFAULT_LOCALE } from "@/i18n/config";
 import { siteConfig } from "@/data/siteConfig";
 import { TEAM } from "@/data/team";
 import { jsonLd } from "@/lib/jsonLd";
+import Nav from "@/components/chrome/Nav";
+import Footer from "@/components/chrome/Footer";
 import TeamClient from "./TeamClient";
 
 export async function generateMetadata(
@@ -62,7 +64,9 @@ export default async function Page(props: {
           }}
         />
       )}
+      <Nav />
       <TeamClient />
+      <Footer />
     </>
   );
 }

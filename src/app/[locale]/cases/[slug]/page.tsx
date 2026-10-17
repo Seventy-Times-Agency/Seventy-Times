@@ -7,6 +7,7 @@ import { getDictionary } from "@/i18n/dictionary";
 import { siteConfig } from "@/data/siteConfig";
 import { languageAlternates } from "@/lib/localizedMeta";
 import CaseStudyDetail from "@/components/sections/cases/CaseStudyDetail";
+import CaseShowcase from "@/components/sections/cases/CaseShowcase";
 
 export function generateStaticParams() {
   return LOCALES.flatMap((locale) =>
@@ -97,7 +98,11 @@ export default async function CasePage(
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbSchema) }}
       />
-      <CaseStudyDetail item={item} related={related} />
+      {item.study.showcase ? (
+        <CaseShowcase item={item} showcase={item.study.showcase} />
+      ) : (
+        <CaseStudyDetail item={item} related={related} />
+      )}
     </>
   );
 }

@@ -13,14 +13,16 @@
    * and mid-range Android. Use a slightly more opaque background so we
    * can drop the saturate() filter and tone the blur down without the
    * nav looking flat. Mobile breakpoint below shrinks it further. */
-  background: rgba(10, 10, 10, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
+  margin: 12px 16px 0;
+  top: 12px;
+  border-radius: var(--radius-pill);
+  background: var(--base);
+  box-shadow: var(--raise);
 }
 
 .logo {
   display: inline-flex;
+  color: var(--ink);
   align-items: center;
   justify-self: start;
   line-height: 1;
@@ -49,7 +51,8 @@
   right: 0;
   bottom: -6px;
   height: 1px;
-  background: currentColor;
+  background: var(--accent);
+  box-shadow: var(--neon-soft);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s var(--ease);
@@ -91,8 +94,8 @@
   gap: 8px;
   padding: 6px 12px 6px 10px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--base);
+  box-shadow: var(--press-s);
   font-size: 11px;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -120,20 +123,23 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  white-space: nowrap;
   padding: 12px 22px;
   border-radius: var(--radius-pill);
   font-weight: 700;
   font-size: 13px;
   letter-spacing: 0.02em;
+  font-weight: 800;
   background: var(--accent);
-  color: var(--black);
+  color: var(--base-lo);
+  box-shadow: var(--neon);
   transition: transform 0.2s var(--ease), background 0.2s ease, box-shadow 0.3s ease;
 }
 
 .cta:hover {
   transform: translateY(-1px);
   background: var(--accent-strong);
-  box-shadow: 0 8px 24px -8px var(--accent-glow);
+  box-shadow: 0 0 8px var(--accent), 0 0 32px rgba(var(--accent-rgb), 0.42);
 }
 
 .cta:focus-visible {
@@ -149,14 +155,15 @@
   transform: translateX(3px);
 }
 
-.langSwitcher { display: flex; gap: 2px; background: rgba(200,212,222,0.06); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 2px; }
+.langSwitcher { display: flex; gap: 2px; background: var(--base); box-shadow: var(--press-s); border-radius: var(--radius-pill); padding: 3px; }
 /* min 44px tap target (WCAG 2.5.8) via min-height + a generous click
    zone; the visible pill stays compact thanks to flex centering. */
 .langBtn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 4px 10px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 800; letter-spacing: 0.08em; color: var(--text-dim); transition: all 0.2s ease; text-transform: uppercase; }
 .langBtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.langBtnActive { background: var(--accent); color: var(--black); }
+.langBtnActive { color: var(--ink); box-shadow: var(--raise-s); }
 
-@media (min-width: 900px) {
+/* The status pill only fits once the nav also carries "Team". */
+@media (min-width: 1400px) {
   .status {
     display: inline-flex;
   }
@@ -186,6 +193,7 @@
   width: 22px;
   height: 1.5px;
   background: var(--accent);
+  box-shadow: var(--neon-soft);
   border-radius: 1px;
   transition: transform 0.3s var(--ease), opacity 0.2s ease;
   transform-origin: center;
@@ -198,13 +206,12 @@
 /* Mobile menu panel */
 .mobileMenu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 12px);
   left: 0;
   right: 0;
-  background: rgba(10, 11, 16, 0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--line);
+  background: var(--base);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--raise);
   padding: 28px 24px 32px;
   display: flex;
   flex-direction: column;
@@ -248,14 +255,13 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-dim);
-  border: 1px solid var(--line);
+  box-shadow: var(--press-s);
   transition: all 0.2s ease;
 }
 
 .mobileLangBtnActive {
-  background: var(--accent);
-  color: var(--black);
-  border-color: var(--accent);
+  color: var(--ink);
+  box-shadow: var(--raise-s);
 }
 
 .mobileCta {
@@ -267,8 +273,9 @@
   margin-top: 8px;
   border-radius: var(--radius-pill);
   background: var(--accent);
-  color: var(--black);
-  font-weight: 700;
+  color: var(--base-lo);
+  box-shadow: var(--neon);
+  font-weight: 800;
   font-size: 15px;
   text-align: center;
 }
@@ -276,7 +283,9 @@
 /*  Base (mobile-first): formerly @media (max-width: 820px).  */
 
 .nav {
-    padding: 16px 20px;
+    padding: 8px 8px 8px 20px;
+    margin: 10px 12px 0;
+    top: 10px;
     grid-template-columns: 1fr auto;
     /* Backdrop-filter on a sticky element is the #1 scroll-jank
      * source on mid-range Android and on iOS with Reduce Motion off.
@@ -285,15 +294,7 @@
      * to recomposite. Use a fully opaque background instead — the
      * frosted look is purely cosmetic and not worth the FPS cost
      * on phones. */
-    background: rgb(10, 10, 10);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-.mobileMenu {
-    background: rgb(12, 14, 20);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    background: var(--base);
   }
 
 .links {
@@ -317,16 +318,10 @@
 
 @media (min-width: 821px) {
   .nav {
-    padding: 22px 48px;
+    padding: 10px 10px 10px 28px;
+    margin: 16px 32px 0;
+    top: 16px;
     grid-template-columns: 1fr auto 1fr;
-    background: rgba(10, 10, 10, 0.78);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-  .mobileMenu {
-    background: rgba(10, 11, 16, 0.96);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
   }
   .links {
     display: inline-flex;

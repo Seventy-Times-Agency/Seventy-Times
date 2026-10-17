@@ -1,21 +1,43 @@
-/* Team grid. Mobile-first: one column, widening on larger viewports.
-   Only renders when data/team.ts has entries — empty state uses the
-   shared legal-page placeholder copy instead. */
+/* Team page on the shared legal shell (wide variant). Mobile-first:
+   one column of raised cards, widening on larger viewports. Only
+   renders the grid when data/team.ts has entries — otherwise the
+   placeholder copy sits in a pressed well with a chat button. */
+
+.title {
+  font-size: clamp(44px, 11vw, 112px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  overflow-wrap: break-word;
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 720px;
+}
 
 .grid {
   list-style: none;
   padding: 0;
-  margin: 28px 0 8px;
+  margin: 0 0 56px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 20px;
+}
+
+.grid > li {
+  display: flex;
 }
 
 .card {
-  padding: 22px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface-2);
+  width: 100%;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--base);
+  box-shadow: var(--raise);
 }
 
 .avatar {
@@ -25,8 +47,9 @@
   height: 88px;
   border-radius: var(--radius-pill);
   overflow: hidden;
-  margin-bottom: 16px;
-  background: var(--surface-3);
+  margin-bottom: 18px;
+  background: var(--base);
+  box-shadow: var(--press-s);
 }
 
 .avatarImg {
@@ -34,57 +57,68 @@
 }
 
 .name {
-  font-size: 1.05rem;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
   color: var(--text);
-  margin: 0 0 4px;
+  margin: 0 0 6px;
 }
 
 .role {
-  font-size: 0.82rem;
-  letter-spacing: 0.02em;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--accent);
-  margin: 0 0 12px;
+  margin: 0 0 14px;
 }
 
 .bio {
-  font-size: 0.9rem;
+  font-size: 15px;
   color: var(--text-muted);
-  line-height: 1.55;
-  margin: 0 0 14px;
+  line-height: 1.6;
+  margin: 0 0 16px;
 }
 
 .link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: var(--text);
-  text-decoration: none;
-  border-bottom: 1px solid var(--line-strong);
-  padding-bottom: 2px;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--press-s);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
 }
 
 .link:hover {
-  color: var(--accent-strong);
+  color: var(--accent);
 }
 
 .link:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: var(--radius-xs);
 }
 
 /* Tablet and up. */
 @media (min-width: 768px) {
   .grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
   }
 }
 
 /* Desktop and up. */
 @media (min-width: 1024px) {
   .grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: none;
   }
 }

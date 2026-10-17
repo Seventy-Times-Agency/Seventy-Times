@@ -18,6 +18,7 @@ export default function AnimatedBackground() {
       <div className={styles.bigNumeral}>70×</div>
       <div className={`${styles.glow} ${styles.glowA}`} />
       <div className={`${styles.glow} ${styles.glowB}`} />
+      <div className={`${styles.glow} ${styles.glowC}`} />
     </div>
   );
 }

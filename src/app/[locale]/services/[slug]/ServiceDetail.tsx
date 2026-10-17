@@ -3,135 +3,153 @@
 import Link from "next/link";
 import { useT } from "@/i18n/context";
 import { siteConfig } from "@/data/siteConfig";
-import type { ServiceItem } from "@/data/services";
-import { SERVICE_ICONS } from "@/components/ui/ServiceIcons";
+import { SERVICES, type ServiceItem } from "@/data/services";
+import Reveal from "@/components/ui/Reveal";
+import ServiceVisual from "@/components/sections/services/ServiceVisual";
+import { FLOW, FLOW_COPY, flowNumber } from "@/components/sections/services/flow";
 import styles from "./ServiceDetail.module.css";
 
 type Props = {
   item: ServiceItem;
-  related: readonly ServiceItem[];
 };
 
-export default function ServiceDetail({ item, related }: Props) {
+export default function ServiceDetail({ item }: Props) {
   const { t, localePath } = useT();
   const home = localePath("/");
-  const Icon = SERVICE_ICONS[item.key];
 
   const title = t[item.i18n.title];
-  const tag = t[item.i18n.tag];
   const note = t[item.i18n.note];
   const includes = t[item.i18n.inc];
   const addons = t[item.i18n.add];
   const timeline = t[item.i18n.timeline];
   const ideal = t[item.i18n.ideal];
+  const copy = FLOW_COPY[item.key];
 
   return (
-    <main className={styles.main}>
+    <main id="main-content" className={styles.main}>
       <div className={styles.inner}>
         <nav className={styles.breadcrumbs} aria-label={t.casesBreadcrumbs}>
           <Link href={home}>{siteConfig.shortName}</Link>
           <span aria-hidden="true">›</span>
           <Link href={`${home}#services`}>{t.navServices}</Link>
           <span aria-hidden="true">›</span>
-          <span className={styles.breadcrumbCurrent} aria-current="page">
-            {title}
-          </span>
+          <span aria-current="page">{title}</span>
         </nav>
 
-        <div className={styles.head}>
-          <div className={styles.headTop}>
-            <span className={styles.kicker}>
-              / {String(item.index).padStart(2, "0")}
+        {/* ── Hero ── */}
+        <section className={styles.hero}>
+          <div className={styles.heroCopy}>
+            <span className={styles.role}>
+              <b>{flowNumber(item.key)}</b> · {t[copy.role]}
             </span>
-            {Icon && (
-              <span className={styles.iconBox}>
-                <Icon className={styles.iconSvg} />
-              </span>
+            <h1 className={styles.title}>{title}</h1>
+            <p className={styles.pitch}>{t[copy.pitch]}</p>
+            {note && <span className={styles.note}>{note}</span>}
+            <div className={styles.ctas}>
+              <Link href={`${home}#lead`} className={styles.primary}>
+                {t.hxCtaBrief}
+                <i aria-hidden="true">↗</i>
+              </Link>
+              <Link href={`${home}#cases`} className={styles.secondary}>
+                {t.svcDetailSecondaryCta}
+              </Link>
+            </div>
+          </div>
+
+          <div className={styles.stage}>
+            <span className={`${styles.cross} ${styles.crossTL}`} />
+            <span className={`${styles.cross} ${styles.crossTR}`} />
+            <span className={`${styles.cross} ${styles.crossBL}`} />
+            <span className={`${styles.cross} ${styles.crossBR}`} />
+            <div className={styles.stageInner}>
+              <ServiceVisual kind={item.key} t={t} size="lg" />
+            </div>
+            {item.key === "targeting" && (
+              <span className={styles.sticker}>{t.svcAdsSticker}</span>
             )}
           </div>
-          <h1 className={styles.title}>{title}</h1>
-          <p className={styles.tagline}>{tag}</p>
-          {note && <span className={styles.note}>{note}</span>}
+        </section>
 
-          <dl className={styles.meta}>
-            <div className={styles.metaItem}>
-              <dt className={styles.metaLabel}>{t.svcTimelineLabel}</dt>
-              <dd className={styles.metaValue}>{timeline}</dd>
+        {/* ── Timing + fit ── */}
+        <Reveal>
+          <dl className={styles.facts}>
+            <div className={styles.factPressed}>
+              <dt>{t.svcTimelineLabel}</dt>
+              <dd>{timeline}</dd>
             </div>
-            <div className={styles.metaItem}>
-              <dt className={styles.metaLabel}>{t.svcIdealLabel}</dt>
-              <dd className={styles.metaValue}>{ideal}</dd>
+            <div className={styles.factRaised}>
+              <dt>{t.svcIdealLabel}</dt>
+              <dd>{ideal}</dd>
             </div>
           </dl>
-        </div>
+        </Reveal>
 
-        <div className={styles.cols}>
-          <section className={styles.col}>
-            <h2 className={styles.colLabel}>{t.svcIncludes}</h2>
-            <ul className={styles.list}>
-              {includes.map((entry) => (
-                <li key={entry} className={styles.item}>
-                  <span className={styles.bullet} aria-hidden="true">
-                    →
-                  </span>
+        {/* ── What's included ── */}
+        <section className={styles.block}>
+          <h2 className={styles.label}>{t.svcIncludes}</h2>
+          <div className={styles.includes}>
+            {includes.map((entry, i) => (
+              <Reveal key={entry} delay={i * 0.05}>
+                <div className={styles.include}>
+                  <span className={styles.includeNum}>{String(i + 1).padStart(2, "0")}</span>
                   <span>{entry}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
 
-          <section className={styles.col}>
-            <h2 className={styles.colLabel}>{t.svcAddons}</h2>
-            <ul className={styles.list}>
-              {addons.map((entry) => (
-                <li key={entry} className={`${styles.item} ${styles.itemMuted}`}>
-                  <span
-                    className={`${styles.bullet} ${styles.bulletMuted}`}
-                    aria-hidden="true"
-                  >
-                    +
-                  </span>
-                  <span>{entry}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
+        {/* ── Add-ons ── */}
+        <section className={styles.block}>
+          <h2 className={styles.label}>{t.svcAddons}</h2>
+          <ul className={styles.addons}>
+            {addons.map((entry) => (
+              <li key={entry}>{entry}</li>
+            ))}
+          </ul>
+        </section>
 
-        <div className={styles.ctaRow}>
-          <Link href={`${home}#lead`} className={styles.primaryCta}>
-            {t.svcDetailPrimaryCta} <span aria-hidden="true">→</span>
-          </Link>
-          <Link href={`${home}#cases`} className={styles.secondaryCta}>
-            {t.svcDetailSecondaryCta} <span aria-hidden="true">↗</span>
-          </Link>
-        </div>
-
-        {related.length > 0 && (
-          <section className={styles.relatedSection}>
-            <h2 className={styles.colLabel}>{t.svcDetailRelatedTitle}</h2>
-            <div className={styles.relatedGrid}>
-              {related.map((r) => (
-                <Link
-                  key={r.slug}
-                  href={localePath(`/services/${r.slug}`)}
-                  className={styles.relatedCard}
-                >
-                  <span className={styles.relatedKicker}>
-                    / {String(r.index).padStart(2, "0")}
+        {/* ── Position in the machine ── */}
+        <section className={styles.block}>
+          <h2 className={styles.label}>{t.svcDetailMachine}</h2>
+          <div className={styles.machine}>
+            {FLOW.map((key) => {
+              const s = SERVICES.find((x) => x.key === key)!;
+              const current = key === item.key;
+              const inner = (
+                <>
+                  <span className={styles.machineNum}>{flowNumber(key)}</span>
+                  <span className={styles.machineTitle}>{t[s.i18n.title]}</span>
+                  <span className={styles.machineRole}>
+                    {current ? t.svcDetailHere : t[FLOW_COPY[key].role]}
                   </span>
-                  <span className={styles.relatedTitle}>
-                    {t[r.i18n.title]}
-                  </span>
-                  <span className={styles.relatedTag}>{t[r.i18n.tag]}</span>
-                  <span className={styles.relatedArrow} aria-hidden="true">
-                    →
-                  </span>
+                </>
+              );
+              return current ? (
+                <div key={key} className={`${styles.machineStep} ${styles.machineCurrent}`} aria-current="page">
+                  {inner}
+                </div>
+              ) : (
+                <Link key={key} href={localePath(`/services/${s.slug}`)} className={styles.machineStep}>
+                  {inner}
                 </Link>
-              ))}
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ── Closing CTA ── */}
+        <Reveal>
+          <div className={styles.cta}>
+            <div>
+              <p className={styles.ctaTitle}>{t.svcDetailCtaTitle}</p>
+              <p className={styles.ctaBody}>{t.svcDetailCtaBody}</p>
             </div>
-          </section>
-        )}
+            <Link href={`${home}#lead`} className={styles.ctaBtn}>
+              {t.hxCtaBrief} <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </main>
   );

@@ -14,47 +14,69 @@
   --bp-desktop: 1024px;
   --bp-wide: 1280px;
 
-  /* ── IAA palette: cool graphite + Casper accents ────────── */
-  --black: #0a0b10;
+  /* ── Palette: graphite neumorphism + one neon accent ─────
+   * The site is built from three materials:
+   *   raised  — soft card lifted off the page   (box-shadow: var(--raise))
+   *   pressed — well sunk into the page          (box-shadow: var(--press))
+   *   brutal  — light ink card, hard offset shadow (--ink bg + var(--brutal))
+   * and one neon accent used sparingly for glows and key highlights.
+   * Neumorphic shadows only read on the flat --base colour, so raised /
+   * pressed surfaces must use `background: var(--base)`. */
+  --base: #101116;
+  --base-hi: #1d1f27;
+  --base-lo: #040506;
+
+  --black: var(--base);
   --black-pure: #000000;
-  --bg-deep: #06060c;
-  --surface: #14151c;
-  --surface-2: #1c1d26;
-  --surface-3: #25262f;
+  --bg-deep: var(--base-lo);
+  --surface: var(--base);
+  --surface-2: #16171d;
+  --surface-3: var(--base-hi);
 
-  --line: rgba(200, 212, 222, 0.1);
-  --line-strong: rgba(200, 212, 222, 0.2);
-  --line-hi: rgba(200, 212, 222, 0.36);
+  --line: rgba(200, 212, 222, 0.08);
+  --line-strong: rgba(200, 212, 222, 0.16);
+  --line-hi: rgba(200, 212, 222, 0.3);
 
-  /* Text — Casper-tinted instead of pure white */
-  --white: #e8eef4;
-  --text: #e8eef4;
-  --text-muted: #a8b4c0;
-  --text-dim: #6c7480; /* cool dove grey */
-  /* 0.62 alpha against --black clears the WCAG AA contrast bar
-   * (~4.7:1). The previous 0.45 value rendered at ~3.8:1 and failed
-   * accessibility scanners on every placeholder. */
-  --text-faint: rgba(232, 238, 244, 0.62);
+  --white: #eef1f4;
+  --text: #eef1f4;
+  --text-muted: #a3acb7;
+  --text-dim: #6c7480;
+  --text-faint: rgba(238, 241, 244, 0.62);
+  --ink: #eef1f4;
 
-  /* Casper accent — used for buttons, badges, glows, key highlights */
-  --accent: #c8d4de;
-  --accent-strong: #d8e2ec;
-  --accent-deep: #8a9aa6;
-  --accent-glow: rgba(200, 212, 222, 0.4);
-
-  /* Single restrained signal for "online" status */
+  /* Neon accent — buttons, glows, outline headings, key figures */
+  --accent: #2fd8c8;
+  --accent-rgb: 47, 216, 200;
+  --accent-strong: #6ee6da;
+  --accent-deep: #14a99b;
+  --accent-glow: rgba(var(--accent-rgb), 0.3);
   --accent-green: #4ade80;
 
+  /* Rare red signal — a few hard shadows and "cut" states only, never
+     a second brand colour. */
+  --signal: #ff4d5e;
+  --signal-rgb: 255, 77, 94;
+
+  --raise: 12px 12px 28px var(--base-lo), -10px -10px 26px var(--base-hi);
+  --raise-s: 6px 6px 14px var(--base-lo), -5px -5px 12px var(--base-hi);
+  --press: inset 8px 8px 18px var(--base-lo), inset -7px -7px 16px var(--base-hi);
+  --press-s: inset 3px 3px 7px var(--base-lo), inset -3px -3px 6px var(--base-hi);
+  --brutal: 8px 8px 0 var(--accent);
+  /* Glow is a seasoning, not the dish: keep it low. */
+  --neon: 0 0 4px rgba(var(--accent-rgb), 0.55), 0 0 14px rgba(var(--accent-rgb), 0.25);
+  --neon-soft: 0 0 12px rgba(var(--accent-rgb), 0.18);
+  --neon-text: 0 0 4px rgba(var(--accent-rgb), 0.45), 0 0 14px rgba(var(--accent-rgb), 0.2);
+
   /* Effects */
-  --gradient-text: linear-gradient(180deg, #e8eef4 0%, #a8b4c0 100%);
+  --gradient-text: linear-gradient(180deg, #eef1f4 0%, #a3acb7 100%);
   --shadow-xl: 0 40px 100px -20px rgba(0, 0, 0, 0.65);
-  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
+  --shadow-card: var(--raise);
 
   /* Layout */
   --radius-xs: 6px;
   --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
   --radius-pill: 100px;
   --container: 1180px;
   --container-sm: 880px;
@@ -139,8 +161,8 @@ textarea {
 }
 
 ::selection {
-  background: var(--white);
-  color: var(--black);
+  background: var(--accent);
+  color: var(--base-lo);
 }
 
 /* Custom scrollbar */
@@ -169,6 +191,14 @@ textarea {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--text-dim);
+}
+
+/* Outline heading word with a neon glow — the signature of the style. */
+.neonOutline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--accent);
+  filter: drop-shadow(0 0 4px rgba(var(--accent-rgb), 0.45))
+    drop-shadow(0 0 14px rgba(var(--accent-rgb), 0.2));
 }
 
 /* Keyframes */
@@ -283,7 +313,7 @@ html:lang(de) h3 {
   position: fixed;
   top: 12px;
   left: 50%;
-  transform: translate(-50%, -120%);
+  transform: translate(-50%, -200%);
   z-index: 1000;
   padding: 10px 20px;
   background: var(--accent);

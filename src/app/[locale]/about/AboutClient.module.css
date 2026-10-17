@@ -1,0 +1,95 @@
+/* About page: shares the legal shell (crumbs, lead, brutal CTA) but
+ * runs wider, with a sticker + big title and raised link tiles into
+ * the rest of the site. Mobile-first. */
+
+.inner {
+  max-width: var(--container-sm);
+}
+
+.sticker {
+  padding: 7px 12px;
+  background: var(--base-lo);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+
+.sticker b {
+  color: var(--accent);
+}
+
+.title {
+  font-size: clamp(44px, 11vw, 112px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  overflow-wrap: break-word;
+}
+
+.tiles {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  background: var(--base);
+  box-shadow: var(--raise);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  transition: color 0.2s ease;
+}
+
+.tile:hover {
+  color: var(--accent);
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.tileNum {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--press-s);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent);
+  text-shadow: var(--neon-text);
+}
+
+.tileLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+.tileArrow {
+  color: var(--text-dim);
+}
+
+@media (min-width: 768px) {
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile {
+    transition: none;
+  }
+}

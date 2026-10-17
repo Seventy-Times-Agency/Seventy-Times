@@ -5,122 +5,103 @@
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, #1a1d2a 0%, var(--black) 55%),
-    var(--black);
+    radial-gradient(ellipse 90% 70% at 70% 0%, #14161d 0%, var(--base) 60%),
+    var(--base);
 }
 
-/* Static architectural grid — Casper-tinted */
+/* Architectural grid, fading out towards the edges */
 .grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(200, 212, 222, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200, 212, 222, 0.05) 1px, transparent 1px);
-  background-size: 80px 80px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 80%);
+    linear-gradient(rgba(200, 212, 222, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 212, 222, 0.07) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 85% 75% at 60% 40%, #000 10%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 60% 40%, #000 10%, transparent 85%);
 }
 
-/* Two soft Casper glows that drift via cheap CSS keyframes. Blur
- * paint cost scales roughly quadratically with the radius, so we
- * keep it modest on desktop and shrink further on mobile. */
+/* Two neon glows that drift via cheap CSS keyframes. Blur paint cost
+ * scales roughly quadratically with the radius, so mobile gets a
+ * smaller radius and footprint. */
 .glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
+  filter: blur(40px);
   will-change: transform;
   transform: translateZ(0);
 }
 
 .glowA {
   top: -15%;
-  left: 18%;
-  width: 560px;
-  height: 560px;
-  background: radial-gradient(circle, rgba(160, 190, 220, 0.18) 0%, transparent 70%);
-  animation: drift 30s ease-in-out infinite;
+  left: 30%;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.17) 0%, transparent 70%);
+  animation: drift 26s ease-in-out infinite;
 }
 
 .glowB {
   bottom: -20%;
-  right: 12%;
-  width: 540px;
-  height: 540px;
-  background: radial-gradient(circle, rgba(120, 160, 200, 0.14) 0%, transparent 70%);
-  animation: drift 38s ease-in-out infinite reverse;
+  left: -8%;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, rgba(28, 60, 130, 0.24) 0%, transparent 70%);
+  animation: drift 34s ease-in-out infinite reverse;
 }
 
-/* Gigantic "70" numeral anchored to the far right edge — brand accent */
+/* A faint red ember low on the right — the rare warm note. */
+.glowC {
+  bottom: -12%;
+  right: 8%;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(var(--signal-rgb), 0.1) 0%, transparent 70%);
+  animation: drift 40s ease-in-out infinite;
+}
+
+/* Giant "70×" outline anchored bottom-right — brand accent */
 .bigNumeral {
+  display: none;
   position: absolute;
-  top: 50%;
-  right: -8%;
-  transform: translateY(-50%);
-  font-size: clamp(300px, 50vw, 900px);
+  right: -4vw;
+  bottom: -8vh;
+  font-size: clamp(300px, 40vw, 720px);
   font-weight: 800;
-  font-style: italic;
   line-height: 0.8;
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(200, 212, 222, 0.03);
-  letter-spacing: -0.06em;
+  -webkit-text-stroke: 1.5px rgba(var(--accent-rgb), 0.08);
+  letter-spacing: -0.07em;
   user-select: none;
-  pointer-events: none;
   white-space: nowrap;
 }
 
-/*  Base (mobile-first): formerly @media (max-width: 820px).  */
-
-.bigNumeral {
-    display: none;
-  }
-
-/* Keep the drifting glows on mobile, just make each frame
-     cheaper: smaller blur radius (paint cost scales ~quadratically
-     with blur) and slightly smaller footprint. Motion stays. */
-
-.glow {
-    filter: blur(40px);
-  }
-
-.glowA {
-    width: 360px;
-    height: 360px;
-  }
-
-.glowB {
-    width: 340px;
-    height: 340px;
-  }
-
-/* Thin highlight line at the top of the page */
+/* Neon hairline at the top of the page */
 .topLight {
   position: absolute;
   top: 0;
-  left: 20%;
-  right: 20%;
+  left: 10%;
+  right: 10%;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(200, 212, 222, 0.32),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  box-shadow: var(--neon);
+  opacity: 0.7;
 }
-/*  821px and up — restores the desktop values overridden above.  */
+
 @media (min-width: 821px) {
   .bigNumeral {
-    display: revert;
+    display: block;
   }
   .glow {
-    filter: blur(60px);
+    filter: blur(70px);
   }
   .glowA {
-    width: 560px;
-    height: 560px;
+    width: 620px;
+    height: 620px;
   }
   .glowB {
-    width: 540px;
-    height: 540px;
+    width: 560px;
+    height: 560px;
   }
 }
 
@@ -128,7 +109,8 @@
    stay, they just don't move. */
 @media (prefers-reduced-motion: reduce) {
   .glowA,
-  .glowB {
+  .glowB,
+  .glowC {
     animation: none;
   }
 }

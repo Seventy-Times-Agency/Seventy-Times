@@ -8,26 +8,37 @@
   gap: 24px;
 }
 
+/* Neon hairline. With a label, the first line fades in from the left
+   and the second fades out to the right so the glow peaks at the tag. */
 .line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--line-strong) 20%,
-    var(--line-hi) 50%,
-    var(--line-strong) 80%,
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  box-shadow: var(--neon-soft);
   transform-origin: center;
 }
 
+.line:first-child:not(:last-child) {
+  background: linear-gradient(90deg, transparent, var(--accent));
+  transform-origin: right;
+}
+
+.label + .line {
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transform-origin: left;
+}
+
+/* Brutal "sticker" tag. */
 .label {
+  background: var(--base-lo);
+  color: var(--ink);
+  padding: 6px 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px var(--accent), var(--neon-soft);
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.24em;
+  font-weight: 800;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-dim);
   white-space: nowrap;
 }
 

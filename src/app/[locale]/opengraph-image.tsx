@@ -32,7 +32,7 @@ export default async function OpengraphImage({ params }: Props) {
   // "Marketing · AI · Automation" → "Marketing × AI × Automation":
   // same string the hero uses, with the brand's × as the separator.
   const headline = t.heroMeta1.replace(/·/g, "×");
-  const services = [t.ftAds, t.ftAutomation, t.ftBots].join(" · ");
+  const services = [t.svc1Title, t.svc2Title, t.svc3Title].join(" · ");
 
   return new ImageResponse(
     (

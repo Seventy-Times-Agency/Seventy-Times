@@ -1,0 +1,299 @@
+/* Small live "screens" illustrating each module. Shared by the landing
+ * conveyor and the service pages. `.lg` renders the same drawing at
+ * double size via `zoom`, so the illustration keeps its proportions. */
+
+/* The "screen" well every visual sits in. */
+.vis {
+  position: relative;
+  height: 156px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: radial-gradient(circle at 80% 15%, rgba(var(--accent-rgb), var(--vis-glow, 0.1)), transparent 60%), var(--base);
+  box-shadow: var(--press);
+  padding: 30px 14px 12px;
+  transition: background 0.35s var(--ease);
+}
+
+/* 01 — mini browser */
+.visSite {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.browserBar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.browserBar i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  box-shadow: var(--press-s);
+}
+
+.browserBar span {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.siteHead {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.ln {
+  display: block;
+  height: 5px;
+  border-radius: 5px;
+  background: var(--base-hi);
+}
+
+.lnShort {
+  width: 55%;
+}
+
+.siteBtn {
+  display: block;
+  width: 64px;
+  height: 16px;
+  margin-top: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  box-shadow: var(--neon-soft);
+}
+
+.pin {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--base);
+  box-shadow: var(--raise-s);
+  color: var(--accent);
+  font-size: 18px;
+  animation: bob 3s ease-in-out infinite;
+}
+
+@keyframes bob {
+  50% { transform: translateY(-4px); }
+}
+
+/* 02 — leads chart */
+.visAds {
+  display: flex;
+  flex-direction: column;
+}
+
+.adsHead {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.adsHead span {
+  padding: 4px 8px;
+  border-radius: 8px;
+  box-shadow: var(--raise-s);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.adsHead em {
+  margin-left: auto;
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.chart {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  width: calc(100% - 28px);
+  height: 74px;
+  z-index: 1;
+}
+
+.chartArea {
+  fill: rgba(var(--accent-rgb), 0.12);
+}
+
+.chartLine {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  filter: drop-shadow(0 0 3px rgba(var(--accent-rgb), 0.6));
+  animation: draw 4.5s ease-in-out infinite;
+}
+
+@keyframes draw {
+  0% { stroke-dashoffset: 260; }
+  45%, 85% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -260; }
+}
+
+.bars {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 12px;
+  height: 70px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8%;
+}
+
+.bars span {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: var(--base-hi);
+}
+
+/* 03 — chat */
+.visChat {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 32px;
+}
+
+.bubble {
+  max-width: 86%;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.bubbleIn {
+  align-self: flex-end;
+  border-radius: 12px 12px 4px 12px;
+  box-shadow: var(--raise-s);
+  color: var(--text-muted);
+}
+
+.bubbleOut {
+  align-self: flex-start;
+  border-radius: 12px 12px 12px 4px;
+  background: var(--accent);
+  color: var(--base-lo);
+  box-shadow: var(--neon-soft);
+}
+
+.typing {
+  display: inline-flex;
+  gap: 4px;
+  padding: 6px 9px;
+  border-radius: 10px;
+  box-shadow: var(--press-s);
+  align-self: flex-start;
+}
+
+.typing i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+.typing i:nth-child(2) { animation-delay: 0.2s; }
+.typing i:nth-child(3) { animation-delay: 0.4s; }
+
+/* 04 — lead flow */
+.visFlow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.node {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 10px;
+  border-radius: 12px;
+  background: var(--base);
+  box-shadow: var(--raise-s);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.nodeHot {
+  background: var(--accent);
+  color: var(--base-lo);
+  box-shadow: var(--neon);
+}
+
+.wire {
+  position: relative;
+  flex: 1;
+  min-width: 14px;
+  height: 2px;
+  background: rgba(var(--accent-rgb), 0.35);
+}
+
+.wire i {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: var(--neon);
+  animation: hop 1.8s linear infinite;
+}
+
+.wire + .node + .wire i {
+  animation-delay: 0.9s;
+}
+
+@keyframes hop {
+  from { left: 0; opacity: 1; }
+  to { left: calc(100% - 8px); opacity: 0.2; }
+}
+
+.lg {
+  width: 230px;
+  zoom: 1.4;
+}
+
+@media (min-width: 1024px) {
+  .lg {
+    width: 250px;
+    zoom: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin,
+  .chartLine,
+  .typing i,
+  .wire i {
+    animation: none;
+  }
+
+  .chartLine {
+    stroke-dashoffset: 0;
+  }
+}

@@ -6,6 +6,8 @@ import { LOCALES, isLocale, DEFAULT_LOCALE } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionary";
 import { siteConfig } from "@/data/siteConfig";
 import { languageAlternates } from "@/lib/localizedMeta";
+import Nav from "@/components/chrome/Nav";
+import Footer from "@/components/chrome/Footer";
 import ServiceDetail from "./ServiceDetail";
 
 export function generateStaticParams() {
@@ -120,9 +122,6 @@ export default async function ServicePage(
     serviceType: title,
   };
 
-  // Up to 3 sibling services for the "explore" rail at the bottom.
-  const related = SERVICES.filter((s) => s.slug !== item.slug).slice(0, 3);
-
   return (
     <>
       <script
@@ -133,7 +132,9 @@ export default async function ServicePage(
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(serviceSchema) }}
       />
-      <ServiceDetail item={item} related={related} />
+      <Nav />
+      <ServiceDetail item={item} />
+      <Footer />
     </>
   );
 }
