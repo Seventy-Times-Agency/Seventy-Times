@@ -63,7 +63,7 @@ export default function MobileStickyCta() {
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
         >
-          <span>{t.heroCta1}</span>
+          <span>{t.hxCtaBrief}</span>
           <span aria-hidden="true">→</span>
         </motion.a>
       )}

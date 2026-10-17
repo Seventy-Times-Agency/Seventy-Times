@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion, type PanInfo } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, type PanInfo } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
@@ -150,9 +150,12 @@ export default function Cases() {
   // The card that just left the front flies out instead of sliding back.
   const [leaving, setLeaving] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
+  // Direction of the last move, for the phone card's slide.
+  const [dir, setDir] = useState(1);
   const sectionRef = useRef<HTMLElement>(null);
 
   const go = (next: number, forward: boolean) => {
+    setDir(forward ? 1 : -1);
     setLeaving(forward ? active : null);
     setActive(((next % n) + n) % n);
   };
@@ -160,7 +163,8 @@ export default function Cases() {
   const prevCase = () => go(active - 1, false);
 
   useEffect(() => {
-    if (reduce || paused) return;
+    // Phones: no autoplay — the card must not slide away mid-read.
+    if (reduce || paused || !window.matchMedia("(min-width: 1024px)").matches) return;
     const id = window.setTimeout(nextCase, AUTOPLAY_MS);
     return () => window.clearTimeout(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -227,18 +231,19 @@ export default function Cases() {
             <span>+</span> {t.deckYours}
           </a>
 
-          <div className={styles.controls}>
-            <button type="button" className={styles.ctrl} onClick={prevCase} aria-label={t.deckPrev}>
-              ←
-            </button>
-            <span className={styles.counter}>
-              <b>{String(active + 1).padStart(2, "0")}</b> / {String(n).padStart(2, "0")}
-            </span>
-            <button type="button" className={styles.ctrl} onClick={nextCase} aria-label={t.deckNext}>
-              →
-            </button>
-          </div>
         </nav>
+
+        <div className={styles.controls}>
+          <button type="button" className={styles.ctrl} onClick={prevCase} aria-label={t.deckPrev}>
+            ←
+          </button>
+          <span className={styles.counter}>
+            <b>{String(active + 1).padStart(2, "0")}</b> / {String(n).padStart(2, "0")}
+          </span>
+          <button type="button" className={styles.ctrl} onClick={nextCase} aria-label={t.deckNext}>
+            →
+          </button>
+        </div>
 
         <div className={styles.stage}>
           {CASE_DECK.map((c, i) => {
@@ -283,6 +288,27 @@ export default function Cases() {
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Phones: one card in the page flow, swipe or arrows to move. */}
+        <div className={styles.mobileStage}>
+          <AnimatePresence mode="wait" initial={false} custom={dir}>
+            <motion.div
+              key={current.id}
+              className={styles.mobileCard}
+              style={{ "--case-accent": current.accent } as CSSProperties}
+              initial={reduce ? false : { opacity: 0, x: dir * 48 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, x: -dir * 48 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.5}
+              onDragEnd={onDragEnd}
+            >
+              <Card c={current} locale={locale} t={t} localePath={localePath} />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>

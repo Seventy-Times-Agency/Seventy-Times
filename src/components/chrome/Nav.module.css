@@ -306,8 +306,7 @@
   }
 
 .cta {
-    font-size: 12px;
-    padding: 10px 16px;
+    display: none;
   }
 
 .hamburger {
@@ -330,6 +329,7 @@
     display: flex;
   }
   .cta {
+    display: inline-flex;
     font-size: 13px;
     padding: 12px 22px;
   }

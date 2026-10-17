@@ -441,6 +441,85 @@
   outline-offset: 3px;
 }
 
+/* ── Phones (base): the console is a slim strip pinned under the nav;
+   the desktop block below restores the full console. ── */
+.consoleWrap {
+  position: sticky;
+  top: 78px;
+  z-index: 5;
+}
+
+.console {
+  gap: 10px;
+  padding: 12px;
+  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.18);
+}
+
+.consoleTitle,
+.tags,
+.modState,
+.chartLabel {
+  display: none;
+}
+
+.mods {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.mod {
+  grid-template-columns: auto;
+  justify-items: center;
+  row-gap: 4px;
+  padding: 8px 4px;
+}
+
+.mod i {
+  grid-row: auto;
+}
+
+.modName {
+  font-size: 10.5px;
+  text-align: center;
+}
+
+.chart {
+  padding: 8px 10px 6px;
+}
+
+.bars {
+  height: 38px;
+  margin-top: 0;
+  gap: 5px;
+}
+
+.steps {
+  gap: 14px;
+}
+
+.step {
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+}
+
+.node {
+  width: 40px;
+  height: 40px;
+  font-size: 12px;
+}
+
+.rail {
+  left: 19px;
+}
+
+.card {
+  padding: 16px 16px 18px;
+}
+
+.desc {
+  font-size: 13.5px;
+}
+
 /* ── Tablet+ ────────────────────────────────────────────────── */
 @media (min-width: 768px) {
   .section {
@@ -466,6 +545,81 @@
     position: sticky;
     top: 120px;
   }
+  /* Restore the full console (phone strip is the base above). */
+  .consoleWrap {
+    z-index: auto;
+  }
+
+  .console {
+    gap: 18px;
+    padding: 20px;
+    box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.12);
+  }
+
+  .consoleTitle,
+  .modState,
+  .chartLabel {
+    display: inline;
+  }
+
+  .tags {
+    display: flex;
+  }
+
+  .mods {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mod {
+    grid-template-columns: auto 1fr;
+    justify-items: stretch;
+    row-gap: 0;
+    padding: 12px 14px;
+  }
+
+  .mod i {
+    grid-row: span 2;
+  }
+
+  .modName {
+    font-size: 14px;
+    text-align: left;
+  }
+
+  .modState {
+    display: block;
+  }
+
+  .chart {
+    padding: 16px 16px 12px;
+  }
+
+  .bars {
+    height: 140px;
+    margin-top: 10px;
+    gap: 8px;
+  }
+
+  .step {
+    grid-template-columns: 48px 1fr;
+    gap: 18px;
+  }
+
+  .node {
+    width: 48px;
+    height: 48px;
+    font-size: 13px;
+  }
+
+  .rail {
+    left: 23px;
+  }
+
+  .desc {
+    font-size: 14.5px;
+  }
+
 
   .steps {
     gap: 28px;

@@ -12,7 +12,7 @@
 
 .grid {
   display: grid;
-  gap: 40px;
+  gap: 28px;
 }
 
 /* ── Copy ───────────────────────────────────────────────────── */
@@ -50,7 +50,7 @@
 .bullets li {
   display: flex;
   gap: 10px;
-  padding: 12px 14px;
+  padding: 10px 12px;
   border-radius: var(--radius-md);
   box-shadow: var(--press-s);
   font-size: 14px;
@@ -133,8 +133,8 @@
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 440px;
-  padding: 36px 18px;
+  min-height: 360px;
+  padding: 24px 14px 56px;
   border-radius: var(--radius-lg);
   background: rgba(21, 22, 28, 0.55);
   box-shadow: var(--press);
@@ -248,7 +248,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 260px;
+  min-height: 230px;
   padding: 18px 16px 22px;
 }
 
@@ -327,6 +327,15 @@
 @media (min-width: 768px) {
   .section {
     padding: 72px 48px 80px;
+  }
+
+  .stage {
+    min-height: 440px;
+    padding: 36px 18px;
+  }
+
+  .log {
+    min-height: 260px;
   }
 }
 

@@ -108,20 +108,28 @@
 /* ── Actions ────────────────────────────────────────────────── */
 .actions {
   display: grid;
-  gap: 14px;
+  gap: 12px;
   align-content: center;
-  justify-items: start;
+  justify-items: stretch;
+}
+
+/* Phones: the magnetic wrapper stretches with the button. */
+.actions > * {
+  min-width: 0;
 }
 
 .primary {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 14px;
-  padding: 18px 18px 18px 28px;
+  min-height: 56px;
+  padding: 12px 14px 12px 22px;
   border-radius: var(--radius-pill);
   background: var(--base-lo);
   color: var(--ink);
-  font-size: 16px;
+  font-size: 15px;
+  white-space: nowrap;
   font-weight: 800;
   letter-spacing: 0.01em;
   box-shadow: 0 10px 30px rgba(8, 9, 12, 0.25);
@@ -153,14 +161,14 @@
 }
 
 .secondaryRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
 .secondary {
-  padding: 11px 18px;
+  min-height: 46px;
+  padding: 11px 12px;
   border-radius: var(--radius-pill);
   border: 1.5px solid rgba(8, 9, 12, 0.22);
   background: transparent;
@@ -178,6 +186,7 @@
 }
 
 .or {
+  display: none;
   font-size: 12px;
   font-weight: 700;
   color: #6b7079;
@@ -282,8 +291,28 @@
     text-align: right;
   }
 
+  .primary {
+    display: inline-flex;
+    min-height: 0;
+    padding: 18px 18px 18px 28px;
+    font-size: 16px;
+  }
+
   .secondaryRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .secondary {
+    min-height: 0;
+    padding: 11px 18px;
+  }
+
+  .or {
+    display: inline;
   }
 
   .channelsRow {

@@ -273,9 +273,16 @@
   to { left: calc(100% - 8px); opacity: 0.2; }
 }
 
+/* Phones: small enough to sit inside the stage frame at 360px. */
 .lg {
   width: 230px;
-  zoom: 1.4;
+  zoom: 1.15;
+}
+
+@media (min-width: 480px) {
+  .lg {
+    zoom: 1.4;
+  }
 }
 
 @media (min-width: 1024px) {

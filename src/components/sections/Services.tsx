@@ -49,6 +49,9 @@ export default function Services() {
           <span className={styles.pulse} />
         </div>
 
+        <span className={styles.swipe} aria-hidden="true">
+          {t.swipeHint}
+        </span>
         <div className={styles.modules}>
           {modules.map((m, i) => (
             <Reveal key={m.key} delay={i * 0.08}>

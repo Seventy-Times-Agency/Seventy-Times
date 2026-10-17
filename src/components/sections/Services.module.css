@@ -74,11 +74,38 @@
   to { left: calc(100% - 10px); }
 }
 
+/* Phones: a swipeable row — one card and the edge of the next. */
 .modules {
   position: relative;
   z-index: 1;
-  display: grid;
-  gap: 24px;
+  display: flex;
+  gap: 14px;
+  margin: 0 -18px;
+  padding: 28px 18px 30px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 18px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modules::-webkit-scrollbar {
+  display: none;
+}
+
+.modules > * {
+  flex: 0 0 82%;
+  scroll-snap-align: start;
+}
+
+.swipe {
+  display: block;
+  margin-bottom: -14px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
 /* ── Module card ────────────────────────────────────────────── */
@@ -369,8 +396,16 @@
   }
 
   .modules {
+    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 28px;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .swipe {
+    display: none;
   }
 }
 

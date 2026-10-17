@@ -37,7 +37,7 @@
 
 .title {
   font-weight: 800;
-  font-size: clamp(38px, 10.5vw, 88px);
+  font-size: clamp(30px, 8.6vw, 88px);
   line-height: 0.92;
   letter-spacing: -0.05em;
   hyphens: none;
@@ -100,6 +100,11 @@
   align-items: center;
 }
 
+/* Phones: both buttons full width (the magnetic wrapper included). */
+.ctas > * {
+  width: 100%;
+}
+
 .primary,
 .secondary {
   display: inline-flex;
@@ -114,6 +119,9 @@
 }
 
 .primary {
+  justify-content: space-between;
+  width: 100%;
+  min-height: 52px;
   padding: 14px 16px 14px 24px;
   color: var(--ink);
   box-shadow: var(--raise);
@@ -141,6 +149,9 @@
 }
 
 .secondary {
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
   padding: 14px 24px;
   color: var(--text-muted);
   box-shadow: var(--press);
@@ -154,7 +165,7 @@
 .board {
   position: relative;
   min-width: 0;
-  height: 600px;
+  height: 400px;
   container-type: size;
 }
 
@@ -220,11 +231,13 @@
   position: absolute;
 }
 
-.siteWrap { left: 4cqw; top: 3cqh; width: 66cqw; z-index: 2; }
-.adsWrap { right: 4cqw; top: 30cqh; width: 54cqw; z-index: 3; }
-.toastWrap { right: 3cqw; top: 2cqh; z-index: 6; }
-.orderWrap { left: 4cqw; bottom: 13cqh; width: 84cqw; z-index: 4; }
-.stickerWrap { right: 4cqw; bottom: 2cqh; z-index: 8; }
+/* Phones: site card, ticket, toast and sticker only — the ads card
+   joins from 768px, where there's room for the full collage. */
+.siteWrap { left: 4cqw; top: 3cqh; width: 64cqw; z-index: 2; }
+.adsWrap { display: none; right: 4cqw; top: 30cqh; width: 54cqw; z-index: 3; }
+.toastWrap { right: 3cqw; top: 34cqh; z-index: 6; }
+.orderWrap { left: 4cqw; bottom: 5cqh; width: 86cqw; z-index: 4; }
+.stickerWrap { right: 3cqw; top: 3cqh; z-index: 8; }
 
 .card {
   position: relative;
@@ -619,15 +632,21 @@
     padding: 12px 14px;
   }
 
+  .ctas > *,
+  .primary,
+  .secondary {
+    width: auto;
+  }
+
   .board {
     height: 600px;
   }
 
   .siteWrap { left: 4cqw; top: 4cqh; width: 52cqw; }
-  .adsWrap { right: 4cqw; top: 12cqh; width: 42cqw; }
+  .adsWrap { display: block; right: 4cqw; top: 12cqh; width: 42cqw; }
   .toastWrap { right: 5cqw; top: 50cqh; }
   .orderWrap { left: 10cqw; bottom: 7cqh; width: 56cqw; }
-  .stickerWrap { right: 4cqw; bottom: 4cqh; }
+  .stickerWrap { right: 4cqw; top: auto; bottom: 4cqh; }
 
   .checks span:nth-child(n + 3) {
     display: inline-block;

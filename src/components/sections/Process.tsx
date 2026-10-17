@@ -50,6 +50,37 @@ export default function Process() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const finaleNodeRef = useRef<HTMLSpanElement>(null);
 
+  // Active step = the last step whose top has passed the middle of the
+  // viewport. Measured on scroll so a fast fling can't skip a step.
+  useEffect(() => {
+    const list = stepsRef.current;
+    if (!list) return;
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const mid = window.innerHeight * 0.55;
+      const items = Array.from(list.children) as HTMLElement[];
+      let idx = 0;
+      items.forEach((el, i) => {
+        if (el.getBoundingClientRect().top < mid) idx = i;
+      });
+      const last = items.length - 1; // the finale
+      setFinale(idx === last);
+      setActive(Math.min(idx, last - 1));
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   // Stop the rail at the centre of the finale node (its card height varies).
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -199,8 +230,6 @@ export default function Process() {
                 <motion.li
                   key={s.title}
                   className={`${styles.step} ${i === active ? styles.stepActive : ""}`}
-                  onViewportEnter={() => setActive(i)}
-                  viewport={{ margin: "-45% 0px -45% 0px" }}
                 >
                   <span className={styles.node} aria-hidden="true">
                     {String(i + 1).padStart(2, "0")}
@@ -224,12 +253,6 @@ export default function Process() {
             {/* The rail ends here: the next step is the visitor's own briefing. */}
             <motion.li
               className={`${styles.step} ${styles.finale} ${finale ? styles.finaleOn : ""}`}
-              onViewportEnter={() => {
-                setActive(steps.length - 1);
-                setFinale(true);
-              }}
-              onViewportLeave={() => setFinale(false)}
-              viewport={{ margin: "-35% 0px -35% 0px" }}
             >
               <span ref={finaleNodeRef} className={`${styles.node} ${styles.finaleNode}`} aria-hidden="true">
                 ↗
