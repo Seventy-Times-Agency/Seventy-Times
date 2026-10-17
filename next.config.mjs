@@ -36,7 +36,9 @@ const CSP = [
   "form-action 'self'",
   "base-uri 'self'",
   "object-src 'none'",
-  "upgrade-insecure-requests",
+  // Prod only: in dev it would force LAN phone previews (http://192.168.x.x)
+  // onto https and strip every stylesheet and script.
+  ...(isDev ? [] : ["upgrade-insecure-requests"]),
 ].join("; ");
 
 const securityHeaders = [
@@ -54,6 +56,8 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Lets a phone on the same Wi-Fi load the dev server's /_next assets.
+  allowedDevOrigins: ["192.168.*.*"],
   async headers() {
     return [
       {
