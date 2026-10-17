@@ -96,6 +96,7 @@ const strings = {
     svcMTitle1: "One system —",
     svcMTitle2: "four modules.",
     svcMLead: "Each module works on its own. Together they carry a lead from the ad all the way to you — without losses on the way.",
+    swipeHint: "Swipe →",
     svc4Role: "Foundation",
     svc1Role: "Brings leads",
     svc3Role: "Answers",

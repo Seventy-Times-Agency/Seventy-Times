@@ -5,7 +5,6 @@ import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import { SERVICES } from "@/data/services";
 import ServiceVisual from "@/components/sections/services/ServiceVisual";
-import { SERVICE_ICONS } from "@/components/ui/ServiceIcons";
 import { FLOW, FLOW_COPY } from "@/components/sections/services/flow";
 import { useT } from "@/i18n/context";
 import styles from "@/components/sections/Services.module.css";
@@ -44,36 +43,15 @@ export default function Services() {
         </Reveal>
       </div>
 
-      {/* Phones: four short rows, each straight to its service page. */}
-      <ol className={styles.mobileList}>
-        {modules.map((m, i) => {
-          const Icon = SERVICE_ICONS[m.key];
-          return (
-            <li key={m.key}>
-              <Link href={m.href} className={styles.mobileRow}>
-                <span className={styles.mobileIcon}>
-                  <Icon />
-                </span>
-                <span className={styles.mobileText}>
-                  <span className={styles.mobileRole}>
-                    {String(i + 1).padStart(2, "0")} · {m.role}
-                  </span>
-                  <b>{m.title}</b>
-                  <span className={styles.mobilePitch}>{m.pitch}</span>
-                </span>
-                <i aria-hidden="true">→</i>
-              </Link>
-            </li>
-          );
-        })}
-      </ol>
-
       <div className={styles.conveyor}>
         {/* The pipe and the lead travelling through it. */}
         <div className={styles.pipe} aria-hidden="true">
           <span className={styles.pulse} />
         </div>
 
+        <span className={styles.swipe} aria-hidden="true">
+          {t.swipeHint}
+        </span>
         <div className={styles.modules}>
           {modules.map((m, i) => (
             <Reveal key={m.key} delay={i * 0.08}>
