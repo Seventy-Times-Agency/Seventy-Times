@@ -139,7 +139,7 @@
 
 .mod_setup i {
   background: #e3b65c;
-  box-shadow: 0 0 10px rgba(227, 182, 92, 0.6);
+  box-shadow: none;
   animation: pulse 1.6s ease-in-out infinite;
 }
 
@@ -196,7 +196,7 @@
 
 .bars .barOn {
   background: linear-gradient(180deg, var(--accent), rgba(var(--accent-rgb), 0.35));
-  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.25);
+  box-shadow: none;
 }
 
 /* Event tags */

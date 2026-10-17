@@ -103,9 +103,7 @@
 
 .titleItalic {
   font-style: italic;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--accent);
-  text-shadow: var(--neon-soft);
+  color: var(--accent);
 }
 
 .subtitle {

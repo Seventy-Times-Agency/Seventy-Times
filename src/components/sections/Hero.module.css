@@ -427,7 +427,7 @@
   height: 7px;
   border-radius: 50%;
   background: var(--accent-green);
-  box-shadow: 0 0 10px var(--accent-green);
+  box-shadow: none;
 }
 
 .adName {
@@ -455,7 +455,7 @@
   fill: none;
   stroke: var(--accent);
   stroke-width: 2.5;
-  filter: drop-shadow(0 0 4px var(--accent));
+  filter: none;
 }
 
 .sparkArea {
@@ -532,7 +532,7 @@
   background: var(--ink);
   color: var(--base-lo);
   border-radius: 6px;
-  box-shadow: 9px 9px 0 var(--signal), 0 0 40px rgba(var(--signal-rgb), 0.18);
+  box-shadow: 9px 9px 0 var(--signal);
   transform: rotate(-2.5deg);
 }
 

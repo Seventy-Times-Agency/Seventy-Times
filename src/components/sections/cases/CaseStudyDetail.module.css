@@ -403,7 +403,7 @@
   height: 6px;
   border-radius: 50%;
   background: var(--accent-green);
-  box-shadow: 0 0 8px var(--accent-green);
+  box-shadow: none;
 }
 .chat {
   display: flex;

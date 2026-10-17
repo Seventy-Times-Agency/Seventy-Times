@@ -41,8 +41,7 @@
 }
 
 .o {
-  color: transparent;
-  -webkit-text-stroke: 1.2px var(--accent);
+  color: var(--accent);
 }
 
 .lede {
@@ -121,10 +120,6 @@
   hyphens: none;
 }
 
-.h1 .o {
-  -webkit-text-stroke-width: 1.5px;
-  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.35));
-}
 
 .under {
   margin-top: 10px;
@@ -162,7 +157,7 @@
   margin-right: 6px;
   border-radius: 50%;
   background: var(--accent-green);
-  box-shadow: 0 0 8px var(--accent-green);
+  box-shadow: none;
 }
 
 .flow {
@@ -877,7 +872,7 @@
 }
 
 .close .o {
-  -webkit-text-stroke-color: var(--base-lo);
+  color: var(--accent-deep);
 }
 
 .close p {

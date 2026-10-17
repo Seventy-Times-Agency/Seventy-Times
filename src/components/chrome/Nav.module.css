@@ -108,7 +108,7 @@
   height: 6px;
   border-radius: 50%;
   background: var(--accent-green);
-  box-shadow: 0 0 8px var(--accent-green);
+  box-shadow: none;
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -139,7 +139,7 @@
 .cta:hover {
   transform: translateY(-1px);
   background: var(--accent-strong);
-  box-shadow: 0 0 8px var(--accent), 0 0 32px rgba(var(--accent-rgb), 0.42);
+  box-shadow: none;
 }
 
 .cta:focus-visible {

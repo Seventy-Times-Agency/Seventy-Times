@@ -245,7 +245,7 @@
 .indexActive .indexNum {
   background: var(--item-accent);
   color: var(--base-lo);
-  box-shadow: 0 0 14px color-mix(in srgb, var(--item-accent) 55%, transparent);
+  box-shadow: none;
 }
 
 .indexName {
