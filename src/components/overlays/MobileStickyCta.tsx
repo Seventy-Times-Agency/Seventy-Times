@@ -31,7 +31,12 @@ export default function MobileStickyCta() {
       const nearBottom =
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 320;
-      setVisible(past && !modalOpen && !nearBottom);
+      // The contact block has the same CTA — don't double it up.
+      const contact = document.getElementById("contact");
+      const contactInView = contact
+        ? contact.getBoundingClientRect().top < window.innerHeight
+        : false;
+      setVisible(past && !modalOpen && !nearBottom && !contactInView);
     };
 
     // rAF-throttle: at most one measurement per animation frame so

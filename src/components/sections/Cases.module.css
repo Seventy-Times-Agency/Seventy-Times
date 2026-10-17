@@ -36,15 +36,16 @@
 }
 
 /* ── Layout ─────────────────────────────────────────────────── */
-/* Phones: chip strip → one card → arrows. Desktop: index + arrows on
-   the left, the stack on the right. */
+/* Below 1024px: a swipeable row of compact cards. From 1024px: index +
+   arrows on the left, the stack on the right. */
 .layout {
-  display: grid;
-  gap: 18px;
-  grid-template-areas:
-    "index"
-    "mobile"
-    "controls";
+  display: block;
+}
+
+.index,
+.controls,
+.stage {
+  display: none;
 }
 
 .index {
@@ -58,65 +59,148 @@
 
 .stage {
   grid-area: stage;
-  display: none;
 }
 
-.mobileStage {
-  grid-area: mobile;
-  min-width: 0;
-}
-
-.mobileCard {
-  touch-action: pan-y;
-}
-
-.mobileCard .card {
-  height: auto;
-  grid-template-rows: auto 230px;
-}
-
-/* ── Index ──────────────────────────────────────────────────── */
-/* Phones: one scrollable strip of chips */
-.index ol {
+/* ── Compact cards (phones, tablets) ───────────────────────────── */
+.mobileCards {
   list-style: none;
   display: flex;
-  gap: 8px;
+  gap: 12px;
   margin: 0 -18px;
-  padding: 6px 18px 10px;
+  padding: 8px 18px 22px;
   overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 18px;
   scrollbar-width: none;
 }
 
-.index ol::-webkit-scrollbar {
+.mobileCards::-webkit-scrollbar {
   display: none;
 }
 
-.index li {
-  flex: none;
+.mobileCards > li {
+  flex: 0 0 84%;
+  max-width: 360px;
+  scroll-snap-align: start;
+  display: flex;
 }
 
-.index .indexItem {
-  width: auto;
-  padding: 8px 14px 8px 8px;
+.mCard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 18px 18px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--base);
+  box-shadow: var(--raise-s), inset 0 3px 0 var(--case-accent);
+}
+
+.mChip {
+  padding: 5px 9px;
   border-radius: var(--radius-pill);
+  box-shadow: var(--press-s);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-muted);
 }
 
-.index .indexNum {
-  width: 28px;
-  height: 28px;
-  font-size: 11px;
+.mName {
+  margin-top: 4px;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
 }
 
-.index .indexName {
-  font-size: 13px;
+.mName span {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink);
+}
+
+.mLabel {
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--case-accent);
+}
+
+.mFigure {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  color: var(--case-accent);
   white-space: nowrap;
 }
 
-.index .indexName small,
-.index .yours {
-  display: none;
+.mNote {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
+.mNote b {
+  color: var(--ink);
+}
+
+.mFinish {
+  padding: 10px 12px;
+  border-radius: 14px;
+  box-shadow: var(--press-s);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.mFinish b {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--case-accent);
+}
+
+.mOpen {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 12px 10px 18px;
+  border-radius: var(--radius-pill);
+  background: var(--base);
+  box-shadow: var(--raise-s);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.mOpen i {
+  font-style: normal;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--case-accent);
+  color: var(--base-lo);
+}
+
+.mOpen:active {
+  box-shadow: var(--press-s);
+}
+
+.mOpen:focus-visible {
+  outline: 2px solid var(--case-accent);
+  outline-offset: 3px;
+}
+
+/* ── Index ──────────────────────────────────────────────────── */
 .indexItem {
   width: 100%;
   display: flex;
@@ -211,8 +295,9 @@
   border-color: rgba(var(--accent-rgb), 0.5);
 }
 
+/* Arrows are desktop-only (phones swipe the card row). */
 .controls {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   gap: 14px;
@@ -727,6 +812,7 @@ a.open:focus-visible {
   }
 
   .layout {
+    display: grid;
     grid-template-columns: 260px minmax(0, 1fr);
     grid-template-areas:
       "index stage"
@@ -737,45 +823,24 @@ a.open:focus-visible {
     align-items: start;
   }
 
+  .index,
   .stage {
     display: block;
   }
 
-  .mobileStage {
-    display: none;
-  }
-
   .controls {
+    display: flex;
     justify-content: flex-start;
   }
 
+  .mobileCards {
+    display: none;
+  }
+
   .index ol {
+    list-style: none;
     display: grid;
     gap: 10px;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-  }
-
-  .index .indexItem {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: var(--radius-md);
-  }
-
-  .index .indexNum {
-    width: 34px;
-    height: 34px;
-    font-size: 12px;
-  }
-
-  .index .indexName {
-    font-size: 15px;
-    white-space: normal;
-  }
-
-  .index .indexName small {
-    display: block;
   }
 
   .index .yours {

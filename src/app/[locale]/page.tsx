@@ -43,8 +43,11 @@ export default async function HomePage() {
             <Testimonials reviews={reviews} />
           </>
         )}
-        <SectionDivider labelKey="divCompare" />
-        <Comparison />
+        {/* A long table that says little on a phone screen. */}
+        <div className="hide-phone">
+          <SectionDivider labelKey="divCompare" />
+          <Comparison />
+        </div>
         <SectionDivider labelKey="divMeet" />
         <ChatDemo />
         <SectionDivider labelKey="divStart" />

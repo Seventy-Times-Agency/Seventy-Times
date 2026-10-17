@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion, type PanInfo } from "framer-motion";
+import { motion, useReducedMotion, type PanInfo } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
@@ -150,12 +150,9 @@ export default function Cases() {
   // The card that just left the front flies out instead of sliding back.
   const [leaving, setLeaving] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
-  // Direction of the last move, for the phone card's slide.
-  const [dir, setDir] = useState(1);
   const sectionRef = useRef<HTMLElement>(null);
 
   const go = (next: number, forward: boolean) => {
-    setDir(forward ? 1 : -1);
     setLeaving(forward ? active : null);
     setActive(((next % n) + n) % n);
   };
@@ -290,26 +287,37 @@ export default function Cases() {
           })}
         </div>
 
-        {/* Phones: one card in the page flow, swipe or arrows to move. */}
-        <div className={styles.mobileStage}>
-          <AnimatePresence mode="wait" initial={false} custom={dir}>
-            <motion.div
-              key={current.id}
-              className={styles.mobileCard}
-              style={{ "--case-accent": current.accent } as CSSProperties}
-              initial={reduce ? false : { opacity: 0, x: dir * 48 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={reduce ? { opacity: 0 } : { opacity: 0, x: -dir * 48 }}
-              transition={{ duration: 0.28, ease: "easeOut" }}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.5}
-              onDragEnd={onDragEnd}
-            >
-              <Card c={current} locale={locale} t={t} localePath={localePath} />
-            </motion.div>
-          </AnimatePresence>
-        </div>
+        {/* Phones: a swipeable row of compact cards — figure first, no collage. */}
+        <ul className={styles.mobileCards}>
+          {CASE_DECK.map((c) => {
+            const [before, after] = c.note[locale].split("{b}");
+            return (
+              <li key={c.id} style={{ "--case-accent": c.accent } as CSSProperties}>
+                <article className={styles.mCard}>
+                  <span className={styles.mChip}>{c.chip[locale]}</span>
+                  <h3 className={styles.mName}>
+                    {c.name[0][locale]} <span>{c.name[1][locale]}</span>
+                  </h3>
+                  <small className={styles.mLabel}>{c.figureLabel[locale]}</small>
+                  <span className={styles.mFigure}>{c.figure[locale]}</span>
+                  <p className={styles.mNote}>
+                    {before}
+                    <b>{c.bold[locale]}</b>
+                    {after}
+                  </p>
+                  <p className={styles.mFinish}>
+                    <b>{t.deckFinish}</b> {c.finish[locale]}
+                  </p>
+                  {HAS_PAGE.has(c.id) && (
+                    <Link href={localePath(`/cases/${c.id}`)} className={styles.mOpen}>
+                      {t.deckOpen} <i aria-hidden="true">↗</i>
+                    </Link>
+                  )}
+                </article>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

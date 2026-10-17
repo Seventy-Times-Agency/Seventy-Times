@@ -39,6 +39,88 @@
   color: var(--text-muted);
 }
 
+/* ── Phones: compact list ───────────────────────────────────── */
+.mobileList {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.mobileRow {
+  display: grid;
+  grid-template-columns: 44px 1fr 32px;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: var(--base);
+  box-shadow: var(--raise-s);
+  transition: box-shadow 0.2s ease;
+}
+
+.mobileRow:active {
+  box-shadow: var(--press-s);
+}
+
+.mobileRow:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.mobileIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--press-s);
+  color: var(--accent);
+}
+
+.mobileIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.mobileText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.mobileText b {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.mobileRole {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.mobilePitch {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.mobileRow i {
+  font-style: normal;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--raise-s);
+  color: var(--accent);
+  font-weight: 800;
+}
+
 /* ── Conveyor ───────────────────────────────────────────────── */
 .conveyor {
   position: relative;
@@ -74,38 +156,11 @@
   to { left: calc(100% - 10px); }
 }
 
-/* Phones: a swipeable row — one card and the edge of the next. */
+/* The module cards show from 768px; phones use the compact list above. */
 .modules {
   position: relative;
   z-index: 1;
-  display: flex;
-  gap: 14px;
-  margin: 0 -18px;
-  padding: 28px 18px 30px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-left: 18px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.modules::-webkit-scrollbar {
   display: none;
-}
-
-.modules > * {
-  flex: 0 0 82%;
-  scroll-snap-align: start;
-}
-
-.swipe {
-  display: block;
-  margin-bottom: -14px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
 }
 
 /* ── Module card ────────────────────────────────────────────── */
@@ -348,7 +403,7 @@
 
 /* ── Extras + footnote ──────────────────────────────────────── */
 .extras {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
@@ -399,13 +454,14 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 28px;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
   }
 
-  .swipe {
+  .mobileList {
     display: none;
+  }
+
+  .extras {
+    display: flex;
   }
 }
 

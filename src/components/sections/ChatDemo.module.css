@@ -42,7 +42,7 @@
 
 .bullets {
   list-style: none;
-  display: grid;
+  display: none;
   gap: 10px;
   max-width: 520px;
 }
@@ -131,7 +131,7 @@
 /* ── Stage with the chat window ─────────────────────────────── */
 .stage {
   position: relative;
-  display: grid;
+  display: none;
   place-items: center;
   min-height: 360px;
   padding: 24px 14px 56px;
@@ -330,8 +330,13 @@
   }
 
   .stage {
+    display: grid;
     min-height: 440px;
     padding: 36px 18px;
+  }
+
+  .bullets {
+    display: grid;
   }
 
   .log {

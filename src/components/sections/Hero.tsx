@@ -8,16 +8,6 @@ import styles from "@/components/sections/Hero.module.css";
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
-const container: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
-};
-
-const item: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
-};
-
 // Board pieces drop in after the copy; each keeps its own tilt in CSS,
 // so the animation only moves them vertically.
 const drop: Variants = {
@@ -97,13 +87,13 @@ export default function Hero() {
 
   return (
     <section id="top" className={styles.hero}>
-      <motion.div className={styles.left} variants={container} initial={start} animate="visible">
-        <motion.div variants={item} className={styles.chips}>
+      <div className={styles.left}>
+        <div className={styles.chips}>
           <span className={styles.chip}>{t.heroMeta1}</span>
           <span className={styles.chip}>{t.heroMeta3}</span>
-        </motion.div>
+        </div>
 
-        <motion.h1 variants={item} className={styles.title}>
+        <h1 className={styles.title}>
           <span className={styles.line}>{withOps(t.heroTitle1)}</span>
           <span className={`${styles.line} ${styles.lineOutline}`}>
             <span className="neonOutline">{t.heroTitle2.replace("×", "")}</span>
@@ -111,13 +101,13 @@ export default function Hero() {
             <span className="neonOutline">{t.heroTitle3}</span>
           </span>
           <span className={styles.line}>{withOps(t.heroTitle4)}</span>
-        </motion.h1>
+        </h1>
 
-        <motion.p variants={item} className={styles.lead}>
+        <p className={styles.lead}>
           {t.hxPlain}
-        </motion.p>
+        </p>
 
-        <motion.div variants={item} className={styles.facts}>
+        <div className={styles.facts}>
           <div className={styles.fact}>
             <b>{t.hxFact1N}</b>
             {t.hxFact1}
@@ -130,9 +120,9 @@ export default function Hero() {
             <b>{t.hxFact3N}</b>
             {t.hxFact3}
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div variants={item} className={styles.ctas}>
+        <div className={styles.ctas}>
           <Magnetic strength={0.3}>
             <a href="#lead" className={styles.primary}>
               {t.hxCtaBrief}
@@ -142,8 +132,8 @@ export default function Hero() {
           <a href="#services" className={styles.secondary}>
             {t.hxCta2} <span aria-hidden="true">↓</span>
           </a>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Illustrative board: one order moving through the machine. */}
       <motion.div

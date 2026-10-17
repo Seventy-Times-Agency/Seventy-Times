@@ -193,6 +193,18 @@ textarea {
   color: var(--text-dim);
 }
 
+/* Blocks that only earn their place on bigger screens. On phones the
+   page stays short and conversion-focused. */
+.hide-phone {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hide-phone {
+    display: contents;
+  }
+}
+
 /* Outline heading word with a neon glow — the signature of the style. */
 .neonOutline {
   color: transparent;
