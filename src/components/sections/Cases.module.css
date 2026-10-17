@@ -855,11 +855,6 @@ a.open:focus-visible {
     display: grid;
   }
 
-  .index {
-    position: sticky;
-    top: 120px;
-  }
-
   .stage {
     min-height: 640px;
   }
