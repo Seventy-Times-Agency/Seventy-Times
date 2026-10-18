@@ -670,7 +670,7 @@ const strings = {
       },
       {
         heading: "What data we collect",
-        text: 'Through the request form: your name, contact (email or Telegram), business name, and a description of your task. Through the review form: name, role, location, review text, and a personal client code. Through the chat with Vanessa: the text of messages you send us. We do not collect payment information and do not use tracking cookies.',
+        text: 'Through the request form: your name, contact (email, Telegram or phone), business name, and a description of your task. Through the callback form: your name and phone number. Through the review form: name, role, location, review text, and a personal client code. Through the chat with Vanessa: the text of messages you send us. We do not collect payment information.',
       },
       {
         heading: "Why we collect it",
@@ -690,7 +690,7 @@ const strings = {
       },
       {
         heading: "Cookies",
-        text: 'We use a minimum of technical cookies — only to remember your chosen interface language. If we add analytics in the future, it will only be activated after explicit consent in the on-site banner. Your current cookie choice is stored in localStorage until you change it.',
+        text: 'We use a minimum of technical cookies — only to remember your chosen interface language. We use privacy-friendly, cookieless analytics (Vercel) to count visits and measure page speed. If we add advertising or marketing tags (for example Meta Pixel or Google Ads), they will only be activated after explicit consent in the on-site banner. Your current cookie choice is stored in localStorage until you change it.',
       },
       {
         heading: "Children",
