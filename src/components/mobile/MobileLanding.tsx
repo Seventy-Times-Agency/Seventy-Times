@@ -313,6 +313,7 @@ export default function MobileLanding() {
         <h2 className={styles.h2}>
           {t.mProofTitle1} <span className={styles.o}>{t.mProofTitle2}</span>
         </h2>
+        <p className={styles.proofNote}>{t.mProofNote}</p>
         <Stories />
       </section>
 

@@ -1021,3 +1021,11 @@
     transition: none;
   }
 }
+
+/* "Not all our work" note under the cases title. */
+.proofNote {
+  margin: 10px 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+}

@@ -11,13 +11,13 @@ import styles from "@/components/sections/ChatDemo.module.css";
 // Scripted demo: visitor asks → Vanessa types and answers → visitor
 // leaves a contact → the lead is handed to a specialist. Each step is
 // the delay (ms) before it appears, counted from the previous one.
-const STEPS = [400, 900, 2200, 1400, 900] as const;
+const STEPS = [150, 450, 1000, 800, 500] as const;
 
 export default function ChatDemo() {
   const { t, localePath } = useT();
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const inView = useInView(ref, { once: true, amount: 0.3 });
   // 0 = empty; 1 = Q1; 2 = typing; 3 = A1; 4 = Q2; 5 = handed over.
   const [step, setStep] = useState(0);
 
@@ -121,20 +121,16 @@ export default function ChatDemo() {
                   {t.venDemoQ2}
                 </motion.p>
               )}
+              {/* System line in the flow of the chat, so it never covers a message. */}
+              {step >= 5 && (
+                <motion.div className={styles.handoff} {...bubble}>
+                  <i>✓</i>
+                  {t.venDemoDone}
+                </motion.div>
+              )}
             </div>
           </div>
 
-          {step >= 5 && (
-            <motion.div
-              className={styles.handoff}
-              initial={{ opacity: 0, y: -12, rotate: -6, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, rotate: -3, scale: 1 }}
-              transition={{ type: "spring", stiffness: 260, damping: 16 }}
-            >
-              <i>✓</i>
-              {t.venDemoDone}
-            </motion.div>
-          )}
         </div>
       </div>
     </section>

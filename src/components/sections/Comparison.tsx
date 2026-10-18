@@ -91,8 +91,10 @@ export default function Comparison() {
             <div className={styles.vsRow} aria-hidden="true">
               <span className={styles.vsUs}>{siteConfig.name}</span>
               <span className={styles.vsMark}>vs</span>
-              <span className={styles.vsThem}>{t.compHeadAgency}</span>
-              <span className={styles.vsThem}>{t.compHeadFreelancer}</span>
+              <span className={styles.vsSlot}>
+                <span className={styles.vsThem}>{t.compHeadAgency}</span>
+                <span className={styles.vsThem}>{t.compHeadFreelancer}</span>
+              </span>
             </div>
             <p className={styles.lead}>{t.compLead}</p>
             <span className={styles.vsScan} aria-hidden="true" />
