@@ -92,7 +92,7 @@ export default function Footer() {
 
       <div className={styles.bottom}>
         <span>
-          © {year} {siteConfig.name} · {t.ftRights}
+          © {year} {siteConfig.legalName} · {t.ftRights}
         </span>
         <nav className={styles.legal} aria-label={t.ftLegal}>
           <Link href={localePath("/privacy")}>{t.ftPrivacy}</Link>

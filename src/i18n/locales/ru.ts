@@ -662,11 +662,11 @@ const strings = {
 
     // Privacy Policy page
     privacyTitle: "Политика конфиденциальности",
-    privacyUpdated: "Обновлено: 20 апреля 2026",
+    privacyUpdated: "Обновлено: 18 октября 2026",
     privacyBody: [
       {
         heading: "Кто мы",
-        text: 'Seventy Times — малый бизнес, работающий из США как индивидуальное предприятие (sole proprietorship); официальная регистрация запланирована на более позднюю стадию. Связаться можно по адресу info@seventy-times.com.',
+        text: 'Seventy Times LLC, a Connecticut limited liability company, 95 Morgan St, Apt 1P, Stamford, CT 06905, USA (компания с ограниченной ответственностью, зарегистрированная в штате Коннектикут, США). Эл. почта: legal@seventy-times.com. Телефон: +1 (585) 685-4437.',
       },
       {
         heading: "Какие данные мы собираем",
@@ -704,11 +704,11 @@ const strings = {
 
     // Terms of Use page
     termsTitle: "Условия использования",
-    termsUpdated: "Обновлено: 20 апреля 2026",
+    termsUpdated: "Обновлено: 18 октября 2026",
     termsBody: [
       {
         heading: "Общее",
-        text: 'Сайт seventy-times.com принадлежит Seventy Times — малому бизнесу из США. Используя сайт, вы соглашаетесь с этими условиями.',
+        text: 'Сайт seventy-times.com принадлежит Seventy Times LLC, a Connecticut limited liability company, 95 Morgan St, Apt 1P, Stamford, CT 06905, USA (компания с ограниченной ответственностью, зарегистрированная в штате Коннектикут, США). Эл. почта: legal@seventy-times.com. Телефон: +1 (585) 685-4437. Используя сайт, вы соглашаетесь с этими условиями.',
       },
       {
         heading: "Что мы обещаем",
@@ -744,7 +744,7 @@ const strings = {
       },
       {
         heading: "Применимое право",
-        text: 'К этим условиям применяется право США. Споры, по возможности, решаются прямым диалогом — пишите на info@seventy-times.com.',
+        text: 'К этим условиям применяется право штата Коннектикут, США, без учёта коллизионных норм. Споры рассматриваются судами, расположенными в округе Фэрфилд, штат Коннектикут.',
       },
       {
         heading: "Изменения",
@@ -771,7 +771,7 @@ const strings = {
     imprintUpdated: "Сведения о поставщике услуг согласно законодательству.",
     imprintProviderHeading: "Поставщик услуг",
     imprintPlaceholder:
-      "Полные реквизиты будут опубликованы здесь после регистрации юридического лица. По любым юридическим вопросам и вопросам защиты данных пишите на info@seventy-times.com.",
+      "Реквизиты временно недоступны. По юридическим вопросам и вопросам защиты данных пишите на legal@seventy-times.com.",
     imprintEntity: "Организация",
     imprintForm: "Правовая форма",
     imprintAddress: "Адрес",

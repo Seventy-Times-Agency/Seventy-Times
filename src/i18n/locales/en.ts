@@ -662,11 +662,11 @@ const strings = {
 
     // Privacy Policy page
     privacyTitle: "Privacy Policy",
-    privacyUpdated: "Last updated: April 20, 2026",
+    privacyUpdated: "Last updated: October 18, 2026",
     privacyBody: [
       {
         heading: "Who we are",
-        text: 'Seventy Times is a small business operating from the United States as a sole proprietorship; formal incorporation is planned at a later stage. You can reach us at info@seventy-times.com.',
+        text: 'Seventy Times LLC, a Connecticut limited liability company, 95 Morgan St, Apt 1P, Stamford, CT 06905, USA. Email: legal@seventy-times.com. Phone: +1 (585) 685-4437.',
       },
       {
         heading: "What data we collect",
@@ -704,11 +704,11 @@ const strings = {
 
     // Terms of Use page
     termsTitle: "Terms of Use",
-    termsUpdated: "Last updated: April 20, 2026",
+    termsUpdated: "Last updated: October 18, 2026",
     termsBody: [
       {
         heading: "General",
-        text: 'The site seventy-times.com is operated by Seventy Times, a small business in the United States. By using the site you accept these terms.',
+        text: 'The site seventy-times.com is operated by Seventy Times LLC, a Connecticut limited liability company, 95 Morgan St, Apt 1P, Stamford, CT 06905, USA. Email: legal@seventy-times.com. Phone: +1 (585) 685-4437. By using the site you accept these terms.',
       },
       {
         heading: "What we promise",
@@ -744,7 +744,7 @@ const strings = {
       },
       {
         heading: "Applicable law",
-        text: 'These terms are governed by the laws of the United States. Disputes are resolved, where possible, through direct dialogue — write to info@seventy-times.com.',
+        text: 'These terms are governed by the laws of the State of Connecticut, USA, without regard to conflict-of-laws principles. Courts located in Fairfield County, Connecticut have jurisdiction.',
       },
       {
         heading: "Changes",
@@ -771,7 +771,7 @@ const strings = {
     imprintUpdated: "Provider information under applicable law.",
     imprintProviderHeading: "Provider",
     imprintPlaceholder:
-      "Full provider details will be published here once the legal entity is finalized. For any legal or data-protection request in the meantime, contact us at info@seventy-times.com.",
+      "Provider details are temporarily unavailable. For any legal or data-protection request, contact legal@seventy-times.com.",
     imprintEntity: "Entity",
     imprintForm: "Legal form",
     imprintAddress: "Address",

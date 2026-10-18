@@ -1,5 +1,7 @@
 export const siteConfig = {
   name: "Seventy Times",
+  /** Registered legal name — footer copyright, legal pages, JSON-LD. */
+  legalName: "Seventy Times LLC",
   shortName: "70×",
   tagline: "Ads · Automation · AI",
   description:

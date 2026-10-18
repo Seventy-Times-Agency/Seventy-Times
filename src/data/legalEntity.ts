@@ -12,19 +12,19 @@ import { siteConfig } from "@/data/siteConfig";
 
 export const legalEntity = {
   /** Registered company name, or the full name of the sole proprietor. */
-  name: "",
+  name: "Seventy Times LLC",
   /** Legal form, e.g. "LLC", "Einzelunternehmen", "ФОП". */
-  form: "",
+  form: "Connecticut limited liability company",
   /** Full postal address (street, city, postal code, country). */
-  address: "",
+  address: "95 Morgan St, Apt 1P, Stamford, CT 06905, USA",
   /** Person responsible for content (DE § 18 Abs. 2 MStV / DDG). */
-  responsible: "",
+  responsible: "Maksym Ilash, Member",
   /** Commercial register + number, if any. */
   registration: "",
   /** VAT / tax id, if any. */
   vatId: "",
   /** Contact email — defaults to the public inbox. */
-  email: siteConfig.contacts.email.address,
+  email: "legal@seventy-times.com",
   /** Contact phone — defaults to the public number. */
   phone: siteConfig.contacts.phone.label,
 } as const;

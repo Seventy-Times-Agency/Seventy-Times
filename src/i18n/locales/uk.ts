@@ -662,11 +662,11 @@ const strings = {
 
     // Privacy Policy page
     privacyTitle: "Політика конфіденційності",
-    privacyUpdated: "Оновлено: 20 квітня 2026",
+    privacyUpdated: "Оновлено: 18 жовтня 2026",
     privacyBody: [
       {
         heading: "Хто ми",
-        text: 'Seventy Times — малий бізнес, що працює зі США як індивідуальне підприємство (sole proprietorship); офіційна реєстрація запланована на пізнішу стадію. Зв\'язатися можна за адресою info@seventy-times.com.',
+        text: 'Seventy Times LLC, a Connecticut limited liability company, 95 Morgan St, Apt 1P, Stamford, CT 06905, USA (компанія з обмеженою відповідальністю, зареєстрована у штаті Коннектикут, США). Ел. пошта: legal@seventy-times.com. Телефон: +1 (585) 685-4437.',
       },
       {
         heading: "Які дані ми збираємо",
@@ -704,11 +704,11 @@ const strings = {
 
     // Terms of Use page
     termsTitle: "Умови використання",
-    termsUpdated: "Оновлено: 20 квітня 2026",
+    termsUpdated: "Оновлено: 18 жовтня 2026",
     termsBody: [
       {
         heading: "Загальне",
-        text: 'Сайт seventy-times.com належить Seventy Times — малому бізнесу зі США. Використовуючи сайт, ви погоджуєтеся з цими умовами.',
+        text: 'Сайт seventy-times.com належить Seventy Times LLC, a Connecticut limited liability company, 95 Morgan St, Apt 1P, Stamford, CT 06905, USA (компанія з обмеженою відповідальністю, зареєстрована у штаті Коннектикут, США). Ел. пошта: legal@seventy-times.com. Телефон: +1 (585) 685-4437. Використовуючи сайт, ви погоджуєтеся з цими умовами.',
       },
       {
         heading: "Що ми обіцяємо",
@@ -744,7 +744,7 @@ const strings = {
       },
       {
         heading: "Застосовне право",
-        text: 'До цих умов застосовується право США. Спори, за можливості, вирішуються прямим діалогом — пишіть на info@seventy-times.com.',
+        text: 'До цих умов застосовується право штату Коннектикут, США, без урахування колізійних норм. Спори розглядаються судами, розташованими в окрузі Ферфілд, штат Коннектикут.',
       },
       {
         heading: "Зміни",
@@ -771,7 +771,7 @@ const strings = {
     imprintUpdated: "Відомості про постачальника послуг згідно із законодавством.",
     imprintProviderHeading: "Постачальник послуг",
     imprintPlaceholder:
-      "Повні реквізити буде опубліковано тут після реєстрації юридичної особи. З будь-яких юридичних питань і питань захисту даних пишіть на info@seventy-times.com.",
+      "Реквізити тимчасово недоступні. З юридичних питань і питань захисту даних пишіть на legal@seventy-times.com.",
     imprintEntity: "Організація",
     imprintForm: "Правова форма",
     imprintAddress: "Адреса",
