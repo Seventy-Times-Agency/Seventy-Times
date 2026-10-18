@@ -179,8 +179,8 @@ public/
 ```
 
 Repository root: `CLAUDE.md`, `README.md`, `package.json`, `tsconfig.json`,
-`next.config.mjs`, `next-env.d.ts`, `.env.example`, `.gitignore` — and
-nothing else.
+`next.config.mjs`, `next-env.d.ts`, `vitest.config.mts` (the `@/` alias for
+tests), `.env.example`, `.gitignore` — and nothing else.
 
 ---
 
