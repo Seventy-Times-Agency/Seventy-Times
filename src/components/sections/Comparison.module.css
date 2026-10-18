@@ -45,6 +45,88 @@
   max-width: 480px;
 }
 
+/* ── "Us vs them" scoreboard next to the title ─────────────── */
+.vsCard {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  background: var(--base);
+  box-shadow: var(--raise-s), 0 0 0 1px var(--line);
+}
+
+.vsRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.vsUs {
+  padding: 7px 13px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--base-lo);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.vsMark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--growth);
+  color: var(--base-lo);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  animation: vsPulse 2.4s ease-in-out infinite;
+}
+
+.vsThem {
+  padding: 6px 11px;
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  color: var(--text-dim);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.vsCard .lead {
+  max-width: none;
+}
+
+/* A slow light sweep — just enough motion to pull the eye here. */
+.vsScan {
+  position: absolute;
+  inset: 0 auto 0 -40%;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.07), transparent);
+  animation: vsSweep 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes vsPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--growth-rgb), 0.45); }
+  50% { box-shadow: 0 0 0 8px rgba(var(--growth-rgb), 0); }
+}
+
+@keyframes vsSweep {
+  0% { left: -40%; }
+  60%, 100% { left: 110%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vsMark,
+  .vsScan {
+    animation: none;
+  }
+}
+
 /* ── Table shell ───────────────────────────────────────────── */
 .tableWrap {
   display: flex;

@@ -352,8 +352,55 @@
     gap: 56px;
   }
 
+  /* Compact desktop pass: same motion, less height. */
+  .section {
+    padding: 56px 48px 60px;
+  }
+
+  .copy {
+    gap: 14px;
+  }
+
+  .title {
+    font-size: clamp(30px, 3vw, 46px);
+  }
+
+  .lead {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .bullets {
+    gap: 6px;
+  }
+
+  .bullets li {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+
+  .cta {
+    padding: 11px 14px 11px 20px;
+    font-size: 13px;
+  }
+
   .stage {
-    min-height: 500px;
+    min-height: 0;
+    padding: 24px 18px;
+  }
+
+  .window {
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .log {
+    min-height: 200px;
+    padding: 14px 14px 16px;
+  }
+
+  .msg {
+    font-size: 12.5px;
   }
 }
 
