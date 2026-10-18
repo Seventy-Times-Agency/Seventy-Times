@@ -32,7 +32,7 @@
 
 .titleItalic {
   font-style: italic;
-  color: var(--accent);
+  color: var(--growth);
 }
 
 .lead {

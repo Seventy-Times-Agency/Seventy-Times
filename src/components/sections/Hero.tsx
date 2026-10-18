@@ -161,6 +161,7 @@ export default function Hero() {
               <span>yourbrand.com</span>
             </div>
             <div className={styles.page}>
+              <span className={styles.pageShop} aria-hidden="true" />
               <p className={styles.pageTitle}>
                 {t.hxSiteH1}
                 <br />
@@ -169,8 +170,8 @@ export default function Hero() {
               <div className={styles.ln} />
               <div className={`${styles.ln} ${styles.lnShort}`} />
               <div className={styles.pageBtns}>
-                <i />
-                <i />
+                <span>{t.hxSiteBtn1}</span>
+                <span>{t.hxSiteBtn2}</span>
               </div>
             </div>
             <div className={styles.checks}>

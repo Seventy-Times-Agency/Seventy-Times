@@ -322,12 +322,31 @@
 }
 
 .page {
+  position: relative;
   display: grid;
   gap: 10px;
-  padding: 14px;
+  padding: 14px 46% 14px 14px;
   border-radius: 10px;
   box-shadow: var(--press);
-  background: radial-gradient(circle at 85% 20%, rgba(var(--accent-rgb), 0.13), transparent 55%);
+}
+
+/* A product grid on the right — reads as "a real shop page" at a
+   glance without depicting any particular client. */
+.pageShop {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  width: 40%;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, var(--base) 0 4px, transparent 4px) 0 0 / 33.34% 100%,
+    linear-gradient(var(--base) 0 4px, transparent 4px) 0 0 / 100% 50%,
+    radial-gradient(ellipse 26% 4% at 50% 84%, rgba(var(--accent-rgb), 0.35) 96%, transparent) 0 0 / 33.34% 50%,
+    radial-gradient(circle at 50% 42%, rgba(var(--accent-rgb), 0.28) 0 21%, transparent 22%) 0 0 / 33.34% 50%,
+    var(--base-hi);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%);
+  mask-image: linear-gradient(90deg, transparent, #000 30%);
 }
 
 .pageTitle {
@@ -354,19 +373,22 @@
 
 .pageBtns {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
-.pageBtns i {
-  width: 70px;
-  height: 20px;
+.pageBtns span {
+  padding: 5px 11px;
   border-radius: var(--radius-pill);
   background: var(--accent);
-  box-shadow: var(--neon-soft);
+  color: var(--base-lo);
+  font-size: clamp(8px, 1.6cqw, 11px);
+  font-weight: 800;
+  white-space: nowrap;
 }
 
-.pageBtns i + i {
+.pageBtns span + span {
   background: none;
+  color: var(--text-muted);
   box-shadow: var(--raise-s);
 }
 
@@ -453,13 +475,13 @@
 
 .sparkLine {
   fill: none;
-  stroke: var(--accent);
+  stroke: var(--growth);
   stroke-width: 2.5;
   filter: none;
 }
 
 .sparkArea {
-  fill: rgba(var(--accent-rgb), 0.1);
+  fill: rgba(var(--growth-rgb), 0.14);
 }
 
 .axis {
@@ -608,14 +630,14 @@
 }
 
 .stepNow i {
-  background: var(--accent);
+  background: var(--growth);
   color: var(--base-lo);
   animation: nowPulse 1.8s ease-in-out 3.4s infinite;
 }
 
 @keyframes nowPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.5); }
-  50% { box-shadow: 0 0 0 6px rgba(var(--accent-rgb), 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--growth-rgb), 0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(var(--growth-rgb), 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

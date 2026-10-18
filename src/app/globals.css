@@ -22,40 +22,46 @@
    * and one neon accent used sparingly for glows and key highlights.
    * Neumorphic shadows only read on the flat --base colour, so raised /
    * pressed surfaces must use `background: var(--base)`. */
-  --base: #0c0d10;
-  --base-hi: #17191d;
-  --base-lo: #040405;
+  --base: #0d0e13;
+  --base-hi: #181a21;
+  --base-lo: #040407;
 
   --black: var(--base);
   --black-pure: #000000;
   --bg-deep: var(--base-lo);
   --surface: var(--base);
-  --surface-2: #121317;
+  --surface-2: #12131a;
   --surface-3: var(--base-hi);
 
   --line: rgba(200, 212, 222, 0.08);
   --line-strong: rgba(200, 212, 222, 0.16);
   --line-hi: rgba(200, 212, 222, 0.3);
 
-  --white: #e8eaed;
-  --text: #e8eaed;
+  --white: #e8eef4;
+  --text: #e8eef4;
   --text-muted: #a3acb7;
   --text-dim: #6c7480;
   --text-faint: rgba(238, 241, 244, 0.62);
-  --ink: #e6e7e9;
+  --ink: #e8eef4;
 
-  /* Brass accent — buttons, key words, key figures. Used sparingly. */
-  --accent: #c9a35c;
-  --accent-rgb: 201, 163, 92;
-  --accent-strong: #dbbb7e;
-  --accent-deep: #8f713c;
+  /* Logo silver (Casper steel, as in favicon.svg) — buttons, key words,
+     key figures. The palette is the logo's: silver on ink black. */
+  --accent: #c8d4de;
+  --accent-rgb: 200, 212, 222;
+  --accent-strong: #dde5ec;
+  --accent-deep: #8a9aa6;
   --accent-glow: rgba(var(--accent-rgb), 0.2);
   --accent-green: #4fae7c;
+  /* Growth green — charts and "up" figures only, so growth reads as
+     growth; never a button or brand colour. */
+  --growth: #4fae7c;
+  --growth-rgb: 79, 174, 124;
+  --growth-deep: #2f7f56;
 
-  /* Rare red signal — a few hard shadows and "cut" states only, never
-     a second brand colour. */
-  --signal: #c9473f;
-  --signal-rgb: 201, 71, 63;
+  /* "Cut" / negative states. Deliberately neutral steel — no red on the
+     site; the palette is the logo's silver on ink. */
+  --signal: #8a9aa6;
+  --signal-rgb: 138, 154, 166;
 
   --raise: 12px 12px 28px var(--base-lo), -10px -10px 26px var(--base-hi);
   --raise-s: 6px 6px 14px var(--base-lo), -5px -5px 12px var(--base-hi);
@@ -215,7 +221,7 @@ textarea {
 
 /* Outline heading word with a neon glow — the signature of the style. */
 .neonOutline {
-  color: var(--accent);
+  color: var(--growth);
 }
 
 /* Keyframes */

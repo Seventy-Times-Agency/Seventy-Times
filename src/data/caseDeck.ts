@@ -32,7 +32,7 @@ export type DeckCase = {
 export const CASE_DECK: readonly DeckCase[] = [
   {
     id: "elitecarmats",
-    accent: "#b89a5e",
+    accent: "#a8b6c2",
     chip: L("Case · E-commerce · USA", "Кейс · E-commerce · США", "Кейс · E-commerce · США"),
     name: [same("Elite Car"), same("Mats")],
     start: L(

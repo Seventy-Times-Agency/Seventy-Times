@@ -138,7 +138,7 @@
 }
 
 .mod_setup i {
-  background: #e3b65c;
+  background: var(--growth);
   box-shadow: none;
   animation: pulse 1.6s ease-in-out infinite;
 }

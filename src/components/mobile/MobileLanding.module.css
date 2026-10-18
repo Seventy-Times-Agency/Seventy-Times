@@ -41,7 +41,7 @@
 }
 
 .o {
-  color: var(--accent);
+  color: var(--growth);
 }
 
 .lede {
@@ -192,8 +192,8 @@
 @keyframes lit {
   0%, 20% {
     color: var(--base-lo);
-    background: var(--accent);
-    box-shadow: var(--neon);
+    background: var(--growth);
+    box-shadow: none;
   }
   30%, 100% {
     color: var(--text-dim);
@@ -872,7 +872,7 @@
 }
 
 .close .o {
-  color: var(--accent-deep);
+  color: var(--growth-deep);
 }
 
 .close p {

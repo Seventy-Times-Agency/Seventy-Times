@@ -110,7 +110,6 @@ export default function Services() {
             ))}
           </ul>
         </div>
-        <p className={styles.footnote}>{t.svcFootnote}</p>
       </Reveal>
     </section>
   );

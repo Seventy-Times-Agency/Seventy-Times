@@ -20,13 +20,20 @@ export default function ServiceVisual({ kind, t, size = "sm" }: Props) {
           <i />
           <span>yourbrand.com</span>
         </div>
-        <p className={styles.siteHead}>{t.svcVisSite}</p>
-        <span className={styles.ln} />
-        <span className={`${styles.ln} ${styles.lnShort}`} />
-        <span className={styles.siteBtn} />
-        <span className={styles.pin} aria-hidden="true">
-          ⌖
-        </span>
+        <div className={styles.siteBody}>
+          <div className={styles.siteCopy}>
+            <p className={styles.siteHead}>{t.svcVisSite}</p>
+            <span className={styles.ln} />
+            <span className={`${styles.ln} ${styles.lnShort}`} />
+            <span className={styles.siteBtn}>{t.hxSiteBtn1}</span>
+          </div>
+          <div className={styles.siteShop} aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+          </div>
+        </div>
       </div>
     );
   }
