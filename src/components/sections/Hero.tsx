@@ -161,7 +161,14 @@ export default function Hero() {
               <span>yourbrand.com</span>
             </div>
             <div className={styles.page}>
-              <span className={styles.pageShop} aria-hidden="true" />
+              <span className={styles.pageShop} aria-hidden="true">
+                <i />
+                <i />
+                <i />
+                <i />
+                <i />
+                <i />
+              </span>
               <p className={styles.pageTitle}>
                 {t.hxSiteH1}
                 <br />

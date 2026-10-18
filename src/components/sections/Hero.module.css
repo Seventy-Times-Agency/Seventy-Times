@@ -338,15 +338,47 @@
   right: 10px;
   bottom: 10px;
   width: 40%;
-  border-radius: 8px;
-  background:
-    linear-gradient(90deg, var(--base) 0 4px, transparent 4px) 0 0 / 33.34% 100%,
-    linear-gradient(var(--base) 0 4px, transparent 4px) 0 0 / 100% 50%,
-    radial-gradient(ellipse 26% 4% at 50% 84%, rgba(var(--accent-rgb), 0.35) 96%, transparent) 0 0 / 33.34% 50%,
-    radial-gradient(circle at 50% 42%, rgba(var(--accent-rgb), 0.28) 0 21%, transparent 22%) 0 0 / 33.34% 50%,
-    var(--base-hi);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%);
-  mask-image: linear-gradient(90deg, transparent, #000 30%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+}
+
+/* Each "product" gets its own muted tone so the shop page has colour. */
+.pageShop i {
+  --p: #c9785f;
+  position: relative;
+  border-radius: 6px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--p) 22%, var(--base-hi)), var(--base-hi));
+}
+
+.pageShop i:nth-child(2) { --p: #d9a54a; }
+.pageShop i:nth-child(3) { --p: #4fa3a5; }
+.pageShop i:nth-child(4) { --p: #8f7fc9; }
+.pageShop i:nth-child(5) { --p: var(--growth); }
+.pageShop i:nth-child(6) { --p: #5f8fd1; }
+
+.pageShop i::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 40%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--p);
+}
+
+.pageShop i::after {
+  content: "";
+  position: absolute;
+  left: 28%;
+  right: 28%;
+  bottom: 16%;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(var(--growth-rgb), 0.7);
 }
 
 .pageTitle {
@@ -357,8 +389,7 @@
 }
 
 .pageTitle span {
-  color: transparent;
-  -webkit-text-stroke: 1px var(--ink);
+  color: var(--growth);
 }
 
 .ln {
@@ -414,7 +445,7 @@
 
 .checks span::before {
   content: "✓ ";
-  color: var(--accent);
+  color: var(--growth);
 }
 
 /* Ad campaign card */
