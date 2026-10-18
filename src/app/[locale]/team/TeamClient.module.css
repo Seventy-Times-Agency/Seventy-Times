@@ -34,26 +34,129 @@
 
 .card {
   width: 100%;
+  overflow: hidden;
   padding: 24px;
   border-radius: var(--radius-lg);
   background: var(--base);
   box-shadow: var(--raise);
 }
 
-.avatar {
+/* ── Portrait: profile at rest, dissolves through smoke into the
+   turned pose on hover (tap on touch screens). ───────────────── */
+.portrait {
   position: relative;
   display: block;
-  width: 88px;
-  height: 88px;
-  border-radius: var(--radius-pill);
+  aspect-ratio: 4 / 5;
+  margin: -24px -24px 22px;
   overflow: hidden;
-  margin-bottom: 18px;
-  background: var(--base);
-  box-shadow: var(--press-s);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: #050506;
+  cursor: pointer;
+  isolation: isolate;
 }
 
-.avatarImg {
+/* Fade into the card at the bottom. */
+.portrait::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 30%;
+  z-index: 4;
+  background: linear-gradient(180deg, transparent, var(--base));
+  pointer-events: none;
+}
+
+.shot {
   object-fit: cover;
+  object-position: 50% 35%;
+  transition:
+    opacity 0.9s var(--ease),
+    filter 1s var(--ease),
+    transform 1.4s var(--ease);
+}
+
+.shotBase {
+  z-index: 1;
+}
+
+.shotTurn {
+  z-index: 2;
+  opacity: 0;
+  filter: blur(12px) brightness(0.7);
+  transform: translateX(5%) scale(1.08);
+}
+
+.card:hover .shotBase,
+.cardTurned .shotBase {
+  opacity: 0;
+  filter: blur(10px) brightness(0.7);
+  transform: translateX(-4%) scale(1.05);
+}
+
+.card:hover .shotTurn,
+.cardTurned .shotTurn {
+  opacity: 1;
+  filter: none;
+  transform: translateX(0) scale(1.02);
+  transition-delay: 0.25s;
+}
+
+/* Ambient haze that always drifts a little — the photo never sits dead. */
+.haze {
+  position: absolute;
+  inset: -20%;
+  z-index: 3;
+  background:
+    radial-gradient(40% 30% at 80% 40%, rgba(170, 190, 215, 0.16), transparent 70%),
+    radial-gradient(35% 25% at 15% 75%, rgba(170, 190, 215, 0.1), transparent 70%);
+  filter: blur(18px);
+  animation: hazeDrift 14s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* The smoke burst that carries the transition. */
+.smoke {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.smoke i {
+  position: absolute;
+  width: 90%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(190, 205, 225, 0.55), rgba(190, 205, 225, 0.18) 55%, transparent);
+  filter: blur(26px);
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.smoke i:nth-child(1) { left: -50%; top: 10%; }
+.smoke i:nth-child(2) { left: -60%; top: 45%; width: 110%; }
+.smoke i:nth-child(3) { left: -40%; top: -15%; width: 70%; }
+
+.card:hover .smoke i,
+.cardTurned .smoke i {
+  animation: smokeSweep 1.6s var(--ease) forwards;
+}
+
+.card:hover .smoke i:nth-child(2),
+.cardTurned .smoke i:nth-child(2) { animation-delay: 0.12s; }
+
+.card:hover .smoke i:nth-child(3),
+.cardTurned .smoke i:nth-child(3) { animation-delay: 0.24s; }
+
+@keyframes smokeSweep {
+  0% { opacity: 0; transform: translateX(0) scale(0.8); }
+  35% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(150%) scale(1.3); }
+}
+
+@keyframes hazeDrift {
+  from { transform: translate3d(-4%, 2%, 0) scale(1); }
+  to { transform: translate3d(4%, -3%, 0) scale(1.1); }
 }
 
 .name {
@@ -118,7 +221,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .link {
+  .link,
+  .shot {
     transition: none;
+  }
+
+  .haze,
+  .smoke i {
+    animation: none !important;
   }
 }

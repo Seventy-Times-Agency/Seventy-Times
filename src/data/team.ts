@@ -22,6 +22,8 @@ export type TeamMember = {
   bio: Loc;
   /** Optional portrait in /public (e.g. "/team/jane.jpg"). */
   photo?: string;
+  /** Optional second pose — the card dissolves into it through smoke on hover. */
+  photoTurn?: string;
   /** Optional profile link — shown on the card and in Person `sameAs`. */
   linkedin?: string;
 };
@@ -48,7 +50,8 @@ export const TEAM: TeamMember[] = [
       ru: "Строит системы, которые продаёт агентство: реклама, AI и кастомная разработка. Лично ведёт каждый проект от брифинга до запуска.",
       uk: "Будує системи, які продає агенція: реклама, AI та кастомна розробка. Особисто веде кожен проєкт від брифінгу до запуску.",
     },
-    // photo: "/team/founder.jpg", // TODO: owner adds the portrait
+    photo: "/team/founder.jpg",
+    photoTurn: "/team/founder-turn.jpg",
   },
   // {
   //   id: "sales-lead",

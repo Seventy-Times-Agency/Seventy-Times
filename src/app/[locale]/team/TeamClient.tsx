@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useT } from "@/i18n/context";
@@ -14,6 +15,8 @@ export default function TeamClient() {
   const home = localePath("/");
 
   const openChat = () => window.dispatchEvent(new Event("open-chat"));
+  // Touch screens have no hover: a tap toggles the second pose instead.
+  const [turned, setTurned] = useState<string | null>(null);
 
   return (
     <main id="main-content" className={legal.main}>
@@ -37,16 +40,37 @@ export default function TeamClient() {
           <ul className={styles.grid}>
             {TEAM.map((member, i) => (
               <li key={member.id}>
-                <Reveal delay={i * 0.05} className={styles.card}>
+                <Reveal
+                  delay={i * 0.05}
+                  className={`${styles.card} ${turned === member.id ? styles.cardTurned : ""}`}
+                >
                   {member.photo && (
-                    <span className={styles.avatar}>
+                    <span
+                      className={styles.portrait}
+                      onClick={() => setTurned((v) => (v === member.id ? null : member.id))}
+                    >
                       <Image
                         src={member.photo}
                         alt={member.name}
                         fill
-                        sizes="88px"
-                        className={styles.avatarImg}
+                        sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+                        className={`${styles.shot} ${styles.shotBase}`}
                       />
+                      {member.photoTurn && (
+                        <Image
+                          src={member.photoTurn}
+                          alt=""
+                          fill
+                          sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+                          className={`${styles.shot} ${styles.shotTurn}`}
+                        />
+                      )}
+                      <span className={styles.haze} aria-hidden="true" />
+                      <span className={styles.smoke} aria-hidden="true">
+                        <i />
+                        <i />
+                        <i />
+                      </span>
                     </span>
                   )}
                   <h2 className={styles.name}>{member.name}</h2>
