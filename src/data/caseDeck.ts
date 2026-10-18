@@ -32,7 +32,7 @@ export type DeckCase = {
 export const CASE_DECK: readonly DeckCase[] = [
   {
     id: "elitecarmats",
-    accent: "#D4A54A",
+    accent: "#b89a5e",
     chip: L("Case · E-commerce · USA", "Кейс · E-commerce · США", "Кейс · E-commerce · США"),
     name: [same("Elite Car"), same("Mats")],
     start: L(
@@ -60,7 +60,7 @@ export const CASE_DECK: readonly DeckCase[] = [
   },
   {
     id: "lantana",
-    accent: "#ef4a23",
+    accent: "#b85a44",
     chip: L("Case · Website & SEO · Florida", "Кейс · Сайт и SEO · Флорида", "Кейс · Сайт і SEO · Флорида"),
     name: [same("Lantana"), same("Upholstery")],
     start: L(
@@ -88,7 +88,7 @@ export const CASE_DECK: readonly DeckCase[] = [
   },
   {
     id: "passenger-transport",
-    accent: "#4d8dff",
+    accent: "#6683ad",
     chip: L("Niche · Meta Ads · 2020–2021", "Ниша · Meta Ads · 2020–2021", "Ніша · Meta Ads · 2020–2021"),
     name: [L("Passenger", "Пассажирские", "Пасажирські"), L("transport", "перевозки", "перевезення")],
     start: L(
@@ -119,7 +119,7 @@ export const CASE_DECK: readonly DeckCase[] = [
   },
   {
     id: "bukovel",
-    accent: "#5ec8e8",
+    accent: "#5f97a6",
     chip: L("Case · Meta Ads · Carpathians", "Кейс · Meta Ads · Карпаты", "Кейс · Meta Ads · Карпати"),
     name: [L("Bukovel", "Курорты", "Курорти"), L("resorts", "Буковеля", "Буковеля")],
     start: L(

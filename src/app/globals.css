@@ -22,46 +22,46 @@
    * and one neon accent used sparingly for glows and key highlights.
    * Neumorphic shadows only read on the flat --base colour, so raised /
    * pressed surfaces must use `background: var(--base)`. */
-  --base: #0f1114;
-  --base-hi: #1b1e23;
-  --base-lo: #050607;
+  --base: #0c0d10;
+  --base-hi: #17191d;
+  --base-lo: #040405;
 
   --black: var(--base);
   --black-pure: #000000;
   --bg-deep: var(--base-lo);
   --surface: var(--base);
-  --surface-2: #15181c;
+  --surface-2: #121317;
   --surface-3: var(--base-hi);
 
   --line: rgba(200, 212, 222, 0.08);
   --line-strong: rgba(200, 212, 222, 0.16);
   --line-hi: rgba(200, 212, 222, 0.3);
 
-  --white: #eef1f4;
-  --text: #eef1f4;
+  --white: #e8eaed;
+  --text: #e8eaed;
   --text-muted: #a3acb7;
   --text-dim: #6c7480;
   --text-faint: rgba(238, 241, 244, 0.62);
-  --ink: #eef1f4;
+  --ink: #e6e7e9;
 
-  /* Neon accent — buttons, glows, outline headings, key figures */
-  --accent: #22b3a2;
-  --accent-rgb: 34, 179, 162;
-  --accent-strong: #4cc8b9;
-  --accent-deep: #167f73;
+  /* Brass accent — buttons, key words, key figures. Used sparingly. */
+  --accent: #c9a35c;
+  --accent-rgb: 201, 163, 92;
+  --accent-strong: #dbbb7e;
+  --accent-deep: #8f713c;
   --accent-glow: rgba(var(--accent-rgb), 0.2);
-  --accent-green: #3dbb7a;
+  --accent-green: #4fae7c;
 
   /* Rare red signal — a few hard shadows and "cut" states only, never
      a second brand colour. */
-  --signal: #e5484d;
-  --signal-rgb: 229, 72, 77;
+  --signal: #c9473f;
+  --signal-rgb: 201, 71, 63;
 
   --raise: 12px 12px 28px var(--base-lo), -10px -10px 26px var(--base-hi);
   --raise-s: 6px 6px 14px var(--base-lo), -5px -5px 12px var(--base-hi);
   --press: inset 8px 8px 18px var(--base-lo), inset -7px -7px 16px var(--base-hi);
   --press-s: inset 3px 3px 7px var(--base-lo), inset -3px -3px 6px var(--base-hi);
-  --brutal: 8px 8px 0 var(--accent-deep);
+  --brutal: 0 24px 48px -16px rgba(0, 0, 0, 0.7);
   /* No glow: highlights are crisp 1px rings and solid fills. The token
      names stay so components keep composing them into shadow lists. */
   --neon: 0 0 0 1px rgba(var(--accent-rgb), 0.55);
