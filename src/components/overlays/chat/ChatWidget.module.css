@@ -564,3 +564,16 @@
     display: block;
   }
 }
+
+/* Every primary CTA turns growth-green the moment you aim at it. */
+.sendBtn {
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.sendBtn:hover:not(:disabled),
+.sendBtn:active:not(:disabled) {
+  background: var(--growth);
+  color: var(--base-lo);
+  border-color: transparent;
+  box-shadow: 0 10px 28px -10px rgba(var(--growth-rgb), 0.6);
+}

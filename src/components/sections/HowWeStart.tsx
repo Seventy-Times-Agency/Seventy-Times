@@ -1,5 +1,7 @@
 "use client";
 
+import type { CSSProperties } from "react";
+
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
@@ -49,9 +51,15 @@ export default function HowWeStart() {
       </div>
 
       <div className={styles.grid}>
+        <span className={styles.rail} aria-hidden="true">
+          <i />
+        </span>
         {steps.map((step, i) => (
           <Reveal key={step.num} delay={i * 0.1}>
-            <div className={`${styles.step} ${i === 0 ? styles.stepBrutal : ""}`}>
+            <div
+              className={`${styles.step} ${i === 0 ? styles.stepBrutal : ""}`}
+              style={{ "--i": i } as CSSProperties}
+            >
               <div className={styles.numberWrap}>{step.num}</div>
               <span className={styles.tag}>{step.tag}</span>
               <h3 className={styles.stepTitle}>{step.title}</h3>

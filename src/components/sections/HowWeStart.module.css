@@ -151,6 +151,51 @@
   color: var(--base-hi);
 }
 
+/* Per-step colour: green → teal → amber, used by the number ring,
+   the top edge and the "lit" pulse that walks across the steps. */
+.step {
+  --s: var(--growth);
+  --s-rgb: var(--growth-rgb);
+  z-index: 1;
+}
+
+.grid > :nth-child(3) .step { --s: #4fa3a5; --s-rgb: 79, 163, 165; }
+.grid > :nth-child(4) .step { --s: #d9a54a; --s-rgb: 217, 165, 74; }
+
+.step::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 0;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: var(--s);
+}
+
+.step .numberWrap {
+  color: var(--s);
+  text-shadow: none;
+  box-shadow: var(--press), inset 0 0 0 2px rgba(var(--s-rgb), 0.55);
+  animation: stepLit 6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 2s);
+}
+
+.stepBrutal .numberWrap {
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--s);
+}
+
+@keyframes stepLit {
+  0%, 30%, 100% { outline: 0 solid transparent; }
+  10% { outline: 6px solid rgba(var(--s-rgb), 0.18); }
+}
+
+/* Path behind the cards with a green dot travelling 01 → 03. */
+.rail {
+  display: none;
+}
+
 /* CTA ───────────────────────────────────────────────────── */
 
 .ctaRow {
@@ -261,12 +306,45 @@
   .ctaRow {
     margin-top: 56px;
   }
+
+  .rail {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    left: 8%;
+    right: 8%;
+    top: 78px;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--line-strong) 0 8px, transparent 8px 16px);
+  }
+
+  .rail i {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--growth);
+    box-shadow: 0 0 0 4px rgba(var(--growth-rgb), 0.18);
+    animation: railRun 6s linear infinite;
+  }
+}
+
+@keyframes railRun {
+  from { left: 0; }
+  to { left: calc(100% - 10px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .step,
   .cta {
     transition: none;
+  }
+
+  .rail i,
+  .step .numberWrap {
+    animation: none;
   }
 
   .step:hover,
@@ -278,4 +356,17 @@
   .stepBrutal:hover {
     transform: rotate(-1.5deg);
   }
+}
+
+/* Every primary CTA turns growth-green the moment you aim at it. */
+.cta {
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.cta:hover,
+.cta:active {
+  background: var(--growth);
+  color: var(--base-lo);
+  border-color: transparent;
+  box-shadow: 0 10px 28px -10px rgba(var(--growth-rgb), 0.6);
 }
