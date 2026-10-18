@@ -328,17 +328,62 @@
   }
 }
 
-/* The link row only fits next to the status chip from 1280px; below
-   that the sections live behind the hamburger. */
-@media (min-width: 1280px) {
+/* From 1024px the full bar shows: links, status chip, languages, CTA.
+   1024–1279 is a compact pass (smaller type, tighter gaps) so the row
+   fits in one line; 1280+ restores the roomy desktop sizes. */
+@media (min-width: 1024px) {
   .nav {
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: auto 1fr auto;
+    column-gap: 18px;
+    padding-left: 22px;
   }
   .links {
     display: inline-flex;
+    justify-content: center;
+    gap: 16px;
+  }
+  .link {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .right {
+    gap: 10px;
+  }
+  .langBtn {
+    min-width: 34px;
+    padding: 4px 6px;
+  }
+  .cta {
+    font-size: 12px;
+    padding: 11px 16px;
   }
   .hamburger,
   .mobileMenu {
     display: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .nav {
+    grid-template-columns: 1fr auto 1fr;
+    column-gap: 36px;
+    padding-left: 28px;
+  }
+  .links {
+    gap: 30px;
+  }
+  .link {
+    font-size: 13px;
+  }
+  .right {
+    gap: 16px;
+  }
+  .langBtn {
+    min-width: 44px;
+    padding: 4px 10px;
+  }
+  .cta {
+    font-size: 13px;
+    padding: 12px 22px;
   }
 }
