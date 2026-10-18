@@ -69,9 +69,9 @@ export const CASE_DECK: readonly DeckCase[] = [
       "20 років досвіду. Сарафан, порожня картка, сайту немає в Google.",
     ),
     finish: L(
-      "#1 in Google Maps and #2 in search for the main query, Lantana, FL, as of October 2026.",
-      "№1 в Google Картах и №2 в поиске по главному запросу, Lantana, FL, на октябрь 2026.",
-      "№1 у Google Картах і №2 у пошуку за головним запитом, Lantana, FL, станом на жовтень 2026.",
+      "#1 in Google Maps and #2 in search for “upholstery Lantana FL”, as of October 2026.",
+      "№1 в Google Картах и №2 в поиске по запросу «upholstery Lantana FL», на октябрь 2026.",
+      "№1 у Google Картах і №2 у пошуку за запитом «upholstery Lantana FL», станом на жовтень 2026.",
     ),
     figureLabel: L("Google impressions in the first month", "Показов в Google за первый месяц", "Показів у Google за перший місяць"),
     figure: same("0 → 226"),

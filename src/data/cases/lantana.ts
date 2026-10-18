@@ -15,15 +15,15 @@ export const lantana: CaseItem = {
       title: u("Lantana Upholstery"),
       tag: u("WEBSITE · SEO · GOOGLE PROFILE · USA · 2026"),
       summary: {
-        en: "An upholstery shop with 20 years of experience that lived on referrals alone: an empty Google profile and a website Google didn't know about. We built the site, wrote the service pages and blog, and set up the profile. In the first month: #1 in Google Maps, #2 in search for the main query, and 226 impressions instead of zero.",
-        ru: "Мастерская перетяжки с 20 годами опыта жила только на сарафане: пустая карточка Google и сайт, о котором Google не знал. Мы сделали сайт, страницы услуг и блог, настроили карточку. За первый месяц: №1 в Google Картах, №2 в поиске по главному запросу и 226 показов вместо нуля.",
-        uk: "Майстерня перетяжки з 20 роками досвіду жила лише на сарафанному радіо: порожня картка Google і сайт, про який Google не знав. Ми зробили сайт, сторінки послуг і блог, налаштували картку. За перший місяць: №1 у Google Картах, №2 у пошуку за головним запитом і 226 показів замість нуля.",
+        en: "An upholstery shop with 20 years of experience that lived on referrals alone: an empty Google profile and a website Google didn't know about. We built the site, wrote the service pages and blog, and set up the profile. In the first month: #1 in Google Maps, #2 in search for “upholstery Lantana FL”, and 226 impressions instead of zero.",
+        ru: "Мастерская перетяжки с 20 годами опыта жила только на сарафане: пустая карточка Google и сайт, о котором Google не знал. Мы сделали сайт, страницы услуг и блог, настроили карточку. За первый месяц: №1 в Google Картах, №2 в поиске по запросу «upholstery Lantana FL» и 226 показов вместо нуля.",
+        uk: "Майстерня перетяжки з 20 роками досвіду жила лише на сарафанному радіо: порожня картка Google і сайт, про який Google не знав. Ми зробили сайт, сторінки послуг і блог, налаштували картку. За перший місяць: №1 у Google Картах, №2 у пошуку за запитом «upholstery Lantana FL» і 226 показів замість нуля.",
       },
       metrics: [
         {
-          en: "#1 in Google Maps for the main query, Lantana, FL, as of October 2026",
-          ru: "№1 в Google Картах по главному запросу, Lantana, FL, на октябрь 2026",
-          uk: "№1 у Google Картах за головним запитом, Lantana, FL, станом на жовтень 2026",
+          en: "#1 in Google Maps for “upholstery Lantana FL”, as of October 2026",
+          ru: "№1 в Google Картах по запросу «upholstery Lantana FL», на октябрь 2026",
+          uk: "№1 у Google Картах за запитом «upholstery Lantana FL», станом на жовтень 2026",
         },
         {
           en: "0 → 226 Google impressions in the first month",
@@ -59,9 +59,9 @@ export const lantana: CaseItem = {
           uk: "20 років досвіду. Сарафан, порожня картка, сайту немає в Google.",
         },
         finish: {
-          en: "#1 in Google Maps and #2 in search for the main query, Lantana, FL, as of October 2026.",
-          ru: "№1 в Google Картах и №2 в поиске по главному запросу, Lantana, FL, на октябрь 2026.",
-          uk: "№1 у Google Картах і №2 у пошуку за головним запитом, Lantana, FL, станом на жовтень 2026.",
+          en: "#1 in Google Maps and #2 in search for “upholstery Lantana FL”, as of October 2026.",
+          ru: "№1 в Google Картах и №2 в поиске по запросу «upholstery Lantana FL», на октябрь 2026.",
+          uk: "№1 у Google Картах і №2 у пошуку за запитом «upholstery Lantana FL», станом на жовтень 2026.",
         },
         revenueLabel: {
           en: "Google impressions in the first month",
@@ -175,9 +175,9 @@ export const lantana: CaseItem = {
               uk: "Ми зробили сайт, підключили домен і прискорили його до 99 балів. Під кожну послугу й місто зробили окрему сторінку та написали 8 статей від імені Дмитра на питання, які люди ставлять Google. Картку прив'язали до сайту, розширили зону з одного міста до 15 і описали всі 12 послуг.",
             },
             {
-              en: "A month later the profile is first in Google Maps for the main query, and the site is second in search after Yelp and first in Bing. Google impressions went from zero to 226, and the first order from search came in by September 18.",
-              ru: "Через месяц карточка первая в Google Картах по главному запросу, сайт второй в поиске после Yelp и первый в Bing. Показов в Google стало 226 вместо нуля, первый заказ из поиска пришёл уже к 18 сентября.",
-              uk: "За місяць картка перша в Google Картах за головним запитом, сайт другий у пошуку після Yelp і перший у Bing. Показів у Google стало 226 замість нуля, перше замовлення з пошуку прийшло вже до 18 вересня.",
+              en: "A month later the profile is first in Google Maps for “upholstery Lantana FL”, and the site is second in search after Yelp and first in Bing. Google impressions went from zero to 226, and the first order from search came in by September 18.",
+              ru: "Через месяц карточка первая в Google Картах по запросу «upholstery Lantana FL», сайт второй в поиске после Yelp и первый в Bing. Показов в Google стало 226 вместо нуля, первый заказ из поиска пришёл уже к 18 сентября.",
+              uk: "За місяць картка перша в Google Картах за запитом «upholstery Lantana FL», сайт другий у пошуку після Yelp і перший у Bing. Показів у Google стало 226 замість нуля, перше замовлення з пошуку прийшло вже до 18 вересня.",
             },
             {
               en: "This is a young site's first month, so the volume is still small. Next we grow organic traffic, then add ads.",
