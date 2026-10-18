@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
-import { emitConsent } from "@/lib/consent";
+import { emitConsent, OPEN_CONSENT_EVENT } from "@/lib/consent";
 import styles from "@/components/overlays/CookieConsent.module.css";
 
 const STORAGE_KEY = "st-cookie-consent-v1";
@@ -34,6 +34,13 @@ export default function CookieConsent() {
     } catch {
       // localStorage may be blocked; just don't show the banner.
     }
+  }, []);
+
+  // "Cookie settings" link in the footer re-opens the banner.
+  useEffect(() => {
+    const open = () => setShow(true);
+    window.addEventListener(OPEN_CONSENT_EVENT, open);
+    return () => window.removeEventListener(OPEN_CONSENT_EVENT, open);
   }, []);
 
   const decide = (choice: Choice) => {

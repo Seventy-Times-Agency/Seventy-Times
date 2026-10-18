@@ -106,6 +106,7 @@
 
 .col a:focus-visible,
 .legal a:focus-visible,
+.cookieBtn:focus-visible,
 .up:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -166,12 +167,14 @@
 }
 
 .legal a,
+.cookieBtn,
 .up {
   color: var(--text-dim);
   transition: color 0.2s ease;
 }
 
 .legal a:hover,
+.cookieBtn:hover,
 .up:hover {
   color: var(--accent);
 }
@@ -222,4 +225,13 @@
   .up {
     margin-left: auto;
   }
+}
+
+/* "Cookie settings" — a button that looks like the sibling legal links. */
+.cookieBtn {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
 }

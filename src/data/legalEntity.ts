@@ -14,13 +14,15 @@ export const legalEntity = {
   /** Registered company name, or the full name of the sole proprietor. */
   name: "Seventy Times LLC",
   /** Legal form, e.g. "LLC", "Einzelunternehmen", "ФОП". */
-  form: "Connecticut limited liability company",
+  form: "A limited liability company organized under the laws of the State of Connecticut, USA",
   /** Full postal address (street, city, postal code, country). */
   address: "95 Morgan St, Apt 1P, Stamford, CT 06905, USA",
+  /** Who legally represents the company (DE: "Vertreten durch"). */
+  represented: "Maksym Ilash, Member",
   /** Person responsible for content (DE § 18 Abs. 2 MStV / DDG). */
-  responsible: "Maksym Ilash, Member",
+  responsible: "Maksym Ilash, address as above",
   /** Commercial register + number, if any. */
-  registration: "",
+  registration: "Connecticut Secretary of the State, Business ID (ALEI) US-CT.BER:3535206",
   /** VAT / tax id, if any. */
   vatId: "",
   /** Contact email — defaults to the public inbox. */

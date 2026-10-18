@@ -3,21 +3,22 @@
 import Link from "next/link";
 import { useT } from "@/i18n/context";
 import LegalCrumbs from "@/components/legal/LegalCrumbs";
+import { LegalBlocks, parseLegal } from "@/components/legal/LegalMarkdown";
 import styles from "@/components/legal/LegalPage.module.css";
-
-type Section = { heading: string; text: string };
 
 type Props = {
   title: string;
   updated: string;
-  body: ReadonlyArray<Section>;
+  /** Document text in the LegalMarkdown subset (data/legal/*). */
+  markdown: string;
 };
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export default function LegalPage({ title, updated, body }: Props) {
+export default function LegalPage({ title, updated, markdown }: Props) {
   const { t, localePath } = useT();
   const home = localePath("/");
+  const { intro, sections: body } = parseLegal(markdown);
 
   return (
     <main id="main-content" className={styles.main}>
@@ -28,6 +29,12 @@ export default function LegalPage({ title, updated, body }: Props) {
           <h1 className={styles.title}>{title}</h1>
           <p className={styles.updated}>{updated}</p>
         </header>
+
+        {intro.length > 0 && (
+          <div className={styles.intro}>
+            <LegalBlocks blocks={intro} localize={localePath} />
+          </div>
+        )}
 
         {body.length > 2 && (
           <nav className={styles.toc} aria-label={title}>
@@ -53,7 +60,7 @@ export default function LegalPage({ title, updated, body }: Props) {
                 </span>
                 {section.heading}
               </h2>
-              <p className={styles.text}>{section.text}</p>
+              <LegalBlocks blocks={section.blocks} localize={localePath} />
             </section>
           ))}
         </div>

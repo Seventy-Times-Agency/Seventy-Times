@@ -584,7 +584,7 @@ const strings = {
     consentTerms: "Terms of Use",
     consentSuffix: ".",
     cbContactConsent:
-      "By submitting, you agree that Seventy Times LLC may contact you by call or message (including WhatsApp or Telegram) at this number about your request. Consent is not a condition of purchase.",
+      "By submitting, you agree to our Privacy Policy and Terms of Use and that Seventy Times LLC may contact you by phone about your request. Consent is not a condition of purchase.",
     consentRequired: "Please agree to the Privacy Policy and Terms of Use",
 
     // Lead form extras
@@ -633,6 +633,7 @@ const strings = {
     ftPrivacy: "Privacy Policy",
     ftTerms: "Terms of Use",
     ftImprint: "Legal notice",
+    ftCookies: "Cookie settings",
     ftReview: "Leave a review",
     ftReviewNote: "For clients with a personal code only",
     ftCallback: "Request a callback",
@@ -665,94 +666,10 @@ const strings = {
     // Privacy Policy page
     privacyTitle: "Privacy Policy",
     privacyUpdated: "Last updated: October 18, 2026",
-    privacyBody: [
-      {
-        heading: "Who we are",
-        text: 'Seventy Times LLC, a Connecticut limited liability company, 95 Morgan St, Apt 1P, Stamford, CT 06905, USA. Email: legal@seventy-times.com. Phone: +1 (585) 685-4437.',
-      },
-      {
-        heading: "What data we collect",
-        text: 'Through the request form: your name, contact (email, Telegram or phone), business name, and a description of your task. Through the callback form: your name and phone number. Through the review form: name, role, location, review text, and a personal client code. Through the chat with Vanessa: the text of messages you send us. We do not collect payment information.',
-      },
-      {
-        heading: "Why we collect it",
-        text: 'Only to get back to you and deliver the service you requested. We do not sell your data, share it with ad networks, or use it for profiling.',
-      },
-      {
-        heading: "Where it is stored",
-        text: 'Requests and reviews are forwarded to our internal Telegram channel and emailed to us (via Resend). Website logs are stored in technical form by our hosting provider (Vercel) and do not contain personal data. Chat with Vanessa is processed via the Anthropic API to generate responses.',
-      },
-      {
-        heading: "How long we keep it",
-        text: 'Requests and reviews — for the duration of the engagement plus one year, then deleted. Chat history is kept only in your browser and is cleared when you clear it.',
-      },
-      {
-        heading: "Your rights",
-        text: 'You can email info@seventy-times.com at any time to: see what data we hold about you, correct it, or delete it. We will respond within 30 days.',
-      },
-      {
-        heading: "Cookies",
-        text: 'We use a minimum of technical cookies — only to remember your chosen interface language. We use privacy-friendly, cookieless analytics (Vercel) to count visits and measure page speed. If we add advertising or marketing tags (for example Meta Pixel or Google Ads), they will only be activated after explicit consent in the on-site banner. Your current cookie choice is stored in localStorage until you change it.',
-      },
-      {
-        heading: "Children",
-        text: 'The site is not intended for children under 16. We do not knowingly collect data from minors.',
-      },
-      {
-        heading: "Changes",
-        text: 'Once the business is formally registered, this policy will be revised with legal counsel. The current version is an honest minimum for the early stage.',
-      },
-    ],
 
     // Terms of Use page
     termsTitle: "Terms of Use",
     termsUpdated: "Last updated: October 18, 2026",
-    termsBody: [
-      {
-        heading: "General",
-        text: 'The site seventy-times.com is operated by Seventy Times LLC, a Connecticut limited liability company, 95 Morgan St, Apt 1P, Stamford, CT 06905, USA. Email: legal@seventy-times.com. Phone: +1 (585) 685-4437. By using the site you accept these terms.',
-      },
-      {
-        heading: "What we promise",
-        text: 'We describe our services honestly, discuss prices individually, and agree on specific KPIs before we start. The chat with Vanessa is a helper tool, not a legal offer.',
-      },
-      {
-        heading: "What we do not promise",
-        text: "No ‘guaranteed 100× in a week’. Actual results depend on niche, budget, market, and execution quality. All numbers on the site are illustrative.",
-      },
-      {
-        heading: "Intellectual property",
-        text: 'All texts, design, and code of this site belong to Seventy Times. You may not copy or reuse them without permission. The brand "Seventy Times", "70×", and related elements are our property.',
-      },
-      {
-        heading: "Forms and reviews",
-        text: 'By submitting a request form you confirm that the information is accurate and provided voluntarily. Reviews require a personal code issued to a real client; fake reviews are not published.',
-      },
-      {
-        heading: "Refunds and early exit",
-        text: 'The contract may set a minimum term for ongoing work. Leaving earlier is possible; a refund of fees already paid is discussed individually and depends on how far the work has progressed. Delivery deadlines are counted from the moment Seventy Times receives the materials a stage needs, and the task history records the sequence of hand-offs. If a deadline is missed through our fault, we compensate — a partial refund or a discount, agreed per situation.',
-      },
-      {
-        heading: "Copy and branding",
-        text: 'Site copy is part of the work. If the client has ready copy or wants specific brand wording used verbatim, they should send it. Logos and basic brand identity are available on request as a separate add-on.',
-      },
-      {
-        heading: "Payment",
-        text: 'We accept several payment formats; the exact method is picked together based on the client\'s location and convenience. Payment terms (amount, schedule and method) are agreed individually and set out in the agreement with each client. Primary currency is USD, with EUR also accepted; other currencies are handled individually.',
-      },
-      {
-        heading: "Limitation of liability",
-        text: 'The site is provided "as is". We do our best to keep everything working, but we do not guarantee 24/7 availability or that every piece of information is always 100% current. Decisions based on site content are your responsibility.',
-      },
-      {
-        heading: "Applicable law",
-        text: 'These terms are governed by the laws of the State of Connecticut, USA, without regard to conflict-of-laws principles. Courts located in Fairfield County, Connecticut have jurisdiction.',
-      },
-      {
-        heading: "Changes",
-        text: 'We may update these terms. Substantial changes will be marked by an updated date at the top of the page.',
-      },
-    ],
 
     legalBack: "← Back to home",
 
@@ -778,21 +695,24 @@ const strings = {
     imprintForm: "Legal form",
     imprintAddress: "Address",
     imprintResponsible: "Responsible for content",
+    imprintRepresented: "Represented by",
+    imprintDisputeHeading: "Consumer dispute resolution",
+    imprintDisputeText: "We are not obliged or willing to take part in dispute resolution proceedings before a consumer arbitration board.",
     imprintRegistration: "Registration",
     imprintVat: "VAT ID",
     imprintEmail: "Email",
     imprintPhone: "Phone",
     imprintTransferHeading: "International data transfers",
-    imprintTransferText:
-      "Some data you submit (through the forms or the chat) is processed by service providers in the United States — Anthropic (the AI assistant), Telegram, Resend and Vercel. These transfers rely on the EU Standard Contractual Clauses and, where applicable, the EU–US Data Privacy Framework. This section will be finalized with legal counsel.",
+    imprintTransferText: "See our ",
+    imprintTransferLink: "Privacy Policy, Section 5",
 
     // Cookie consent banner
     cookieTitle: "Cookies",
     cookieBody:
-      "We use a minimum of technical cookies to remember your language preference. Analytics is only enabled with your consent —",
+      "Necessary: language and chat history — always on. Analytics: cookieless visit stats. Marketing (Meta Pixel, Google tags): only if you click “Accept”.",
     cookieLink: "details in the policy",
     cookieAccept: "Accept",
-    cookieEssential: "Essential only",
+    cookieEssential: "Necessary only",
 
     // 404
     notFoundEyebrow: "404 / Lost link",

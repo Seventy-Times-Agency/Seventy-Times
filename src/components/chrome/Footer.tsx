@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { openConsentSettings } from "@/lib/consent";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/data/siteConfig";
 import { SERVICES } from "@/data/services";
@@ -98,6 +99,9 @@ export default function Footer() {
           <Link href={localePath("/privacy")}>{t.ftPrivacy}</Link>
           <Link href={localePath("/terms")}>{t.ftTerms}</Link>
           <Link href={localePath("/imprint")}>{t.ftImprint}</Link>
+          <button type="button" className={styles.cookieBtn} onClick={openConsentSettings}>
+            {t.ftCookies}
+          </button>
         </nav>
         <a href={onHome ? "#top" : home} className={styles.up}>
           {t.ftUp}

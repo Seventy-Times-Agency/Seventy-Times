@@ -19,11 +19,12 @@ export default function ImprintClient() {
       [t.imprintEntity, e.name],
       [t.imprintForm, e.form],
       [t.imprintAddress, e.address],
-      [t.imprintResponsible, e.responsible],
-      [t.imprintRegistration, e.registration],
-      [t.imprintVat, e.vatId],
-      [t.imprintEmail, e.email],
+      [t.imprintRepresented, e.represented],
       [t.imprintPhone, e.phone],
+      [t.imprintEmail, e.email],
+      [t.imprintRegistration, e.registration],
+      [t.imprintResponsible, e.responsible],
+      [t.imprintVat, e.vatId],
     ] as Array<[string, string]>
   ).filter(([, value]) => value.length > 0);
 
@@ -60,9 +61,20 @@ export default function ImprintClient() {
           <section id="s-2" className={legal.section}>
             <h2 className={legal.heading}>
               <span className={legal.num} aria-hidden="true">02</span>
+              {t.imprintDisputeHeading}
+            </h2>
+            <p className={legal.text}>{t.imprintDisputeText}</p>
+          </section>
+
+          <section id="s-3" className={legal.section}>
+            <h2 className={legal.heading}>
+              <span className={legal.num} aria-hidden="true">03</span>
               {t.imprintTransferHeading}
             </h2>
-            <p className={legal.text}>{t.imprintTransferText}</p>
+            <p className={legal.text}>
+              {t.imprintTransferText}
+              <Link href={`${localePath("/privacy")}#s-5`}>{t.imprintTransferLink}</Link>.
+            </p>
           </section>
         </div>
 
