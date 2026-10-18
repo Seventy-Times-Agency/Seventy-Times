@@ -10,8 +10,9 @@ export const siteConfig = {
 
   contacts: {
     telegram: {
-      handle: "@seventytimes",
-      url: "https://t.me/seventytimes",
+      // Customer-facing support bot; the sales team answers through Convioo.
+      handle: "@SeventyTimesAgencyBot",
+      url: "https://t.me/SeventyTimesAgencyBot",
     },
     email: {
       address: "info@seventy-times.com",

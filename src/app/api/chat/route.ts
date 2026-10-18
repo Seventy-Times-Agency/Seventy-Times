@@ -328,7 +328,7 @@ export async function POST(req: Request) {
       return {
         text:
           "Lead delivery isn't configured server-side. Apologise and give the " +
-          "direct contacts: Telegram @seventytimes or email " +
+          "direct contacts: Telegram @SeventyTimesAgencyBot or email " +
           "info@seventy-times.com.",
         isError: true,
       };
@@ -348,7 +348,7 @@ export async function POST(req: Request) {
           "Too many lead submissions from this visitor recently. Do NOT submit " +
           "another lead now. Apologise warmly, say the team already has their " +
           "earlier request and will be in touch, and suggest they reach out " +
-          "directly via Telegram @seventytimes or email info@seventy-times.com " +
+          "directly via Telegram @SeventyTimesAgencyBot or email info@seventy-times.com " +
           "if it's urgent.",
         isError: true,
       };
@@ -399,7 +399,7 @@ export async function POST(req: Request) {
       return {
         text:
           "Delivery failed on every channel. Apologise and give the direct " +
-          "contacts: Telegram @seventytimes or email info@seventy-times.com.",
+          "contacts: Telegram @SeventyTimesAgencyBot or email info@seventy-times.com.",
         isError: true,
       };
     }

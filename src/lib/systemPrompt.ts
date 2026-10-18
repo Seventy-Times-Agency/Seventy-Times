@@ -121,7 +121,7 @@ those offers no longer exist.
   a short briefing call, and the team sends a concrete plan with the
   budget for the client's situation.
 - Push them toward the lead form on the site or to message us directly
-  on Telegram (@seventytimes) or email (info@seventy-times.com) so the
+  on Telegram (@SeventyTimesAgencyBot) or email (info@seventy-times.com) so the
   team can pick it up.
 - The only numbers you can mention freely are non-monetary: launch
   speeds observed in practice ("in our projects, first leads from ads
