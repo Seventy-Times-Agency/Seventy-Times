@@ -49,8 +49,9 @@ src/
 │   │   ├── cases/[slug]/         /<locale>/cases/<id> — per-case page
 │   │   │                         (renders CaseStudyDetail from sections/cases)
 │   │   ├── services/[slug]/      /<locale>/services/<id> — per-service page
-│   │   ├── go/{audit,brief}/     /<locale>/go/<variant> — A/B entry-offer
-│   │   │                         landings for ad traffic. Outside the nav
+│   │   ├── go/brief/             /<locale>/go/brief — entry-offer landing
+│   │   │                         for ad traffic (/go/audit redirects here;
+│   │   │                         the paid audit was retired). Outside the nav
 │   │   │                         and the sitemap, `robots: index:false`.
 │   │   │                         Copy + prices live in data/offers.ts
 │   │   ├── privacy/              /<locale>/privacy
@@ -133,9 +134,9 @@ src/
 │   │   └── <slug>.ts             Each case: status, region, url + an inline-
 │   │                             localized `study` (stats, sections, chat…)
 │   ├── services.ts               Service catalogue (key + slug + i18n keys)
-│   └── offers.ts                 Entry-offer config for the /go/ landings —
-│                                 headlines, bullets, CTA copy and the only
-│                                 price anywhere on the site ($100 audit)
+│   └── offers.ts                 Entry-offer config for /go/brief —
+│                                 headlines, bullets, CTA copy. No prices
+│                                 anywhere on the site.
 │
 ├── i18n/
 │   ├── config.ts                 Locale list + isLocale + localizedPath() +

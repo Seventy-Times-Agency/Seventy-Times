@@ -93,7 +93,7 @@ export function readUtm(): Record<string, string> {
 
 /**
  * Tag the current visitor with an entry-landing marker
- * (landing=audit|brief). Merged into the same stored attribution
+ * (landing=brief). Merged into the same stored attribution
  * object, so it rides along with every lead the visitor submits later
  * (form or chat) and reaches Telegram / email as part of the
  * source line. First-touch wins — an existing landing tag is kept.

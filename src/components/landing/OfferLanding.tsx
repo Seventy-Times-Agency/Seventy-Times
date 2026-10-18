@@ -12,10 +12,9 @@ import { siteConfig } from "@/data/siteConfig";
 import styles from "@/components/landing/OfferLanding.module.css";
 
 /**
- * Shared shell for the two A/B entry-offer landings (/go/audit and
- * /go/brief). All copy and offer values come from `data/offers.ts` —
+ * Shell for the entry-offer landing (/go/brief). All copy and offer values come from `data/offers.ts` —
  * this component only lays them out. On mount it tags the visitor
- * (landing=audit|brief) so every lead they submit afterwards carries
+ * (landing=brief) so every lead they submit afterwards carries
  * the source into Telegram / email.
  */
 export default function OfferLanding({ variant }: { variant: OfferVariant }) {

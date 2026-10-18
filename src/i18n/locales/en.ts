@@ -396,7 +396,7 @@ const strings = {
     faq1q: "How much do your services cost?",
     faq1a: "The price is built around your task. After a free briefing a specialist sends you a plan with the scope and budget. Anything that affects the price, we say up front.",
     faq2q: "Who pays for ads, AI and subscriptions?",
-    faq2a: "You pay the ad budget straight to Meta and Google — the accounts are in your name and stay yours. AI keys and subscriptions (Make, Zapier) are set up on your account too. If you'd rather have it turnkey, we invoice at cost plus a 30% management fee.",
+    faq2a: "You pay the ad budget straight to Meta and Google — the accounts are in your name and stay yours. AI keys and subscriptions (Make, Zapier) are set up on your account too. If you'd rather have it turnkey, we can run it on our side — the terms are set in the agreement.",
     faq3q: "How fast will I see results?",
     faq3a: "In our projects, first leads from ads typically came within 3–7 days of launch. An AI bot answers customers from day one. The system typically settles into steady numbers within 2–3 months of optimisation.",
     faq4q: "What if you miss a deadline — or I want to leave?",

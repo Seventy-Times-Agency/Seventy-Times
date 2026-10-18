@@ -1,4 +1,5 @@
-// A/B entry-offer landing pages (/go/audit and /go/brief).
+// Entry-offer landing page for ad traffic (/go/brief). The paid audit
+// offer (/go/audit) was retired in Oct 2026 — that URL now redirects here.
 //
 // SINGLE SOURCE OF TRUTH for both offers: headlines, bullets, prices
 // and CTA copy live here — changing the offer means editing this file,
@@ -8,8 +9,7 @@
 // Rules these pages live by (knowledge-base doc 12 §4.1):
 //   - They sit OUTSIDE the navigation and OUTSIDE the sitemap, and are
 //     noindexed — traffic arrives only from ads and from the sales team.
-//   - The audit price ($100) exists ONLY here. The main site carries no
-//     prices at all.
+//   - No prices anywhere on the site.
 //   - Every lead from these pages is tagged (landing=audit|brief) so the
 //     source reaches Telegram with the lead.
 
@@ -17,7 +17,7 @@ import type { Locale } from "@/i18n/config";
 
 type Loc = Record<Locale, string>;
 
-export type OfferVariant = "audit" | "brief";
+export type OfferVariant = "brief";
 
 export type Offer = {
   /** Tag stored with the lead (utm-style `landing` key). */
@@ -47,100 +47,6 @@ export type Offer = {
 };
 
 export const OFFERS: Record<OfferVariant, Offer> = {
-  audit: {
-    id: "audit",
-    eyebrow: {
-      en: "— Marketing audit",
-      ru: "— Аудит маркетинга",
-      uk: "— Аудит маркетингу",
-    },
-    title: {
-      en: "Find out where your marketing leaks money",
-      ru: "Узнайте, где ваш маркетинг теряет деньги",
-      uk: "Дізнайтеся, де ваш маркетинг втрачає гроші",
-    },
-    sub: {
-      en: "A specialist goes through your ads, funnel and analytics by hand and walks you through the findings on a call — what works, what leaks, and what to do first.",
-      ru: "Специалист вручную разбирает вашу рекламу, воронку и аналитику и проходит по выводам с вами на созвоне: что работает, где утечки и что делать в первую очередь.",
-      uk: "Спеціаліст вручну розбирає вашу рекламу, воронку й аналітику та проходить по висновках із вами на дзвінку: що працює, де витоки й що робити насамперед.",
-    },
-    price: "$100",
-    priceNote: {
-      en: "one-off, credited toward work if we continue",
-      ru: "разово; зачитывается в работу, если продолжаем",
-      uk: "разово; зараховується в роботу, якщо продовжуємо",
-    },
-    bullets: [
-      {
-        en: "A written breakdown of your ad accounts, funnel and analytics",
-        ru: "Письменный разбор рекламных кабинетов, воронки и аналитики",
-        uk: "Письмовий розбір рекламних кабінетів, воронки й аналітики",
-      },
-      {
-        en: "The specific places where budget is being wasted right now",
-        ru: "Конкретные места, где бюджет сливается прямо сейчас",
-        uk: "Конкретні місця, де бюджет зливається просто зараз",
-      },
-      {
-        en: "A prioritised list of fixes — what to change first and why",
-        ru: "Приоритезированный список правок: что менять первым и почему",
-        uk: "Пріоритезований список правок: що змінювати першим і чому",
-      },
-      {
-        en: "A call where we walk through everything together — yours to keep either way",
-        ru: "Созвон, где проходим всё вместе — выводы остаются у вас в любом случае",
-        uk: "Дзвінок, де проходимо все разом — висновки залишаються у вас у будь-якому разі",
-      },
-    ],
-    cta: {
-      en: "Book my audit",
-      ru: "Заказать аудит",
-      uk: "Замовити аудит",
-    },
-    ctaHint: {
-      en: "We reply within an hour on weekdays",
-      ru: "Отвечаем в течение часа по будням",
-      uk: "Відповідаємо протягом години в будні",
-    },
-    faq: [
-      {
-        q: {
-          en: "What exactly do I get?",
-          ru: "Что именно я получу?",
-          uk: "Що саме я отримаю?",
-        },
-        a: {
-          en: "A written audit of your ads, funnel and analytics plus a call where a specialist walks you through it. The findings are yours to keep whether or not we work together afterwards.",
-          ru: "Письменный аудит рекламы, воронки и аналитики плюс созвон, где специалист проходит по нему с вами. Выводы остаются у вас независимо от того, продолжим ли мы работать вместе.",
-          uk: "Письмовий аудит реклами, воронки й аналітики плюс дзвінок, де спеціаліст проходить по ньому з вами. Висновки залишаються у вас незалежно від того, чи продовжимо ми працювати разом.",
-        },
-      },
-      {
-        q: {
-          en: "Why is it paid?",
-          ru: "Почему он платный?",
-          uk: "Чому він платний?",
-        },
-        a: {
-          en: "Because it's real work — hours of a specialist's time on your accounts, not an automated report. The fee filters for serious requests and is credited toward the work if we continue.",
-          ru: "Потому что это настоящая работа: часы специалиста в ваших кабинетах, а не автоматический отчёт. Оплата отсекает несерьёзные запросы и зачитывается в работу, если продолжаем.",
-          uk: "Бо це справжня робота: години спеціаліста у ваших кабінетах, а не автоматичний звіт. Оплата відсікає несерйозні запити й зараховується в роботу, якщо продовжуємо.",
-        },
-      },
-      {
-        q: {
-          en: "What do you need from me?",
-          ru: "Что нужно от меня?",
-          uk: "Що потрібно від мене?",
-        },
-        a: {
-          en: "Access to the ad accounts and analytics (viewer is enough) and 20 minutes for a short intro call. We handle the rest.",
-          ru: "Доступ к рекламным кабинетам и аналитике (достаточно просмотра) и 20 минут на короткий вводный созвон. Остальное берём на себя.",
-          uk: "Доступ до рекламних кабінетів і аналітики (достатньо перегляду) та 20 хвилин на короткий вступний дзвінок. Решту беремо на себе.",
-        },
-      },
-    ],
-  },
   brief: {
     id: "brief",
     eyebrow: {

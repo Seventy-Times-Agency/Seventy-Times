@@ -58,6 +58,16 @@ const nextConfig = {
   poweredByHeader: false,
   // Lets a phone on the same Wi-Fi load the dev server's /_next assets.
   allowedDevOrigins: ["192.168.*.*"],
+  // The paid audit offer was retired; keep old ad links alive.
+  async redirects() {
+    return [
+      {
+        source: "/:locale(en|ru|uk|ua)/go/audit",
+        destination: "/:locale/go/brief",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {
