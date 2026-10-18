@@ -37,6 +37,12 @@ const BARS: number[][] = [
   [10, 16, 14, 24, 30, 38, 52, 70],
 ];
 
+// Bars light up red → orange → green as the funnel matures: the first
+// weeks are slow, the last ones are where it pays off.
+const BAR_TONE = [0, 1, 2, 3, 4, 5, 6, 7].map((i) =>
+  i < 3 ? styles.barLow : i < 6 ? styles.barMid : styles.barHigh,
+);
+
 // Which principle sits on which step (title keys).
 const PRINCIPLE = ["prin1Title", null, "prin3Title", "prin4Title", "prin2Title"] as const;
 
@@ -181,7 +187,7 @@ export default function Process() {
                 {BARS[active].map((h, i) => (
                   <motion.span
                     key={i}
-                    className={h > 4 ? styles.barOn : undefined}
+                    className={h > 4 ? `${styles.barOn} ${BAR_TONE[i]}` : undefined}
                     animate={{ height: `${h}%` }}
                     transition={{ ...spring, delay: reduce ? 0 : i * 0.03 }}
                   />

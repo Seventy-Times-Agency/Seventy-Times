@@ -138,29 +138,30 @@
 }
 
 .mod_setup i {
-  background: var(--growth);
+  background: #d98f3e;
   box-shadow: none;
   animation: pulse 1.6s ease-in-out infinite;
 }
 
 .mod_setup .modState {
-  color: #e3b65c;
+  color: #d98f3e;
 }
 
+/* Live modules read as "on": green dot, green status, green edge. */
 .mod_live,
 .mod_on {
-  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--accent-rgb), 0.3);
+  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--growth-rgb), 0.35);
 }
 
 .mod_live i,
 .mod_on i {
-  background: var(--accent);
-  box-shadow: var(--neon);
+  background: var(--growth);
+  box-shadow: 0 0 0 4px rgba(var(--growth-rgb), 0.18);
 }
 
 .mod_live .modState,
 .mod_on .modState {
-  color: var(--accent);
+  color: var(--growth);
 }
 
 /* Leads chart */
@@ -191,13 +192,18 @@
   flex: 1;
   height: 4%;
   border-radius: 4px 4px 0 0;
-  background: var(--base-hi);
+  background-color: var(--base-hi);
+  transition: background-color 0.6s var(--ease);
 }
 
+/* Solid colour (so it can transition) + a darkening fade to the base. */
 .bars .barOn {
-  background: linear-gradient(180deg, var(--accent), rgba(var(--accent-rgb), 0.35));
-  box-shadow: none;
+  background-image: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.35));
 }
+
+.bars .barLow { background-color: #c8574d; }
+.bars .barMid { background-color: #d98f3e; }
+.bars .barHigh { background-color: var(--growth); }
 
 /* Event tags */
 .tags {
