@@ -411,7 +411,7 @@
 }
 
 .name {
-  font-size: clamp(34px, 4vw, 56px);
+  font-size: clamp(30px, min(4vw, 6.4vh), 56px);
   font-weight: 800;
   line-height: 0.88;
   letter-spacing: -0.06em;
@@ -498,7 +498,7 @@
 .figure {
   display: block;
   margin-top: 6px;
-  font-size: clamp(48px, 6vw, 88px);
+  font-size: clamp(40px, min(6vw, 10vh), 88px);
   font-weight: 800;
   line-height: 0.85;
   letter-spacing: -0.065em;
@@ -855,15 +855,27 @@ a.open:focus-visible {
     display: grid;
   }
 
+  /* The deck is sized to the window height, not a fixed 640px, so the
+     whole card stays on screen on short laptop windows too. */
   .stage {
-    min-height: 640px;
+    min-height: 0;
+    height: clamp(440px, calc(100svh - 120px), 640px);
+    padding-top: clamp(28px, 6vh, 60px);
+  }
+
+  .slot {
+    top: clamp(28px, 6vh, 60px);
   }
 
   .card {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-rows: none;
     gap: 22px;
-    padding: 26px;
+    padding: clamp(16px, 3vh, 26px) 26px;
+  }
+
+  .copy {
+    gap: clamp(8px, 1.6vh, 14px);
   }
 }
 
