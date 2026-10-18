@@ -35,7 +35,9 @@ const strings = {
 
     // Hero v2 (order-in-progress board)
     hxAds: "Ads",
-    hxPlain: "Ads bring you customers, AI answers them in seconds, and ready leads land straight with you — one system built around your business.",
+    hxPain: "Paying for ads but losing the leads?",
+    hxPlain: "We run your ads, an AI consultant answers customers in seconds, 24/7, and ready leads land straight with you.",
+    hxTrust: "Working with businesses in the US and Europe · first leads usually 3–7 days after launch",
     hxCtaBrief: "Free briefing · 20 min",
 
     // Mobile funnel (phones only)

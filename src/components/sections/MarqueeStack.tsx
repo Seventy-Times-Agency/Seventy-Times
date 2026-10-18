@@ -86,7 +86,7 @@ export default function MarqueeStack() {
           {topDoubled.map((item, i) => (
             <span key={`t-${item}-${i}`} className={styles.itemTop}>
               {item}
-              <span className={styles.dot} />
+              <span className={styles.dot} aria-hidden="true" />
             </span>
           ))}
         </div>

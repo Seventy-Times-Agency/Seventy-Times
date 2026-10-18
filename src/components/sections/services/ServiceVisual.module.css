@@ -226,14 +226,24 @@
   border-radius: 12px 12px 4px 12px;
   box-shadow: var(--raise-s);
   color: var(--text-muted);
+  animation: chatIn 7s var(--ease) infinite;
 }
 
 .bubbleOut {
   align-self: flex-start;
   border-radius: 12px 12px 12px 4px;
-  background: var(--accent);
+  /* The bot's answer is the "it works" moment — growth green. */
+  background: var(--growth);
   color: var(--base-lo);
-  box-shadow: var(--neon-soft);
+  box-shadow: 0 8px 20px -8px rgba(var(--growth-rgb), 0.6);
+  animation: chatIn 7s var(--ease) 0.7s infinite backwards;
+}
+
+/* Messages drop in one after another, hold, then reset — a live chat loop. */
+@keyframes chatIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  8%, 88% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: none; }
 }
 
 .typing {
@@ -249,7 +259,7 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--growth);
   animation: blink 1.4s ease-in-out infinite;
 }
 
@@ -334,7 +344,9 @@
 @media (prefers-reduced-motion: reduce) {
   .chartLine,
   .typing i,
-  .wire i {
+  .wire i,
+  .bubbleIn,
+  .bubbleOut {
     animation: none;
   }
 

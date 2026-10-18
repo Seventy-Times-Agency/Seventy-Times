@@ -53,6 +53,30 @@
   color: var(--text-muted);
 }
 
+/* Hook: the pain line in full white, then the fix, then a trust line. */
+.hookPain {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text);
+  font-weight: 800;
+}
+
+.trust {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+
+.trust i {
+  font-style: normal;
+  color: var(--growth);
+}
+
 .btn {
   display: flex;
   align-items: center;
@@ -79,6 +103,21 @@
   place-items: center;
   background: var(--base-lo);
   color: var(--accent);
+}
+
+.btn {
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn:hover,
+.btn:active {
+  background: var(--growth);
+  box-shadow: 0 10px 30px -8px rgba(var(--growth-rgb), 0.55);
+}
+
+.btn:hover i,
+.btn:active i {
+  color: var(--growth);
 }
 
 /* ── 1 · Hook ────────────────────────────────────────────────── */
@@ -225,6 +264,58 @@
   letter-spacing: -0.04em;
   color: var(--ink);
   white-space: nowrap;
+}
+
+/* Each fact gets its own soft tint, a coloured top edge and a slow
+   light sweep that runs across the three in turn. */
+.fact {
+  --f: var(--growth);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--f) 12%, var(--base)), var(--base) 65%);
+}
+
+.fact:nth-child(2) { --f: #4fa3a5; }
+.fact:nth-child(3) { --f: #d9a54a; }
+
+.fact::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 0;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: var(--f);
+  opacity: 0.85;
+}
+
+.fact::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -60%;
+  width: 50%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  animation: factSweep 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.fact:nth-child(2)::after { animation-delay: 0.5s; }
+.fact:nth-child(3)::after { animation-delay: 1s; }
+
+.fact b {
+  color: color-mix(in srgb, var(--f) 30%, var(--ink));
+}
+
+@keyframes factSweep {
+  0% { left: -60%; }
+  35%, 100% { left: 120%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fact::after {
+    animation: none;
+  }
 }
 
 /* ── 2 · Pain ────────────────────────────────────────────────── */

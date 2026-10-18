@@ -223,7 +223,12 @@ export default function MobileLanding() {
         </span>
         <Formula parts={[t.heroTitle1, t.heroTitle2, t.heroTitle3]} />
         <h1 className={styles.h1}>{outlineLast(t.heroTitle4)}</h1>
-        <p className={styles.lede}>{t.hxPlain}</p>
+        <p className={styles.lede}>
+          <b className={styles.hookPain}>{t.hxPain}</b> {t.hxPlain}
+        </p>
+        <p className={styles.trust}>
+          <i aria-hidden="true">✓</i> {t.hxTrust}
+        </p>
         <a className={styles.btn} href="#lead">
           {t.hxCtaBrief} <i aria-hidden="true">↗</i>
         </a>

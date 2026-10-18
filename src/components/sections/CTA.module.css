@@ -132,7 +132,7 @@
   font-weight: 800;
   letter-spacing: 0.01em;
   box-shadow: 0 10px 30px rgba(8, 9, 12, 0.25);
-  transition: transform 0.2s var(--ease), color 0.2s ease;
+  transition: transform 0.2s var(--ease), color 0.2s ease, background 0.25s ease;
 }
 
 .primary i {
@@ -149,7 +149,8 @@
 }
 
 .primary:hover {
-  color: var(--accent);
+  background: var(--growth);
+  color: var(--base-lo);
   transform: translateY(-2px);
 }
 

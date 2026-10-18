@@ -28,7 +28,12 @@
     border-radius: var(--radius-pill);
     /* Lift off the page (dark half of --raise-s) + neon glow. */
     box-shadow: 6px 6px 14px var(--base-lo), var(--neon);
+    transition: background 0.25s ease;
     will-change: transform;
+  }
+
+.cta:active {
+    background: var(--growth);
   }
 
 .cta:focus-visible {

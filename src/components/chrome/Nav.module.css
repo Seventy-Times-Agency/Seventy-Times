@@ -141,7 +141,7 @@
 
 .cta:hover {
   transform: translateY(-1px);
-  background: var(--accent-strong);
+  background: var(--growth);
   box-shadow: none;
 }
 

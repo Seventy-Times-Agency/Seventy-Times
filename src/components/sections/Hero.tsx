@@ -104,7 +104,10 @@ export default function Hero() {
         </h1>
 
         <p className={styles.lead}>
-          {t.hxPlain}
+          <b className={styles.hookPain}>{t.hxPain}</b> {t.hxPlain}
+        </p>
+        <p className={styles.trust}>
+          <i aria-hidden="true">✓</i> {t.hxTrust}
         </p>
 
         <div className={styles.facts}>
