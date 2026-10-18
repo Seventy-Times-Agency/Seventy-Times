@@ -33,8 +33,8 @@ export const siteConfig = {
       url: "tel:+15856854437",
     },
     instagram: {
-      handle: "@seventytimesagency",
-      url: "https://instagram.com/seventytimesagency",
+      handle: "@seventy.times.agency",
+      url: "https://www.instagram.com/seventy.times.agency/",
     },
     facebook: {
       handle: "Seventy Times Agency",
