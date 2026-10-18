@@ -21,9 +21,9 @@ export const lantana: CaseItem = {
       },
       metrics: [
         {
-          en: "#1 in Google Maps for the main query",
-          ru: "№1 в Google Картах по главному запросу",
-          uk: "№1 у Google Картах за головним запитом",
+          en: "#1 in Google Maps for the main query, Lantana, FL, as of October 2026",
+          ru: "№1 в Google Картах по главному запросу, Lantana, FL, на октябрь 2026",
+          uk: "№1 у Google Картах за головним запитом, Lantana, FL, станом на жовтень 2026",
         },
         {
           en: "0 → 226 Google impressions in the first month",
@@ -59,9 +59,9 @@ export const lantana: CaseItem = {
           uk: "20 років досвіду. Сарафан, порожня картка, сайту немає в Google.",
         },
         finish: {
-          en: "#1 in Google Maps and #2 in search for the main query.",
-          ru: "№1 в Google Картах и №2 в поиске по главному запросу.",
-          uk: "№1 у Google Картах і №2 у пошуку за головним запитом.",
+          en: "#1 in Google Maps and #2 in search for the main query, Lantana, FL, as of October 2026.",
+          ru: "№1 в Google Картах и №2 в поиске по главному запросу, Lantana, FL, на октябрь 2026.",
+          uk: "№1 у Google Картах і №2 у пошуку за головним запитом, Lantana, FL, станом на жовтень 2026.",
         },
         revenueLabel: {
           en: "Google impressions in the first month",
@@ -111,9 +111,9 @@ export const lantana: CaseItem = {
           bottom: {
             value: u("№1"),
             label: {
-              en: "in Google Maps",
-              ru: "в Google Картах",
-              uk: "у Google Картах",
+              en: "in Google Maps · Oct 2026",
+              ru: "в Google Картах · окт. 2026",
+              uk: "у Google Картах · жовт. 2026",
             },
           },
         },

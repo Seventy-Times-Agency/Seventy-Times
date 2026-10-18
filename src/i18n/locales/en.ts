@@ -37,7 +37,7 @@ const strings = {
     hxAds: "Ads",
     hxPain: "Paying for ads but losing the leads?",
     hxPlain: "We run your ads, an AI consultant answers customers in seconds, 24/7, and ready leads land straight with you.",
-    hxTrust: "Working with businesses in the US and Europe · first leads usually 3–7 days after launch",
+    hxTrust: "Working with businesses in the US and Europe · in our projects, first leads typically came within 3–7 days of launch",
     hxCtaBrief: "Free briefing · 20 min",
 
     // Mobile funnel (phones only)
@@ -49,7 +49,7 @@ const strings = {
     mFlow3: "replied",
     mFlow4: "lead",
     mFact1N: "3–7 days",
-    mFact1: "first leads after launch",
+    mFact1: "first leads in our projects",
     mStagePain: "Sound familiar?",
     mStageSolution: "Solution",
     mStageProof: "Proof",
@@ -176,7 +176,7 @@ const strings = {
       "Alerts wherever suits you",
       "Auto-reports and service integrations",
     ],
-    svcAdsSticker: "First leads 3–7 days after launch",
+    svcAdsSticker: "In our projects: first leads within 3–7 days",
     svcOutTitle: "Ready leads — with you.",
     svcOutBody: "In your CRM, inbox or messenger. From there, your team takes them on.",
     svcReqLabel: "Also on request · individually",
@@ -205,7 +205,7 @@ const strings = {
     compShowAlts: "Show vs Agency / Freelancer",
     compHideAlts: "Hide alternatives",
     compRowSpeedLabel: "First leads",
-    compRowSpeedUs: "3–7 days after the ads go live",
+    compRowSpeedUs: "In our projects — within 3–7 days of the ads going live",
     compRowSpeedAgency: "After 60–90 days of onboarding",
     compRowSpeedFreelancer: "Depends on their workload",
     compRowAiLabel: "AI in the workflow",
@@ -234,7 +234,7 @@ const strings = {
     svc1Tag: "Ads that bring real customers",
     svc1Note: "Ad budget is billed separately",
     svc1Inc: [
-      "First leads typically within 3–7 days after launch",
+      "In our projects, first leads typically came within 3–7 days of launch",
       "Turnkey ad accounts on Meta & Google",
       "A/B-tested creatives: banners and copy that actually pull",
       "Audiences and targeting built around your real customer",
@@ -247,7 +247,7 @@ const strings = {
       "Landing page for ad campaigns",
       "Ad budget management",
     ],
-    svc1Timeline: "Guide: 1–2 weeks to set up; first leads usually 3–7 days after launch",
+    svc1Timeline: "Guide: 1–2 weeks to set up; in our projects, first leads typically came within 3–7 days of launch",
     svc1Ideal:
       "B2C and consumer services with a clear offer and a working ad budget — when you're ready to scale the channel, not test if marketing works at all.",
     svc2Title: "Automation",
@@ -319,7 +319,7 @@ const strings = {
     proc1t: "Guide: 1–2 weeks",
     proc2: "First leads",
     proc2d: "Ads go live and the first leads come in — usually within a week, sometimes faster. They reach you straight away.",
-    proc2t: "3–7 days after launch",
+    proc2t: "3–7 days in our projects",
     proc3: "Optimisation",
     proc3d: "We look at the numbers every week: cut what doesn't pay off, put more into what works, test new creatives and audiences.",
     proc3t: "Every week",
@@ -398,7 +398,7 @@ const strings = {
     faq2q: "Who pays for ads, AI and subscriptions?",
     faq2a: "You pay the ad budget straight to Meta and Google — the accounts are in your name and stay yours. AI keys and subscriptions (Make, Zapier) are set up on your account too. If you'd rather have it turnkey, we invoice at cost plus a 30% management fee.",
     faq3q: "How fast will I see results?",
-    faq3a: "First leads from ads usually come 3–7 days after launch. An AI bot answers customers from day one. The system typically settles into steady numbers within 2–3 months of optimisation.",
+    faq3a: "In our projects, first leads from ads typically came within 3–7 days of launch. An AI bot answers customers from day one. The system typically settles into steady numbers within 2–3 months of optimisation.",
     faq4q: "What if you miss a deadline — or I want to leave?",
     faq4a: "Deadlines run from the moment we get the materials for each stage, and the task history shows who was waiting on whom. If we miss one, we make up for it: a partial refund or a discount on that stage. Ongoing work has a minimum term in the contract, then it's month-to-month with 30 days' notice; you can leave earlier, and refunds are discussed case by case.",
     faq5q: "How much time do you need from my team?",
@@ -408,7 +408,7 @@ const strings = {
     faq7q: "Do you work with my niche?",
     faq7a: "Our main focus is e-commerce, services, retail, car accessories and beauty; B2B SaaS on request. If a niche is new to us, we'll say so honestly rather than learn on your budget.",
     faq8q: "How do I pay, and in which currency?",
-    faq8a: "Our main currency is US dollars; euros are fine at the current rate. We take bank transfer, crypto and other convenient options — we'll pick one on the call. Setup is paid upfront, ongoing work monthly in advance.",
+    faq8a: "Our main currency is US dollars; euros are fine at the current rate. We take bank transfer, crypto and other convenient options — we'll pick one on the call. Payment terms are agreed individually and fixed in the agreement.",
     faq9q: "Do you sign a contract and an NDA?",
     faq9a: "Yes. We don't work without a contract: it sets out the scope, deadlines and each side's responsibilities. We'll sign a mutual NDA before any work starts.",
 
@@ -583,6 +583,8 @@ const strings = {
     consentAnd: " and ",
     consentTerms: "Terms of Use",
     consentSuffix: ".",
+    cbContactConsent:
+      "By submitting, you agree that Seventy Times LLC may contact you by call or message (including WhatsApp or Telegram) at this number about your request. Consent is not a condition of purchase.",
     consentRequired: "Please agree to the Privacy Policy and Terms of Use",
 
     // Lead form extras
@@ -736,7 +738,7 @@ const strings = {
       },
       {
         heading: "Payment",
-        text: 'We accept several payment formats; the exact method is picked together based on the client\'s location and convenience. Setup is paid upfront; the retainer is paid monthly in advance. Primary currency is USD, with EUR also accepted; other currencies are handled individually.',
+        text: 'We accept several payment formats; the exact method is picked together based on the client\'s location and convenience. Payment terms (amount, schedule and method) are agreed individually and set out in the agreement with each client. Primary currency is USD, with EUR also accepted; other currencies are handled individually.',
       },
       {
         heading: "Limitation of liability",

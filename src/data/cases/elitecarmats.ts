@@ -26,9 +26,9 @@ export const eliteCarMats: CaseItem = {
           uk: "86 оплачених замовлень за 3 місяці реклами",
         },
         {
-          en: "$16,188 revenue on $2,267 ad spend",
-          ru: "$16 188 выручки при бюджете $2 267",
-          uk: "$16 188 виручки при бюджеті $2 267",
+          en: "$16,188 revenue on $2,267 ad spend (client data)",
+          ru: "$16 188 выручки при бюджете $2 267 (данные клиента)",
+          uk: "$16 188 виручки при бюджеті $2 267 (дані клієнта)",
         },
         {
           en: "1,360 vehicle models in the configurator",
@@ -362,9 +362,9 @@ export const eliteCarMats: CaseItem = {
         },
         revenue: { en: "$16,188", ru: "$16 188", uk: "$16 188" },
         spendNote: {
-          en: "on {spend} of ad spend",
-          ru: "при {spend} на рекламу",
-          uk: "при {spend} на рекламу",
+          en: "on {spend} of ad spend · client data",
+          ru: "при {spend} на рекламу · данные клиента",
+          uk: "при {spend} на рекламу · дані клієнта",
         },
         spend: { en: "$2,267", ru: "$2 267", uk: "$2 267" },
         shots: {

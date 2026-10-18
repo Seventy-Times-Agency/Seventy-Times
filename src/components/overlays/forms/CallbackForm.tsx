@@ -278,6 +278,7 @@ export default function CallbackForm() {
                       {t.consentSuffix}
                     </span>
                   </label>
+                  <p className={styles.contactNote}>{t.cbContactConsent}</p>
 
                   {error && (
                     <div className={styles.error} role="alert">

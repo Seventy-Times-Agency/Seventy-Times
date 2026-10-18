@@ -47,7 +47,7 @@ export const CASE_DECK: readonly DeckCase[] = [
     ),
     figureLabel: L("Brought the client in 3 months", "Принесли клиенту за 3 месяца", "Принесли клієнту за 3 місяці"),
     figure: L("$16,188", "$16 188", "$16 188"),
-    note: L("on {b} of ad spend", "при {b} на рекламу", "при {b} на рекламу"),
+    note: L("on {b} of ad spend · client data", "при {b} на рекламу · данные клиента", "при {b} на рекламу · дані клієнта"),
     bold: L("$2,267", "$2 267", "$2 267"),
     shots: {
       site: { src: "/cases/elitecarmats/site-hero.webp", host: "elitecarmats.us" },
@@ -69,9 +69,9 @@ export const CASE_DECK: readonly DeckCase[] = [
       "20 років досвіду. Сарафан, порожня картка, сайту немає в Google.",
     ),
     finish: L(
-      "#1 in Google Maps and #2 in search for the main query.",
-      "№1 в Google Картах и №2 в поиске по главному запросу.",
-      "№1 у Google Картах і №2 у пошуку за головним запитом.",
+      "#1 in Google Maps and #2 in search for the main query, Lantana, FL, as of October 2026.",
+      "№1 в Google Картах и №2 в поиске по главному запросу, Lantana, FL, на октябрь 2026.",
+      "№1 у Google Картах і №2 у пошуку за головним запитом, Lantana, FL, станом на жовтень 2026.",
     ),
     figureLabel: L("Google impressions in the first month", "Показов в Google за первый месяц", "Показів у Google за перший місяць"),
     figure: same("0 → 226"),
@@ -83,7 +83,7 @@ export const CASE_DECK: readonly DeckCase[] = [
     },
     stickers: {
       top: { value: same("0 → 18"), label: L("clicks from the profile", "переходов с карточки", "переходів з картки") },
-      bottom: { value: same("№1"), label: L("in Google Maps", "в Google Картах", "у Google Картах") },
+      bottom: { value: same("№1"), label: L("in Google Maps · Oct 2026", "в Google Картах · окт. 2026", "у Google Картах · жовт. 2026") },
     },
   },
   {
