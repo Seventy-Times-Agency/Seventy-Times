@@ -41,14 +41,14 @@ export const TEAM: TeamMember[] = [
     id: "founder",
     name: "Maksym", // TODO: owner — confirm full public name
     role: {
-      en: "Founder · Head of Delivery",
-      ru: "Основатель · руководитель отдела доставки",
-      uk: "Засновник · керівник відділу доставки",
+      en: "CEO",
+      ru: "Генеральный директор",
+      uk: "Генеральний директор",
     },
     bio: {
-      en: "Builds the systems the agency sells — ads, AI and custom development. Personally leads every project from briefing to launch.",
-      ru: "Строит системы, которые продаёт агентство: реклама, AI и кастомная разработка. Лично ведёт каждый проект от брифинга до запуска.",
-      uk: "Будує системи, які продає агенція: реклама, AI та кастомна розробка. Особисто веде кожен проєкт від брифінгу до запуску.",
+      en: "Specialises in advertising and website development. Sees each project as a whole — ads, site, AI and automation — oversees every stage and takes every project through to results.",
+      ru: "Специализируется на рекламе и создании сайтов. Видит проект целиком — от рекламы и сайта до AI и автоматизации, — следит за каждым этапом и доводит каждый проект до результата.",
+      uk: "Спеціалізується на рекламі та створенні сайтів. Бачить проєкт цілком — від реклами й сайту до AI та автоматизації, — стежить за кожним етапом і доводить кожен проєкт до результату.",
     },
     photo: "/team/founder.jpg",
     photoTurn: "/team/founder-turn.jpg",
