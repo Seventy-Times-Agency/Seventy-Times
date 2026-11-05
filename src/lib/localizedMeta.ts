@@ -187,6 +187,91 @@ export function getTeamMeta(locale: Locale): LegalMeta {
   return TEAM[locale] ?? TEAM.en;
 }
 
+const SERVICES_PAGE: Record<Locale, LegalMeta> = {
+  en: {
+    title: "Services",
+    description:
+      "Websites and SEO, Meta and Google ads, an AI consultant and lead automation: what each module includes and how they work together.",
+  },
+  ru: {
+    title: "Услуги",
+    description:
+      "Сайты и SEO, реклама в Meta и Google, AI-консультант и автоматизация заявок: что входит в каждый модуль и как они работают вместе.",
+  },
+  uk: {
+    title: "Послуги",
+    description:
+      "Сайти та SEO, реклама в Meta і Google, AI-консультант та автоматизація заявок: що входить у кожен модуль і як вони працюють разом.",
+  },
+};
+
+export function getServicesMeta(locale: Locale): LegalMeta {
+  return SERVICES_PAGE[locale] ?? SERVICES_PAGE.en;
+}
+
+const CASES_PAGE: Record<Locale, LegalMeta> = {
+  en: {
+    title: "Work",
+    description:
+      "Seventy Times projects in e-commerce, local services, transport and tourism: where each client started, what we did and the numbers we got.",
+  },
+  ru: {
+    title: "Кейсы",
+    description:
+      "Проекты Seventy Times в e-commerce, услугах, перевозках и туризме: откуда клиент стартовал, что мы сделали и какие цифры получили.",
+  },
+  uk: {
+    title: "Кейси",
+    description:
+      "Проєкти Seventy Times в e-commerce, послугах, перевезеннях і туризмі: звідки клієнт стартував, що ми зробили та які цифри отримали.",
+  },
+};
+
+export function getCasesMeta(locale: Locale): LegalMeta {
+  return CASES_PAGE[locale] ?? CASES_PAGE.en;
+}
+
+const PROCESS_PAGE: Record<Locale, LegalMeta> = {
+  en: {
+    title: "How we work",
+    description:
+      "The stages from launch to scaling, a comparison with an agency and a freelancer, our AI consultant Vanessa and answers to common questions.",
+  },
+  ru: {
+    title: "Как мы работаем",
+    description:
+      "Этапы от запуска до масштабирования, сравнение с агентством и фрилансером, AI-консультант Ванесса и ответы на частые вопросы.",
+  },
+  uk: {
+    title: "Як ми працюємо",
+    description:
+      "Етапи від запуску до масштабування, порівняння з агентством і фрилансером, AI-консультантка Ванесса та відповіді на часті запитання.",
+  },
+};
+
+export function getProcessMeta(locale: Locale): LegalMeta {
+  return PROCESS_PAGE[locale] ?? PROCESS_PAGE.en;
+}
+
+const FAQ_PAGE: Record<Locale, LegalMeta> = {
+  en: {
+    title: "FAQ",
+    description: "Pricing, who pays for ads, timelines, contracts and payment: what clients ask before starting.",
+  },
+  ru: {
+    title: "Частые вопросы",
+    description: "Цена, кто платит за рекламу, сроки, договор и оплата: что спрашивают перед стартом.",
+  },
+  uk: {
+    title: "Часті запитання",
+    description: "Ціна, хто платить за рекламу, строки, договір і оплата: що запитують перед стартом.",
+  },
+};
+
+export function getFaqMeta(locale: Locale): LegalMeta {
+  return FAQ_PAGE[locale] ?? FAQ_PAGE.en;
+}
+
 const IMPRINT: Record<Locale, LegalMeta> = {
   en: {
     title: "Legal Notice",

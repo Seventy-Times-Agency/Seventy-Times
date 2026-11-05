@@ -12,6 +12,7 @@ import {
   type Locale,
 } from "@/i18n/config";
 import { I18nProvider } from "@/i18n/context";
+import { RESTORE_SCRIPT } from "@/i18n/localeSwitch";
 import { getDictionary } from "@/i18n/dictionary";
 import AnimatedBackground from "@/components/decor/AnimatedBackground";
 import FloatingGlyphs from "@/components/decor/FloatingGlyphs";
@@ -19,6 +20,7 @@ import ScrollProgress from "@/components/decor/ScrollProgress";
 import SmoothScroll from "@/components/decor/SmoothScroll";
 import ClientOverlays from "@/components/overlays/ClientOverlays";
 import TagManager from "@/components/system/TagManager";
+import LegacyAnchors from "@/components/system/LegacyAnchors";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
@@ -31,7 +33,7 @@ const manrope = Manrope({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#101116",
+  themeColor: "#0a0b10",
   width: "device-width",
   initialScale: 1,
 };
@@ -52,8 +54,8 @@ const organizationJsonLd = {
       "@type": ["Organization", "ProfessionalService"],
       "@id": ORG_ID,
       name: siteConfig.name,
-      legalName: siteConfig.legalName,
       alternateName: siteConfig.shortName,
+      legalName: siteConfig.legalName,
       address: {
         "@type": "PostalAddress",
         streetAddress: "95 Morgan St, Apt 1P",
@@ -205,7 +207,10 @@ export default async function LocaleLayout(
           <ScrollProgress />
           {children}
           <ClientOverlays />
+          <LegacyAnchors />
         </I18nProvider>
+        {/* Before hydration on purpose: see i18n/localeSwitch.ts. */}
+        <script dangerouslySetInnerHTML={{ __html: RESTORE_SCRIPT }} />
         {/* Privacy-friendly product analytics + Core Web Vitals. Both
             are cookieless, so they need no consent gate. */}
         <Analytics />

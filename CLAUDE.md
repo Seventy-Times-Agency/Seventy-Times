@@ -1,7 +1,8 @@
 # Seventy Times — developer & AI guide
 
 Marketing landing for **Seventy Times**, a US-based AI + performance-marketing
-agency. Single page with a lead form, a callback form, a review form, and a
+agency. A short landing plus section pages (/services, /cases, /process,
+/faq, /about), with a lead form, a callback form, a review form, and a
 live Claude-powered chat assistant named Vanessa. Three languages
 (en / ru / uk).
 
@@ -41,7 +42,13 @@ src/
 │   │   ├── layout.tsx            THE root layout (there is no app/layout.tsx):
 │   │   │                         <html lang>, fonts, JSON-LD, metadata,
 │   │   │                         I18nProvider + decor + overlays
-│   │   ├── page.tsx              Landing — composes all sections
+│   │   ├── page.tsx              Landing: hero, tape, how we start, service
+│   │   │                         teaser, cases, stack builder, CTA
+│   │   ├── services/             /<locale>/services — full service overview
+│   │   ├── cases/                /<locale>/cases — the case shelf
+│   │   ├── process/              /<locale>/process — timeline, comparison,
+│   │   │                         Vanessa, CTA
+│   │   ├── faq/                  /<locale>/faq (FaqStructuredData here)
 │   │   ├── [...rest]/            Catch-all → notFound() for unknown URLs
 │   │   ├── not-found.tsx         Branded localized 404
 │   │   ├── about/                /<locale>/about
@@ -49,9 +56,8 @@ src/
 │   │   ├── cases/[slug]/         /<locale>/cases/<id> — per-case page
 │   │   │                         (renders CaseStudyDetail from sections/cases)
 │   │   ├── services/[slug]/      /<locale>/services/<id> — per-service page
-│   │   ├── go/brief/             /<locale>/go/brief — entry-offer landing
-│   │   │                         for ad traffic (/go/audit redirects here;
-│   │   │                         the paid audit was retired). Outside the nav
+│   │   ├── go/{audit,brief}/     /<locale>/go/<variant> — A/B entry-offer
+│   │   │                         landings for ad traffic. Outside the nav
 │   │   │                         and the sitemap, `robots: index:false`.
 │   │   │                         Copy + prices live in data/offers.ts
 │   │   ├── privacy/              /<locale>/privacy
@@ -96,21 +102,16 @@ src/
 │   │   │                         Hero, MarqueeStack, HowWeStart, Services,
 │   │   │                         ChatDemo, Comparison, Cases, Testimonials
 │   │   │                         (only rendered when approved reviews exist —
-│   │   │                         page.tsx gates it), Process (which now also
-│   │   │                         renders the brand Principles block),
-│   │   │                         FAQ, CTA
-│   │   ├── cases/                Case pages (the landing deck lives in
-│   │   │   │                     Cases.tsx, data in data/caseDeck.ts)
-│   │   │   ├── CaseShowcase.tsx  One-screen case layout, used instead
-│   │   │   │                     when the case has `study.showcase`
-│   │   │   │                     (screenshots, or `scheme`: route
-│   │   │   │                     board + funnel when there are none)
-│   │   │   └── CaseStudyDetail.tsx Older per-case layout (no showcase)
+│   │   │                         page.tsx gates it), Process,
+│   │   │                         StackBuilder (replaced the ROI simulator: no
+│   │   │                         promised figures), FAQ, CTA
+│   │   ├── cases/                Sub-components used by Cases + case pages
+│   │   │   ├── CaseCard.tsx        Landing card (status pill + region badge)
+│   │   │   ├── CaseStudyDetail.tsx Rich per-case detail layout
+│   │   │   └── PlaceholderCard.tsx
 │   │   └── services/
-│   │       ├── flow.ts           Module order site → ads → bot →
-│   │       │                     automation + landing-only copy keys
-│   │       └── ServiceVisual.tsx Small live "screens" per module, shared
-│   │                             by the landing and /services/<slug>
+│   │       ├── ServiceVisual.tsx Live drawings; unfold on card hover
+│   │       └── flow.ts           Module order and role/pitch keys
 │   ├── decor/                    Non-content visuals: AnimatedBackground,
 │   │                             FloatingGlyphs, ScrollProgress, SmoothScroll,
 │   │                             SectionDivider, SectionWatermark
@@ -118,7 +119,8 @@ src/
 │   │                             AnimatedText, RingCounter,
 │   │                             ContactIcons, ServiceIcons, Logo
 │   ├── legal/                    Shared shell for /privacy + /terms
-│   └── seo/StructuredData.tsx    Client-rendered FAQPage + Service JSON-LD
+│   ├── seo/StructuredData.tsx    Client-rendered Service JSON-LD (landing)
+│   └── seo/FaqStructuredData.tsx Client-rendered FAQPage JSON-LD (/faq)
 │
 ├── data/                         Static content (single source of truth)
 │   ├── siteConfig.ts             Brand name, URL, contacts, hero stats
@@ -134,9 +136,9 @@ src/
 │   │   └── <slug>.ts             Each case: status, region, url + an inline-
 │   │                             localized `study` (stats, sections, chat…)
 │   ├── services.ts               Service catalogue (key + slug + i18n keys)
-│   └── offers.ts                 Entry-offer config for /go/brief —
-│                                 headlines, bullets, CTA copy. No prices
-│                                 anywhere on the site.
+│   └── offers.ts                 Entry-offer config for the /go/ landings —
+│                                 headlines, bullets, CTA copy and the only
+│                                 price anywhere on the site ($100 audit)
 │
 ├── i18n/
 │   ├── config.ts                 Locale list + isLocale + localizedPath() +
@@ -179,8 +181,8 @@ public/
 ```
 
 Repository root: `CLAUDE.md`, `README.md`, `package.json`, `tsconfig.json`,
-`next.config.mjs`, `next-env.d.ts`, `vitest.config.mts` (the `@/` alias for
-tests), `.env.example`, `.gitignore` — and nothing else.
+`next.config.mjs`, `next-env.d.ts`, `.env.example`, `.gitignore` — and
+nothing else.
 
 ---
 
@@ -312,7 +314,11 @@ concept on the site.
 
 | Surface | URL pattern | What gets indexed |
 |---|---|---|
-| Landing | `/<locale>` | Brand + all four service tags + FAQ |
+| Landing | `/<locale>` | Brand + all four service tags |
+| Services | `/<locale>/services` | Service overview |
+| Cases | `/<locale>/cases` | Case shelf |
+| Process | `/<locale>/process` | How we work, comparison |
+| FAQ | `/<locale>/faq` | Questions and answers |
 | About | `/<locale>/about` | Team / mission |
 | Team | `/<locale>/team` | Team bios |
 | Case study | `/<locale>/cases/<slug>` | Each portfolio project |
@@ -330,7 +336,7 @@ concept on the site.
 **JSON-LD already wired:**
 - `Organization` + `ProfessionalService` + `WebSite` graph
   (`[locale]/layout.tsx`, server-rendered)
-- `FAQPage` (`StructuredData.tsx`, client-rendered)
+- `FAQPage` (`FaqStructuredData.tsx`, client-rendered, on /faq)
 - `Service` on the landing + per-page `Service` on each `/services/<slug>`
 - `BreadcrumbList` on every case + service page
 
@@ -386,7 +392,7 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 1. Add `faqNq` and `faqNa` keys (same N across all three locale files).
 2. Append one more entry to the `items` array in
    `components/sections/FAQ.tsx`.
-3. Extend `faqItems` in `components/seo/StructuredData.tsx` so the
+3. Extend `faqItems` in `components/seo/FaqStructuredData.tsx` so the
    FAQPage JSON-LD picks up the new entry.
 
 ### Add a new section to the landing
@@ -398,7 +404,7 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 ### Add a new case
 1. Create `data/cases/<slug>.ts` exporting one `CaseItem`: `id`, `status`
    (`live` / `progress` / `soon`), `region` (`usa` / `europe`), optional
-   `url`, and an inline-localized `study`. Translate every `Loc` field
+   `url`, and an inline-localized `study`. Add its card to `data/caseCards.ts`. Translate every `Loc` field
    across en/ru/uk; wrap non-translatable tokens in `u("…")`.
 2. Register it in `data/cases/index.ts` (import + add to `CASES` in the
    order you want — the landing grid re-sorts by status anyway).
@@ -470,6 +476,17 @@ than adding a new `max-width` block.
 
 - **Chat history persists** to `localStorage` under `st-chat-history-v1`,
   last 50 messages. Clear that key to wipe Vanessa's session memory.
+- **Text never appears from nothing**: `Reveal` and `AnimatedText` render it
+  dim (`.dimText`) and brighten it on reaching the screen (`useLit`, one shared
+  observer). No slide-ins, so a block is never blank.
+- **Language switch is a full page load**: the locale param is in the root
+  layout. `i18n/localeSwitch.ts` stores the on-screen section and restores it
+  from an inline script at the end of `<body>`, before hydration.
+- **Case cards are anonymous**: the shelf reads `data/caseCards.ts` (niche, no
+  client name). A new case needs an entry there to show on the shelf; client
+  names and sourced figures stay on the case page.
+- **Moved landing anchors**: `#process`, `#comparison`, `#chat`, `#faq` redirect
+  to their pages (`LegacyAnchors`), so old shared links and ads keep working.
 - **Chat nudge** (proactive teaser bubble) shows once per browser session
   after ~18s on the page while the chat is closed; the spent flag lives in
   `sessionStorage` under `st-chat-nudge-v1`.

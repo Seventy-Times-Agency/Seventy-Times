@@ -10,29 +10,32 @@ type Props = {
   className?: string;
 };
 
+// How far around the button the pull starts, and how far it may travel.
+const REACH = 22;
+const MAX_SHIFT = 12;
+
+const clamp = (n: number) => Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, n));
+
 /**
- * Magnetic wrapper — translates its child toward the cursor while it
- * hovers, snapping back when the cursor leaves. Spring-smoothed.
+ * Magnetic wrapper: the child leans toward the cursor and settles back
+ * when it leaves. The outer frame never moves and is larger than the
+ * button, so the distance is measured from a fixed point. Measuring the
+ * moving element itself made the button twitch and drop the hover at its
+ * edge.
  *
- * Becomes a passthrough on coarse-pointer / small-viewport devices —
- * the magnetic pull only makes sense with a hovering mouse, and the
- * spring loop ran needlessly on phones where no `mousemove` fires.
+ * Becomes a passthrough on touch and small screens.
  */
-export default function Magnetic({
-  children,
-  strength = 0.35,
-  className,
-}: Props) {
+export default function Magnetic({ children, strength = 0.35, className }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 220, damping: 18, mass: 0.5 });
-  const springY = useSpring(y, { stiffness: 220, damping: 18, mass: 0.5 });
+  const springX = useSpring(x, { stiffness: 170, damping: 17, mass: 0.6 });
+  const springY = useSpring(y, { stiffness: 170, damping: 17, mass: 0.6 });
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia(
-      "(min-width: 768px) and (hover: hover) and (pointer: fine)",
+      "(min-width: 768px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
     );
     setEnabled(mq.matches);
     const onChange = (e: MediaQueryListEvent) => setEnabled(e.matches);
@@ -48,10 +51,8 @@ export default function Magnetic({
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    x.set((e.clientX - cx) * strength);
-    y.set((e.clientY - cy) * strength);
+    x.set(clamp((e.clientX - (rect.left + rect.width / 2)) * strength));
+    y.set(clamp((e.clientY - (rect.top + rect.height / 2)) * strength));
   };
 
   const handleLeave = () => {
@@ -60,14 +61,16 @@ export default function Magnetic({
   };
 
   return (
-    <motion.div
+    <div
       ref={ref}
       className={className}
-      style={{ x: springX, y: springY, display: "inline-flex" }}
+      style={{ display: "inline-flex", padding: REACH, margin: -REACH }}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
     >
-      {children}
-    </motion.div>
+      <motion.div style={{ x: springX, y: springY, display: "inline-flex" }}>
+        {children}
+      </motion.div>
+    </div>
   );
 }

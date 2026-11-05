@@ -65,7 +65,7 @@ export default function CaseShowcase({ item, showcase: s }: Props) {
   const [before, after] = s.spendNote[locale].split("{spend}");
   const name = s.name.map((n) => (typeof n === "string" ? n : n[locale]));
   const long = name.some((n) => n.length > LONG_NAME);
-  const rootStyle = { "--case-accent": item.study.accent } as CSSProperties;
+  const rootStyle = { "--case-accent": "var(--accent)" } as CSSProperties;
 
   return (
     <>

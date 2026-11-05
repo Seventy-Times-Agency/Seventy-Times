@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
-import Image from "next/image";
+import VanessaMark from "@/components/ui/VanessaMark";
 import { AnimatePresence, motion } from "framer-motion";
 import { useT } from "@/i18n/context";
 import { track } from "@/lib/analytics";
@@ -326,14 +326,7 @@ export default function ChatWidget() {
           >
             <div className={styles.header}>
               <div className={styles.avatar}>
-                <Image
-                  src="/vanessa-avatar.png"
-                  alt={t.chatAlt}
-                  className={styles.avatarImg}
-                  width={48}
-                  height={48}
-                  priority={false}
-                />
+                <VanessaMark title={t.chatAlt} />
               </div>
               <div className={styles.meta}>
                 <span className={styles.name}>{t.chatName}</span>
@@ -511,15 +504,7 @@ export default function ChatWidget() {
         aria-label={open ? t.chatClose : t.chatOpen}
         type="button"
       >
-        <Image
-          src="/vanessa-avatar.png"
-          alt=""
-          className={styles.toggleImg}
-          width={56}
-          height={56}
-          priority={false}
-          aria-hidden="true"
-        />
+        <VanessaMark className={styles.toggleImg} />
         <span className={styles.toggleDot} />
         {!open && <span className={styles.toggleLabel}>{t.chatLabel}</span>}
       </button>

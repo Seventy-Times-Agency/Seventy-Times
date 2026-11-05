@@ -93,7 +93,7 @@ export default async function ServicePage(
         "@type": "ListItem",
         position: 2,
         name: t.navServices,
-        item: `${siteConfig.url}/${locale}#services`,
+        item: `${siteConfig.url}/${locale}/services`,
       },
       {
         "@type": "ListItem",

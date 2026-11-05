@@ -31,7 +31,7 @@ export default function ServiceDetail({ item }: Props) {
         <nav className={styles.breadcrumbs} aria-label={t.casesBreadcrumbs}>
           <Link href={home}>{siteConfig.shortName}</Link>
           <span aria-hidden="true">›</span>
-          <Link href={`${home}#services`}>{t.navServices}</Link>
+          <Link href={localePath("/services")}>{t.navServices}</Link>
           <span aria-hidden="true">›</span>
           <span aria-current="page">{title}</span>
         </nav>
@@ -50,7 +50,7 @@ export default function ServiceDetail({ item }: Props) {
                 {t.hxCtaBrief}
                 <i aria-hidden="true">↗</i>
               </Link>
-              <Link href={`${home}#cases`} className={styles.secondary}>
+              <Link href={localePath("/cases")} className={styles.secondary}>
                 {t.svcDetailSecondaryCta}
               </Link>
             </div>
@@ -64,9 +64,6 @@ export default function ServiceDetail({ item }: Props) {
             <div className={styles.stageInner}>
               <ServiceVisual kind={item.key} t={t} size="lg" />
             </div>
-            {item.key === "targeting" && (
-              <span className={styles.sticker}>{t.svcAdsSticker}</span>
-            )}
           </div>
         </section>
 
@@ -91,7 +88,7 @@ export default function ServiceDetail({ item }: Props) {
             {includes.map((entry, i) => (
               <Reveal key={entry} delay={i * 0.05}>
                 <div className={styles.include}>
-                  <span className={styles.includeNum}>{String(i + 1).padStart(2, "0")}</span>
+                  <span className={styles.includeTick} aria-hidden="true" />
                   <span>{entry}</span>
                 </div>
               </Reveal>

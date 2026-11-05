@@ -1,364 +1,224 @@
-/* Services as a conveyor: four modules in the order a lead travels
- * (site → ads → AI bot → automation). Each module opens with a small
- * live "screen" of what it does, joined by a neon pipe with a pulse
- * running through it, ending in a "ready leads — with you" bar.
- * Mobile-first: modules stack; four in a row from 1024px. */
-
 .section {
   position: relative;
+  padding: 56px 18px 48px;
   max-width: var(--container);
   margin: 0 auto;
-  padding: 56px 18px 64px;
 }
 
-/* ── Header ─────────────────────────────────────────────────── */
 .header {
   display: grid;
-  gap: 18px;
-  margin-bottom: 48px;
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
 .title {
-  margin-top: 14px;
-  font-size: var(--fs-h2);
+  font-size: clamp(38px, 11vw, 64px);
   font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.05em;
-}
-
-.titleLine {
-  display: block;
-  padding-left: 0.4em;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  margin-top: 14px;
 }
 
 .lead {
-  max-width: 440px;
-  font-size: var(--fs-body-lg);
-  line-height: 1.5;
-  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.6;
   color: var(--text-muted);
+  max-width: 420px;
 }
 
-/* ── Conveyor ───────────────────────────────────────────────── */
-.conveyor {
-  position: relative;
-}
-
-/* The pipe runs behind the cards at screen height; it shows in the gaps. */
-.pipe {
-  display: none;
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  right: 0;
-  top: 92px;
-  height: 2px;
-  background: linear-gradient(90deg, rgba(var(--growth-rgb), 0.15), rgba(var(--growth-rgb), 0.6));
-  box-shadow: var(--neon-soft);
-}
-
-.pulse {
-  position: absolute;
-  top: -4px;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--growth);
-  box-shadow: 0 0 0 4px rgba(var(--growth-rgb), 0.18);
-  animation: travel 6s linear infinite;
-}
-
-@keyframes travel {
-  from { left: 0; }
-  to { left: calc(100% - 10px); }
-}
-
-/* Phones: a swipeable row — one card and the edge of the next. */
 .modules {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  gap: 14px;
-  margin: 0 -18px;
-  padding: 28px 18px 30px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-left: 18px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  display: grid;
+  gap: 16px;
 }
 
-.modules::-webkit-scrollbar {
-  display: none;
+.slot {
+  height: 100%;
 }
 
-.modules > * {
-  flex: 0 0 82%;
-  scroll-snap-align: start;
-}
-
-.swipe {
-  display: block;
-  margin-bottom: -14px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-/* ── Module card ────────────────────────────────────────────── */
 .module {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: visible;
+  padding: 12px 12px 18px;
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: var(--base);
-  box-shadow: var(--raise);
-  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  background: rgba(255, 255, 255, 0.018);
+  overflow: hidden;
+  transition: border-color 0.3s ease, background 0.3s ease;
 }
 
-.module:hover {
-  --vis-glow: 0.2;
-  transform: translateY(-6px);
-  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.35), var(--neon-soft);
+.module:hover,
+.module:focus-within {
+  border-color: var(--line-hi);
+  background: rgba(200, 212, 222, 0.035);
 }
 
-/* Glow ring that lights up as the pulse passes this module.
-   The pulse crosses module i at (i + 0.5) / 4 of its 6s run. */
-.module::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow: 0 0 0 1px rgba(var(--growth-rgb), 0.7);
-  opacity: 0;
-  animation: lit 6s linear infinite;
-  animation-delay: calc(0.45s + var(--i) * 1.5s);
-}
-
-@keyframes lit {
-  0% { opacity: 0; }
-  6% { opacity: 1; }
-  22% { opacity: 0; }
-  100% { opacity: 0; }
-}
-
-/* Huge outline number in the card's bottom-right corner. */
-.bigNum {
-  position: absolute;
-  right: 14px;
-  bottom: 4px;
-  font-size: 84px;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.06em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(var(--accent-rgb), 0.22);
-  pointer-events: none;
-  user-select: none;
+/* Keeps the layout height of the collapsed picture while the picture
+   itself grows out of it, absolutely positioned. */
+.visSlot {
+  position: relative;
+  flex: none;
+  height: 156px;
 }
 
 .visWrap {
-  position: relative;
-  padding: 14px 14px 0;
+  --vis-grow: 0px;
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto;
+  height: calc(156px + var(--vis-grow));
+  transition: height 0.45s var(--ease);
 }
 
 .role {
   position: absolute;
-  z-index: 2;
-  top: 4px;
-  left: 6px;
-  padding: 6px 10px;
-  background: var(--base-lo);
-  color: var(--ink);
+  z-index: 3;
+  top: 9px;
+  left: 12px;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  white-space: nowrap;
-  transform: rotate(-3deg);
+  color: var(--text-dim);
 }
 
 .role b {
   color: var(--accent);
+  font-weight: 700;
 }
 
-/* ── Card body ──────────────────────────────────────────────── */
+.bodyClip {
+  flex: 1;
+  overflow: hidden;
+}
+
 .body {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 20px 20px 0;
+  padding: 18px 8px 0;
+  transition: transform 0.45s var(--ease);
 }
 
 .moduleTitle {
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.05;
-}
-
-.module:hover .moduleTitle {
-  color: var(--accent);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--white);
 }
 
 .pitch {
-  font-size: 13.5px;
-  line-height: 1.45;
-  font-weight: 600;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--text-muted);
+  transition: opacity 0.3s ease;
 }
 
+/* The drawn tick: two strokes, no pill behind the line. */
 .points {
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 4px;
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  transition: opacity 0.25s ease;
 }
 
 .points li {
-  padding: 6px 10px;
-  border-radius: var(--radius-pill);
-  box-shadow: var(--press-s);
-  font-size: 11.5px;
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--text);
+  position: relative;
+  padding-left: 20px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-muted);
 }
 
 .points li::before {
-  content: "✓ ";
-  color: var(--accent);
-  font-weight: 800;
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 3px;
+  width: 6px;
+  height: 10px;
+  border-right: 1.5px solid var(--accent);
+  border-bottom: 1.5px solid var(--accent);
+  transform: rotate(40deg);
 }
 
 .more {
-  position: relative;
-  z-index: 1;
-  margin: auto 20px 20px;
-  padding-top: 18px;
-  align-self: flex-start;
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
+  margin: 16px 8px 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
   font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text-muted);
-  transition: color 0.2s ease;
+  color: var(--text);
+}
+
+.more::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
 }
 
 .more i {
   font-style: normal;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--base);
-  box-shadow: var(--raise-s);
-  color: var(--accent);
-  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.more:hover,
-.module:hover .more {
-  color: var(--ink);
+  transition: transform 0.25s var(--ease);
 }
 
 .module:hover .more i {
-  background: var(--accent);
-  color: var(--base-lo);
-  box-shadow: var(--neon);
+  transform: translateX(4px);
 }
 
 .more:focus-visible {
+  outline: none;
+}
+
+.module:has(.more:focus-visible) {
   outline: 2px solid var(--accent);
-  outline-offset: 4px;
-  border-radius: 6px;
+  outline-offset: 2px;
 }
 
-/* Brutal sticker on the ads module: the one hard number we promise. */
-.sticker {
-  position: absolute;
-  z-index: 3;
-  top: 146px;
-  right: -10px;
-  max-width: 160px;
-  padding: 8px 10px;
-  background: var(--ink);
-  color: var(--base-lo);
-  box-shadow: 0 18px 36px -14px rgba(0, 0, 0, 0.65);
-  transform: rotate(4deg);
-  font-size: 11px;
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-/* ── Output bar ─────────────────────────────────────────────── */
-.output {
-  position: relative;
-  z-index: 1;
-  display: flex;
+.all {
+  display: inline-flex;
   align-items: center;
-  gap: 18px;
-  margin-top: 32px;
-  padding: 20px 24px;
-  background: var(--ink);
-  color: var(--base-lo);
-  border-radius: 6px;
-  box-shadow: var(--brutal);
-}
-
-.outputArrow {
-  flex: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--accent);
-  color: var(--base-lo);
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.outputTitle {
-  font-size: clamp(20px, 2.2vw, 28px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-}
-
-.outputBody {
-  margin-top: 4px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #3f444c;
-}
-
-/* ── On-request extras: one quiet line, not a block ─────────── */
-.extras {
-  display: none;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 10px;
+  gap: 12px;
   margin-top: 26px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  border-bottom: 1px solid var(--line-hi);
+  padding-bottom: 4px;
+}
+
+.all i {
+  font-style: normal;
+  transition: transform 0.25s var(--ease);
+}
+
+.all:hover i {
+  transform: translateX(4px);
+}
+
+.extras {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line-strong);
 }
 
 .extrasLabel {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-dim);
 }
@@ -367,68 +227,67 @@
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px 20px;
 }
 
 .extrasList li {
-  padding: 5px 11px;
-  border-radius: var(--radius-pill);
-  box-shadow: inset 0 0 0 1px var(--line-strong);
-  font-size: 11.5px;
-  font-weight: 600;
+  font-size: 14px;
   color: var(--text-muted);
 }
 
-/* ── Tablet+ ────────────────────────────────────────────────── */
-@media (min-width: 768px) {
-  .section {
-    padding: 72px 48px 80px;
-  }
-
+@media (min-width: 640px) {
   .modules {
-    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-  }
-
-  .swipe {
-    display: none;
-  }
-
-  .extras {
-    display: flex;
   }
 }
 
-/* ── Desktop: the full conveyor ─────────────────────────────── */
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
+  .section {
+    padding: 96px 48px 72px;
+  }
+
   .header {
     grid-template-columns: 1fr auto;
     align-items: end;
     gap: 40px;
+    margin-bottom: 44px;
   }
 
-  .pipe {
-    display: block;
-  }
-
-  .modules {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 28px;
+  .title {
+    font-size: var(--fs-h2);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .pulse,
-  .module::after {
-    animation: none;
+@media (min-width: 1024px) {
+  .modules {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Hover-capable screens only. The body slides down behind the growing
+   picture and its small print fades, inside a clip of a fixed size. */
+@media (min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .module:hover .visWrap {
+    --vis-grow: 104px;
   }
 
-  .module,
-  .module:hover {
-    transform: none;
+  .module:hover .body {
+    transform: translateY(104px);
+  }
+
+  .module:hover .points {
+    opacity: 0;
+  }
+
+  .modulesTeaser .module:hover .visWrap {
+    --vis-grow: 60px;
+  }
+
+  .modulesTeaser .module:hover .body {
+    transform: translateY(60px);
+  }
+
+  .modulesTeaser .module:hover .pitch {
+    opacity: 0;
   }
 }

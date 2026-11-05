@@ -77,7 +77,8 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  transform: rotate(-2deg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
 }
 
 .consoleStep b {
@@ -138,13 +139,13 @@
 }
 
 .mod_setup i {
-  background: #d98f3e;
+  background: var(--text-muted);
   box-shadow: none;
   animation: pulse 1.6s ease-in-out infinite;
 }
 
 .mod_setup .modState {
-  color: #d98f3e;
+  color: var(--text-muted);
 }
 
 /* Live modules read as "on": green dot, green status, green edge. */
@@ -196,14 +197,9 @@
   transition: background-color 0.6s var(--ease);
 }
 
-/* Solid colour (so it can transition) + a darkening fade to the base. */
 .bars .barOn {
-  background-image: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.35));
+  background-color: var(--accent-deep);
 }
-
-.bars .barLow { background-color: #c8574d; }
-.bars .barMid { background-color: #d98f3e; }
-.bars .barHigh { background-color: var(--growth); }
 
 /* Event tags */
 .tags {
@@ -224,9 +220,8 @@
 }
 
 .tagLeads {
-  background: var(--accent);
-  color: var(--base-lo);
-  box-shadow: var(--neon);
+  box-shadow: var(--raise-s);
+  color: var(--text);
 }
 
 .tagCut {
@@ -241,10 +236,8 @@
 }
 
 .tagAccount {
-  background: var(--ink);
-  color: var(--base-lo);
-  box-shadow: 0 18px 36px -14px rgba(0, 0, 0, 0.65);
-  border-radius: 4px !important;
+  box-shadow: var(--raise-s);
+  color: var(--text);
 }
 
 /* ── Steps ──────────────────────────────────────────────────── */
@@ -346,26 +339,6 @@
   color: var(--text-muted);
 }
 
-.principle {
-  display: none;
-  justify-self: start;
-  padding: 6px 10px;
-  background: var(--base-lo);
-  color: var(--ink);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  transform: rotate(-1.5deg);
-}
-
-.principle b {
-  margin-right: 4px;
-  color: var(--accent);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-size: 10px;
-}
-
 /* Active step */
 .stepActive .node {
   background: var(--accent);
@@ -403,16 +376,14 @@
   gap: 12px;
   justify-items: start;
   padding: 24px 26px;
-  background: var(--ink);
-  color: var(--base-lo);
-  border-radius: 6px;
-  box-shadow: var(--brutal);
-  transform: rotate(-1deg);
-  transition: transform 0.35s var(--ease);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--line-strong);
+  transition: transform 0.35s var(--ease), border-color 0.35s ease;
 }
 
 .finaleOn .finaleCard {
-  transform: rotate(-1deg) translateX(4px);
+  transform: translateX(4px);
+  border-color: var(--line-hi);
 }
 
 .finaleTitle {
@@ -425,9 +396,8 @@
 .finaleBody {
   max-width: 440px;
   font-size: 14.5px;
-  font-weight: 600;
   line-height: 1.5;
-  color: #3f444c;
+  color: var(--text-muted);
 }
 
 .finaleBtn {
@@ -437,19 +407,20 @@
   margin-top: 4px;
   padding: 13px 22px;
   border-radius: var(--radius-pill);
-  background: var(--base-lo);
-  color: var(--accent);
+  background: var(--accent);
+  color: var(--black);
   font-size: 14px;
-  font-weight: 800;
-  transition: transform 0.2s var(--ease);
+  font-weight: 700;
+  transition: transform 0.2s var(--ease), background 0.2s ease;
 }
 
 .finaleBtn:hover {
+  background: var(--accent-strong);
   transform: translateY(-2px);
 }
 
 .finaleBtn:focus-visible {
-  outline: 2px solid var(--base-lo);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -480,10 +451,6 @@
     top: 120px;
   }
 
-  .principle {
-    display: inline-block;
-  }
-
 
   .steps {
     gap: 28px;
@@ -504,15 +471,3 @@
   }
 }
 
-/* Every primary CTA turns growth-green the moment you aim at it. */
-.finaleBtn {
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
-}
-
-.finaleBtn:hover,
-.finaleBtn:active {
-  background: var(--growth);
-  color: var(--base-lo);
-  border-color: transparent;
-  box-shadow: 0 10px 28px -10px rgba(var(--growth-rgb), 0.6);
-}

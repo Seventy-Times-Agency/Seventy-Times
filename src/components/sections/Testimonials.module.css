@@ -11,8 +11,9 @@
   grid-template-columns: 1fr 1fr;
   gap: 48px;
   align-items: end;
-  margin-bottom: 40px;
-  padding: 0 48px 16px;
+  margin-bottom: 56px;
+  padding: 0 48px 36px;
+  border-bottom: 1px solid var(--line);
 }
 
 .headerLeft {
@@ -25,12 +26,13 @@
   font-size: var(--fs-h1);
   font-weight: 800;
   line-height: 0.95;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
 }
 
-/* Paired with the global .neonOutline class in the TSX. */
 .titleItalic {
-  font-style: normal;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--line-hi);
 }
 
 .headerRight {
@@ -48,35 +50,29 @@
   text-align: right;
 }
 
-/* Secondary action — raised pill, pressed on click. */
 .reviewBtn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 24px;
+  padding: 13px 22px;
   border-radius: var(--radius-pill);
-  background: var(--base);
-  box-shadow: var(--raise-s);
+  background: transparent;
+  border: 1px solid var(--line-strong);
   color: var(--text);
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  transition: color 0.2s ease, box-shadow 0.2s ease;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .reviewBtn:hover {
-  color: var(--accent);
-  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--accent-rgb), 0.17);
-}
-
-.reviewBtn:active {
-  box-shadow: var(--press-s);
+  background: rgba(200, 212, 222, 0.05);
+  border-color: var(--accent);
 }
 
 .reviewBtn:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 /* Carousel ─────────────────────────────────────────────── */
@@ -87,8 +83,7 @@
 .track {
   display: flex;
   gap: 22px;
-  /* Vertical padding leaves room for the raised shadow. */
-  padding: 16px 48px 40px;
+  padding: 4px 48px 32px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -106,39 +101,34 @@
   scroll-snap-align: start;
   padding: 44px 36px 38px;
   border-radius: var(--radius-lg);
-  background: var(--base);
-  box-shadow: var(--raise);
+  background: rgba(200, 212, 222, 0.02);
+  border: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   gap: 18px;
+  overflow: hidden;
   transition:
-    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease,
     transform 0.4s var(--ease);
 }
 
-/* Number badge — small pressed well. */
 .principleBadge {
-  align-self: flex-start;
   display: inline-block;
-  padding: 7px 12px;
-  border-radius: var(--radius-pill);
-  background: var(--base);
-  box-shadow: var(--press-s);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .principleTitle {
   font-size: clamp(22px, 2vw, 28px);
   font-weight: 800;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   line-height: 1.15;
   color: var(--text);
-  transition: color 0.25s ease;
 }
 
 .principleBody {
@@ -148,20 +138,30 @@
   flex: 1;
 }
 
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    500px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(200, 212, 222, 0.06),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.17);
+  transform: translateY(-4px);
+  border-color: var(--line-hi);
+  background: rgba(200, 212, 222, 0.04);
 }
 
-.card:hover .principleTitle {
-  color: var(--accent);
+.card:hover::before {
+  opacity: 1;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .card:hover {
-    transform: none;
-  }
-}
 
 /* Controls row ─────────────────────────────────────────── */
 .controls {
@@ -169,86 +169,71 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 48px;
-  margin-top: 4px;
+  margin-top: 12px;
   gap: 24px;
 }
 
-/* Progress — pressed groove with a neon fill. */
 .progress {
   flex: 1;
-  height: 8px;
-  border-radius: var(--radius-pill);
-  background: var(--base);
-  box-shadow: var(--press-s);
+  height: 1px;
+  background: var(--line);
   position: relative;
   max-width: 420px;
 }
 
 .progressFill {
   position: absolute;
-  top: 2px;
-  left: 2px;
-  bottom: 2px;
-  max-width: calc(100% - 4px);
-  border-radius: var(--radius-pill);
+  top: 0;
+  left: 0;
+  bottom: 0;
   background: var(--accent);
-  box-shadow: var(--neon-soft);
   transform-origin: left;
   transition: width 0.4s var(--ease);
 }
 
 .navButtons {
   display: flex;
-  gap: 14px;
+  gap: 12px;
 }
 
 .navBtn {
   width: 48px;
   height: 48px;
-  border: 0;
   border-radius: 50%;
-  background: var(--base);
-  box-shadow: var(--raise-s);
+  border: 1px solid var(--line-strong);
+  background: transparent;
   color: var(--text);
   font-size: 18px;
   display: grid;
   place-items: center;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s var(--ease);
 }
 
 .navBtn:hover:not(:disabled) {
   background: var(--accent);
-  color: var(--base-lo);
-  box-shadow: var(--neon);
-}
-
-.navBtn:active:not(:disabled) {
-  background: var(--base);
-  color: var(--accent);
-  box-shadow: var(--press-s);
+  color: var(--black);
+  border-color: var(--accent);
+  transform: translateY(-1px);
 }
 
 .navBtn:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 .navBtn:disabled {
-  box-shadow: var(--press-s);
-  color: var(--text-dim);
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
 .counter {
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--text-dim);
   min-width: 56px;
   text-align: center;
-  font-variant-numeric: tabular-nums;
 }
 
 /*  Base (mobile-first): formerly @media (max-width: 900px).  */
@@ -269,7 +254,7 @@
   }
 
 .track {
-    padding: 16px 24px 36px;
+    padding: 4px 24px 28px;
   }
 
 .controls {
@@ -292,7 +277,7 @@
   }
 
 .track {
-    padding: 14px 18px 30px;
+    padding: 4px 18px 20px;
     gap: 12px;
   }
 
@@ -325,7 +310,7 @@
     font-size: var(--fs-h1);
   }
   .track {
-    padding: 16px 24px 36px;
+    padding: 4px 24px 28px;
     gap: 22px;
   }
   .card {
@@ -359,7 +344,7 @@
     text-align: right;
   }
   .track {
-    padding: 16px 48px 40px;
+    padding: 4px 48px 32px;
   }
   .controls {
     padding: 0 48px;

@@ -2,9 +2,8 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(8, 9, 12, 0.6);
+  background: rgba(0, 0, 0, 0.62);
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,10 +14,9 @@
   position: relative;
   width: 100%;
   max-width: 460px;
-  background: var(--base);
-  border: 0;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.1);
+  background: var(--surface, #11141b);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg, 18px);
   padding: 32px 28px;
   display: flex;
   flex-direction: column;
@@ -43,24 +41,20 @@
   display: grid;
   place-items: center;
   transition: color 0.18s ease;
-  isolation: isolate;
 }
 .close::before {
   content: "";
   position: absolute;
-  z-index: -1;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--base);
-  box-shadow: var(--raise-s);
-  transition: box-shadow 0.18s ease;
+  transition: background 0.18s ease;
 }
 .close:hover {
-  color: var(--accent);
+  color: var(--white);
 }
 .close:hover::before {
-  box-shadow: var(--press-s), 0 0 0 1px var(--accent), var(--neon-soft);
+  background: rgba(255, 255, 255, 0.06);
 }
 .close:focus-visible {
   outline: 2px solid var(--accent);
@@ -105,30 +99,29 @@
   gap: 8px;
   padding: 12px 22px;
   border-radius: var(--radius-pill);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 14px;
-  transition: transform 0.18s var(--ease), box-shadow 0.18s ease, color 0.18s ease;
+  transition: transform 0.18s var(--ease);
   border: 0;
   cursor: pointer;
 }
 
 .primary {
   background: var(--accent);
-  color: var(--base-lo);
-  box-shadow: var(--neon);
+  color: var(--black);
 }
 .primary:hover {
   transform: translateY(-2px);
 }
 
 .secondary {
-  background: var(--base);
-  box-shadow: var(--raise-s);
+  background: transparent;
+  border: 1px solid var(--line);
   color: var(--text-muted);
 }
 .secondary:hover {
-  color: var(--accent);
-  box-shadow: var(--press-s);
+  color: var(--white);
+  border-color: var(--text-muted);
 }
 
 .primary:focus-visible,
@@ -156,17 +149,4 @@
   .title {
     font-size: 26px;
   }
-}
-
-/* Every primary CTA turns growth-green the moment you aim at it. */
-.primary {
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
-}
-
-.primary:hover,
-.primary:active {
-  background: var(--growth);
-  color: var(--base-lo);
-  border-color: transparent;
-  box-shadow: 0 10px 28px -10px rgba(var(--growth-rgb), 0.6);
 }

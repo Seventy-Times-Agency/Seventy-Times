@@ -1,508 +1,122 @@
-/* Comparison — "Seventy Times vs the alternatives".
-   Mobile-first: each criterion is a raised accordion card. From 901px
-   the block becomes one raised table whose "Seventy Times" column is the
-   section's single brutal (light-ink) element. */
-
+/* Plain two-way comparison: hairlines and text, no table chrome. */
 .section {
   position: relative;
+  padding: 56px 18px 48px;
   max-width: var(--container);
   margin: 0 auto;
-  padding: 40px 18px 36px;
 }
 
 .header {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 26px;
-  align-items: end;
-}
-
-.headerLeft {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
 .title {
-  font-size: clamp(28px, 7.5vw, 44px);
+  font-size: clamp(28px, 8vw, 52px);
   font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.05em;
-  margin: 0;
-  color: var(--text);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  margin-top: 14px;
 }
 
-/* Paired with the global .neonOutline class in the TSX. */
 .titleItalic {
-  font-style: normal;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--line-hi);
 }
 
 .lead {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--text-muted);
-  max-width: 480px;
+  max-width: 420px;
 }
 
-/* ── "Us vs them" match-up next to the title ────────────────── */
-.vsCard {
-  position: relative;
-  overflow: hidden;
-  display: grid;
-  gap: 10px;
-  max-width: 440px;
-  padding: 14px 16px;
-  border-radius: var(--radius-md);
-  background: var(--base);
-  box-shadow: var(--raise-s), 0 0 0 1px var(--line);
-}
-
-.vsRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.vsUs {
-  flex: none;
-  padding: 6px 11px;
-  border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--base-lo);
-  font-size: 11.5px;
-  font-weight: 800;
-}
-
-.vsMark {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--growth);
-  color: var(--base-lo);
-  font-size: 9.5px;
-  font-weight: 900;
-  text-transform: uppercase;
-  animation: vsPulse 2.4s ease-in-out infinite;
-}
-
-/* The opponent swaps between agency and freelancer, slot-machine style. */
-.vsSlot {
-  position: relative;
-  flex: 1;
-  min-width: 0;
-  height: 28px;
-  overflow: hidden;
-}
-
-.vsThem {
-  position: absolute;
-  inset: 0 auto 0 0;
-  display: flex;
-  align-items: center;
-  padding: 0 11px;
-  border-radius: var(--radius-pill);
-  box-shadow: inset 0 0 0 1px var(--line-strong);
-  color: var(--text-muted);
-  font-size: 11.5px;
-  font-weight: 700;
-  white-space: nowrap;
-  animation: vsSwap 6s var(--ease) infinite;
-}
-
-.vsThem + .vsThem {
-  animation-delay: -3s;
-}
-
-.vsCard .lead {
-  max-width: none;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-dim);
-}
-
-.vsScan {
-  position: absolute;
-  inset: 0 auto 0 -40%;
-  width: 40%;
-  background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.06), transparent);
-  animation: vsSweep 6s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes vsPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--growth-rgb), 0.45); }
-  50% { box-shadow: 0 0 0 7px rgba(var(--growth-rgb), 0); }
-}
-
-@keyframes vsSwap {
-  0% { transform: translateY(100%); opacity: 0; }
-  8%, 45% { transform: none; opacity: 1; }
-  53%, 100% { transform: translateY(-100%); opacity: 0; }
-}
-
-@keyframes vsSweep {
-  0% { left: -40%; }
-  60%, 100% { left: 110%; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vsMark,
-  .vsScan {
-    animation: none;
-  }
-
-  .vsThem {
-    animation: none;
-  }
-
-  .vsThem + .vsThem {
-    display: none;
-  }
-}
-
-/* ── Table shell ───────────────────────────────────────────── */
-.tableWrap {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  background: transparent;
-}
-
-.colHeaders {
+.head {
   display: none;
-  grid-template-columns: 1.4fr 1.3fr 1fr 1fr;
-}
-
-.headCell {
-  padding: 20px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-height: 84px;
-  justify-content: center;
-}
-
-/* Top cap of the brutal column. */
-.headCellUs {
-  position: relative;
-  z-index: 1;
-  background: var(--ink);
-  color: var(--base-lo);
-  border-radius: 6px 6px 0 0;
-  box-shadow: var(--brutal);
-}
-
-.headBadge {
-  display: inline-flex;
-  align-self: flex-start;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--base-lo);
-  padding: 6px 10px;
-  transform: rotate(-2deg);
-}
-
-.headName {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--base-lo);
-}
-
-.headLabel {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-dim);
 }
 
 .rows {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  border-top: 1px solid var(--line-strong);
 }
 
-/* Mobile: each criterion is a raised card. */
 .row {
   display: grid;
-  grid-template-columns: 1fr;
   gap: 10px;
-  padding: 16px 16px;
-  border-radius: var(--radius-md);
-  background: var(--base);
-  box-shadow: var(--raise-s);
-  transition: box-shadow 0.25s ease;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
 }
 
-.rowOpen {
-  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--accent-rgb), 0.17);
-}
-
-.rowLabel {
-  /* Accordion trigger on mobile: full-width tappable row. */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  padding: 0;
-  background: none;
-  border: 0;
-  text-align: left;
-  font-family: inherit;
-  font-size: 10px;
-  font-weight: 800;
+.label {
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-dim);
-  cursor: pointer;
 }
 
-.rowLabel:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-
-.rowChevron {
-  display: inline-grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--base);
-  box-shadow: var(--raise-s);
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 1;
-  color: var(--accent);
-}
-
-.rowOpen .rowChevron {
-  box-shadow: var(--press-s);
-}
-
-.cell {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  padding: 0;
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--text-muted);
-}
-
-.cellUs {
-  color: var(--text);
-  font-weight: 700;
+.us,
+.them {
   font-size: 15px;
+  line-height: 1.5;
 }
 
-.checkUs {
-  color: var(--accent);
-  font-weight: 800;
-  flex-shrink: 0;
-  text-shadow: var(--neon-text);
+.us {
+  font-weight: 700;
+  color: var(--white);
 }
 
-/* Agency / Freelancer: hidden until the accordion opens, then shown as
-   pressed wells with their label prefixed via pseudo-content. */
-.cell:nth-child(3),
-.cell:nth-child(4) {
-  display: none;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--base);
-  box-shadow: var(--press-s);
-  font-size: 12.5px;
-  color: var(--text-muted);
-}
-
-.rowOpen .cell:nth-child(3),
-.rowOpen .cell:nth-child(4) {
-  display: block;
-}
-
-.cell:nth-child(3)::before,
-.cell:nth-child(4)::before {
+.them {
   color: var(--text-dim);
+}
+
+.who {
+  display: block;
+  margin-bottom: 2px;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-right: 6px;
-}
-
-.cell:nth-child(3)::before {
-  content: "Agency — ";
-}
-
-.cell:nth-child(4)::before {
-  content: "Freelancer — ";
-}
-
-.disclaimer {
-  margin-top: 28px;
-  font-size: 12px;
-  font-style: italic;
   color: var(--text-dim);
-  max-width: 720px;
 }
 
-/* "Show vs alternatives" toggle — mobile-only pressed pill (not
-   currently rendered by the TSX; styles kept for parity). */
-.altsToggle {
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 12px;
-  padding: 10px 14px;
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: var(--base);
-  box-shadow: var(--raise-s);
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease, color 0.2s ease;
-}
-
-.altsToggle:hover {
-  color: var(--accent);
-}
-
-.altsToggle:active {
-  box-shadow: var(--press-s);
-}
-
-.altsToggle:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.altsToggleArrow {
-  display: inline-grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--base);
-  box-shadow: var(--press-s);
-  color: var(--accent);
-  font-size: 14px;
-  line-height: 1;
-}
-
-/* ── 901px and up — full 4-column table ───────────────────── */
-@media (min-width: 901px) {
+@media (min-width: 768px) {
   .section {
-    padding: 96px 48px;
+    padding: 96px 48px 72px;
   }
+
   .header {
-    grid-template-columns: 1.2fr 1fr;
-    gap: 32px;
-    margin-bottom: 56px;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 40px;
+    margin-bottom: 44px;
   }
+
   .title {
-    font-size: clamp(40px, 6vw, 76px);
-    line-height: 0.98;
-  }
-  .lead {
-    font-size: 16px;
+    font-size: var(--fs-h2);
   }
 
-  /* One raised card holds the whole table; padding leaves room for
-     the brutal column's hard offset shadow (no overflow clipping). */
-  .tableWrap {
-    gap: 0;
-    padding: 14px 22px 22px 14px;
-    border-radius: var(--radius-lg);
-    background: var(--base);
-    box-shadow: var(--raise);
-  }
-  .colHeaders {
+  .head,
+  .row {
     display: grid;
-  }
-  .rows {
-    gap: 0;
-  }
-  .row,
-  .rowOpen {
-    grid-template-columns: 1.4fr 1.3fr 1fr 1fr;
-    gap: 0;
-    padding: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-  .rowLabel {
-    padding: 18px 20px;
-    font-size: 11px;
-    border-top: 1px solid var(--line);
-    cursor: default;
-    pointer-events: none;
-  }
-  .rowChevron {
-    display: none;
-  }
-  .cell {
-    padding: 18px 18px;
-    font-size: 14px;
-    line-height: 1.5;
-    gap: 10px;
-    align-items: flex-start;
-    border-top: 1px solid var(--line);
+    grid-template-columns: minmax(150px, 0.7fr) 1.2fr 1.2fr;
+    gap: 28px;
+    align-items: baseline;
   }
 
-  /* Brutal column body: every cell is light ink with the hard accent
-     shadow; stacked cells read as one card because each later cell
-     paints over the previous one's bottom shadow. */
-  .cellUs {
-    position: relative;
-    z-index: 1;
-    background: var(--ink);
-    color: var(--base-lo);
+  .head {
+    padding-bottom: 14px;
+    font-size: 12px;
     font-weight: 700;
-    font-size: 14px;
-    border-top: 1px dashed var(--text-muted);
-    box-shadow: var(--brutal);
-  }
-  .row:last-child .cellUs {
-    border-radius: 0 0 6px 6px;
-  }
-  .cellUs .checkUs {
-    color: var(--base-lo);
-    text-shadow: none;
+    color: var(--text-dim);
   }
 
-  .cell:nth-child(3),
-  .cell:nth-child(4) {
-    display: flex;
-    padding: 18px 18px;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    font-size: 14px;
-    color: var(--text-muted);
+  .headUs {
+    color: var(--white);
   }
-  .cell:nth-child(3)::before,
-  .cell:nth-child(4)::before {
-    content: none;
-  }
-  .altsToggle {
+
+  .who {
     display: none;
   }
 }

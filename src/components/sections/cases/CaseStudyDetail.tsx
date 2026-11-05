@@ -42,7 +42,7 @@ export default function CaseStudyDetail({ item, related }: Props) {
         <nav className={styles.breadcrumbs} aria-label={t.casesBreadcrumbs}>
           <Link href={home}>{siteConfig.shortName}</Link>
           <span aria-hidden="true">›</span>
-          <Link href={`${home}#cases`}>{t.navCases}</Link>
+          <Link href={localePath("/cases")}>{t.navCases}</Link>
           <span aria-hidden="true">›</span>
           <span className={styles.breadcrumbCurrent} aria-current="page">
             {s.title[locale]}

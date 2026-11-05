@@ -14,76 +14,68 @@
   --bp-desktop: 1024px;
   --bp-wide: 1280px;
 
-  /* ── Palette: graphite neumorphism + one neon accent ─────
-   * The site is built from three materials:
-   *   raised  — soft card lifted off the page   (box-shadow: var(--raise))
-   *   pressed — well sunk into the page          (box-shadow: var(--press))
-   *   brutal  — light ink card, hard offset shadow (--ink bg + var(--brutal))
-   * and one neon accent used sparingly for glows and key highlights.
-   * Neumorphic shadows only read on the flat --base colour, so raised /
-   * pressed surfaces must use `background: var(--base)`. */
-  --base: #0d0e13;
-  --base-hi: #181a21;
-  --base-lo: #040407;
-
-  --black: var(--base);
+  /* ── IAA palette: cool graphite + Casper accents ────────── */
+  --black: #0a0b10;
   --black-pure: #000000;
-  --bg-deep: var(--base-lo);
-  --surface: var(--base);
-  --surface-2: #12131a;
-  --surface-3: var(--base-hi);
+  --bg-deep: #06060c;
+  --surface: #14151c;
+  --surface-2: #1c1d26;
+  --surface-3: #25262f;
 
-  --line: rgba(200, 212, 222, 0.08);
-  --line-strong: rgba(200, 212, 222, 0.16);
-  --line-hi: rgba(200, 212, 222, 0.3);
+  --line: rgba(200, 212, 222, 0.1);
+  --line-strong: rgba(200, 212, 222, 0.2);
+  --line-hi: rgba(200, 212, 222, 0.36);
 
+  /* Text — Casper-tinted instead of pure white */
   --white: #e8eef4;
   --text: #e8eef4;
-  --text-muted: #a3acb7;
-  --text-dim: #6c7480;
-  --text-faint: rgba(238, 241, 244, 0.62);
-  --ink: #e8eef4;
+  --text-muted: #a8b4c0;
+  --text-dim: #6c7480; /* cool dove grey */
+  /* 0.62 alpha against --black clears the WCAG AA contrast bar
+   * (~4.7:1). The previous 0.45 value rendered at ~3.8:1 and failed
+   * accessibility scanners on every placeholder. */
+  --text-faint: rgba(232, 238, 244, 0.62);
 
-  /* Logo silver (Casper steel, as in favicon.svg) — buttons, key words,
-     key figures. The palette is the logo's: silver on ink black. */
+  /* Casper accent — used for buttons, badges, glows, key highlights */
   --accent: #c8d4de;
-  --accent-rgb: 200, 212, 222;
-  --accent-strong: #dde5ec;
+  --accent-strong: #d8e2ec;
   --accent-deep: #8a9aa6;
-  --accent-glow: rgba(var(--accent-rgb), 0.2);
-  --accent-green: #4fae7c;
-  /* Growth green — charts and "up" figures only, so growth reads as
-     growth; never a button or brand colour. */
-  --growth: #4fae7c;
-  --growth-rgb: 79, 174, 124;
-  --growth-deep: #2f7f56;
+  --accent-glow: rgba(200, 212, 222, 0.4);
 
-  /* "Cut" / negative states. Deliberately neutral steel — no red on the
-     site; the palette is the logo's silver on ink. */
-  --signal: #8a9aa6;
-  --signal-rgb: 138, 154, 166;
+  /* Single restrained signal for "online" status */
+  --accent-green: #4ade80;
 
-  --raise: 12px 12px 28px var(--base-lo), -10px -10px 26px var(--base-hi);
-  --raise-s: 6px 6px 14px var(--base-lo), -5px -5px 12px var(--base-hi);
-  --press: inset 8px 8px 18px var(--base-lo), inset -7px -7px 16px var(--base-hi);
-  --press-s: inset 3px 3px 7px var(--base-lo), inset -3px -3px 6px var(--base-hi);
-  --brutal: 0 24px 48px -16px rgba(0, 0, 0, 0.7);
-  /* No glow: highlights are crisp 1px rings and solid fills. The token
-     names stay so components keep composing them into shadow lists. */
-  --neon: 0 0 0 1px rgba(var(--accent-rgb), 0.55);
-  --neon-soft: 0 0 0 transparent;
+  /* Aliases used by section and legal styles. Elevation is a hairline here,
+     and "growth" is a steel tone: green stays reserved for "online". */
+  --base: var(--surface);
+  --base-hi: var(--surface-3);
+  --base-lo: var(--black);
+  --ink: var(--white);
+  --accent-rgb: 200, 212, 222;
+  --growth: var(--text-muted);
+  --growth-rgb: 168, 180, 192;
+  --growth-deep: var(--accent-deep);
+  --signal: var(--text-dim);
+  --signal-rgb: 108, 116, 128;
+  --raise: inset 0 0 0 1px var(--line);
+  --raise-s: inset 0 0 0 1px var(--line);
+  --press: inset 0 0 0 1px var(--line);
+  --press-s: inset 0 0 0 1px var(--line);
+  --brutal: inset 0 0 0 1px var(--line-strong);
+  --neon: none;
+  --neon-soft: none;
   --neon-text: none;
 
   /* Effects */
-  --gradient-text: linear-gradient(180deg, #eef1f4 0%, #a3acb7 100%);
+  --gradient-text: linear-gradient(180deg, #e8eef4 0%, #a8b4c0 100%);
   --shadow-xl: 0 40px 100px -20px rgba(0, 0, 0, 0.65);
-  --shadow-card: var(--raise);
+  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
 
   /* Layout */
   --radius-xs: 6px;
   --radius-sm: 10px;
-  --radius-md: 18px;
-  --radius-lg: 26px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --radius-pill: 100px;
   --container: 1180px;
   --container-sm: 880px;
@@ -168,8 +160,8 @@ textarea {
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--base-lo);
+  background: var(--white);
+  color: var(--black);
 }
 
 /* Custom scrollbar */
@@ -198,30 +190,6 @@ textarea {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--text-dim);
-}
-
-/* Blocks that only earn their place on bigger screens. On phones the
-   page stays short and conversion-focused. */
-.hide-phone {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .hide-phone {
-    display: contents;
-  }
-}
-
-/* The phone-only counterpart (the mobile funnel landing). */
-@media (min-width: 768px) {
-  .only-phone {
-    display: none;
-  }
-}
-
-/* Outline heading word with a neon glow — the signature of the style. */
-.neonOutline {
-  color: var(--growth);
 }
 
 /* Keyframes */
@@ -328,6 +296,31 @@ html:lang(de) h3 {
   .shimmer {
     animation: none;
     background-position: 0 0;
+  }
+}
+
+/* Outlined word inside a heading. */
+.neonOutline {
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--line-hi);
+}
+
+/* Text is on the page from the first paint: dim until it reaches the screen. */
+.dimText {
+  opacity: 0.22;
+  transition: opacity 0.9s ease;
+}
+
+.dimTextLit,
+html[data-locale-switch] .dimText {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dimText {
+    opacity: 1;
+    transition: none;
   }
 }
 

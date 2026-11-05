@@ -10,44 +10,38 @@
 }
 
 /* Toggle ──────────────────────────────────────────────── */
-/* Raised graphite disc with a thin neon ring; the ring brightens on
-   hover / when the panel is open. */
 .toggle {
   position: relative;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 0;
-  padding: 3px;
-  background: var(--base);
+  border: 2px solid var(--line-strong);
+  background: var(--surface);
   overflow: hidden;
-  box-shadow: var(--raise-s), 0 0 0 2px var(--accent-deep), var(--neon-soft);
-  transition: box-shadow 0.3s ease, transform 0.2s var(--ease);
+  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.6);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s var(--ease);
 }
 
 .toggle:hover {
-  box-shadow: var(--raise-s), 0 0 0 2px var(--accent), var(--neon);
+  border-color: var(--accent);
+  box-shadow: 0 16px 50px -10px rgba(200, 212, 222, 0.3);
   transform: scale(1.06);
 }
 
 .toggle:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 .toggleOpen {
-  box-shadow: var(--press-s), 0 0 0 2px var(--accent), var(--neon);
+  border-color: var(--accent);
 }
 
 .toggleImg {
   position: absolute;
-  inset: 3px;
-  width: calc(100% - 6px);
-  height: calc(100% - 6px);
-  object-fit: cover;
-  object-position: center 30%;
-  display: block;
-  border-radius: 50%;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
 }
 
 .toggleFallback {
@@ -55,13 +49,10 @@
   height: 100%;
   display: grid;
   place-items: center;
-  border-radius: 50%;
   font-size: 24px;
   font-weight: 800;
   color: var(--accent);
-  text-shadow: var(--neon-text);
-  background: var(--base);
-  box-shadow: var(--press-s);
+  background: var(--surface-2);
 }
 
 .toggleDot {
@@ -72,8 +63,7 @@
   height: 14px;
   border-radius: 50%;
   background: var(--accent-green);
-  border: 3px solid var(--base);
-  box-shadow: none;
+  border: 3px solid var(--surface);
   z-index: 2;
 }
 
@@ -92,16 +82,16 @@
 
 /* Proactive teaser nudge — shown once per session when chat is closed,
    to lift engagement on paid traffic without nagging. */
-/* Phones: no teaser — it covers the funnel's CTAs; the launcher stays. */
 .nudge {
   position: relative;
-  display: none;
+  display: block;
   max-width: min(280px, calc(100vw - 90px));
   padding: 13px 36px 13px 15px;
-  border: 0;
-  border-radius: 18px 18px 4px 18px;
-  background: var(--base);
-  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.1);
+  border: 1px solid var(--line-strong);
+  border-radius: 16px 16px 4px 16px;
+  background:
+    linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  box-shadow: var(--shadow-xl);
   cursor: pointer;
   text-align: left;
 }
@@ -114,7 +104,7 @@
 
 .nudgeClose {
   /* 44×44 tap target (WCAG 2.5.8). The button itself is a transparent
-     44px box; the visible 22px raised circle is drawn with ::before so
+     44px box; the visible 22px bordered circle is drawn with ::before so
      the icon stays compact while the hit area clears the floor. */
   position: absolute;
   top: -5px;
@@ -129,27 +119,25 @@
   background: transparent;
   border: 0;
   transition: color 0.2s ease;
-  isolation: isolate;
 }
 
 .nudgeClose::before {
   content: "";
   position: absolute;
-  z-index: -1;
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--base);
-  box-shadow: var(--raise-s);
-  transition: box-shadow 0.2s ease;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  transition: border-color 0.2s ease;
 }
 
 .nudgeClose:hover {
-  color: var(--accent);
+  color: var(--white);
 }
 
 .nudgeClose:hover::before {
-  box-shadow: var(--press-s), 0 0 0 1px var(--accent);
+  border-color: var(--accent);
 }
 
 .nudgeClose:focus-visible {
@@ -163,10 +151,11 @@
   width: 390px;
   max-width: calc(100vw - 40px);
   max-height: min(580px, calc(100vh - 140px));
-  border: 0;
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
-  background: var(--base);
-  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.1);
+  background:
+    linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  box-shadow: var(--shadow-xl);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -180,7 +169,7 @@
   gap: 12px;
   padding: 18px 20px;
   border-bottom: 1px solid var(--line);
-  background: var(--base);
+  background: rgba(200, 212, 222, 0.02);
   flex-shrink: 0;
 }
 
@@ -189,8 +178,7 @@
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
-  border: 0;
-  box-shadow: var(--raise-s), 0 0 0 1px var(--accent-deep);
+  border: 1px solid var(--line-strong);
   flex-shrink: 0;
 }
 
@@ -226,15 +214,15 @@
 }
 
 .statusDot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--accent-green);
-  box-shadow: none;
+  box-shadow: 0 0 6px var(--accent-green);
 }
 
 .closeBtn {
-  /* 44×44 tap target (WCAG 2.5.8); the visible raised circle stays
+  /* 44×44 tap target (WCAG 2.5.8); the visible bordered circle stays
      32px via ::before, the rest of the box is transparent hit area. */
   position: relative;
   width: 44px;
@@ -247,27 +235,25 @@
   font-size: 16px;
   color: var(--text-muted);
   transition: color 0.2s ease;
-  isolation: isolate;
 }
 
 .closeBtn::before {
   content: "";
   position: absolute;
-  z-index: -1;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--base);
-  box-shadow: var(--raise-s);
-  transition: box-shadow 0.2s ease;
+  border: 1px solid var(--line);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .closeBtn:hover {
-  color: var(--accent);
+  color: var(--black);
 }
 
 .closeBtn:hover::before {
-  box-shadow: var(--press-s), 0 0 0 1px var(--accent), var(--neon-soft);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .closeBtn:focus-visible {
@@ -283,10 +269,10 @@
   padding: 20px 18px 10px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: var(--line-strong) transparent;
+  scrollbar-color: rgba(200, 212, 222, 0.15) transparent;
 }
 
 .bubble {
@@ -301,19 +287,17 @@
 .userBubble {
   align-self: flex-end;
   background: var(--accent);
-  color: var(--base-lo);
-  border-radius: 18px 18px 4px 18px;
+  color: var(--black);
+  border-radius: 16px 16px 4px 16px;
   font-weight: 600;
-  box-shadow: var(--neon-soft);
 }
 
 .botBubble {
   align-self: flex-start;
-  background: var(--base);
-  border: 0;
-  box-shadow: var(--press-s);
+  background: rgba(200, 212, 222, 0.04);
+  border: 1px solid var(--line);
   color: var(--text);
-  border-radius: 4px 18px 18px 18px;
+  border-radius: 4px 16px 16px 16px;
 }
 
 .typing {
@@ -321,10 +305,9 @@
   display: flex;
   gap: 5px;
   padding: 14px 18px;
-  border-radius: 4px 18px 18px 18px;
-  background: var(--base);
-  border: 0;
-  box-shadow: var(--press-s);
+  border-radius: 4px 16px 16px 16px;
+  background: rgba(200, 212, 222, 0.04);
+  border: 1px solid var(--line);
 }
 
 .typingDot {
@@ -332,7 +315,6 @@
   height: 6px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: none;
   animation: blink 1.3s ease-in-out infinite;
 }
 
@@ -352,31 +334,33 @@
 .suggestions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  padding: 4px 16px 14px;
+  gap: 8px;
+  padding: 0 16px 12px;
   flex-shrink: 0;
 }
 
 .suggestion {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.02em;
   padding: 8px 14px;
-  border: 0;
+  border: 1px solid var(--line);
   border-radius: var(--radius-pill);
-  background: var(--base);
-  box-shadow: var(--raise-s);
+  background: transparent;
   color: var(--text-muted);
   cursor: pointer;
   transition:
     color 0.18s ease,
-    box-shadow 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
     transform 0.18s var(--ease);
 }
 
 .suggestion:hover {
-  color: var(--accent);
-  box-shadow: var(--press-s), 0 0 0 1px var(--accent);
+  color: var(--white);
+  border-color: var(--accent);
+  background: rgba(200, 212, 222, 0.05);
+  transform: translateY(-1px);
 }
 
 .suggestion:focus-visible {
@@ -387,10 +371,10 @@
 /* Input ────────────────────────────────────────────────── */
 .inputRow {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   padding: 14px 16px;
   border-top: 1px solid var(--line);
-  background: var(--base);
+  background: rgba(200, 212, 222, 0.015);
   flex-shrink: 0;
 }
 
@@ -398,26 +382,28 @@
   flex: 1;
   padding: 12px 16px;
   border-radius: var(--radius-pill);
-  background: var(--base);
-  border: 0;
-  box-shadow: var(--press-s);
-  color: var(--text);
+  background: rgba(200, 212, 222, 0.04);
+  border: 1px solid var(--line);
   /* 16px on mobile so iOS Safari doesn't auto-zoom on focus; desktop
      drops it back down in the @641 block below. */
   font-size: 16px;
   outline: none;
-  transition: box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .input::placeholder {
   color: var(--text-faint);
 }
 
-/* Visible focus: an accent ring + soft neon on the pressed well, so the
-   signal isn't colour-only (WCAG 1.4.11 / 2.4.7). */
-.input:focus,
+/* Visible focus: border colour change alone is a colour-only signal
+   (WCAG 1.4.11 / 2.4.7). Add an accent ring on keyboard focus. */
+.input:focus {
+  border-color: var(--accent);
+}
+
 .input:focus-visible {
-  box-shadow: var(--press-s), 0 0 0 1px var(--accent), var(--neon-soft);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
 }
 
 .sendBtn {
@@ -427,14 +413,12 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 0;
   background: var(--accent);
-  color: var(--base-lo);
-  box-shadow: var(--neon);
+  color: var(--black);
   font-weight: 800;
   font-size: 15px;
   flex-shrink: 0;
-  transition: background 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
 
 .sendBtn:hover:not(:disabled) {
@@ -443,12 +427,11 @@
 
 .sendBtn:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 .sendBtn:disabled {
   opacity: 0.35;
-  box-shadow: none;
   cursor: not-allowed;
 }
 
@@ -557,23 +540,4 @@
     max-width: 84%;
     font-size: 14px;
   }
-}
-
-@media (min-width: 768px) {
-  .nudge {
-    display: block;
-  }
-}
-
-/* Every primary CTA turns growth-green the moment you aim at it. */
-.sendBtn {
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
-}
-
-.sendBtn:hover:not(:disabled),
-.sendBtn:active:not(:disabled) {
-  background: var(--growth);
-  color: var(--base-lo);
-  border-color: transparent;
-  box-shadow: 0 10px 28px -10px rgba(var(--growth-rgb), 0.6);
 }

@@ -78,7 +78,7 @@ export default async function CasePage(
         "@type": "ListItem",
         position: 2,
         name: t.navCases,
-        item: `${siteConfig.url}/${locale}#cases`,
+        item: `${siteConfig.url}/${locale}/cases`,
       },
       {
         "@type": "ListItem",

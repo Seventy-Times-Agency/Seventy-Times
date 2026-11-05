@@ -31,15 +31,7 @@ export default function MobileStickyCta() {
       const nearBottom =
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 320;
-      // The contact block has the same CTA — don't double it up.
-      // On phones the visible contact block is the funnel's "m-contact".
-      const contact = ["m-contact", "contact"]
-        .map((id) => document.getElementById(id))
-        .find((el) => el && el.offsetParent !== null);
-      const contactInView = contact
-        ? contact.getBoundingClientRect().top < window.innerHeight
-        : false;
-      setVisible(past && !modalOpen && !nearBottom && !contactInView);
+      setVisible(past && !modalOpen && !nearBottom);
     };
 
     // rAF-throttle: at most one measurement per animation frame so
@@ -71,7 +63,7 @@ export default function MobileStickyCta() {
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
         >
-          <span>{t.hxCtaBrief}</span>
+          <span>{t.heroCta1}</span>
           <span aria-hidden="true">→</span>
         </motion.a>
       )}

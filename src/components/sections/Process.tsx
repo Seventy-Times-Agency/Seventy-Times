@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { motion, useReducedMotion, useScroll } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
@@ -15,8 +15,7 @@ type ModState = "off" | "setup" | "live" | "on";
  * "How we work" after the plan is agreed. Steps scroll on the right; a
  * sticky "project console" on the left reacts to the step in view:
  * modules light up, the leads chart grows, weak/strong tags appear, the
- * account badge shows, and later modules join the system. Each brand
- * principle is attached to the step where it actually applies.
+ * account badge shows, and later modules join in.
  */
 
 // Console state per step (index = step).
@@ -37,17 +36,12 @@ const BARS: number[][] = [
   [10, 16, 14, 24, 30, 38, 52, 70],
 ];
 
-// The whole chart takes one colour per stage: red while only the first
-// weeks are in, orange once the middle ones land, green once growth shows.
-const barTone = (bars: number[]) => {
-  const lit = bars.filter((h) => h > 4).length;
-  return lit > 6 ? styles.barHigh : lit > 3 ? styles.barMid : styles.barLow;
+type Props = {
+  /** /process opens with this section, so its title is the page's h1. */
+  titleAs?: "h1" | "h2";
 };
 
-// Which principle sits on which step (title keys).
-const PRINCIPLE = ["prin1Title", null, "prin3Title", "prin4Title", "prin2Title"] as const;
-
-export default function Process() {
+export default function Process({ titleAs: Title = "h2" }: Props) {
   const { t } = useT();
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
@@ -108,7 +102,6 @@ export default function Process() {
     target: stepsRef,
     offset: ["start 60%", "end 85%"],
   });
-  const fill = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.4 });
 
   const steps = [
     { title: t.proc1, desc: t.proc1d, dur: t.proc1t },
@@ -135,18 +128,18 @@ export default function Process() {
 
   return (
     <section id="process" className={styles.section}>
-      <SectionWatermark text={t.navProcess.toLowerCase()} number="/ 05" position="left" />
+      <SectionWatermark text={t.navProcess.toLowerCase()} number="/ 01" position="left" />
 
       <div className={styles.header}>
         <div>
           <Reveal>
             <span className="eyebrow">{t.procEyebrow}</span>
           </Reveal>
-          <h2 className={styles.title}>
+          <Title className={styles.title}>
             <AnimatedText
               words={[t.procTitle1, t.procTitle2, { text: t.procTitle3, className: "neonOutline" }]}
             />
-          </h2>
+          </Title>
         </div>
         <Reveal delay={0.15}>
           <p className={styles.lead}>{t.procLead}</p>
@@ -188,7 +181,7 @@ export default function Process() {
                 {BARS[active].map((h, i) => (
                   <motion.span
                     key={i}
-                    className={h > 4 ? `${styles.barOn} ${barTone(BARS[active])}` : undefined}
+                    className={h > 4 ? styles.barOn : undefined}
                     animate={{ height: `${h}%` }}
                     transition={{ ...spring, delay: reduce ? 0 : i * 0.03 }}
                   />
@@ -228,13 +221,11 @@ export default function Process() {
         {/* ── Steps ── */}
         <div className={styles.stepsWrap} ref={wrapRef}>
           <div className={styles.rail} aria-hidden="true">
-            <motion.span style={{ scaleY: reduce ? 1 : fill }} />
+            <motion.span style={{ scaleY: reduce ? 1 : scrollYProgress }} />
           </div>
           <ol className={styles.steps} ref={stepsRef}>
-            {steps.map((s, i) => {
-              const principle = PRINCIPLE[i];
-              return (
-                <motion.li
+            {steps.map((s, i) => (
+                <li
                   key={s.title}
                   className={`${styles.step} ${i === active ? styles.stepActive : ""}`}
                 >
@@ -247,18 +238,12 @@ export default function Process() {
                       <span className={styles.dur}>{s.dur}</span>
                     </div>
                     <p className={styles.desc}>{s.desc}</p>
-                    {principle && (
-                      <span className={styles.principle}>
-                        <b>{t.procPrinciple}</b> {t[principle]}
-                      </span>
-                    )}
                   </div>
-                </motion.li>
-              );
-            })}
+                </li>
+            ))}
 
             {/* The rail ends here: the next step is the visitor's own briefing. */}
-            <motion.li
+            <li
               className={`${styles.step} ${styles.finale} ${finale ? styles.finaleOn : ""}`}
             >
               <span ref={finaleNodeRef} className={`${styles.node} ${styles.finaleNode}`} aria-hidden="true">
@@ -271,7 +256,7 @@ export default function Process() {
                   {t.hxCtaBrief} <span aria-hidden="true">→</span>
                 </a>
               </div>
-            </motion.li>
+            </li>
           </ol>
         </div>
       </div>

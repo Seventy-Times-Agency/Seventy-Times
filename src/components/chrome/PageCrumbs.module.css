@@ -1,0 +1,13 @@
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 28px 18px 0;
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    padding: 36px 48px 0;
+  }
+}

@@ -13,9 +13,9 @@ export default function AboutClient() {
   const home = localePath("/");
 
   const links = [
-    { href: `${home}#services`, label: t.navServices },
-    { href: `${home}#cases`, label: t.navCases },
-    { href: `${home}#process`, label: t.navProcess },
+    { href: localePath("/services"), label: t.navServices },
+    { href: localePath("/cases"), label: t.navCases },
+    { href: localePath("/process"), label: t.navWork },
     { href: localePath("/team"), label: t.teamTitle },
   ];
 

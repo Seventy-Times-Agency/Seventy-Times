@@ -1,96 +1,91 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/data/siteConfig";
+import { SERVICES } from "@/data/services";
+import { FLOW, FLOW_COPY } from "@/components/sections/services/flow";
 import { useT } from "@/i18n/context";
 import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
 import Logo from "@/components/ui/Logo";
+import Magnetic from "@/components/ui/Magnetic";
 import styles from "@/components/chrome/Nav.module.css";
-
-const SECTION_IDS = ["how-we-start", "services", "process", "chat", "cases", "faq"] as const;
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
   const { locale, t, setLocale, localePath } = useT();
   const pathname = usePathname();
-  const home = localePath("/");
-  // On the landing page, anchor links scroll within the page; on
-  // other routes (legal pages, case pages), they need to send the
-  // user back to the landing first.
-  const onHome = pathname === home || pathname === `/${locale}`;
-  const anchor = (id: string) => (onHome ? `#${id}` : `${home}#${id}`);
-  const leadHref = onHome ? "#lead" : `${home}#lead`;
-
-  useEffect(() => {
-    const nodes = SECTION_IDS
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => Boolean(el));
-
-    if (nodes.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: "-30% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
-
-    nodes.forEach((n) => observer.observe(n));
-    return () => observer.disconnect();
-    // Re-attach after client-side navigation: the landing's sections
-    // are fresh DOM nodes each time we return to it.
-  }, [pathname]);
 
   const close = () => setMenuOpen(false);
+  const isUnder = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
-  // Phones render a separate funnel whose sections carry an "m-" prefix
-  // (the desktop sections are hidden there). Scroll to whichever copy of
-  // the section is actually visible.
-  const PHONE_FALLBACK: Record<string, string> = { process: "m-how-we-start" };
-  const goToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    if (!onHome || id === "team") return;
-    const desktop = document.getElementById(id);
-    if (desktop && desktop.offsetParent !== null) return; // default jump works
-    const phone =
-      document.getElementById(`m-${id}`) ?? document.getElementById(PHONE_FALLBACK[id] ?? "");
-    if (!phone) return;
-    e.preventDefault();
-    phone.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  const servicesHref = localePath("/services");
+  const services = FLOW.map((key) => {
+    const s = SERVICES.find((x) => x.key === key)!;
+    return {
+      href: localePath(`/services/${s.slug}`),
+      title: t[s.i18n.title],
+      role: t[FLOW_COPY[key].role],
+    };
+  });
 
   const NAV_LINKS = [
-    { href: anchor("services"), id: "services", label: t.navServices },
-    { href: anchor("cases"), id: "cases", label: t.navCases },
-    { href: anchor("how-we-start"), id: "how-we-start", label: t.navStart },
-    { href: anchor("process"), id: "process", label: t.navProcess },
-    { href: anchor("faq"), id: "faq", label: t.navFaq },
-    // A page, not a landing anchor — the only way into /team from the top bar.
-    { href: localePath("/team"), id: "team", label: t.ftTeam },
+    { href: localePath("/cases"), label: t.navCases, active: isUnder(localePath("/cases")) },
+    { href: localePath("/process"), label: t.navWork, active: isUnder(localePath("/process")) },
+    { href: localePath("/faq"), label: t.navFaq, active: isUnder(localePath("/faq")) },
+    {
+      href: localePath("/about"),
+      label: t.ftAbout,
+      // The team page is part of the same section.
+      active: isUnder(localePath("/about")) || isUnder(localePath("/team")),
+    },
   ];
+  const servicesActive = isUnder(servicesHref);
 
   return (
     <nav className={styles.nav}>
-      <Link href={home} className={styles.logo} aria-label={siteConfig.name}>
+      <Link href={localePath("/")} className={styles.logo} aria-label={siteConfig.name}>
         <Logo variant="compact" />
       </Link>
 
       <div className={styles.links}>
+        {/* Opens on hover and on keyboard focus — no JS state to get stuck. */}
+        <div className={styles.dropdown}>
+          <Link
+            href={servicesHref}
+            className={`${styles.link}${servicesActive ? ` ${styles.linkActive}` : ""}`}
+            aria-current={servicesActive ? "page" : undefined}
+          >
+            {t.navServices}
+            <span className={styles.chevron} aria-hidden="true" />
+          </Link>
+          <div className={styles.menu}>
+            <div className={styles.menuPanel}>
+              {services.map((s) => (
+                <Link
+                  key={s.href}
+                  href={s.href}
+                  className={styles.menuItem}
+                  aria-current={pathname === s.href ? "page" : undefined}
+                  onClick={(e) => e.currentTarget.blur()}
+                >
+                  {s.title}
+                  <small>{s.role}</small>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
         {NAV_LINKS.map((l) => (
-          <a
+          <Link
             key={l.href}
             href={l.href}
-            onClick={(e) => goToSection(e, l.id)}
-            className={`${styles.link}${(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? ` ${styles.linkActive}` : ""}`}
-            aria-current={(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? "location" : undefined}
+            className={`${styles.link}${l.active ? ` ${styles.linkActive}` : ""}`}
+            aria-current={l.active ? "page" : undefined}
           >
             {l.label}
-          </a>
+          </Link>
         ))}
       </div>
 
@@ -111,9 +106,11 @@ export default function Nav() {
             </button>
           ))}
         </div>
-        <a href={leadHref} className={styles.cta}>
-          {t.navCta} <span className={styles.ctaArrow} aria-hidden="true">→</span>
-        </a>
+        <Magnetic strength={0.25} className={styles.ctaWrap}>
+          <a href="#lead" className={styles.cta}>
+            {t.navCta} <span className={styles.ctaArrow} aria-hidden="true">→</span>
+          </a>
+        </Magnetic>
         <button
           className={styles.hamburger}
           onClick={() => setMenuOpen((v) => !v)}
@@ -130,19 +127,37 @@ export default function Nav() {
 
       {menuOpen && (
         <div className={styles.mobileMenu} id="mobile-menu">
+          <Link
+            href={servicesHref}
+            className={`${styles.mobileLink}${servicesActive ? ` ${styles.mobileLinkActive}` : ""}`}
+            aria-current={servicesActive ? "page" : undefined}
+            onClick={close}
+          >
+            {t.navServices}
+          </Link>
+          <div className={styles.mobileSub}>
+            {services.map((s) => (
+              <Link
+                key={s.href}
+                href={s.href}
+                className={styles.mobileSubLink}
+                aria-current={pathname === s.href ? "page" : undefined}
+                onClick={close}
+              >
+                {s.title}
+              </Link>
+            ))}
+          </div>
           {NAV_LINKS.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
-              className={`${styles.mobileLink}${(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? ` ${styles.mobileLinkActive}` : ""}`}
-              onClick={(e) => {
-                goToSection(e, l.id);
-                close();
-              }}
-              aria-current={(active === l.id || (l.id === "team" && pathname === localePath("/team"))) ? "location" : undefined}
+              className={`${styles.mobileLink}${l.active ? ` ${styles.mobileLinkActive}` : ""}`}
+              aria-current={l.active ? "page" : undefined}
+              onClick={close}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
           <div className={styles.mobileLangRow}>
             {LOCALES.map((l) => (
@@ -157,7 +172,7 @@ export default function Nav() {
               </button>
             ))}
           </div>
-          <a href={leadHref} className={styles.mobileCta} onClick={close}>
+          <a href="#lead" className={styles.mobileCta} onClick={close}>
             {t.heroCta1} →
           </a>
         </div>
