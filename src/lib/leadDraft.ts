@@ -124,3 +124,10 @@ export function clearLeadDraft(): void {
     // ignore
   }
 }
+
+/** Fired to prefill the open lead form's request field. */
+export const LEAD_PREFILL_EVENT = "st-lead-prefill";
+
+export function requestLeadPrefill(request: string) {
+  window.dispatchEvent(new CustomEvent<string>(LEAD_PREFILL_EVENT, { detail: request }));
+}

@@ -3,8 +3,7 @@
   top: 0;
   right: 24px;
   bottom: 0;
-  width: 2px;
-  border-radius: 2px;
+  width: 1px;
   background: var(--line);
   z-index: 90;
   pointer-events: none;
@@ -16,10 +15,14 @@
   left: -1px;
   right: -1px;
   height: 100%;
-  border-radius: 2px;
-  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(200, 212, 222, 0.1) 0%,
+    var(--accent) 30%,
+    var(--accent-strong) 100%
+  );
   transform-origin: top;
-  box-shadow: var(--neon);
+  box-shadow: 0 0 14px var(--accent-glow);
 }
 
 .label {
@@ -28,7 +31,7 @@
   bottom: 32px;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text-dim);
   writing-mode: vertical-rl;
@@ -51,10 +54,4 @@
   .label {
     display: revert;
   }
-}
-
-/* One-screen pages (case showcase) have nothing to scroll. */
-:global(html[data-one-screen]) .track,
-:global(html[data-one-screen]) .label {
-  display: none;
 }

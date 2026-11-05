@@ -5,13 +5,12 @@
 /* The "screen" well every visual sits in. */
 .vis {
   position: relative;
-  height: 156px;
+  height: 100%;
   overflow: hidden;
   border-radius: 16px;
-  background: radial-gradient(circle at 80% 15%, rgba(var(--accent-rgb), var(--vis-glow, 0.1)), transparent 60%), var(--base);
-  box-shadow: var(--press);
+  background: var(--bg-deep);
+  border: 1px solid var(--line);
   padding: 30px 14px 12px;
-  transition: background 0.35s var(--ease);
 }
 
 /* 01 — mini browser */
@@ -64,8 +63,8 @@
   margin-top: 2px;
   padding: 3px 10px;
   border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--base-lo);
+  border: 1px solid var(--line-hi);
+  color: var(--text);
   font-size: 9px;
   font-weight: 800;
 }
@@ -95,15 +94,11 @@
 }
 
 .siteShop i {
-  --p: #c9785f;
+  --p: var(--accent-deep);
   position: relative;
   border-radius: 6px;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--p) 22%, var(--base-hi)), var(--base-hi));
+  background: var(--base-hi);
 }
-
-.siteShop i:nth-child(2) { --p: #d9a54a; }
-.siteShop i:nth-child(3) { --p: #4fa3a5; }
-.siteShop i:nth-child(4) { --p: #8f7fc9; }
 
 .siteShop i::before {
   content: "";
@@ -164,7 +159,7 @@
   right: 14px;
   bottom: 12px;
   width: calc(100% - 28px);
-  height: 74px;
+  height: calc(100% - 82px);
   z-index: 1;
 }
 
@@ -179,13 +174,12 @@
   stroke-dasharray: 260;
   stroke-dashoffset: 260;
   filter: none;
-  animation: draw 4.5s ease-in-out infinite;
+  /* Draws once: a looping stroke would repaint the card forever. */
+  animation: draw 1.8s ease-out 0.4s forwards;
 }
 
 @keyframes draw {
-  0% { stroke-dashoffset: 260; }
-  45%, 85% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: -260; }
+  to { stroke-dashoffset: 0; }
 }
 
 .bars {
@@ -193,7 +187,7 @@
   left: 18px;
   right: 18px;
   bottom: 12px;
-  height: 70px;
+  height: calc(100% - 86px);
   display: flex;
   align-items: flex-end;
   gap: 8%;
@@ -232,10 +226,9 @@
 .bubbleOut {
   align-self: flex-start;
   border-radius: 12px 12px 12px 4px;
-  /* The bot's answer is the "it works" moment — growth green. */
-  background: var(--growth);
-  color: var(--base-lo);
-  box-shadow: 0 8px 20px -8px rgba(var(--growth-rgb), 0.6);
+  background: var(--surface-3);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
   animation: chatIn 7s var(--ease) 0.7s infinite backwards;
 }
 
@@ -269,9 +262,11 @@
 /* 04 — lead flow */
 .visFlow {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  align-content: center;
   justify-content: center;
-  gap: 0;
+  gap: 14px 0;
 }
 
 .node {
@@ -288,20 +283,32 @@
 }
 
 .nodeHot {
-  background: var(--accent);
-  color: var(--base-lo);
-  box-shadow: var(--neon);
+  box-shadow: inset 0 0 0 1px var(--line-hi);
+  color: var(--white);
 }
 
 .wire {
   position: relative;
+  overflow-x: clip;
   flex: 1;
   min-width: 14px;
   height: 2px;
   background: rgba(var(--growth-rgb), 0.35);
 }
 
+/* Spans the wire so a percent transform covers its length; the dot is
+   drawn at its left edge. Only transform and opacity animate. */
 .wire i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  animation: hop 1.8s linear infinite;
+}
+
+.wire i::before {
+  content: "";
   position: absolute;
   top: -3px;
   left: 0;
@@ -310,7 +317,6 @@
   border-radius: 50%;
   background: var(--growth);
   box-shadow: 0 0 0 3px rgba(var(--growth-rgb), 0.18);
-  animation: hop 1.8s linear infinite;
 }
 
 .wire + .node + .wire i {
@@ -318,8 +324,52 @@
 }
 
 @keyframes hop {
-  from { left: 0; opacity: 1; }
-  to { left: calc(100% - 8px); opacity: 0.2; }
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(calc(100% - 8px)); opacity: 0.2; }
+}
+
+/* Details that only show once the picture has unfolded (Services hover).
+   They take no room while collapsed, so the small drawing stays as it was. */
+.more {
+  display: none;
+}
+
+.channels {
+  flex-basis: 100%;
+  justify-content: center;
+  gap: 6px;
+}
+
+.channels span {
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+@media (min-width: 1024px) and (hover: hover) {
+  :global(article):hover .more {
+    display: block;
+  }
+
+  :global(article):hover .channels {
+    display: flex;
+  }
+}
+
+/* The large drawing on a service page has room for everything. */
+.lg {
+  height: 210px;
+}
+
+.lg .more {
+  display: block;
+}
+
+.lg .channels {
+  display: flex;
 }
 
 /* Phones: small enough to sit inside the stage frame at 360px. */

@@ -26,6 +26,9 @@ export default function ServiceVisual({ kind, t, size = "sm" }: Props) {
             <span className={styles.ln} />
             <span className={`${styles.ln} ${styles.lnShort}`} />
             <span className={styles.siteBtn}>{t.hxSiteBtn1}</span>
+            <span className={`${styles.ln} ${styles.more}`} />
+            <span className={`${styles.ln} ${styles.lnShort} ${styles.more}`} />
+            <span className={`${styles.ln} ${styles.more}`} />
           </div>
           <div className={styles.siteShop} aria-hidden="true">
             <i />
@@ -62,6 +65,8 @@ export default function ServiceVisual({ kind, t, size = "sm" }: Props) {
       <div className={`${styles.vis} ${styles.visChat}${sz}`}>
         <p className={`${styles.bubble} ${styles.bubbleIn}`}>{t.svcVisQ}</p>
         <p className={`${styles.bubble} ${styles.bubbleOut}`}>{t.svcVisA}</p>
+        <p className={`${styles.bubble} ${styles.bubbleIn} ${styles.more}`}>{t.svcVisQ2}</p>
+        <p className={`${styles.bubble} ${styles.bubbleOut} ${styles.more}`}>{t.svcVisA2}</p>
         <span className={styles.typing} aria-hidden="true">
           <i />
           <i />
@@ -87,6 +92,11 @@ export default function ServiceVisual({ kind, t, size = "sm" }: Props) {
         </svg>
         {t.svcVisAlert}
       </span>
+      <div className={`${styles.channels} ${styles.more}`} aria-hidden="true">
+        <span>Telegram</span>
+        <span>Email</span>
+        <span>Sheets</span>
+      </div>
     </div>
   );
 }

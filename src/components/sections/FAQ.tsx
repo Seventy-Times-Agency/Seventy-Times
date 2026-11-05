@@ -11,7 +11,12 @@ import styles from "@/components/sections/FAQ.module.css";
 
 const MOBILE_VISIBLE = 5;
 
-export default function FAQ() {
+type Props = {
+  /** /faq opens with this section, so its title is the page's h1. */
+  titleAs?: "h1" | "h2";
+};
+
+export default function FAQ({ titleAs: Title = "h2" }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   // Mobile diet: only the first 5 questions render visibly on phones;
   // the rest sit behind a "show all" toggle. Desktop always shows all
@@ -62,13 +67,13 @@ export default function FAQ() {
 
   return (
     <section id="faq" className={styles.section}>
-      <SectionWatermark text={t.faqTitle2} number="/ 06" position="left" />
+      <SectionWatermark text={t.faqTitle2} number="/ 08" position="left" />
       <div className={styles.layout}>
         <div className={styles.intro}>
           <Reveal><span className="eyebrow">{t.faqEyebrow}</span></Reveal>
-          <h2 className={styles.title}>
+          <Title className={styles.title}>
             <AnimatedText stagger={0.1} words={[t.faqTitle1, { text: t.faqTitle2, className: styles.titleItalic }]} />
-          </h2>
+          </Title>
           <Reveal delay={0.2}><p className={styles.lead}>{t.faqLead}</p></Reveal>
           <Reveal delay={0.3}>
             <p className={styles.note}>

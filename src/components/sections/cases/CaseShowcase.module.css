@@ -6,15 +6,15 @@
 
 /* Palette shared by the page and the drawer (rendered outside it). */
 .theme {
-  --base: #17181e;
-  --hi: #22242c;
-  --lo: #0b0c10;
-  --ink: #eef1f4;
+  --base: var(--surface);
+  --hi: var(--surface-3);
+  --lo: var(--black);
+  --ink: var(--white);
   --mute: #8e96a1;
   --dim: #555b65;
-  --raise: 9px 9px 22px var(--lo), -9px -9px 22px var(--hi);
-  --raise-s: 5px 5px 12px var(--lo), -5px -5px 12px var(--hi);
-  --press: inset 6px 6px 14px var(--lo), inset -6px -6px 14px var(--hi);
+  --raise: inset 0 0 0 1px var(--line);
+  --raise-s: inset 0 0 0 1px var(--line);
+  --press: inset 0 0 0 1px var(--line);
 
   color: var(--ink);
   font-family: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;

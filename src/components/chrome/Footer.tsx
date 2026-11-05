@@ -28,8 +28,6 @@ export default function Footer() {
   const pathname = usePathname();
   const home = localePath("/");
   const onHome = pathname === home || pathname === `/${locale}`;
-  // Anchors point to landing-page sections; from other routes go home first.
-  const anchor = (id: string) => (onHome ? `#${id}` : `${home}#${id}`);
 
   const services = FLOW.map((key) => SERVICES.find((s) => s.key === key)!);
   const socials = [
@@ -67,8 +65,9 @@ export default function Footer() {
           <span className={styles.colTitle}>{t.ftCompany}</span>
           <Link href={localePath("/about")}>{t.ftAbout}</Link>
           <Link href={localePath("/team")}>{t.ftTeam}</Link>
-          <a href={anchor("process")}>{t.ftProcess}</a>
-          <a href={anchor("faq")}>{t.ftFaq}</a>
+          <Link href={localePath("/cases")}>{t.navCases}</Link>
+          <Link href={localePath("/process")}>{t.navWork}</Link>
+          <Link href={localePath("/faq")}>{t.ftFaq}</Link>
           <a href={`${onHome ? "" : home}#review`} title={t.ftReviewNote}>
             {t.ftReview}
           </a>

@@ -6,7 +6,7 @@ import {
   useContext,
   type ReactNode,
 } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   DEFAULT_LOCALE,
   LOCALES,
@@ -14,6 +14,7 @@ import {
   type Locale,
 } from "./config";
 import { getDictionary, type Dictionary } from "./dictionary";
+import { captureScrollAnchor } from "./localeSwitch";
 
 type I18nContextValue = {
   locale: Locale;
@@ -43,7 +44,6 @@ export function I18nProvider({
   children: ReactNode;
   locale: Locale;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
 
   const setLocale = useCallback(
@@ -53,9 +53,12 @@ export function I18nProvider({
       const stripped = (pathname ?? "/").replace(LOCALE_PATTERN, "") || "/";
       const target =
         stripped === "/" ? `/${next}` : `/${next}${stripped}`;
-      router.push(target);
+      if (next === locale) return;
+      captureScrollAnchor();
+      // A locale change swaps the root layout, so it is a full load anyway.
+      window.location.assign(target);
     },
-    [pathname, router],
+    [locale, pathname],
   );
 
   const localePath = useCallback(

@@ -19,6 +19,7 @@ import {
   writeLeadDraft,
   type LeadBudget,
   type LeadPackage,
+  LEAD_PREFILL_EVENT,
 } from "@/lib/leadDraft";
 import { newEventId, track } from "@/lib/analytics";
 import { captureUtm, readUtm } from "@/lib/utm";
@@ -101,6 +102,16 @@ export default function LeadForm() {
       // ignore
     }
     setHydrated(true);
+  }, []);
+
+  // The stack builder hands over the chosen set as the request text.
+  useEffect(() => {
+    const onPrefill = (e: Event) => {
+      const request = (e as CustomEvent<string>).detail;
+      setFields((prev) => ({ ...prev, request }));
+    };
+    window.addEventListener(LEAD_PREFILL_EVENT, onPrefill);
+    return () => window.removeEventListener(LEAD_PREFILL_EVENT, onPrefill);
   }, []);
 
   // Persist any user-typed changes — survives accidental reloads,

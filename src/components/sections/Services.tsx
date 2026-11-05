@@ -3,13 +3,21 @@
 import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
+import SectionWatermark from "@/components/decor/SectionWatermark";
 import { SERVICES } from "@/data/services";
 import ServiceVisual from "@/components/sections/services/ServiceVisual";
 import { FLOW, FLOW_COPY } from "@/components/sections/services/flow";
 import { useT } from "@/i18n/context";
 import styles from "@/components/sections/Services.module.css";
 
-export default function Services() {
+type Props = {
+  /** Landing version: cards without the checklists, then a link to /services. */
+  teaser?: boolean;
+  /** /services opens with this section, so its title is the page's h1. */
+  titleAs?: "h1" | "h2";
+};
+
+export default function Services({ teaser = false, titleAs: Title = "h2" }: Props) {
   const { t, localePath } = useT();
 
   const modules = FLOW.map((key) => {
@@ -26,91 +34,81 @@ export default function Services() {
 
   return (
     <section id="services" className={styles.section}>
+      <SectionWatermark text={t.navServices.toLowerCase()} number="/ 02" position="right" />
+
       <div className={styles.header}>
         <div>
           <Reveal>
             <span className="eyebrow">{t.svcEyebrow}</span>
           </Reveal>
-          <h2 className={styles.title}>
-            <AnimatedText words={[t.svcMTitle1]} />
-            <span className={styles.titleLine}>
-              <AnimatedText words={[{ text: t.svcMTitle2, className: "neonOutline" }]} />
-            </span>
-          </h2>
+          <Title className={styles.title}>
+            <AnimatedText
+              words={[t.svcMTitle1, { text: t.svcMTitle2, className: "neonOutline" }]}
+            />
+          </Title>
         </div>
         <Reveal delay={0.15}>
           <p className={styles.lead}>{t.svcMLead}</p>
         </Reveal>
       </div>
 
-      <div className={styles.conveyor}>
-        {/* The pipe and the lead travelling through it. */}
-        <div className={styles.pipe} aria-hidden="true">
-          <span className={styles.pulse} />
-        </div>
-
-        <span className={styles.swipe} aria-hidden="true">
-          {t.swipeHint}
-        </span>
-        <div className={styles.modules}>
-          {modules.map((m, i) => (
-            <Reveal key={m.key} delay={i * 0.08}>
-              <article className={styles.module} style={{ ["--i" as string]: i }}>
-                {m.key === "targeting" && (
-                  <span className={styles.sticker}>{t.svcAdsSticker}</span>
-                )}
+      <div className={`${styles.modules}${teaser ? ` ${styles.modulesTeaser}` : ""}`}>
+        {modules.map((m, i) => (
+          <Reveal key={m.key} delay={i * 0.08} className={styles.slot}>
+            <article className={styles.module}>
+              {/* The picture unfolds over the text on hover; its slot in the
+                  layout keeps its size, so the row around it never moves. */}
+              <div className={styles.visSlot}>
                 <div className={styles.visWrap}>
                   <span className={styles.role}>
                     <b>{String(i + 1).padStart(2, "0")}</b> · {m.role}
                   </span>
                   <ServiceVisual kind={m.key} t={t} />
                 </div>
+              </div>
 
+              <div className={styles.bodyClip}>
                 <div className={styles.body}>
                   <h3 className={styles.moduleTitle}>{m.title}</h3>
                   <p className={styles.pitch}>{m.pitch}</p>
-                  <ul className={styles.points}>
-                    {m.points.map((p) => (
-                      <li key={p}>{p}</li>
-                    ))}
-                  </ul>
+                  {!teaser && (
+                    <ul className={styles.points}>
+                      {m.points.map((p) => (
+                        <li key={p}>{p}</li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
+              </div>
 
-                <Link href={m.href} className={styles.more}>
-                  {t.svcExpand}
-                  <i aria-hidden="true">→</i>
-                </Link>
-                <span className={styles.bigNum} aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={0.3}>
-          <div className={styles.output}>
-            <span className={styles.outputArrow} aria-hidden="true">
-              ↓
-            </span>
-            <div>
-              <p className={styles.outputTitle}>{t.svcOutTitle}</p>
-              <p className={styles.outputBody}>{t.svcOutBody}</p>
-            </div>
-          </div>
-        </Reveal>
+              <Link href={m.href} className={styles.more}>
+                {t.svcExpand}
+                <i aria-hidden="true">→</i>
+              </Link>
+            </article>
+          </Reveal>
+        ))}
       </div>
 
-      <Reveal delay={0.1}>
-        <div className={styles.extras}>
-          <span className={styles.extrasLabel}>{t.svcReqLabel}</span>
-          <ul className={styles.extrasList}>
-            {t.svcReqItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      </Reveal>
+      {teaser ? (
+        <Reveal delay={0.1}>
+          <Link href={localePath("/services")} className={styles.all}>
+            {t.svcAll}
+            <i aria-hidden="true">→</i>
+          </Link>
+        </Reveal>
+      ) : (
+        <Reveal delay={0.1}>
+          <div className={styles.extras}>
+            <span className={styles.extrasLabel}>{t.svcReqLabel}</span>
+            <ul className={styles.extrasList}>
+              {t.svcReqItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      )}
     </section>
   );
 }

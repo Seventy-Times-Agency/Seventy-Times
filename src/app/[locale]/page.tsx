@@ -7,61 +7,31 @@ import Services from "@/components/sections/Services";
 import Footer from "@/components/chrome/Footer";
 import SectionDivider from "@/components/decor/SectionDivider";
 import StructuredData from "@/components/seo/StructuredData";
-import MobileLanding from "@/components/mobile/MobileLanding";
 
 // Below-fold sections — code-split so the initial route bundle stays
 // lean. Still SSR'd (no `ssr: false`) so search engines and the first
 // paint keep the content; only the client JS for hydration is deferred.
-const Comparison = dynamic(() => import("@/components/sections/Comparison"));
-const Process = dynamic(() => import("@/components/sections/Process"));
-const ChatDemo = dynamic(() => import("@/components/sections/ChatDemo"));
-const Testimonials = dynamic(
-  () => import("@/components/sections/Testimonials"),
-);
 const Cases = dynamic(() => import("@/components/sections/Cases"));
-const FAQ = dynamic(() => import("@/components/sections/FAQ"));
+const StackBuilder = dynamic(() => import("@/components/sections/StackBuilder"));
 const CTA = dynamic(() => import("@/components/sections/CTA"));
 
 export default async function HomePage() {
-  // Approved reviews had their store removed together with the Notion
-  // integration; the Testimonials section stays in the codebase and
-  // lights up again as soon as a reviews source returns entries here.
-  const reviews: import("@/components/sections/Testimonials").ApprovedReview[] = [];
-
   return (
     <>
       <StructuredData />
       <Nav />
       <main id="main-content">
-        {/* Phones get their own funnel; tablets and desktop the full page. */}
-        <div className="only-phone">
-          <MobileLanding />
-        </div>
-        <div className="hide-phone">
-          <Hero />
-          <MarqueeStack />
-          <Services />
-          <SectionDivider labelKey="divCases" />
-          <Cases />
-          {reviews.length > 0 && (
-            <>
-              <SectionDivider labelKey="divProof" />
-              <Testimonials reviews={reviews} />
-            </>
-          )}
-          <SectionDivider labelKey="divCompare" />
-          <Comparison />
-          <SectionDivider labelKey="divMeet" />
-          <ChatDemo />
-          <SectionDivider labelKey="divStart" />
-          <HowWeStart />
-          <SectionDivider labelKey="divNext" />
-          <Process />
-          <SectionDivider labelKey="divQuestions" />
-          <FAQ />
-          <SectionDivider labelKey="divTalk" />
-          <CTA />
-        </div>
+        <Hero />
+        <MarqueeStack />
+        <SectionDivider labelKey="divStart" />
+        <HowWeStart />
+        <Services teaser />
+        <SectionDivider labelKey="divCases" />
+        <Cases />
+        <SectionDivider labelKey="divSimulator" />
+        <StackBuilder />
+        <SectionDivider labelKey="divTalk" />
+        <CTA />
       </main>
       <Footer />
     </>

@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(8, 9, 12, 0.6);
+  background: rgba(5, 6, 12, 0.78);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   display: grid;
@@ -20,11 +20,28 @@
   max-height: calc(100vh - 48px);
   max-height: calc(100dvh - 48px);
   overflow-y: auto;
-  background: var(--base);
-  border: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(160, 190, 220, 0.1), transparent 60%),
+    var(--surface);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
   padding: 48px 44px 40px;
-  box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.1);
+  box-shadow: var(--shadow-xl);
+}
+
+.modal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(200, 212, 222, 0.4),
+    transparent
+  );
 }
 
 .closeBtn {
@@ -44,30 +61,25 @@
   display: grid;
   place-items: center;
   transition: color 0.2s ease;
-  isolation: isolate;
-  z-index: 1;
 }
 
-/* Visible 36px raised disc; sinks into a pressed well with a neon
-   ring on hover. */
 .closeBtn::before {
   content: "";
   position: absolute;
-  z-index: -1;
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--base);
-  box-shadow: var(--raise-s);
-  transition: box-shadow 0.2s ease;
+  border: 1px solid var(--line-strong);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .closeBtn:hover {
-  color: var(--accent);
+  color: var(--black);
 }
 
 .closeBtn:hover::before {
-  box-shadow: var(--press-s), 0 0 0 1px var(--accent), var(--neon-soft);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .closeBtn:focus-visible {
@@ -103,7 +115,8 @@
 
 .titleItalic {
   font-style: italic;
-  color: var(--accent);
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--line-hi);
 }
 
 .subtitle {
@@ -138,24 +151,16 @@
 .textarea {
   width: 100%;
   padding: 14px 18px;
-  /* Pressed well sunk into the modal surface. */
-  background: var(--base);
-  border: 0;
-  border-radius: 14px;
-  box-shadow: var(--press-s);
+  background: rgba(200, 212, 222, 0.03);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
   color: var(--text);
   /* 16px on mobile so iOS Safari doesn't auto-zoom on focus; desktop
      restores 15px in the @641 block below. */
   font-size: 16px;
   outline: none;
-  transition: box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
   font-family: inherit;
-}
-
-/* Native <select>s share .input; give the popup list the same surface. */
-select.input option {
-  background: var(--base);
-  color: var(--text);
 }
 
 .input::placeholder,
@@ -163,13 +168,18 @@ select.input option {
   color: var(--text-faint);
 }
 
-/* Focus: accent hairline + soft neon around the pressed well — a ring,
-   not a colour-only cue (WCAG 1.4.11 / 2.4.7). */
 .input:focus,
-.textarea:focus,
+.textarea:focus {
+  border-color: var(--accent);
+  background: rgba(200, 212, 222, 0.06);
+}
+
+/* Visible keyboard focus: the border-colour change alone is a
+   colour-only cue (WCAG 1.4.11 / 2.4.7). Add an accent focus ring. */
 .input:focus-visible,
 .textarea:focus-visible {
-  box-shadow: var(--press-s), 0 0 0 1px var(--accent), var(--neon-soft);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
 }
 
 .textarea {
@@ -188,25 +198,23 @@ select.input option {
   line-height: 1.5;
 }
 
-/* Progress bar — sits between header and form: a pressed track with a
-   neon accent fill. Fills based on either step count (steps mode) or
+/* Progress bar — sits between header and form, styled as a slim
+   accent track. Fills based on either step count (steps mode) or
    how many required fields have content (single-page mode). */
 .progress {
   position: relative;
-  height: 10px;
+  height: 3px;
   width: 100%;
-  padding: 3px;
-  background: var(--base);
-  box-shadow: var(--press-s);
-  border-radius: var(--radius-pill);
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
   margin: 4px 0 18px;
 }
 
 .progressBar {
   height: 100%;
   background: var(--accent);
-  border-radius: var(--radius-pill);
-  box-shadow: var(--neon);
+  border-radius: 2px;
   transition: width 0.3s var(--ease);
 }
 
@@ -225,18 +233,17 @@ select.input option {
   gap: 8px;
   padding: 14px 22px;
   border-radius: var(--radius-pill);
-  background: var(--base);
-  border: 0;
-  box-shadow: var(--raise-s);
+  background: transparent;
+  border: 1px solid var(--line);
   color: var(--text-muted);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  transition: color 0.18s ease, box-shadow 0.18s ease;
+  transition: color 0.18s ease, border-color 0.18s ease;
 }
 .back:hover {
-  color: var(--accent);
-  box-shadow: var(--press-s);
+  color: var(--white);
+  border-color: var(--text-muted);
 }
 
 .back:focus-visible {
@@ -264,7 +271,7 @@ select.input option {
   transition: color 0.18s ease;
 }
 .modeToggle:hover {
-  color: var(--accent);
+  color: var(--white);
   text-decoration: underline;
 }
 
@@ -280,16 +287,15 @@ select.input option {
   justify-content: center;
   gap: 12px;
   padding: 18px 32px;
-  border: 0;
   border-radius: var(--radius-pill);
   background: var(--accent);
-  color: var(--base-lo);
-  font-weight: 800;
+  color: var(--black);
+  font-weight: 700;
   font-size: 15px;
   letter-spacing: 0.01em;
   margin-top: 8px;
-  transition: transform 0.15s var(--ease), background 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: var(--neon);
+  transition: transform 0.15s var(--ease), background 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 20px 50px -16px var(--accent-glow);
 }
 
 .submit:hover:not(:disabled) {
@@ -299,7 +305,6 @@ select.input option {
 
 .submit:disabled {
   opacity: 0.5;
-  box-shadow: none;
   cursor: not-allowed;
   transform: none;
 }
@@ -363,7 +368,7 @@ select.input option {
 .consent a {
   color: var(--text);
   text-decoration: underline;
-  text-decoration-color: var(--line-hi);
+  text-decoration-color: rgba(232, 238, 244, 0.3);
   text-underline-offset: 2px;
   transition: text-decoration-color 0.2s ease;
 }
@@ -387,12 +392,12 @@ select.input option {
   height: 72px;
   border-radius: 50%;
   background: var(--accent);
-  color: var(--base-lo);
+  color: var(--black);
   display: grid;
   place-items: center;
   font-size: 36px;
   font-weight: 900;
-  box-shadow: var(--neon);
+  box-shadow: 0 20px 50px -16px var(--accent-glow);
   margin-bottom: 12px;
 }
 
@@ -414,18 +419,17 @@ select.input option {
   margin-top: 18px;
   padding: 14px 28px;
   border-radius: var(--radius-pill);
-  background: var(--base);
-  border: 0;
-  box-shadow: var(--raise-s);
+  background: transparent;
+  border: 1px solid var(--line-strong);
   color: var(--text);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 14px;
-  transition: color 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .successCloseBtn:hover {
-  color: var(--accent);
-  box-shadow: var(--press-s);
+  background: rgba(200, 212, 222, 0.05);
+  border-color: var(--line-hi);
 }
 
 .successCloseBtn:focus-visible {
@@ -459,25 +463,4 @@ select.input option {
   .textarea {
     font-size: 15px;
   }
-}
-
-/* Every primary CTA turns growth-green the moment you aim at it. */
-.submit {
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
-}
-
-.submit:hover:not(:disabled),
-.submit:active:not(:disabled) {
-  background: var(--growth);
-  color: var(--base-lo);
-  border-color: transparent;
-  box-shadow: 0 10px 28px -10px rgba(var(--growth-rgb), 0.6);
-}
-
-/* Callback form: TCPA-style note on how we'll reach the number. */
-.contactNote {
-  margin: 8px 0 0;
-  font-size: 11px;
-  line-height: 1.45;
-  color: var(--text-dim);
 }

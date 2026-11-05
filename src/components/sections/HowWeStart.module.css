@@ -1,6 +1,6 @@
-/* "How we start" — three raised step cards; the first (the briefing
-   call, the actual entry point) is the section's single brutal card.
-   Mobile-first like every other module. */
+/* "How we start" — mirrors the Process section's visual language:
+   header split, numbered circles, connector line on desktop. Written
+   mobile-first like every other module. */
 
 .section {
   position: relative;
@@ -16,6 +16,8 @@
   gap: 14px;
   align-items: start;
   margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
 }
 
 .headerLeft {
@@ -28,12 +30,13 @@
   font-size: clamp(28px, 7.5vw, 44px);
   font-weight: 800;
   line-height: 0.95;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
 }
 
-/* Fill/stroke/glow come from the global .neonOutline class. */
 .titleItalic {
   font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--line-hi);
 }
 
 .headerRight {
@@ -55,66 +58,62 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+  gap: 16px;
 }
 
-/* Phones: number on the left, the rest beside it — a compact row. */
 .step {
   position: relative;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  column-gap: 14px;
-  row-gap: 8px;
-  align-items: start;
-  justify-items: start;
-  padding: 16px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 16px;
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: var(--base);
-  box-shadow: var(--raise-s);
-  transition:
-    transform 0.4s var(--ease),
-    box-shadow 0.3s ease;
-}
-
-.step:hover {
-  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--accent-rgb), 0.17);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(200, 212, 222, 0.06), transparent 60%),
+    rgba(255, 255, 255, 0.012);
+  transition: transform 0.4s var(--ease);
 }
 
 .numberWrap {
   position: relative;
   z-index: 1;
-  grid-row: span 3;
-  width: 44px;
-  height: 44px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  background: var(--base);
-  box-shadow: var(--press);
+  background: var(--black);
+  border: 1px solid var(--line-strong);
   display: grid;
   place-items: center;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.04em;
-  color: var(--accent);
-  text-shadow: var(--neon-text);
-  font-variant-numeric: tabular-nums;
+  color: var(--white);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.4s ease;
+}
+
+.step:hover .numberWrap {
+  background: var(--accent);
+  color: var(--black);
+  border-color: var(--accent);
+  box-shadow: 0 20px 50px -18px var(--accent-glow);
 }
 
 .tag {
-  padding: 6px 10px;
-  background: var(--base-lo);
-  color: var(--ink);
-  font-size: 10px;
+  font-size: var(--fs-mini);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  transform: rotate(-1.5deg);
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
 }
 
 .stepTitle {
-  font-size: 19px;
+  font-size: 22px;
   font-weight: 800;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.025em;
   line-height: 1.1;
 }
 
@@ -125,83 +124,12 @@
   max-width: 36ch;
 }
 
-/* The one brutal card: light ink slab, hard neon offset shadow. */
-.stepBrutal {
-  background: var(--ink);
-  color: var(--base-lo);
-  border-radius: 6px;
-  box-shadow: var(--brutal);
-  transform: rotate(-1.5deg);
-}
-
-.stepBrutal:hover {
-  box-shadow: var(--brutal);
-}
-
-.stepBrutal .numberWrap {
-  background: var(--base-lo);
-  box-shadow: none;
-}
-
-.stepBrutal .stepTitle {
-  color: var(--base-lo);
-}
-
-.stepBrutal .stepDesc {
-  color: var(--base-hi);
-}
-
-/* Per-step colour: green → teal → amber, used by the number ring,
-   the top edge and the "lit" pulse that walks across the steps. */
-.step {
-  --s: var(--growth);
-  --s-rgb: var(--growth-rgb);
-  z-index: 1;
-}
-
-.grid > :nth-child(3) .step { --s: #4fa3a5; --s-rgb: 79, 163, 165; }
-.grid > :nth-child(4) .step { --s: #d9a54a; --s-rgb: 217, 165, 74; }
-
-.step::before {
-  content: "";
-  position: absolute;
-  left: 22px;
-  right: 22px;
-  top: 0;
-  height: 3px;
-  border-radius: 0 0 3px 3px;
-  background: var(--s);
-}
-
-.step .numberWrap {
-  color: var(--s);
-  text-shadow: none;
-  box-shadow: var(--press), inset 0 0 0 2px rgba(var(--s-rgb), 0.55);
-  animation: stepLit 6s ease-in-out infinite;
-  animation-delay: calc(var(--i, 0) * 2s);
-}
-
-.stepBrutal .numberWrap {
-  color: var(--ink);
-  box-shadow: inset 0 0 0 2px var(--s);
-}
-
-@keyframes stepLit {
-  0%, 30%, 100% { outline: 0 solid transparent; }
-  10% { outline: 6px solid rgba(var(--s-rgb), 0.18); }
-}
-
-/* Path behind the cards with a green dot travelling 01 → 03. */
-.rail {
-  display: none;
-}
-
 /* CTA ───────────────────────────────────────────────────── */
 
 .ctaRow {
   display: flex;
   justify-content: center;
-  margin-top: 32px;
+  margin-top: 28px;
 }
 
 .cta {
@@ -209,53 +137,26 @@
   align-items: center;
   gap: 8px;
   padding: 14px 28px;
-  border-radius: var(--radius-pill);
+  border-radius: 999px;
   background: var(--accent);
-  color: var(--base-lo);
-  box-shadow: var(--neon);
+  color: var(--black);
   font-weight: 800;
   font-size: 15px;
   letter-spacing: -0.01em;
-  transition: transform 0.3s var(--ease);
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s ease;
 }
 
 .cta:hover {
   transform: translateY(-2px);
-}
-
-.cta:focus-visible {
-  outline: 2px solid var(--accent-strong);
-  outline-offset: 4px;
-  border-radius: var(--radius-pill);
+  box-shadow: 0 18px 40px -16px var(--accent-glow);
 }
 
 /* Tablet and up. */
 @media (min-width: 768px) {
-  .step {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 20px 18px 22px;
-  }
-
-  .numberWrap {
-    width: 64px;
-    height: 64px;
-    font-size: 20px;
-  }
-
-  .stepTitle {
-    font-size: 22px;
-  }
-
-  .grid {
-    gap: 22px;
-  }
-}
-
-@media (min-width: 768px) {
   .section {
-    padding: 56px 48px 56px;
+    padding: 72px 48px 56px;
   }
 
   .header {
@@ -263,6 +164,7 @@
     gap: 48px;
     align-items: end;
     margin-bottom: 60px;
+    padding-bottom: 40px;
   }
 
   .title {
@@ -280,93 +182,40 @@
 
   .grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    gap: 0;
+  }
+
+  /* Horizontal connector line behind step numbers */
+  .grid::before {
+    content: "";
+    position: absolute;
+    top: 32px;
+    left: 48px;
+    right: 48px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--line-strong) 10%,
+      var(--line-strong) 90%,
+      transparent
+    );
+    z-index: 0;
   }
 
   .step {
-    padding: 28px 26px 30px;
+    border: none;
+    border-radius: 0;
+    background: none;
+    padding: 0 28px;
     gap: 16px;
-    box-shadow: var(--raise);
   }
 
   .step:hover {
     transform: translateY(-6px);
-    box-shadow: var(--raise), 0 0 0 1px rgba(var(--accent-rgb), 0.17);
-  }
-
-  .stepBrutal,
-  .stepBrutal:hover {
-    box-shadow: var(--brutal);
-  }
-
-  .stepBrutal:hover {
-    transform: rotate(-1.5deg) translateY(-6px);
   }
 
   .ctaRow {
-    margin-top: 56px;
+    margin-top: 48px;
   }
-
-  .rail {
-    display: block;
-    position: absolute;
-    z-index: 0;
-    left: 8%;
-    right: 8%;
-    top: 78px;
-    height: 2px;
-    background: repeating-linear-gradient(90deg, var(--line-strong) 0 8px, transparent 8px 16px);
-  }
-
-  .rail i {
-    position: absolute;
-    top: -4px;
-    left: 0;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--growth);
-    box-shadow: 0 0 0 4px rgba(var(--growth-rgb), 0.18);
-    animation: railRun 6s linear infinite;
-  }
-}
-
-@keyframes railRun {
-  from { left: 0; }
-  to { left: calc(100% - 10px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .step,
-  .cta {
-    transition: none;
-  }
-
-  .rail i,
-  .step .numberWrap {
-    animation: none;
-  }
-
-  .step:hover,
-  .cta:hover {
-    transform: none;
-  }
-
-  .stepBrutal,
-  .stepBrutal:hover {
-    transform: rotate(-1.5deg);
-  }
-}
-
-/* Every primary CTA turns growth-green the moment you aim at it. */
-.cta {
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
-}
-
-.cta:hover,
-.cta:active {
-  background: var(--growth);
-  color: var(--base-lo);
-  border-color: transparent;
-  box-shadow: 0 10px 28px -10px rgba(var(--growth-rgb), 0.6);
 }

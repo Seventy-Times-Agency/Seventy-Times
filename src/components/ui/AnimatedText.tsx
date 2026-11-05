@@ -1,12 +1,11 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useLit } from "@/components/ui/useLit";
 
 /**
- * Mask-clip word reveal.
- * Each word is wrapped in an `overflow: hidden` span, and its content
- * slides up from below the baseline. Supports per-word classNames for
- * inline styling (italic, outlined, shimmer, etc.).
+ * Word-by-word brightening. The words are on the page from the first
+ * paint, dim, and light up in turn once the heading reaches the screen.
+ * Supports per-word classNames for inline styling (italic, outlined…).
  */
 
 export type AnimatedWord = string | { text: string; className?: string };
@@ -18,77 +17,32 @@ type Props = {
   delay?: number;
   /** Gap between each word's animation, in seconds. */
   stagger?: number;
-  /** Duration of each word's slide. */
-  duration?: number;
-  /** Animate immediately on mount rather than on scroll-in. */
+  /** Kept for the hero: a heading on the first screen lights up on load. */
   immediate?: boolean;
-  /** Only animate once per page load. */
-  once?: boolean;
 };
-
-const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
 export default function AnimatedText({
   words,
   className,
   delay = 0,
   stagger = 0.09,
-  duration = 0.95,
-  immediate = false,
-  once = true,
 }: Props) {
-  // Respect prefers-reduced-motion: render words statically (no slide-up
-  // mask) so motion-sensitive users get the text immediately. The public
-  // API is unchanged — only the rendered motion differs.
-  const reduceMotion = useReducedMotion();
+  const { ref, lit } = useLit<HTMLSpanElement>();
 
   return (
-    <span className={className}>
+    <span ref={ref} className={className}>
       {words.map((w, i) => {
         const text = typeof w === "string" ? w : w.text;
-        const wordClass = typeof w === "string" ? undefined : w.className;
+        const wordClass = typeof w === "string" ? "" : (w.className ?? "");
         const isLast = i === words.length - 1;
-
-        const inner = reduceMotion ? (
-          <span className={wordClass} style={{ display: "inline-block" }}>
-            {text}
-            {!isLast ? " " : ""}
-          </span>
-        ) : (
-          <motion.span
-            className={wordClass}
-            style={{ display: "inline-block" }}
-            transition={{
-              duration,
-              delay: delay + i * stagger,
-              ease: EASE,
-            }}
-            {...(immediate
-              ? { initial: { y: "110%" }, animate: { y: 0 } }
-              : {
-                  initial: { y: "110%" },
-                  whileInView: { y: 0 },
-                  viewport: { once, margin: "-10%" },
-                })}
-          >
-            {text}
-            {!isLast ? "\u00A0" : ""}
-          </motion.span>
-        );
-
         return (
           <span
             key={i}
-            style={{
-              display: "inline-block",
-              overflow: "hidden",
-              verticalAlign: "bottom",
-              padding: "0.25em 0.08em",
-              margin: "-0.25em -0.08em",
-              lineHeight: "inherit",
-            }}
+            className={`dimText${lit ? " dimTextLit" : ""}${wordClass ? ` ${wordClass}` : ""}`}
+            style={{ display: "inline-block", transitionDelay: `${delay + i * stagger}s` }}
           >
-            {inner}
+            {text}
+            {!isLast ? " " : ""}
           </span>
         );
       })}
