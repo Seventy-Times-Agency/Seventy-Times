@@ -51,11 +51,159 @@
   max-width: 420px;
 }
 
-.grid {
-  grid-auto-rows: 1fr;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+/* ── Carousel ─────────────────────────────────────────────── */
+.carousel {
+  --slide-w: min(74vw, 340px);
+  --fade: 3%;
+  position: relative;
+  /* Phones: bleed past the 18px section padding so side cards peek in. */
+  margin-inline: -18px;
+}
+
+/* Native horizontal scroll + snap; padding lets the first and last
+   slides reach the centre. Edges fade so side cards recede. */
+.track {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 28px calc(50% - var(--slide-w) / 2);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+  cursor: grab;
+  touch-action: pan-x pan-y;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.track[data-dragging="true"] {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+
+.track[data-dragging="true"] .card {
+  pointer-events: none;
+}
+
+.slide {
+  flex: 0 0 var(--slide-w);
+  display: flex;
+  scroll-snap-align: center;
+  transform-origin: center;
+  will-change: transform, opacity;
+  transform: scale(0.84);
+  opacity: 0.55;
+  /* Phones: pull neighbours in so a strip of each peeks past the centre. */
+  margin-inline: -14px;
+}
+
+.slide > * {
+  flex: 1;
+}
+
+/* Side cards are previews: no lift on hover until they're centred. */
+.slide:not([data-active]) .cardLink:hover {
+  transform: none;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: rgba(200, 212, 222, 0.03);
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.navBtn:hover:not(:disabled),
+.navBtn:focus-visible {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--black);
+}
+
+.navBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--line-strong);
+  cursor: pointer;
+  transition:
+    width 0.3s var(--ease),
+    background 0.3s ease;
+}
+
+/* Bigger hit area than the visible dot. */
+.dot {
+  position: relative;
+}
+
+.dot::after {
+  content: "";
+  position: absolute;
+  inset: -10px -4px;
+}
+
+.dot[data-active] {
+  width: 22px;
+  background: var(--accent);
+}
+
+@media (min-width: 641px) {
+  .carousel {
+    --slide-w: 380px;
+    --fade: 8%;
+    margin-inline: 0;
+  }
+  .track {
+    gap: 8px;
+  }
+  .slide {
+    margin-inline: 0;
+  }
+}
+
+@media (min-width: 1001px) {
+  .carousel {
+    --slide-w: 420px;
+  }
 }
 
 /* ── Card ─────────────────────────────────────────────────── */
@@ -172,14 +320,28 @@
   background: currentColor;
 }
 
+/* Each status sets its colour once (--st-rgb); text, tinted border,
+   faint fill and the dot's glow all derive from it. */
+.status_live,
+.status_progress,
+.status_soon {
+  color: rgb(var(--st-rgb));
+  border-color: rgba(var(--st-rgb), 0.38);
+  background: rgba(var(--st-rgb), 0.08);
+}
+
+.status_live .statusDot,
+.status_progress .statusDot,
+.status_soon .statusDot {
+  box-shadow: 0 0 0 3px rgba(var(--st-rgb), 0.16), 0 0 8px rgba(var(--st-rgb), 0.6);
+}
+
 .status_live {
-  color: var(--accent);
-  border-color: var(--line-strong);
+  --st-rgb: var(--st-live-rgb);
 }
 
 .status_progress {
-  color: var(--accent-strong);
-  border-color: rgba(200, 212, 222, 0.25);
+  --st-rgb: var(--st-progress-rgb);
 }
 
 .status_progress .statusDot {
@@ -194,7 +356,7 @@
 }
 
 .status_soon {
-  color: var(--text-dim);
+  --st-rgb: var(--st-later-rgb);
 }
 
 /* ── Body text ────────────────────────────────────────────── */
@@ -304,11 +466,6 @@
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
-/*  Base (mobile-first): formerly @media (max-width: 1000px).  */
-.grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
 /*  Base (mobile-first): formerly @media (max-width: 900px).  */
 
 .section {
@@ -336,16 +493,6 @@
     font-size: clamp(28px, 8vw, 52px);
   }
 
-/*  Base (mobile-first): one column; every tile the same size.  */
-.grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-
-.slot {
-    height: 100%;
-  }
-
 .card {
     padding: 22px 18px 20px;
   }
@@ -353,20 +500,6 @@
 /*  641px and up — restores the desktop values overridden above.  */
 
 @media (min-width: 641px) {
-  .grid {
-    display: grid;
-    overflow-x: visible;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    padding-bottom: 0;
-  }
-  .grid > * {
-    flex: initial;
-    width: auto;
-  }
-  .placeholderSlot {
-    display: block;
-  }
   .card {
     padding: 24px 24px 20px;
   }
@@ -394,13 +527,5 @@
   }
   .title {
     font-size: var(--fs-h1);
-  }
-}
-
-/*  1001px and up — restores the desktop values overridden above.  */
-
-@media (min-width: 1001px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
   }
 }

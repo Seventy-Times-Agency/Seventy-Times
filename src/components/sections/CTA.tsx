@@ -4,7 +4,6 @@ import { siteConfig } from "@/data/siteConfig";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
-import Magnetic from "@/components/ui/Magnetic";
 import { useT } from "@/i18n/context";
 import {
   TelegramIcon,
@@ -84,28 +83,14 @@ export default function CTA() {
           <p className={styles.sub}>{t.ctaSub}</p>
 
           <div className={styles.buttons}>
-            <Magnetic strength={0.4}>
-              <a className={styles.primary} href="#lead">
-                {t.ctaPrimary} <span aria-hidden="true">→</span>
-              </a>
-            </Magnetic>
+            <a className={styles.primary} href="#lead">
+              {t.ctaPrimary} <span aria-hidden="true">→</span>
+            </a>
             {/* Low-friction alternative: the compact callback form
                 (name + phone) lives behind #callback but had no entry
                 point on the landing. Styled as a ghost/secondary action
                 so it sits beside the primary CTA without competing. */}
-            <a
-              href="#callback"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "20px 32px",
-                borderRadius: "var(--radius-pill)",
-                border: "1px solid var(--border, rgba(255,255,255,0.18))",
-                fontWeight: 600,
-                fontSize: 15,
-              }}
-            >
+            <a href="#callback" className={styles.ghost}>
               {t.ctaCallback}
             </a>
           </div>

@@ -15,7 +15,6 @@ import styles from "@/components/overlays/forms/LeadForm.module.css";
 type Status = "idle" | "loading" | "success" | "error";
 
 const INITIAL = {
-  code: "",
   name: "",
   role: "",
   location: "",
@@ -55,13 +54,12 @@ export default function ReviewForm() {
   useEffect(() => {
     if (!hydrated) return;
     writeReviewDraft({
-      code: fields.code,
       name: fields.name,
       role: fields.role,
       location: fields.location,
       content: fields.content,
     });
-  }, [hydrated, fields.code, fields.name, fields.role, fields.location, fields.content]);
+  }, [hydrated, fields.name, fields.role, fields.location, fields.content]);
 
   const setField = (key: keyof typeof INITIAL) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -75,7 +73,6 @@ export default function ReviewForm() {
     if (status === "loading") return;
 
     const payload = {
-      code: fields.code.trim(),
       name: fields.name.trim(),
       role: fields.role.trim(),
       location: fields.location.trim(),
@@ -84,7 +81,6 @@ export default function ReviewForm() {
     };
 
     if (
-      !payload.code ||
       !payload.name ||
       !payload.role ||
       !payload.location ||
@@ -120,15 +116,13 @@ export default function ReviewForm() {
         const msg =
           res.status === 429
             ? t.reviewTooMany
-            : res.status === 401
-              ? t.reviewInvalidCode
-              : code === "TOO_LONG"
-                ? t.reviewTooLong
-                : code === "NOT_CONFIGURED"
-                  ? t.reviewNotConfigured
-                  : code === "MISSING_FIELDS"
-                    ? t.reviewFillAll
-                    : t.reviewError;
+            : code === "TOO_LONG"
+              ? t.reviewTooLong
+              : code === "NOT_CONFIGURED"
+                ? t.reviewNotConfigured
+                : code === "MISSING_FIELDS"
+                  ? t.reviewFillAll
+                  : t.reviewError;
         throw new Error(msg);
       }
 
@@ -223,20 +217,6 @@ export default function ReviewForm() {
                   </div>
 
                   <label className={styles.field}>
-                    <span className={styles.label}>{t.reviewCode}</span>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      value={fields.code}
-                      onChange={setField("code")}
-                      placeholder={t.reviewCodePh}
-                      maxLength={64}
-                      autoComplete="off"
-                      required
-                    />
-                  </label>
-
-                  <label className={styles.field}>
                     <span className={styles.label}>{t.reviewName}</span>
                     <input
                       className={styles.input}
@@ -317,19 +297,21 @@ export default function ReviewForm() {
                     </div>
                   )}
 
-                  <button
-                    type="submit"
-                    className={styles.submit}
-                    disabled={status === "loading" || !consent}
-                  >
-                    {status === "loading" ? (
-                      t.reviewSubmitting
-                    ) : (
-                      <>
-                        {t.reviewSubmit} <span aria-hidden="true">→</span>
-                      </>
-                    )}
-                  </button>
+                  <div className={styles.actions}>
+                    <button
+                      type="submit"
+                      className={styles.submit}
+                      disabled={status === "loading" || !consent}
+                    >
+                      {status === "loading" ? (
+                        t.reviewSubmitting
+                      ) : (
+                        <>
+                          {t.reviewSubmit} <span aria-hidden="true">→</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
 
                   <p className={styles.note}>{t.reviewNote}</p>
                 </form>

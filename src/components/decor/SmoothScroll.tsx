@@ -29,7 +29,22 @@ export default function SmoothScroll() {
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 2,
+      // Lenis swallows wheel events page-wide. Anything that scrolls on
+      // its own — modals/forms (role="dialog"), the chat, the mobile
+      // menu (data-lenis-prevent) — must get the native wheel back, or
+      // it can only be scrolled by dragging its scrollbar.
+      prevent: (node) =>
+        !!node.closest?.('[role="dialog"], [aria-modal="true"], [data-lenis-prevent]'),
     });
+
+    // A modal locks the page (body overflow: hidden, see useHashModal).
+    // Pause Lenis meanwhile so the wheel can't drift the page behind it.
+    const syncLock = () => {
+      if (document.body.style.overflow === "hidden") lenis.stop();
+      else lenis.start();
+    };
+    const lockObserver = new MutationObserver(syncLock);
+    lockObserver.observe(document.body, { attributes: true, attributeFilter: ["style"] });
 
     let rafId = 0;
     const raf = (time: number) => {
@@ -40,6 +55,7 @@ export default function SmoothScroll() {
 
     return () => {
       cancelAnimationFrame(rafId);
+      lockObserver.disconnect();
       lenis.destroy();
     };
   }, []);

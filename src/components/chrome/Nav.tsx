@@ -9,7 +9,6 @@ import { FLOW, FLOW_COPY } from "@/components/sections/services/flow";
 import { useT } from "@/i18n/context";
 import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
 import Logo from "@/components/ui/Logo";
-import Magnetic from "@/components/ui/Magnetic";
 import styles from "@/components/chrome/Nav.module.css";
 
 export default function Nav() {
@@ -106,11 +105,11 @@ export default function Nav() {
             </button>
           ))}
         </div>
-        <Magnetic strength={0.25} className={styles.ctaWrap}>
+        <span className={styles.ctaWrap}>
           <a href="#lead" className={styles.cta}>
             {t.navCta} <span className={styles.ctaArrow} aria-hidden="true">→</span>
           </a>
-        </Magnetic>
+        </span>
         <button
           className={styles.hamburger}
           onClick={() => setMenuOpen((v) => !v)}
@@ -126,7 +125,7 @@ export default function Nav() {
       </div>
 
       {menuOpen && (
-        <div className={styles.mobileMenu} id="mobile-menu">
+        <div className={styles.mobileMenu} id="mobile-menu" data-lenis-prevent>
           <Link
             href={servicesHref}
             className={`${styles.mobileLink}${servicesActive ? ` ${styles.mobileLinkActive}` : ""}`}

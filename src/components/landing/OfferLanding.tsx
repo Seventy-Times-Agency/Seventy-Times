@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import Nav from "@/components/chrome/Nav";
 import Footer from "@/components/chrome/Footer";
 import Reveal from "@/components/ui/Reveal";
-import Magnetic from "@/components/ui/Magnetic";
 import { OFFERS, type OfferVariant } from "@/data/offers";
 import { markLanding } from "@/lib/utm";
 import { useT } from "@/i18n/context";
@@ -83,12 +82,10 @@ export default function OfferLanding({ variant }: { variant: OfferVariant }) {
                 </span>
               </div>
               <div className={styles.ctaSide}>
-                <Magnetic strength={0.4}>
-                  <a href="#lead" className={styles.cta}>
-                    {offer.cta[locale]}
-                    <span aria-hidden="true"> →</span>
-                  </a>
-                </Magnetic>
+                <a href="#lead" className={styles.cta}>
+                  {offer.cta[locale]}
+                  <span aria-hidden="true"> →</span>
+                </a>
                 <span className={styles.ctaHint}>{offer.ctaHint[locale]}</span>
               </div>
             </section>

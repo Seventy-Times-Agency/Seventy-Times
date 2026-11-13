@@ -7,11 +7,13 @@ import Services from "@/components/sections/Services";
 import Footer from "@/components/chrome/Footer";
 import SectionDivider from "@/components/decor/SectionDivider";
 import StructuredData from "@/components/seo/StructuredData";
+import { REVIEWS } from "@/data/reviews";
 
 // Below-fold sections — code-split so the initial route bundle stays
 // lean. Still SSR'd (no `ssr: false`) so search engines and the first
 // paint keep the content; only the client JS for hydration is deferred.
 const Cases = dynamic(() => import("@/components/sections/Cases"));
+const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
 const StackBuilder = dynamic(() => import("@/components/sections/StackBuilder"));
 const CTA = dynamic(() => import("@/components/sections/CTA"));
 
@@ -28,6 +30,13 @@ export default async function HomePage() {
         <Services teaser />
         <SectionDivider labelKey="divCases" />
         <Cases />
+        {/* Client reviews appear once data/reviews.ts has entries. */}
+        {REVIEWS.length > 0 && (
+          <>
+            <SectionDivider labelKey="divReviews" />
+            <Testimonials />
+          </>
+        )}
         <SectionDivider labelKey="divSimulator" />
         <StackBuilder />
         <SectionDivider labelKey="divTalk" />

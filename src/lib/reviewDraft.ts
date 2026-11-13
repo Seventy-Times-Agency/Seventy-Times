@@ -7,7 +7,6 @@
 export const REVIEW_DRAFT_KEY = "st-review-draft-v1";
 
 export type ReviewDraft = {
-  code: string;
   name: string;
   role: string;
   location: string;
@@ -21,7 +20,6 @@ export function readReviewDraft(): ReviewDraft | null {
     const parsed = JSON.parse(raw) as Partial<ReviewDraft>;
     if (typeof parsed !== "object" || parsed === null) return null;
     return {
-      code: typeof parsed.code === "string" ? parsed.code : "",
       name: typeof parsed.name === "string" ? parsed.name : "",
       role: typeof parsed.role === "string" ? parsed.role : "",
       location: typeof parsed.location === "string" ? parsed.location : "",

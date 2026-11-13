@@ -1,0 +1,272 @@
+/* Team time-zone dials (hero strip). Status colours come from the
+   shared palette in globals.css: --st-live for a working office,
+   steel for an office that's off. */
+
+.clock {
+  --st-rgb: var(--accent-rgb);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.clock[data-state="on"] {
+  --st-rgb: var(--st-live-rgb);
+}
+
+.dial {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 6px;
+}
+
+/* 0 h at the top: the whole drawing turns a quarter back. */
+.svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  transform: rotate(-90deg);
+}
+
+/* Outer dashed scale drifts slowly — the one ambient motion. */
+.guide {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+  opacity: 0.7;
+  transform-box: view-box;
+  transform-origin: center;
+  animation: drift 120s linear infinite;
+  animation-delay: calc(var(--i) * -30s);
+}
+
+.tick {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.tickMajor {
+  stroke: var(--line-strong);
+  stroke-width: 1.4;
+}
+
+.track {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 3;
+}
+
+/* 09–19 working window. Draws in on mount (dasharray 0 → length),
+   then only its colour changes with the office's state. */
+.work {
+  fill: none;
+  stroke: rgba(var(--st-rgb), 0.38);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition:
+    stroke-dasharray 1.4s var(--ease) calc(0.15s + var(--i) * 0.12s),
+    stroke 0.6s ease;
+}
+
+.clock[data-state="on"] .work {
+  stroke: rgb(var(--st-rgb));
+  filter: drop-shadow(0 0 6px rgba(var(--st-rgb), 0.55));
+}
+
+/* "Now" marker travelling round the dial. */
+.hand {
+  transform-box: view-box;
+  transform-origin: center;
+  transition: transform 0.8s var(--ease);
+}
+
+.now {
+  fill: var(--white);
+  stroke: var(--black);
+  stroke-width: 1.5;
+  transition: fill 0.6s ease;
+}
+
+.clock[data-state="on"] .now {
+  fill: rgb(var(--st-rgb));
+}
+
+.halo {
+  fill: rgba(var(--st-rgb), 0.35);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.clock[data-state="on"] .halo {
+  animation: halo 2.4s ease-out infinite;
+}
+
+.time {
+  position: absolute;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+.clock[data-state="off"] .time {
+  color: var(--text-muted);
+}
+
+.clock[data-state="idle"] .time {
+  color: var(--text-dim);
+}
+
+.colon {
+  display: inline-block;
+  margin: 0 1px;
+  animation: blink 2s steps(1, end) infinite;
+}
+
+.city {
+  font-size: var(--fs-mini);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-align: center;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  white-space: nowrap;
+  transition: color 0.6s ease;
+}
+
+.clock[data-state="on"] .status {
+  color: rgb(var(--st-rgb));
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  opacity: 0.7;
+  transition: background 0.6s ease, box-shadow 0.6s ease;
+}
+
+.clock[data-state="idle"] .dot {
+  opacity: 0;
+}
+
+.clock[data-state="on"] .dot {
+  background: rgb(var(--st-rgb));
+  opacity: 1;
+  box-shadow: 0 0 0 3px rgba(var(--st-rgb), 0.16), 0 0 8px rgba(var(--st-rgb), 0.6);
+}
+
+/* Small, quiet contact pill — highlight only, no motion. */
+.contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition:
+    background 0.28s ease,
+    color 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.contact:hover,
+.contact:focus-visible {
+  color: var(--white);
+  border-color: rgba(var(--st-rgb), 0.7);
+  background: rgba(var(--st-rgb), 0.08);
+  box-shadow: 0 0 0 1px rgba(var(--st-rgb), 0.2), 0 8px 24px -12px rgba(var(--st-rgb), 0.6);
+}
+
+@keyframes drift {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes halo {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide,
+  .halo,
+  .colon {
+    animation: none;
+  }
+  .work,
+  .hand {
+    transition: none;
+  }
+}
+
+/* Tablet and up. */
+@media (min-width: 421px) {
+  .dial {
+    width: 110px;
+    height: 110px;
+  }
+  .time {
+    font-size: 21px;
+  }
+}
+
+/* Desktop. */
+@media (min-width: 901px) {
+  .dial {
+    width: 132px;
+    height: 132px;
+  }
+  .time {
+    font-size: 25px;
+  }
+}
+
+/* Drop-shadow forces an offscreen pass every paint; skip it on touch. */
+@media (pointer: coarse) {
+  .clock[data-state="on"] .work {
+    filter: none;
+  }
+}

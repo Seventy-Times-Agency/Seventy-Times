@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import AnimatedText from "@/components/ui/AnimatedText";
-import RingCounter from "@/components/ui/RingCounter";
-import Magnetic from "@/components/ui/Magnetic";
-import { siteConfig } from "@/data/siteConfig";
+import TeamClocks from "@/components/ui/TeamClocks";
 import { useT } from "@/i18n/context";
 import styles from "@/components/sections/Hero.module.css";
 
@@ -27,48 +25,6 @@ const item: Variants = {
 export default function Hero() {
   const { t, localePath } = useT();
 
-  // Stats are visual rings; display values live in siteConfig.
-  // Ring 0 counts up to 4 (service pillars), ring 1 stays static
-  // ("24/7" — no count-up since the value isn't a single number),
-  // ring 2 counts to 3 (platforms), ring 3 to 20 (briefing minutes).
-  const [pillars, aiOn, platforms, briefingMin] = siteConfig.stats;
-  const stats = [
-    {
-      display: pillars.value,
-      to: 4,
-      suffix: "",
-      label: t.statGoal,
-      fillPct: 100,
-      id: "pillars",
-      delay: 0,
-    },
-    {
-      display: aiOn.value,
-      // No `to` — RingCounter renders the display value as static.
-      label: t.statServices,
-      fillPct: 100,
-      id: "ai-on",
-      delay: 0.12,
-    },
-    {
-      display: platforms.value,
-      to: 3,
-      suffix: "",
-      label: t.statSupport,
-      fillPct: 100,
-      id: "platforms",
-      delay: 0.24,
-    },
-    {
-      display: briefingMin.value,
-      to: 20,
-      suffix: "",
-      label: t.statLaunch,
-      fillPct: 100,
-      id: "briefing-min",
-      delay: 0.36,
-    },
-  ];
 
   return (
     <section id="top" className={styles.hero}>
@@ -82,10 +38,6 @@ export default function Hero() {
           <span className={styles.metaLeft}>
             <span className={styles.metaLine} />
             {t.heroMeta1}
-          </span>
-          <span className={styles.metaCenter}>
-            <span className={styles.metaDot} />
-            {t.heroMeta2}
           </span>
           <span className={styles.metaRight}>
             {t.heroMeta3}
@@ -121,38 +73,23 @@ export default function Hero() {
 
           <div className={styles.actions}>
             <div className={styles.actionsRow}>
-              <Magnetic strength={0.4}>
-                <a href="#lead" className={styles.primary}>
-                  {t.heroCta1}
-                  <span className={styles.arrow} aria-hidden="true">
-                    →
-                  </span>
-                </a>
-              </Magnetic>
-              <Magnetic strength={0.3}>
-                <Link href={localePath("/process")} className={styles.secondary}>
-                  {t.heroCta2}
-                </Link>
-              </Magnetic>
+              <a href="#lead" className={styles.primary}>
+                {t.heroCta1}
+                <span className={styles.arrow} aria-hidden="true">
+                  →
+                </span>
+              </a>
+              <Link href={localePath("/process")} className={styles.secondary}>
+                {t.heroCta2}
+              </Link>
             </div>
             <span className={styles.hint}>{t.heroHint}</span>
           </div>
         </motion.div>
 
-        {/* Stats strip — animated rings + counters */}
-        <motion.div variants={item} className={styles.stats}>
-          {stats.map((s) => (
-            <RingCounter
-              key={s.label}
-              id={s.id}
-              display={s.display}
-              to={s.to}
-              suffix={s.suffix}
-              label={s.label}
-              fillPct={s.fillPct}
-              delay={s.delay}
-            />
-          ))}
+        {/* Team time zones — live 24 h dials, green while an office works */}
+        <motion.div variants={item} className={styles.stats} role="group" aria-label={t.clocksLabel}>
+          <TeamClocks />
         </motion.div>
       </motion.div>
     </section>

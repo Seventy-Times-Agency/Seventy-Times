@@ -46,15 +46,4 @@ export const siteConfig = {
       url: "https://www.linkedin.com/company/seventy-times",
     },
   },
-
-  // Hero ring values in display order. Labels live in i18n
-  // (statGoal/statServices/statSupport/statLaunch). The Hero
-  // overrides count-up targets per ring; non-numeric values like
-  // "24/7" stay static.
-  stats: [
-    { value: "4", label: "Направления" },
-    { value: "24/7", label: "AI на связи" },
-    { value: "3", label: "Платформы" },
-    { value: "20", label: "Брифинг (минут)" },
-  ],
 } as const;

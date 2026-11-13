@@ -199,52 +199,63 @@
   background: var(--base-hi);
 }
 
-/* 03 — chat */
+/* 03 — chat. A messenger: newest message at the bottom, older ones are
+   pushed up and fade out under the top edge (ChatSim drives the order).
+   Sizes scale with the screen's width (container units), so bubbles
+   keep their proportions from the small card to the service page. */
 .visChat {
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: 7px;
-  padding-top: 32px;
+  /* Top 30px stay clear for the card's role label; messages fade out
+     as they scroll up under it. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 18px, #000 44px);
+  mask-image: linear-gradient(to bottom, transparent 18px, #000 44px);
 }
 
 .bubble {
-  max-width: 86%;
-  padding: 7px 10px;
-  font-size: 11px;
+  flex: none;
+  max-width: 82%;
+  padding: 0.6em 0.85em;
+  font-size: clamp(10px, 4.6cqi, 13px);
   font-weight: 600;
   line-height: 1.35;
+  /* Wrap between words; only break inside a word if it can't fit. */
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: manual;
 }
 
-.bubbleIn {
+/* Client — right, outline. */
+.bubbleUser {
   align-self: flex-end;
-  border-radius: 12px 12px 4px 12px;
+  border-radius: 1.1em 1.1em 0.35em 1.1em;
   box-shadow: var(--raise-s);
   color: var(--text-muted);
-  animation: chatIn 7s var(--ease) infinite;
 }
 
-.bubbleOut {
+/* Bot — left, filled. */
+.bubbleBot {
   align-self: flex-start;
-  border-radius: 12px 12px 12px 4px;
+  border-radius: 1.1em 1.1em 1.1em 0.35em;
   background: var(--surface-3);
   color: var(--text);
   box-shadow: inset 0 0 0 1px var(--line-strong);
-  animation: chatIn 7s var(--ease) 0.7s infinite backwards;
 }
 
-/* Messages drop in one after another, hold, then reset — a live chat loop. */
-@keyframes chatIn {
-  0% { opacity: 0; transform: translateY(8px); }
-  8%, 88% { opacity: 1; transform: none; }
-  100% { opacity: 0; transform: none; }
-}
-
+/* "…" typing indicator, sits where the bot's reply will appear. */
 .typing {
+  flex: none;
   display: inline-flex;
+  align-items: center;
   gap: 4px;
-  padding: 6px 9px;
-  border-radius: 10px;
-  box-shadow: var(--press-s);
+  padding: 0.75em 0.85em;
+  font-size: clamp(10px, 4.6cqi, 13px);
+  border-radius: 1.1em 1.1em 1.1em 0.35em;
+  background: var(--surface-3);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
   align-self: flex-start;
 }
 
@@ -252,8 +263,13 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--growth);
-  animation: blink 1.4s ease-in-out infinite;
+  background: var(--text-muted);
+  animation: typingDot 1.2s ease-in-out infinite;
+}
+
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-2px); }
 }
 
 .typing i:nth-child(2) { animation-delay: 0.2s; }
@@ -384,19 +400,26 @@
   }
 }
 
+/* Desktop: the stage frame's inner width is ~383px at 1024 and ~466px
+   from 1280 on, so the zoom steps keep 250px × zoom (+ frame padding)
+   inside it — zoom: 2 used to overflow the frame and, at 1024, the page. */
 @media (min-width: 1024px) {
   .lg {
     width: 250px;
-    zoom: 2;
+    zoom: 1.5;
+  }
+}
+
+@media (min-width: 1280px) {
+  .lg {
+    zoom: 1.85;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .chartLine,
   .typing i,
-  .wire i,
-  .bubbleIn,
-  .bubbleOut {
+  .wire i {
     animation: none;
   }
 

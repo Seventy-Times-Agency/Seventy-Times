@@ -4,9 +4,12 @@ import { jsonLd } from "@/lib/jsonLd";
 import { useT } from "@/i18n/context";
 
 /**
- * Client-rendered FAQPage JSON-LD for /process, the page that shows the
- * FAQ section — the schema has to sit on the page with the visible
- * answers. Client-side because the copy comes from the i18n context.
+ * FAQPage JSON-LD for /<locale>/faq. A client component only because the
+ * copy comes from the i18n context — it is still server-rendered into
+ * the static HTML of every locale, so crawlers see it without JS.
+ * Must list exactly the questions the FAQ section shows (same keys,
+ * same order); every answer is in that section's HTML too (collapsed
+ * with CSS, never unmounted), as Google requires for FAQ rich results.
  */
 export default function FaqStructuredData() {
   const { t } = useT();

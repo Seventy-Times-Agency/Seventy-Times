@@ -89,7 +89,8 @@ src/
 │   │   ├── forms/LeadForm.tsx    3-step lead modal (#lead hash trigger)
 │   │   ├── forms/CallbackForm.tsx Compact "request a call" modal (#callback),
 │   │   │                         posts to /api/lead with kind="callback"
-│   │   ├── forms/ReviewForm.tsx  Review modal with code gate (#review hash)
+│   │   ├── forms/ReviewForm.tsx  Review modal (#review hash); open to anyone,
+│   │   │                         reviews are moderated by hand
 │   │   ├── forms/useHashModal.ts Shared modal lifecycle: hash trigger,
 │   │   │                         scroll lock, Escape, post-close reset
 │   │   ├── CookieConsent.tsx     Cookie banner (gates analytics)
@@ -135,6 +136,11 @@ src/
 │   │   ├── index.ts              Assembles CASES (display/source order)
 │   │   └── <slug>.ts             Each case: status, region, url + an inline-
 │   │                             localized `study` (stats, sections, chat…)
+│   ├── reviews.ts                Published client reviews (REVIEWS). Empty →
+│   │                             the landing hides the Testimonials section.
+│   │                             /api/review only notifies the team; the
+│   │                             notification email carries a ready-to-paste
+│   │                             entry for this file (publish = paste + deploy)
 │   ├── services.ts               Service catalogue (key + slug + i18n keys)
 │   └── offers.ts                 Entry-offer config for the /go/ landings —
 │                                 headlines, bullets, CTA copy and the only
@@ -239,11 +245,11 @@ share a guard stack from `lib/apiGuard.ts`, applied in this order:
 
 ### Error responses
 On non-2xx, every route returns `{ error: "<CODE>" }` with one of:
-`INVALID_JSON`, `MISSING_FIELDS`, `TOO_LONG`, `INVALID_CODE`, `RATE_LIMITED`,
+`INVALID_JSON`, `MISSING_FIELDS`, `TOO_LONG`, `RATE_LIMITED`,
 `FORBIDDEN`, `NOT_CONFIGURED`, `MISSING_MESSAGES`, `EMPTY_REPLY`,
 `UPSTREAM_ERROR`. Codes are English and stable; the client maps them to
-localized strings via the dictionary (e.g. `401 → t.reviewInvalidCode`,
-`429 → t.leadTooMany`). Server text is never displayed directly to the user.
+localized strings via the dictionary (e.g. `429 → t.leadTooMany`,
+`TOO_LONG → t.leadTooLong`). Server text is never displayed directly to the user.
 
 ### Lead / review fan-out
 `POST /api/lead` and `POST /api/review` fan out to Telegram and
@@ -379,7 +385,6 @@ All optional except `ANTHROPIC_API_KEY`. See `.env.example` for full setup.
 | `ANTHROPIC_MODEL` | Override model id (default: `claude-sonnet-4-6`) |
 | `ALLOWED_ORIGINS` | Comma-separated origins allowed to call /api/* |
 | `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` | Forward leads/reviews to Telegram |
-| `CLIENT_CODES` | Comma-separated codes for the review form |
 | `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` (+ `RESEND_FROM`) | Email fallback channel |
 | `VERCEL_URL` / `VERCEL_BRANCH_URL` / `VERCEL_PROJECT_PRODUCTION_URL` | Auto-set by Vercel; origin checks trust these hostnames |
 | `VERCEL_GIT_COMMIT_SHA` / `NEXT_PUBLIC_BUILD_ID` | Auto-set / optional; versions the service-worker cache |

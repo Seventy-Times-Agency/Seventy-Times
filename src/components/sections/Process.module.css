@@ -125,44 +125,54 @@
   text-transform: uppercase;
 }
 
+/* Status colours (tokens in globals.css): later → muted red, setup →
+   amber, live/on → green. Each state sets --st-rgb once; the dot, its
+   glow, the state label and a tinted edge derive from it. */
 .mod_off {
-  box-shadow: var(--press-s);
+  --st-rgb: var(--st-later-rgb);
+  box-shadow: var(--press-s), 0 0 0 1px rgba(var(--st-rgb), 0.14);
   color: var(--text-dim);
 }
 
-.mod_off i {
-  background: var(--base-hi);
+.mod_setup {
+  --st-rgb: var(--st-progress-rgb);
+  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--st-rgb), 0.3);
 }
 
-.mod_setup {
-  box-shadow: var(--raise-s);
+.mod_live,
+.mod_on {
+  --st-rgb: var(--st-live-rgb);
+  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--st-rgb), 0.4);
+  background: linear-gradient(rgba(var(--st-rgb), 0.05), rgba(var(--st-rgb), 0.05)), var(--base);
+}
+
+.mod_off i,
+.mod_setup i,
+.mod_live i,
+.mod_on i {
+  background: rgb(var(--st-rgb));
+  box-shadow: 0 0 0 4px rgba(var(--st-rgb), 0.16), 0 0 10px rgba(var(--st-rgb), 0.55);
+}
+
+/* "Later" is parked, not alarming: the dot keeps its colour but dimmer. */
+.mod_off i {
+  opacity: 0.7;
+  box-shadow: 0 0 0 4px rgba(var(--st-rgb), 0.1);
 }
 
 .mod_setup i {
-  background: var(--text-muted);
-  box-shadow: none;
   animation: pulse 1.6s ease-in-out infinite;
 }
 
-.mod_setup .modState {
-  color: var(--text-muted);
-}
-
-/* Live modules read as "on": green dot, green status, green edge. */
-.mod_live,
-.mod_on {
-  box-shadow: var(--raise-s), 0 0 0 1px rgba(var(--growth-rgb), 0.35);
-}
-
-.mod_live i,
-.mod_on i {
-  background: var(--growth);
-  box-shadow: 0 0 0 4px rgba(var(--growth-rgb), 0.18);
-}
-
+.mod_off .modState,
+.mod_setup .modState,
 .mod_live .modState,
 .mod_on .modState {
-  color: var(--growth);
+  color: rgb(var(--st-rgb));
+}
+
+.mod_off .modState {
+  opacity: 0.8;
 }
 
 /* Leads chart */
@@ -411,12 +421,12 @@
   color: var(--black);
   font-size: 14px;
   font-weight: 700;
-  transition: transform 0.2s var(--ease), background 0.2s ease;
+  transition: background 0.28s ease, background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
 
 .finaleBtn:hover {
   background: var(--accent-strong);
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.45), 0 10px 32px -12px var(--accent-glow);
 }
 
 .finaleBtn:focus-visible {

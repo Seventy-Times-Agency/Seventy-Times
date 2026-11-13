@@ -17,15 +17,16 @@
   border-radius: 50%;
   border: 2px solid var(--line-strong);
   background: var(--surface);
-  overflow: hidden;
+  /* Not clipped: the online dot sits on the ring's edge and must show
+     whole (overflow: hidden used to cut it by the circle). */
+  overflow: visible;
   box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.6);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s var(--ease);
+  transition: background 0.28s ease, background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
 
 .toggle:hover {
   border-color: var(--accent);
   box-shadow: 0 16px 50px -10px rgba(200, 212, 222, 0.3);
-  transform: scale(1.06);
 }
 
 .toggle:focus-visible {
@@ -57,27 +58,15 @@
 
 .toggleDot {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
+  bottom: -1px;
+  right: -1px;
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--accent-green);
+  background: var(--st-live);
   border: 3px solid var(--surface);
+  box-shadow: 0 0 8px rgba(var(--st-live-rgb), 0.55);
   z-index: 2;
-}
-
-.toggleLabel {
-  position: absolute;
-  bottom: -24px;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-dim);
 }
 
 /* Proactive teaser nudge — shown once per session when chat is closed,
@@ -266,6 +255,7 @@
 .messages {
   flex: 1;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 20px 18px 10px;
   display: flex;
   flex-direction: column;
@@ -349,18 +339,14 @@
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
-  transition:
-    color 0.18s ease,
-    background 0.18s ease,
-    border-color 0.18s ease,
-    transform 0.18s var(--ease);
+  transition: background 0.28s ease, background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
 
 .suggestion:hover {
   color: var(--white);
   border-color: var(--accent);
   background: rgba(200, 212, 222, 0.05);
-  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.45), 0 10px 32px -12px var(--accent-glow);
 }
 
 .suggestion:focus-visible {
@@ -461,10 +447,6 @@
     max-height: calc(100dvh - 100px);
   }
 
-.toggleLabel {
-    display: none;
-  }
-
 .header {
     padding: 14px 16px;
   }
@@ -514,9 +496,6 @@
     width: 390px;
     max-height: min(580px, calc(100vh - 140px));
     max-height: min(580px, calc(100dvh - 140px));
-  }
-  .toggleLabel {
-    display: revert;
   }
   .header {
     padding: 18px 20px;

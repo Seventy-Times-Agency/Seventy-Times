@@ -49,7 +49,10 @@ export default function Comparison() {
       <Reveal delay={0.1}>
         <div className={styles.head} aria-hidden="true">
           <span />
-          <span className={styles.headUs}>{siteConfig.name}</span>
+          <span className={styles.headUs}>
+            {siteConfig.name}
+            <span className={styles.liveDot} />
+          </span>
           <span>{t.compHeadAgency}</span>
         </div>
         <dl className={styles.rows}>
@@ -57,7 +60,10 @@ export default function Comparison() {
             <div key={row.label} className={styles.row}>
               <dt className={styles.label}>{t[row.label] as string}</dt>
               <dd className={styles.us}>
-                <span className={styles.who}>{siteConfig.name}</span>
+                <span className={styles.who}>
+                  {siteConfig.name}
+                  <span className={styles.liveDot} aria-hidden="true" />
+                </span>
                 {t[row.us] as string}
               </dd>
               <dd className={styles.them}>

@@ -169,8 +169,8 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--accent-green);
-  box-shadow: none;
+  background: var(--st-live);
+  box-shadow: 0 0 0 3px rgba(var(--st-live-rgb), 0.16), 0 0 8px rgba(var(--st-live-rgb), 0.6);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -197,11 +197,12 @@
   box-shadow: var(--neon);
   justify-content: center;
   min-width: 204px;
-  transition: background 0.2s ease;
+  transition: background 0.28s ease, background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
 
 .cta:hover {
   background: var(--accent-strong);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.45), 0 10px 32px -12px var(--accent-glow);
 }
 
 .cta:focus-visible {
@@ -423,7 +424,7 @@
 @media (min-width: 1024px) {
   .nav {
     grid-template-columns: auto 1fr auto;
-    column-gap: 18px;
+    column-gap: 12px;
     padding-left: 22px;
   }
   .links {
@@ -433,21 +434,26 @@
   }
   .link {
     font-size: 12px;
-    padding: 8px 10px;
+    padding: 8px 8px;
   }
+  /* Compact bar: the status chip stays (always visible), so links,
+     languages and the CTA give up a little padding to make room. */
   .status {
-    display: none;
+    min-width: 0;
+    padding: 6px 10px 6px 9px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
   }
   .right {
-    gap: 10px;
+    gap: 8px;
   }
   .langBtn {
-    min-width: 34px;
-    padding: 4px 6px;
+    min-width: 30px;
+    padding: 4px 5px;
   }
   .cta {
     font-size: 12px;
-    padding: 11px 16px;
+    padding: 11px 14px;
   }
   .hamburger,
   .mobileMenu {
@@ -457,10 +463,14 @@
 
 @media (min-width: 1280px) {
   .nav {
+    column-gap: 18px;
     padding-left: 28px;
   }
   .status {
-    display: inline-flex;
+    min-width: 176px;
+    letter-spacing: 0.12em;
+    padding: 7px 12px 7px 10px;
+    font-size: 10px;
   }
   .link {
     font-size: 13px;

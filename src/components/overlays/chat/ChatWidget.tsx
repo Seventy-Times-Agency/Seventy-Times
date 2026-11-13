@@ -37,7 +37,7 @@ function getSessionId(): string {
 }
 
 export default function ChatWidget() {
-  const { t, locale, localePath } = useT();
+  const { t, locale } = useT();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: t.chatGreeting },
@@ -57,13 +57,25 @@ export default function ChatWidget() {
       if (raw) {
         const parsed = JSON.parse(raw) as Message[];
         if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed.slice(-MAX_STORED));
+          const restored = parsed.slice(-MAX_STORED);
+          // The greeting is stored with the history, so a returning
+          // visitor would see whatever wording it had back then (e.g. an
+          // old spelling of Vanessa's name). When the stored history
+          // still starts at the greeting (not trimmed), refresh it to
+          // the current copy; the conversation itself is untouched.
+          if (parsed.length < MAX_STORED && restored[0]?.role === "assistant") {
+            restored[0] = { role: "assistant", content: t.chatGreeting };
+          }
+          setMessages(restored);
         }
       }
     } catch {
       // ignore corrupt storage
     }
     setHydrated(true);
+    // Mount-only: a later language switch swaps the greeting in the
+    // locale effect below, so re-running this would clobber history.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Persist on change (after hydration, to avoid overwriting with greeting).
@@ -319,6 +331,8 @@ export default function ChatWidget() {
         {open && (
           <motion.div
             className={styles.panel}
+            // Native wheel/trackpad scroll inside the chat (see SmoothScroll).
+            data-lenis-prevent
             initial={{ opacity: 0, scale: 0.92, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 12 }}
@@ -442,23 +456,6 @@ export default function ChatWidget() {
               </button>
             </div>
 
-            {/* GDPR Art. 13 notice for free-text chat: where the
-                conversation is processed and that it may be stored, with
-                a link to the full policy. Styling kept inline because the
-                CSS module is owned elsewhere. */}
-            <a
-              href={localePath("/privacy")}
-              style={{
-                display: "block",
-                margin: "8px 16px 12px",
-                fontSize: 11,
-                lineHeight: 1.4,
-                opacity: 0.6,
-                textAlign: "center",
-              }}
-            >
-              {t.chatPrivacyNotice}
-            </a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -506,7 +503,6 @@ export default function ChatWidget() {
       >
         <VanessaMark className={styles.toggleImg} />
         <span className={styles.toggleDot} />
-        {!open && <span className={styles.toggleLabel}>{t.chatLabel}</span>}
       </button>
     </div>
   );

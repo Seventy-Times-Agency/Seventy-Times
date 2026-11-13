@@ -143,11 +143,27 @@ export default function LeadForm() {
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setFields((prev) => ({ ...prev, [key]: e.target.value }));
 
-  const setPackage = (e: React.ChangeEvent<HTMLSelectElement>) =>
-    setFields((prev) => ({ ...prev, package: e.target.value as LeadPackage }));
+  const setPackage = (value: LeadPackage) =>
+    setFields((prev) => ({ ...prev, package: value }));
 
-  const setBudget = (e: React.ChangeEvent<HTMLSelectElement>) =>
-    setFields((prev) => ({ ...prev, budget: e.target.value as LeadBudget }));
+  const setBudget = (value: LeadBudget) =>
+    setFields((prev) => ({ ...prev, budget: value }));
+
+  // Choice chips instead of dropdowns: every option visible, one tap.
+  const packageOptions: [LeadPackage, string][] = [
+    ["not_sure", t.leadPackageNotSure],
+    ["ads", t.leadPackageAds],
+    ["site", t.leadPackageSite],
+    ["ai_bot", t.leadPackageBot],
+    ["standalone", t.leadPackageStandalone],
+  ];
+  const budgetOptions: [LeadBudget, string][] = [
+    ["not_sure", t.leadBudgetNotSure],
+    ["under_1k", t.leadBudgetUnder1k],
+    ["1k_3k", t.leadBudget1k3k],
+    ["3k_10k", t.leadBudget3k10k],
+    ["10k_plus", t.leadBudget10kPlus],
+  ];
 
   // Track how many of the four required fields are filled, for the
   // progress bar at the top of the modal.
@@ -464,35 +480,41 @@ export default function LeadForm() {
                         />
                       </label>
 
-                      <label className={styles.field}>
-                        <span className={styles.label}>{t.leadPackage}</span>
-                        <select
-                          className={styles.input}
-                          value={fields.package}
-                          onChange={setPackage}
-                        >
-                          <option value="not_sure">{t.leadPackageNotSure}</option>
-                          <option value="ads">{t.leadPackageAds}</option>
-                          <option value="site">{t.leadPackageSite}</option>
-                          <option value="ai_bot">{t.leadPackageBot}</option>
-                          <option value="standalone">{t.leadPackageStandalone}</option>
-                        </select>
-                      </label>
+                      <fieldset className={styles.choice}>
+                        <legend className={styles.choiceLegend}>{t.leadPackage}</legend>
+                        <div className={styles.chips}>
+                          {packageOptions.map(([value, label]) => (
+                            <label key={value} className={styles.chip}>
+                              <input
+                                type="radio"
+                                name="lead-package"
+                                value={value}
+                                checked={fields.package === value}
+                                onChange={() => setPackage(value)}
+                              />
+                              <span>{label}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </fieldset>
 
-                      <label className={styles.field}>
-                        <span className={styles.label}>{t.leadBudget}</span>
-                        <select
-                          className={styles.input}
-                          value={fields.budget}
-                          onChange={setBudget}
-                        >
-                          <option value="not_sure">{t.leadBudgetNotSure}</option>
-                          <option value="under_1k">{t.leadBudgetUnder1k}</option>
-                          <option value="1k_3k">{t.leadBudget1k3k}</option>
-                          <option value="3k_10k">{t.leadBudget3k10k}</option>
-                          <option value="10k_plus">{t.leadBudget10kPlus}</option>
-                        </select>
-                      </label>
+                      <fieldset className={styles.choice}>
+                        <legend className={styles.choiceLegend}>{t.leadBudget}</legend>
+                        <div className={styles.chips}>
+                          {budgetOptions.map(([value, label]) => (
+                            <label key={value} className={styles.chip}>
+                              <input
+                                type="radio"
+                                name="lead-budget"
+                                value={value}
+                                checked={fields.budget === value}
+                                onChange={() => setBudget(value)}
+                              />
+                              <span>{label}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </fieldset>
                     </>
                   )}
 

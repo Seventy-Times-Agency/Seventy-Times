@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState, type KeyboardEvent } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { siteConfig } from "@/data/siteConfig";
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
@@ -109,15 +108,19 @@ export default function FAQ({ titleAs: Title = "h2" }: Props) {
                     <span className={styles.qText}>{item.q}</span>
                     <span className={styles.toggle} aria-hidden="true">+</span>
                   </button>
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div key="content" id={`faq-${i}`} className={styles.answer}
-                        initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}>
-                        <p className={styles.answerInner}>{item.a}</p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {/* Every answer is always in the HTML (search engines and
+                      the FAQPage JSON-LD need the text on the page); closed
+                      ones are only collapsed visually, via CSS. */}
+                  <div
+                    id={`faq-${i}`}
+                    className={styles.answer}
+                    data-open={isOpen ? "true" : undefined}
+                    aria-hidden={!isOpen}
+                  >
+                    <div className={styles.answerClip}>
+                      <p className={styles.answerInner}>{item.a}</p>
+                    </div>
+                  </div>
                 </div>
               );
             })}

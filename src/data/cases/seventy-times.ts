@@ -11,8 +11,8 @@ export const seventyTimes: CaseItem = {
       tag: u("NEXT.JS · AI ASSISTANT"),
       summary: {
         en: "This very site. A multilingual Next.js 15 build with Vanessa — our AI consultant who qualifies and hands off leads — and motion throughout.",
-        ru: "Этот самый сайт. Многоязычный проект на Next.js 15: Ванесса — наш AI-консультант, которая квалифицирует и передаёт лиды, — и анимации повсюду.",
-        uk: "Цей самий сайт. Багатомовний проєкт на Next.js 15: Ванесса — наш AI-консультант, яка кваліфікує та передає ліди, — та анімації всюди.",
+        ru: "Этот самый сайт. Многоязычный проект на Next.js 15: Vanessa — наш AI-консультант, которая квалифицирует и передаёт лиды, — и анимации повсюду.",
+        uk: "Цей самий сайт. Багатомовний проєкт на Next.js 15: Vanessa — наш AI-консультант, яка кваліфікує та передає ліди, — та анімації всюди.",
       },
       metrics: [
         {
@@ -22,8 +22,8 @@ export const seventyTimes: CaseItem = {
         },
         {
           en: "Vanessa — AI closer: qualifies & captures leads, 24/7",
-          ru: "Ванесса — AI-клоузер: квалифицирует и захватывает лиды, 24/7",
-          uk: "Ванесса — AI-клоузер: кваліфікує та захоплює ліди, 24/7",
+          ru: "Vanessa — AI-клоузер: квалифицирует и захватывает лиды, 24/7",
+          uk: "Vanessa — AI-клоузер: кваліфікує та захоплює ліди, 24/7",
         },
       ],
       headline: {
@@ -54,8 +54,8 @@ export const seventyTimes: CaseItem = {
           icon: "🤖",
           text: {
             en: "Vanessa — our AI consultant: qualifies, captures & hands off leads, 24/7",
-            ru: "Ванесса — наш AI-консультант: квалифицирует, захватывает и передаёт лиды, 24/7",
-            uk: "Ванесса — наш AI-консультант: кваліфікує, захоплює й передає ліди, 24/7",
+            ru: "Vanessa — наш AI-консультант: квалифицирует, захватывает и передаёт лиды, 24/7",
+            uk: "Vanessa — наш AI-консультант: кваліфікує, захоплює й передає ліди, 24/7",
           },
         },
         {
@@ -86,8 +86,8 @@ export const seventyTimes: CaseItem = {
             role: "bot",
             text: {
               en: "Hi! I'm Vanessa, the Seventy Times AI consultant. Tell me about your business — I'll help figure out what you actually need.",
-              ru: "Привет! Я Ванесса, ИИ-консультант Seventy Times. Расскажите о вашем бизнесе — помогу понять, что вам действительно нужно.",
-              uk: "Привіт! Я Ванесса, ШІ-консультант Seventy Times. Розкажіть про ваш бізнес — допоможу зрозуміти, що вам справді потрібно.",
+              ru: "Привет! Я Vanessa, ИИ-консультант Seventy Times. Расскажите о вашем бизнесе — помогу понять, что вам действительно нужно.",
+              uk: "Привіт! Я Vanessa, ШІ-консультант Seventy Times. Розкажіть про ваш бізнес — допоможу зрозуміти, що вам справді потрібно.",
             },
           },
           {

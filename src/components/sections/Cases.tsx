@@ -8,6 +8,7 @@ import { CASE_CARDS } from "@/data/caseCards";
 import { useT } from "@/i18n/context";
 import CaseCard from "@/components/sections/cases/CaseCard";
 import PlaceholderCard from "@/components/sections/cases/PlaceholderCard";
+import CaseCarousel from "@/components/sections/cases/CaseCarousel";
 import styles from "@/components/sections/Cases.module.css";
 
 type Props = {
@@ -58,12 +59,19 @@ export default function Cases({ titleAs: Title = "h2" }: Props) {
         </div>
       </div>
 
-      <div className={styles.grid}>
-        {cases.map((item, i) => {
+      <Reveal>
+        <CaseCarousel
+          label={t.casesCarousel}
+          prevLabel={t.casesPrev}
+          nextLabel={t.casesNext}
+          // Open on the last case so the "your project" card sits on the right.
+          initialIndex={Math.max(0, cases.length - 1)}
+        >
+        {cases.map((item) => {
           const copy = CASE_CARDS[item.id];
           return (
-            <Reveal key={item.id} delay={i * 0.06} className={styles.slot}>
               <CaseCard
+                key={item.id}
                 kind={copy.kind[locale]}
                 title={copy.title[locale]}
                 task={copy.task[locale]}
@@ -73,18 +81,16 @@ export default function Cases({ titleAs: Title = "h2" }: Props) {
                 ctaLabel={t.casesCta}
                 href={localePath(`/cases/${item.id}`)}
               />
-            </Reveal>
           );
         })}
-        <Reveal delay={cases.length * 0.06} className={styles.slot}>
           <PlaceholderCard
             href="#lead"
             title={t.casesPlaceholderTitle}
             summary={t.casesPlaceholderSummary}
             ctaLabel={t.casesPlaceholderCta}
           />
-        </Reveal>
-      </div>
+        </CaseCarousel>
+      </Reveal>
     </section>
   );
 }

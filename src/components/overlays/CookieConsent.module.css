@@ -81,12 +81,13 @@
   background: var(--accent);
   color: var(--black);
   border-color: var(--accent);
+  transition: background 0.28s ease, background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
 
 .btnPrimary:hover {
   background: var(--accent-strong);
   border-color: var(--accent-strong);
-  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.45), 0 10px 32px -12px var(--accent-glow);
 }
 
 /*  Base (mobile-first): formerly @media (max-width: 640px).  */

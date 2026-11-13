@@ -436,12 +436,12 @@ a.machineStep:focus-visible {
   font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
-  transition: transform 0.2s var(--ease), background 0.2s ease;
+  transition: background 0.28s ease, background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
 
 .ctaBtn:hover {
   background: var(--accent-strong);
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.45), 0 10px 32px -12px var(--accent-glow);
 }
 
 .ctaBtn:focus-visible {

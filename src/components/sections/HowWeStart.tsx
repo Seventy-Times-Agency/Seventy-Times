@@ -3,7 +3,6 @@
 import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
-import Magnetic from "@/components/ui/Magnetic";
 import { useT } from "@/i18n/context";
 import styles from "@/components/sections/HowWeStart.module.css";
 
@@ -63,12 +62,10 @@ export default function HowWeStart() {
 
       <Reveal delay={0.2}>
         <div className={styles.ctaRow}>
-          <Magnetic strength={0.4}>
-            <a href="#lead" className={styles.cta}>
-              {t.hsCta}
-              <span aria-hidden="true"> →</span>
-            </a>
-          </Magnetic>
+          <a href="#lead" className={styles.cta}>
+            {t.hsCta}
+            <span aria-hidden="true"> →</span>
+          </a>
         </div>
       </Reveal>
     </section>

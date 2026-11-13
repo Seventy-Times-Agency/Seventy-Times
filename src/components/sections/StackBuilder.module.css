@@ -143,12 +143,12 @@
   color: var(--black);
   font-size: 14px;
   font-weight: 700;
-  transition: transform 0.2s var(--ease), background 0.2s ease;
+  transition: background 0.28s ease, background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
 
 .cta:hover {
   background: var(--accent-strong);
-  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.45), 0 10px 32px -12px var(--accent-glow);
 }
 
 .cta:focus-visible {
@@ -194,12 +194,14 @@
   border-radius: 50%;
   border: 1px solid var(--line-hi);
   background: var(--black);
-  transition: background 0.3s ease, border-color 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* A picked step is "active": green status dot (palette in globals.css). */
 .stepOn .dot {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--st-live);
+  border-color: var(--st-live);
+  box-shadow: 0 0 0 4px rgba(var(--st-live-rgb), 0.15), 0 0 10px rgba(var(--st-live-rgb), 0.5);
 }
 
 .stepLabel {

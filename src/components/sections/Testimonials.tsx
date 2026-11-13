@@ -5,15 +5,7 @@ import Reveal from "@/components/ui/Reveal";
 import AnimatedText from "@/components/ui/AnimatedText";
 import SectionWatermark from "@/components/decor/SectionWatermark";
 import { useT } from "@/i18n/context";
-/** A published visitor review. The original store (Notion) was removed;
- * any future source just needs to hand the page a list of these. */
-export type ApprovedReview = {
-  id: string;
-  name: string;
-  role?: string;
-  location?: string;
-  content: string;
-};
+import { REVIEWS, type ApprovedReview } from "@/data/reviews";
 import styles from "@/components/sections/Testimonials.module.css";
 
 type Props = {
@@ -29,7 +21,7 @@ type Card = {
   body: string;
 };
 
-export default function Testimonials({ reviews = [] }: Props) {
+export default function Testimonials({ reviews = REVIEWS }: Props) {
   const { t } = useT();
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
@@ -121,7 +113,7 @@ export default function Testimonials({ reviews = [] }: Props) {
         <Reveal delay={0.15}>
           <div className={styles.headerRight}>
             <p className={styles.lead}>{t.testLead}</p>
-            <a href="#lead" className={styles.reviewBtn}>
+            <a href="#review" className={styles.reviewBtn}>
               {t.testReviewBtn} <span aria-hidden="true">→</span>
             </a>
           </div>

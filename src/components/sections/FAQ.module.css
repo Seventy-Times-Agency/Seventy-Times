@@ -153,8 +153,31 @@
   transform: rotate(45deg);
 }
 
+/* Collapsed by animating the grid row 0fr ↔ 1fr: the answer stays in
+   the DOM (indexable) and still eases open like before. */
 .answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.45s cubic-bezier(0.21, 0.47, 0.32, 0.98),
+    opacity 0.35s ease;
+}
+
+.answer[data-open] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.answerClip {
+  min-height: 0;
   overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .answer {
+    transition: none;
+  }
 }
 
 .answerInner {

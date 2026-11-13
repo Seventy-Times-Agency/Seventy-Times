@@ -9,6 +9,7 @@ import { newEventId, track } from "@/lib/analytics";
 import { captureUtm, readUtm } from "@/lib/utm";
 import { readConsent } from "@/lib/consent";
 import { useHashModal } from "@/components/overlays/forms/useHashModal";
+import { CALLBACK_REGION_EVENT } from "@/lib/callbackRegion";
 import styles from "@/components/overlays/forms/LeadForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -35,11 +36,20 @@ export default function CallbackForm() {
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  // Set when the form is opened from a team clock ("Contact — Berlin").
+  const [region, setRegion] = useState("");
 
   const { open, close, dialogRef } = useHashModal("#callback", () => {
     setStatus("idle");
     setError("");
+    setRegion("");
   });
+
+  useEffect(() => {
+    const onRegion = (e: Event) => setRegion(String((e as CustomEvent).detail ?? ""));
+    window.addEventListener(CALLBACK_REGION_EVENT, onRegion);
+    return () => window.removeEventListener(CALLBACK_REGION_EVENT, onRegion);
+  }, []);
 
   // Capture campaign attribution (utm_*, gclid, fbclid) once on mount.
   useEffect(() => {
@@ -96,9 +106,13 @@ export default function CallbackForm() {
             contact: phone,
             phone,
             business: t.callbackBusinessFiller,
-            request: note
-              ? `${t.callbackRequestPrefix}\n\n${note}`
-              : t.callbackRequestPrefix,
+            request: [
+              t.callbackRequestPrefix,
+              region ? `${t.callbackRegion}: ${region}` : "",
+              note ? `\n${note}` : "",
+            ]
+              .filter(Boolean)
+              .join("\n"),
             kind: "callback",
             utm: readUtm(),
             eventId,
@@ -128,7 +142,7 @@ export default function CallbackForm() {
         setError(err instanceof Error ? err.message : t.chatError);
       }
     },
-    [fields, consent, t],
+    [fields, consent, t, region],
   );
 
   return (
@@ -189,6 +203,11 @@ export default function CallbackForm() {
                     </span>
                   </h3>
                   <p className={styles.subtitle}>{t.callbackSub}</p>
+                  {region && (
+                    <span className={styles.regionChip}>
+                      {t.callbackRegion}: <strong>{region}</strong>
+                    </span>
+                  )}
                 </div>
 
                 <form onSubmit={submit} className={styles.form} noValidate>

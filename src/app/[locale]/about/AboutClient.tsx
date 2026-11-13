@@ -2,62 +2,55 @@
 
 import Link from "next/link";
 import { useT } from "@/i18n/context";
-import { siteConfig } from "@/data/siteConfig";
+import { TEAM } from "@/data/team";
 import Reveal from "@/components/ui/Reveal";
-import LegalCrumbs from "@/components/legal/LegalCrumbs";
+import TeamGrid from "@/components/sections/team/TeamGrid";
 import legal from "@/components/legal/LegalPage.module.css";
 import styles from "./AboutClient.module.css";
 
+/**
+ * About: title + lead, then the team itself (faces first), then the
+ * "let's meet" CTA. No breadcrumbs, sticker or link tiles — the nav
+ * already covers the rest of the site.
+ */
 export default function AboutClient() {
   const { t, localePath } = useT();
   const home = localePath("/");
 
-  const links = [
-    { href: localePath("/services"), label: t.navServices },
-    { href: localePath("/cases"), label: t.navCases },
-    { href: localePath("/process"), label: t.navWork },
-    { href: localePath("/team"), label: t.teamTitle },
-  ];
-
   return (
     <main id="main-content" className={legal.main}>
-      <div className={`${legal.inner} ${styles.inner}`}>
-        <LegalCrumbs current={t.aboutTitle} />
-
-        <header className={legal.header}>
-          <span className={styles.sticker}>
-            <b>{siteConfig.shortName}</b> · {siteConfig.name}
-          </span>
+      <div className={`${legal.inner} ${legal.innerWide}`}>
+        <header className={`${legal.header} ${styles.header}`}>
           <h1 className={styles.title}>{t.aboutTitle}</h1>
           <p className={legal.lead}>{t.aboutLead}</p>
           <div className={legal.actions}>
             <Link href={`${home}#lead`} className={legal.primary}>
-              {t.hxCtaBrief}
+              {t.aboutCtaBtn}
               <i aria-hidden="true">↗</i>
             </Link>
           </div>
         </header>
 
-        <nav className={styles.tiles} aria-label={t.aboutTitle}>
-          {links.map((link, i) => (
-            <Reveal key={link.href} delay={i * 0.05}>
-              <Link href={link.href} className={styles.tile}>
-                <span className={styles.tileNum}>{String(i + 1).padStart(2, "0")}</span>
-                <span className={styles.tileLabel}>{link.label}</span>
-                <span className={styles.tileArrow} aria-hidden="true">→</span>
-              </Link>
-            </Reveal>
-          ))}
-        </nav>
+        {TEAM.length > 0 && (
+          <section className={styles.team} aria-labelledby="about-team-title">
+            <div className={styles.teamHead}>
+              <h2 className={styles.teamTitle} id="about-team-title">
+                {t.teamTitle}
+              </h2>
+              <p className={styles.teamLead}>{t.teamLead}</p>
+            </div>
+            <TeamGrid nameAs="h3" />
+          </section>
+        )}
 
         <Reveal>
           <div className={legal.cta}>
             <div>
-              <p className={legal.ctaTitle}>{t.svcDetailCtaTitle}</p>
-              <p className={legal.ctaBody}>{t.svcDetailCtaBody}</p>
+              <p className={legal.ctaTitle}>{t.aboutCtaTitle}</p>
+              <p className={legal.ctaBody}>{t.aboutCtaBody}</p>
             </div>
             <Link href={`${home}#lead`} className={legal.ctaBtn}>
-              {t.hxCtaBrief} <span aria-hidden="true">→</span>
+              {t.aboutCtaBtn} <span aria-hidden="true">→</span>
             </Link>
           </div>
         </Reveal>

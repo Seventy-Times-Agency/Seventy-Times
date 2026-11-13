@@ -122,7 +122,6 @@ instructions in [`.env.example`](./.env.example):
 | `ANTHROPIC_MODEL` | no | Override Claude model id |
 | `ALLOWED_ORIGINS` | recommended | Lock /api/* to known hosts |
 | `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` | optional | Forward submissions to Telegram |
-| `CLIENT_CODES` | optional | Comma-separated codes that unlock the review form |
 | `NOTION_TOKEN` + `NOTION_DATABASE_{LEADS,REVIEWS,CHATS}_ID` | optional | Forward leads / reviews / chat turns into Notion CRM |
 | `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` | optional | Email channel for lead / review notifications |
 

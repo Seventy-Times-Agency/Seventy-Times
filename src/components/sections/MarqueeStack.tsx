@@ -13,7 +13,6 @@ const TOP_ITEMS = [
   "Lead Engine",
   "Meta Ads",
   "Google Ads",
-  "TikTok Ads",
   "Telegram Bots",
   "CRM Integration",
   "Funnel Design",

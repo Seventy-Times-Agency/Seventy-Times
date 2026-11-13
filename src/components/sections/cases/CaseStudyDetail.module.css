@@ -124,19 +124,27 @@
   border-radius: 50%;
   background: currentColor;
 }
-.status_live {
-  color: var(--accent-green);
-  border-color: rgba(74, 222, 128, 0.3);
-  background: rgba(74, 222, 128, 0.07);
+/* Same status palette as the case cards (tokens in globals.css). */
+.status_live,
+.status_progress,
+.status_soon {
+  color: rgb(var(--st-rgb));
+  border-color: rgba(var(--st-rgb), 0.38);
+  background: rgba(var(--st-rgb), 0.08);
 }
-.status_live .statusDot {
-  box-shadow: 0 0 8px currentColor;
+.status_live .statusDot,
+.status_progress .statusDot,
+.status_soon .statusDot {
+  box-shadow: 0 0 0 3px rgba(var(--st-rgb), 0.16), 0 0 8px rgba(var(--st-rgb), 0.6);
+}
+.status_live {
+  --st-rgb: var(--st-live-rgb);
 }
 .status_progress {
-  color: #fbbf24;
+  --st-rgb: var(--st-progress-rgb);
 }
 .status_soon {
-  color: var(--text-dim);
+  --st-rgb: var(--st-later-rgb);
 }
 
 .location {
@@ -479,17 +487,15 @@
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.04em;
-  transition:
-    transform 0.18s var(--ease),
-    background 0.18s ease,
-    border-color 0.18s ease;
+  transition: background 0.28s ease, background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
 .primaryCta {
   background: var(--accent);
   color: var(--black);
+  transition: background 0.28s ease, background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
 }
 .primaryCta:hover {
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.45), 0 10px 32px -12px var(--accent-glow);
 }
 .secondaryCta {
   background: transparent;
@@ -498,7 +504,7 @@
 }
 .secondaryCta:hover {
   border-color: var(--text-muted);
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.45), 0 10px 32px -12px var(--accent-glow);
 }
 
 /* ── Related ───────────────────────────────────────────────── */
@@ -596,7 +602,7 @@
 
 /* Every primary CTA turns growth-green the moment you aim at it. */
 .primaryCta {
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  transition: background 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
 }
 
 .primaryCta:hover,

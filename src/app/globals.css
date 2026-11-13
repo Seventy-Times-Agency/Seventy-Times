@@ -45,6 +45,17 @@
   /* Single restrained signal for "online" status */
   --accent-green: #4ade80;
 
+  /* Status palette — one meaning per colour, used by every status dot,
+     pill and module chip: live/active → green, in progress/setup →
+     amber, later/soon → muted red. Muted on purpose (no neon): colour
+     carries the state, a soft glow on the dot gives the accent. */
+  --st-live: #5ed68f;
+  --st-live-rgb: 94, 214, 143;
+  --st-progress: #f0b44c;
+  --st-progress-rgb: 240, 180, 76;
+  --st-later: #e07b6c;
+  --st-later-rgb: 224, 123, 108;
+
   /* Aliases used by section and legal styles. Elevation is a hairline here,
      and "growth" is a steel tone: green stays reserved for "online". */
   --base: var(--surface);
@@ -279,7 +290,7 @@ html:lang(de) h3 {
        • globals.css .shimmer          (below)
        • AnimatedBackground (.glowA/.glowB drift)
        • FloatingGlyphs (.glyph drift)
-       • Hero (.heroWordmark drift, .metaDot pulse)
+       • Hero (.heroWordmark drift)
        • Nav (.statusDot pulse)
        • Cases (.status_progress .statusDot pulse)
        • ChatWidget (.typingDot blink)

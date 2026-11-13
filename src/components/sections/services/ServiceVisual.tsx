@@ -2,6 +2,7 @@
 
 import type { ServiceKey } from "@/data/services";
 import type { useT } from "@/i18n/context";
+import ChatSim from "./ChatSim";
 import styles from "./ServiceVisual.module.css";
 
 type T = ReturnType<typeof useT>["t"];
@@ -62,17 +63,15 @@ export default function ServiceVisual({ kind, t, size = "sm" }: Props) {
   }
   if (kind === "aibot") {
     return (
-      <div className={`${styles.vis} ${styles.visChat}${sz}`}>
-        <p className={`${styles.bubble} ${styles.bubbleIn}`}>{t.svcVisQ}</p>
-        <p className={`${styles.bubble} ${styles.bubbleOut}`}>{t.svcVisA}</p>
-        <p className={`${styles.bubble} ${styles.bubbleIn} ${styles.more}`}>{t.svcVisQ2}</p>
-        <p className={`${styles.bubble} ${styles.bubbleOut} ${styles.more}`}>{t.svcVisA2}</p>
-        <span className={styles.typing} aria-hidden="true">
-          <i />
-          <i />
-          <i />
-        </span>
-      </div>
+      <ChatSim
+        className={`${styles.vis} ${styles.visChat}${sz}`}
+        script={[
+          { from: "user", text: t.svcVisQ },
+          { from: "bot", text: t.svcVisA },
+          { from: "user", text: t.svcVisQ2 },
+          { from: "bot", text: t.svcVisA2 },
+        ]}
+      />
     );
   }
   return (
